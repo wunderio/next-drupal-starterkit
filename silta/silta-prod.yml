@@ -1,0 +1,50 @@
+
+# Enable autoscaling for production.
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+
+# Don't delay the production deployment process to create the reference data.
+referenceData:
+  updateAfterDeployment: false
+
+# Enable daily backups.
+backup:
+  enabled: true
+
+php:
+  # Reserve more resources for our PHP containerss.
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256M
+
+  # Don't show errors in production.
+  errorLevel: "hide"
+
+nginx:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 50M
+# Uncomment these lines to disable basic auth protection.
+# basicauth:
+#   enabled: false
+
+mariadb:
+  master:
+    persistence:
+      # Database storage disk space allocation
+      # Request assistance from ops team after changing this on existing deployment.
+      size: 5Gi
+
+# Connect to an externally hosted database.
+#  env:
+#    DB_HOST: 'hosted.database.server.com'
+#    DB_NAME: 'drupal-1A4G3C'
+#    DB_USER: 'drupal'
+#    DB_PASS: 'never store passwords'
+# Disable the built-in database when using an external database.
+#mariadb:
+#  enabled: false

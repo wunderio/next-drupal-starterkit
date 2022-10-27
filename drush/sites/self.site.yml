@@ -1,0 +1,30 @@
+# Edit or remove this file as needed.
+# Docs at https://github.com/drush-ops/drush/blob/master/examples/example.site.yml
+local:
+  root: ${env.LANDO_WEBROOT}
+  uri: https://${env.LANDO_APP_NAME}.${env.LANDO_DOMAIN}
+
+current:
+  host: ${ENVIRONMENT}-shell.${REPOSITORY}
+  ssh:
+    options: -J www-admin@ssh.dev.wdr.io
+  user: www-admin
+  root: /app/web
+  uri: https://${ENVIRONMENT}.${PROJECT}.dev.wdr.io
+
+main:
+  host: main-shell.${REPOSITORY}
+  ssh:
+    options: -J www-admin@ssh.dev.wdr.io
+  user: www-admin
+  root: /app/web
+  uri: https://main.${PROJECT}.dev.wdr.io
+
+#prod:
+#  host: production-shell.client-PROJECTNAME
+#  ssh:
+#    options: -J www-admin@ssh.finland.wdr.io
+#  user: www-admin
+#  root: /app/web
+#  uri: https://www.domain.com
+

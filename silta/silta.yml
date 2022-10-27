@@ -1,0 +1,13 @@
+
+# Values in this file override the default values of our helm chart.
+#
+# See https://github.com/wunderio/charts/blob/master/drupal/values.yaml
+# for all possible options.
+
+php:
+  drupalCoreVersion: "9"
+
+# Configure reference data that will be used when creating new environments.
+referenceData:
+  # The name of the environment from which reference data will be copied.
+  referenceEnvironment: 'main'

@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Module file for phpunit_example.
+ */
+
+/**
+ * @defgroup phpunit_example Example: PHPUnit
+ * @ingroup examples
+ * @{
+ * This example demonstrates PHPUnit for Drupal 8 unit testing.
+ */
+
+/**
+ * @} End of "defgroup phpunit_example".
+ */

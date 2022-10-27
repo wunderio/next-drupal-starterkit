@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- See http://pear.php.net/manual/en/package.php.php-codesniffer.annotated-ruleset.php -->
+<ruleset name="Drupal Custom">
+    <description>Drupal coding standard</description>
+
+    <!-- Set ignore warnings. -->
+    <!-- <config name="ignore_warnings_on_exit" value="1" />  -->
+
+    <file>.</file>
+
+    <!-- exclude vendor code -->
+    <exclude-pattern>vendor|drush|scripts</exclude-pattern>
+    <exclude-pattern>web/core|web/*/contrib</exclude-pattern>
+    <exclude-pattern>web/_ping.php</exclude-pattern>
+    <exclude-pattern>web/autoload.php</exclude-pattern>
+
+    <!-- exclude some Drupal files that contain issues -->
+    <exclude-pattern>web/sites/default/default.settings.php</exclude-pattern>
+
+    <!-- exclude content files -->
+    <exclude-pattern>web/sites/default/files</exclude-pattern>
+
+    <!-- exclude minified files -->
+    <exclude-pattern>*.min.*</exclude-pattern>
+
+    <!-- exclude JavaScript files -->
+    <exclude-pattern>*.js</exclude-pattern>
+
+    <!-- exclude third-party node modules -->
+    <exclude-pattern>node_modules/</exclude-pattern>
+
+    <!-- exclude CSS files, where we don't usually follow Drupal standards  -->
+    <exclude-pattern>*.css</exclude-pattern>
+
+    <rule ref="WunderDrupal"/>
+    <rule ref="WunderSecurity"/>
+
+</ruleset>

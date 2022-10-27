@@ -1,0 +1,124 @@
+name: drupal-project
+recipe: drupal9
+
+config:
+  php: "8.0"
+  via: nginx
+  webroot: web
+  database: "mariadb:10.3"
+  composer_version: 2
+  xdebug: off
+  config:
+    php: .lando/php.ini
+
+tooling:
+  grumphp:
+    description: "Runs grumphp commands"
+    cmd:
+      - appserver: ./vendor/bin/grumphp
+  npm:
+    description: "Runs npm commands"
+    service: node
+  phpunit:
+    description: Runs PHPUnit commands
+    user: www-data
+    cmd:
+      - appserver: "php /app/vendor/bin/phpunit -c /app/phpunit.xml --testdox"
+  regenerate-phpunit-config:
+    description: "Regenerates fresh PHPUnit configuration."
+    cmd:
+      - appserver: /app/.lando/phpunit.sh
+  xdebug:
+    description: "Loads Xdebug in the selected mode"
+    cmd:
+      - appserver: /app/.lando/xdebug.sh
+    user: root
+
+services:
+  database:
+    # User random static high port for database connection.
+    portforward: 34567
+  appserver:
+    # Install dependencies when building lando.
+    build:
+      - "composer install"
+    overrides:
+      environment:
+        HASH_SALT: notsosecurehash
+        ENVIRONMENT_NAME: lando
+        DB_NAME_DRUPAL: drupal9
+        DB_USER_DRUPAL: drupal9
+        DB_PASS_DRUPAL: drupal9
+        DB_HOST_DRUPAL: database
+        DRUSH_OPTIONS_URI: https://drupal-project.lndo.site
+        # Support debugging with XDEBUG 3.
+        XDEBUG_MODE:
+        PHP_IDE_CONFIG: serverName=appserver
+        # PHPUnit settings. @see: .lando/phpunit.sh
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chrome:9515"]'
+  chrome:
+    type: compose
+    services:
+      image: drupalci/webdriver-chromedriver:production
+      command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
+  # elasticsearch:
+  #   type: compose
+  #   services:
+  #     image: "docker.elastic.co/elasticsearch/elasticsearch:7.17.0"
+  #     command: "/bin/tini -- /usr/local/bin/docker-entrypoint.sh eswrapper"
+  #     user: elasticsearch
+  #     environment:
+  #       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+  #       discovery.type: "single-node"
+  #       bootstrap.memory_lock: "true"
+  #       # Allow CORS requests.
+  #       http.cors.enabled: "true"
+  #       http.cors.allow-origin: "*"
+  #     ulimits:
+  #       memlock:
+  #         soft: "-1"
+  #         hard: "-1"
+  #     ports:
+  #       - "9200:9200"
+  #     volumes:
+  #       - esdata:/usr/share/elasticsearch/data
+  #   # Install ES plugins.
+  #   build_as_root:
+  #     - elasticsearch-plugin install analysis-icu analysis-ukrainian
+  #   volumes:
+  #     esdata:
+  #       driver: local
+  # kibana:
+  #   type: compose
+  #   services:
+  #     image: "docker.elastic.co/kibana/kibana:7.17.0"
+  #     command: "/bin/tini -- /usr/local/bin/kibana-docker"
+  #     user: kibana
+  #     ports:
+  #       - "5601:5601"
+  mailhog:
+    type: mailhog
+    hogfrom:
+      - appserver
+  node:
+    type: "node:16"
+    build:
+      - "npm install"
+
+proxy:
+  mailhog:
+    - mail.lndo.site
+  # elasticsearch:
+  #   - elasticsearch.lndo.site:9200
+  # kibana:
+  #   - kibana.lndo.site:5601
+
+events:
+  post-db-import:
+    - appserver: "cd $LANDO_WEBROOT && drush cache:rebuild -y && drush @local user:login"
+
+env_file:
+  - .lando/.env
+
+# Tested with Lando version
+version: v3.6.1

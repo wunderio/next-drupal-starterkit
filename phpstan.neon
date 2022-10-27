@@ -1,0 +1,15 @@
+parameters:
+	# See: https://phpstan.org/config-reference#rule-level
+	level: 5
+	customRulesetUsed: true
+	reportUnmatchedIgnoredErrors: false
+	# Ignore phpstan-drupal extension's rules.
+	ignoreErrors:
+		- '#\Drupal calls should be avoided in classes, use dependency injection instead#'
+		- '#Plugin definitions cannot be altered.#'
+		- '#Missing cache backend declaration for performance.#'
+		- '#Plugin manager has cache backend specified but does not declare cache tags.#'
+		- '#Unsafe usage of new static\(\)#'
+includes:
+	- %currentWorkingDirectory%/vendor/mglaman/phpstan-drupal/extension.neon
+	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon

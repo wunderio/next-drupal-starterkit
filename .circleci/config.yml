@@ -1,0 +1,58 @@
+version: 2.1
+
+orbs:
+  silta: silta/silta@0.1
+
+executors:
+  cicd80:
+    docker:
+      - image: wunderio/silta-cicd:circleci-php8.0-node16-composer2-v0.1
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - silta/drupal-validate:
+          name: validate
+          executor: cicd80
+          post-validation:
+            - run: echo "You can add additional validation here!"
+
+      - silta/analyze:
+          name: analyze
+          context: analyze
+          sources: web
+
+      - silta/drupal-build-deploy: &build-deploy
+          name: build-deploy
+          executor: cicd80
+          codebase-build:
+            - silta/drupal-composer-install
+            - silta/npm-install-build
+          context: silta_dev
+          filters:
+            branches:
+              ignore:
+                - production
+                - /dependabot\/.*/
+
+      - silta/drupal-build-deploy:
+          # Extend the build-deploy configuration for the production environment.
+          <<: *build-deploy
+          name: build-deploy-prod
+          silta_config: silta/silta.yml,silta/silta-prod.yml
+          context: silta_finland
+          filters:
+            branches:
+              only: production
+
+      - silta/drupal-build-deploy:
+          <<: *build-deploy
+          name: build-dependabot
+          context: silta_dev
+          skip-deployment: true
+          filters:
+            branches:
+              only: /dependabot\/.*/
+
+

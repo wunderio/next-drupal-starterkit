@@ -1,0 +1,35 @@
+parameters:
+  grumphp.run_on_paths: ['web/modules/custom', 'web/themes/custom']
+grumphp:
+  stop_on_failure: true
+  process_timeout: 300
+  ascii:
+    failed: ~
+    succeeded: ~
+  tasks:
+    php_compatibility:
+      run_on: '%grumphp.run_on_paths%'
+      testVersion: '8.0'
+    check_file_permissions: ~
+    php_check_syntax:
+      run_on: '%grumphp.run_on_paths%'
+    phpcs:
+      standard: ['phpcs.xml']
+      run_on: '%grumphp.run_on_paths%'
+    php_stan:
+      run_on: '%grumphp.run_on_paths%'
+    yaml_lint: ~
+    json_lint: ~
+    # PHPUnit will fail with 0 tests.
+    phpunit:
+      testsuite: unit
+  extensions:
+    - Wunderio\GrumPHP\Task\PhpCompatibility\PhpCompatibilityExtensionLoader
+    - Wunderio\GrumPHP\Task\PhpCheckSyntax\PhpCheckSyntaxExtensionLoader
+    - Wunderio\GrumPHP\Task\CheckFilePermissions\CheckFilePermissionsExtensionLoader
+    - Wunderio\GrumPHP\Task\Phpcs\PhpcsExtensionLoader
+    - Wunderio\GrumPHP\Task\PhpStan\PhpStanExtensionLoader
+    - Wunderio\GrumPHP\Task\YamlLint\YamlLintExtensionLoader
+    - Wunderio\GrumPHP\Task\JsonLint\JsonLintExtensionLoader
+  git_hook_variables:
+    EXEC_GRUMPHP_COMMAND: lando php
