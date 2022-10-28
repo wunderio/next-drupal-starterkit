@@ -44,7 +44,7 @@ services:
       - "composer install"
     overrides:
       environment:
-        HASH_SALT: notsosecurehash
+        HASH_SALT: notsosecurehashnotsosecurehashnotsosecurehash
         ENVIRONMENT_NAME: lando
         DB_NAME_DRUPAL: drupal9
         DB_USER_DRUPAL: drupal9
