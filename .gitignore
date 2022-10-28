@@ -36,3 +36,6 @@
 
 # Ignore node modules
 node_modules
+
+# Ignore oauth keys
+oauth

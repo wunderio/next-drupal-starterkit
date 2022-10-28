@@ -1,0 +1,9 @@
+uuid: 93d4c8a2-7b5f-43e2-90c4-097276ce6f80
+langcode: en
+status: true
+dependencies: {  }
+id: node.article
+site_resolver: site_selector
+configuration:
+  sites:
+    next_js: next_js

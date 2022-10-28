@@ -1,0 +1,14 @@
+uuid: a02f0fbc-d254-4aa3-9dc6-94f27c6e0f86
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.next_js_admin
+  module:
+    - user
+id: user_add_role_action.next_js_admin
+label: 'Add the Next.js Admin role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: next_js_admin

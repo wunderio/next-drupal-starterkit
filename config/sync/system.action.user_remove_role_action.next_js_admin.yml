@@ -1,0 +1,14 @@
+uuid: c5098398-9699-44a1-a52d-ad4cfcb0d76f
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.next_js_admin
+  module:
+    - user
+id: user_remove_role_action.next_js_admin
+label: 'Remove the Next.js Admin role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: next_js_admin
