@@ -1,0 +1,7 @@
+_core:
+  default_config_hash: ve5n0mfUSWWZEFldenHnFrpcL1XKTjzTacerxemPPU4
+langcode: en
+read_only: true
+maintenance_header_retry_seconds:
+  min: 5
+  max: 10

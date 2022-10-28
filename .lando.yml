@@ -2,7 +2,7 @@ name: drupal-project
 recipe: drupal9
 
 config:
-  php: "8.0"
+  php: "8.1"
   via: nginx
   webroot: web
   database: "mariadb:10.3"
