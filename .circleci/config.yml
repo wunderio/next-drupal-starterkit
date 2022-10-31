@@ -55,4 +55,37 @@ workflows:
             branches:
               only: /dependabot\/.*/
 
+      # silta/frontend-build-deploy is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/jobs/%40frontend.yml
+      # &build-deploy is a yaml anchor, so we can reference it later
+      - silta/frontend-build-deploy: &frontend-build-deploy
+          name: Silta build & deploy
+          context: silta_dev
+          silta_config: silta/silta.yml
+          codebase-build:
+            # npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
+            - silta/npm-install-build
+          filters:
+            branches:
+              ignore:
+                - production
+                - /dependabot\/.*/
 
+
+      - silta/frontend-build-deploy:
+          # Extend the build-deploy configuration for the production environment.
+          <<: *frontend-build-deploy
+          name: Silta build & deploy production
+          context: silta_finland
+          silta_config: silta/silta.yml,silta/silta-prod.yml
+          filters:
+            branches:
+              only: production
+
+      - silta/frontend-build-deploy:
+          <<: *frontend-build-deploy
+          name: Build Dependabot
+          context: silta_dev
+          skip-deployment: true
+          filters:
+            branches:
+              only: /dependabot\/.*/
