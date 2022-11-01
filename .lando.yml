@@ -1,4 +1,4 @@
-name: drupal-project
+name: next4drupal-project
 recipe: drupal9
 
 config:
@@ -50,7 +50,7 @@ services:
         DB_USER_DRUPAL: drupal9
         DB_PASS_DRUPAL: drupal9
         DB_HOST_DRUPAL: database
-        DRUSH_OPTIONS_URI: https://drupal-project.lndo.site
+        DRUSH_OPTIONS_URI: https://next4drupal-project.lndo.site
         # Support debugging with XDEBUG 3.
         XDEBUG_MODE:
         PHP_IDE_CONFIG: serverName=appserver
