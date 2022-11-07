@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.article.body
     - field.field.node.article.comment
+    - field.field.node.article.field_content_paragraphs
     - field.field.node.article.field_image
     - field.field.node.article.field_tags
     - image.style.medium
@@ -33,8 +34,8 @@ content:
     type: image
     label: hidden
     settings:
-      image_style: medium
       image_link: content
+      image_style: medium
       image_loading:
         attribute: lazy
     third_party_settings: {  }
@@ -53,5 +54,6 @@ content:
     region: content
 hidden:
   comment: true
+  field_content_paragraphs: true
   field_image: true
   field_tags: true

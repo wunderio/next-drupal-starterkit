@@ -652,6 +652,13 @@
   dependencies:
     "esutils" "^2.0.2"
 
+"drupal-jsonapi-params@^2.1.0":
+  "integrity" "sha512-s8eVK5bDfMbVoutqXo9bEnE8+5p6lDUlylTC/N2OdxAB3dgzet6sFNyKxh0D8TUi3w/CgmiGYI1qdLLcLIS14g=="
+  "resolved" "https://registry.npmjs.org/drupal-jsonapi-params/-/drupal-jsonapi-params-2.1.0.tgz"
+  "version" "2.1.0"
+  dependencies:
+    "qs" "^6.10.3"
+
 "electron-to-chromium@^1.4.84":
   "integrity" "sha512-ZYfpVLULm67K7CaaGP7DmjyeMY4naxsbTy+syVVxT6QHI1Ww8XbJjmr9fDckrhq44WzCrcC5kH3zGpdusxwwqg=="
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.106.tgz"

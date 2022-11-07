@@ -5,6 +5,7 @@ import { DrupalNode } from "next-drupal"
 import { drupal } from "lib/drupal"
 import { Layout } from "components/layout"
 import { NodeArticleTeaser } from "components/node--article--teaser"
+import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 
 interface IndexPageProps {
   nodes: DrupalNode[]
@@ -40,16 +41,24 @@ export default function IndexPage({ nodes }: IndexPageProps) {
 export async function getStaticProps(
   context
 ): Promise<GetStaticPropsResult<IndexPageProps>> {
+  const params = new DrupalJsonApiParams()
+    .addFields("node--article", [
+      "title",
+      "path",
+      "field_image",
+      "uid",
+      "created"
+    ])
+    .addInclude(["field_image,uid"])
+    .addFilter("status", "1")
+    .addSort("created", "DESC")
+    .getQueryObject()
+
   const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
     "node--article",
     context,
     {
-      params: {
-        "filter[status]": 1,
-        "fields[node--article]": "title,path,field_image,uid,created",
-        include: "field_image,uid",
-        sort: "-created",
-      },
+      params: params
     }
   )
 

@@ -44,6 +44,18 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
           className="mt-6 font-serif text-xl leading-loose prose"
         />
       )}
+      {node.field_content_paragraphs && node.field_content_paragraphs.length > 0 && (
+        node.field_content_paragraphs.map((item) => {
+          return (
+            <div key={item.id}>
+              <div
+                dangerouslySetInnerHTML={{ __html: item.field_text?.value }}
+                className="mt-6 font-serif text-xl leading-loose prose"
+              />
+            </div>
+          );
+        })
+      )}
     </article>
   )
 }

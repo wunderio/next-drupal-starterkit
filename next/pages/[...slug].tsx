@@ -1,4 +1,5 @@
 import * as React from "react"
+import { DrupalJsonApiParams } from "drupal-jsonapi-params"
 import { GetStaticPathsResult, GetStaticPropsResult } from "next"
 import Head from "next/head"
 import { DrupalNode } from "next-drupal"
@@ -49,18 +50,24 @@ export async function getStaticProps(
 
   const type = path.jsonapi.resourceName
 
-  let params = {}
+  let params = new DrupalJsonApiParams()
   if (type === "node--article") {
-    params = {
-      include: "field_image,uid",
-    }
+    params.addFields("node--article", [
+        "title",
+        "path",
+        "body",
+        "uid",
+        "field_content_paragraphs"
+      ])
+      .addFields("paragraph--text_paragraph", ["field_text"])
+      .addInclude(["field_image,uid,field_content_paragraphs"])
   }
 
   const resource = await drupal.getResourceFromContext<DrupalNode>(
     path,
     context,
     {
-      params,
+      params: params.getQueryObject(),
     }
   )
 
