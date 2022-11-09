@@ -12,8 +12,7 @@
 /web/profiles/.gitignore
 /web/profiles/contrib/
 /web/libraries/
-/web/sites/.gitignore
-/web/sites/default/.gitignore
+/web/**/.gitignore
 
 # Ignore local configuration
 /web/sites/*/settings.local.php
