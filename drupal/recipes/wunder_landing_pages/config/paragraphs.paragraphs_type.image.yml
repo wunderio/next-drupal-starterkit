@@ -1,0 +1,10 @@
+uuid: 0c607596-b968-41ac-8624-c327df401cd9
+langcode: en
+status: true
+dependencies: {  }
+id: image
+label: Image
+icon_uuid: null
+icon_default: null
+description: 'A paragraph containing an image.'
+behavior_plugins: {  }

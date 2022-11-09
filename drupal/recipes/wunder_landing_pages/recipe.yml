@@ -1,0 +1,30 @@
+name: 'Wunder landing pages'
+description: "An example recipe showing the adding of a section for the site."
+type: 'Content type'
+# note, that this needs to be plural:
+recipes:
+  # An array of recipe's to apply prior to applying this recipe. If any of these
+  # recipes fail to be applied, this recipe will not be applied either.
+  - wunder_media
+install:
+  - menu_ui
+  - paragraphs
+  - node
+  - text
+  - pathauto
+config:
+  import:
+    paragraphs: '*'
+    pathauto: '*'
+  actions:
+    user.role.wunder_content_editor:
+      ensure_exists:
+        label: 'Wunder content editor'
+      grantPermissions:
+        - 'create wunder_landing_page content'
+        - 'delete any wunder_landing_page content'
+        - 'delete own wunder_landing_page content'
+        - 'edit any wunder_landing_page content'
+        - 'edit own wunder_landing_page content'
+        - 'revert wunder_landing_page revisions'
+        - 'view wunder_landing_page revisions'

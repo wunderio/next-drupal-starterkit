@@ -1,0 +1,11 @@
+{
+    "name": "drupal_recipe/wunder_articles_section",
+    "description": "Wunder articles section example recipe",
+    "type": "drupal-recipe",
+    "require": {
+        "drupal/core": "^9.4",
+        "drupal/easy_breadcrumb": "^2.0.3",
+        "drupal/pathauto": "^1.11"
+    },
+    "license": "GPL-2.0-or-later"
+}

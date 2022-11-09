@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: wunder_article
+label: 'Wunder article'
+type: 'canonical_entities:node'
+pattern: 'wunder-articles/[node:title]'
+selection_criteria:
+  ea010228-0a77-457c-a26d-258ca00f6c66:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: ea010228-0a77-457c-a26d-258ca00f6c66
+    context_mapping:
+      node: node
+    bundles:
+      wunder_article: wunder_article
+selection_logic: and
+weight: -5
+relationships: {  }

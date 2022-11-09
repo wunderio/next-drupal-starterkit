@@ -1,0 +1,31 @@
+# An example recipe that shows the installation and configuration of a contrib module.
+# this includes a config folder to import configuration for the easy breadcrumbs contrib module.
+name: 'Wunder articles section'
+description: "An example recipe showing the adding of a section for the site."
+type: 'Content type'
+# note, that this needs to be plural:
+recipes:
+  # An array of recipe's to apply prior to applying this recipe. If any of these
+  # recipes fail to be applied, this recipe will not be applied either.
+  - wunder_languages
+  - wunder_roles
+install:
+  - menu_ui
+  - easy_breadcrumb
+  - node
+  - text
+  - pathauto
+  - views
+config:
+  actions:
+    user.role.wunder_content_editor:
+      ensure_exists:
+        label: 'Wunder content editor'
+      grantPermissions:
+        - 'create wunder_article content'
+        - 'delete any wunder_article content'
+        - 'delete own wunder_article content'
+        - 'edit any wunder_article content'
+        - 'edit own wunder_article content'
+        - 'revert wunder_article revisions'
+        - 'view wunder_article revisions'

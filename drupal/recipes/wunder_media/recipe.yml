@@ -1,0 +1,63 @@
+# An example recipe that shows the installation and configuration of a contrib module.
+# this includes a config folder to import configuration for the easy breadcrumbs contrib module.
+name: 'Wunder media recipe'
+description: "An example recipe, adding media configuration with basic media types and its settings."
+type: 'Media'
+# note, that this needs to be plural:
+recipes:
+  - wunder_languages
+  - wunder_roles
+install:
+  - media
+  - media_library
+  - views
+  - image
+config:
+  import:
+    media_library: '*'
+    media: '*'
+    # uncomment this if installing over the minimal installation profile:
+    # image: '*'
+  actions:
+    user.role.wunder_content_editor:
+      ensure_exists:
+        label: 'Wunder content editor'
+      grantPermissions:
+        - 'access media overview'
+        - 'create audio media'
+        - 'create document media'
+        - 'create image media'
+        - 'create media'
+        - 'create remote_video media'
+        - 'create video media'
+        - 'delete any audio media'
+        - 'delete any document media'
+        - 'delete any image media'
+        - 'delete any media'
+        - 'delete any remote_video media'
+        - 'delete any video media'
+        - 'delete media'
+        - 'delete own audio media'
+        - 'delete own document media'
+        - 'delete own image media'
+        - 'delete own remote_video media'
+        - 'delete own video media'
+        - 'edit any audio media'
+        - 'edit any document media'
+        - 'edit any image media'
+        - 'edit any remote_video media'
+        - 'edit any video media'
+        - 'edit own audio media'
+        - 'edit own document media'
+        - 'edit own image media'
+        - 'edit own remote_video media'
+        - 'edit own video media'
+        - 'translate audio media'
+        - 'translate document media'
+        - 'translate image media'
+        - 'translate remote_video media'
+        - 'translate video media'
+        - 'update any media'
+        - 'update media'
+        - 'view all media revisions'
+        - 'view own unpublished media'
