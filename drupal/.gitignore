@@ -15,8 +15,6 @@
 /web/sites/.gitignore
 /web/sites/default/.gitignore
 
-/.idea
-
 # Ignore local configuration
 /web/sites/*/settings.local.php
 
