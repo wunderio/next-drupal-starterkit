@@ -34,6 +34,13 @@ tooling:
       - appserver: /app/.lando/xdebug.sh
     user: root
 
+  install-recipe:
+    description: 'Installs the specified recipe. Accepts the recipe folder name. Recipes should be stored in /recipes'
+    cmd:
+      - appserver: /app/.lando/install_recipe.sh
+    dir: /app/web
+    user: www-data
+
 services:
   database:
     # User random static high port for database connection.
