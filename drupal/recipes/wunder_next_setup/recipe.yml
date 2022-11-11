@@ -1,0 +1,8 @@
+# An example recipe that shows the creation of a user role.
+name: 'Wunder next setup'
+description: "Enable needed modules to use next-drupal and add pathauto setup"
+type: 'Setup'
+install:
+  - next
+  - next_jsonapi
+  - pathauto
