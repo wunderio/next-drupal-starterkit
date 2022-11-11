@@ -2,17 +2,20 @@
 
 (WORK IN PROGRESS)
 
-This repository includes a starter template to create a drupal-next site. Both front and back end are included.
+This is a starter template for a decoupled website using [Next.js for Drupal](https://next-drupal.org/). It includes 
+the codebase for the drupal backend and the corresponding next.js frontend.
 
 ### Getting started
 
-Follow this guide to get backend and frontend up and running, showing a basic site.
+Follow this guide to get backend and frontend up and running.
 
 #### Drupal setup
 
 All drupal code and configuration is in the `drupal` directory.
 All needed module dependencies have been added to the `composer.json` file.
 Some of the setup process is automated using [drupal recipes](https://www.drupal.org/project/distributions_recipes).
+
+Follow these steps to get started:
 
 1. `cd drupal`
 2. `lando start`
@@ -25,14 +28,13 @@ Some of the setup process is automated using [drupal recipes](https://www.drupal
 #### Next.js setup
 
 All next.js code  is in the `next` directory.
-All needed module dependencies have been added to the `composer.json` file.
-Some of the setup process is automated using [drupal recipes](https://www.drupal.org/project/distributions_recipes).
+
+Follow these steps to get started:
 
 1. `cd next`
-2. `npm install` (you should use node 16)
+2. `npm install`
 3. `cp .env.example .env.local`
 4. `npm run dev`
-
 5. visit `localhost:3000` and you should see your content displayed by the frontend.
 > If you get a `https://next4drupal-project.lndo.site/jsonapi failed, reason: unable to verify the first certificate`,
   decomment the `NODE_TLS_REJECT_UNAUTHORIZED=0` line in .env.local
