@@ -54,7 +54,7 @@ class WunderNextCommands extends DrushCommands {
       // Check if the account can be created:
       if ($violations->count() > 0) {
         foreach ($violations as $violation) {
-          $this->output()->writeln('<error>' . $violation->getMessage() . '<error>');
+          $this->logger()->error($violation->getMessage());
           return new CommandError("Could not create a new user account with the name " . self::API_USER_NAME . ".");
         }
       }
@@ -79,7 +79,7 @@ class WunderNextCommands extends DrushCommands {
       // Check if the consumer can be created:
       if ($violations->count() > 0) {
         foreach ($violations as $violation) {
-          $this->output()->writeln('<error>' . $violation->getMessage() . '<error>');
+          $this->logger()->error($violation->getMessage());
           return new CommandError('Could not create a new consumer.');
         }
       }
@@ -92,7 +92,7 @@ class WunderNextCommands extends DrushCommands {
     $uuid = $consumer->uuid();
 
     // Output instructions to the user:
-    $this->output()->writeln('User and consumer are now created. Add these two lines to the .env file for the Next application:');
+    $this->logger()->success(dt('User and consumer created. Add these two lines to the .env file for the Next application:'));
     $this->output()->writeln("DRUPAL_CLIENT_ID=$uuid");
     $this->output()->writeln("DRUPAL_CLIENT_SECRET=$secret");
   }
