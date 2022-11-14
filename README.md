@@ -21,7 +21,7 @@ Follow these steps to get started:
 2. `lando start`
 3. `lando composer install`
 4. Install Drupal as usual. Use the standard installation profile. You can do it via the UI or using this command: `lando drush si --site-name="My great site neame here"
-5. Configure the next drupal module by issuing the command:  `lando install-recipe wunder_next_step`
+5. Configure the next drupal module by issuing the command:  `lando install-recipe wunder_next_setup`
 6. You can now export your configuration.
 7. Create some content :-)
 
