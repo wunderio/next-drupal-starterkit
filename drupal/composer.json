@@ -1,6 +1,6 @@
 {
     "name": "wunderio/drupal-project",
-    "description": "Wunder's template for Drupal 9 projects.",
+    "description": "Wunder's template for Drupal-next projects.",
     "type": "project",
     "license": "GPL-2.0-or-later",
     "homepage": "https://www.drupal.org/project/drupal",
@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.1",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_toolbar": "^3.1",
@@ -121,6 +121,10 @@
             },
             "drupal/decoupled_router": {
                 "Unable to resolve path on node in other language than default": "https://www.drupal.org/files/issues/2021-05-05/3111456-34.patch"
+            },
+            "drupal/core": {
+                "Add support for the experimental recipes functionality": "https://git.drupalcode.org/project/distributions_recipes/-/raw/patch/recipe.patch",
+                "Fix error when enabling the language module via recipe": "https://www.drupal.org/files/issues/2019-11-19/drupal.8.8.x-3002532-20.patch"
             }
         },
         "dropin-paths": {
