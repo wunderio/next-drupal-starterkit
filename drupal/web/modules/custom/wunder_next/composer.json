@@ -1,0 +1,11 @@
+{
+    "name": "org/wunder_next",
+    "type": "drupal-drush",
+    "extra": {
+        "drush": {
+            "services": {
+                "drush.services.yml": "^11"
+            }
+        }
+    }
+}
