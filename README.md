@@ -34,7 +34,10 @@ Follow these steps to get started:
 1. `cd next`
 2. `npm install`
 3. `cp .env.example .env.local`
+4. back in the drupal directory, execute `lando drush wunder_next:setup-user-and-consumer`
+5. copy the lines that the command outputs into your `.env.local` file in the next directory.
 4. `npm run dev`
 5. visit `localhost:3000` and you should see your content displayed by the frontend.
+6. you will also be able to view unpublished content as previews inside drupal.
 > If you get a `https://next4drupal-project.lndo.site/jsonapi failed, reason: unable to verify the first certificate`,
   decomment the `NODE_TLS_REJECT_UNAUTHORIZED=0` line in .env.local
