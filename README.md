@@ -20,8 +20,9 @@ Follow these steps to get started:
 1. `cd drupal`
 2. `lando start`
 3. `lando composer install`
+4. generate oauth keys using the command `lando generate-oauth-keys`. The keys will be created in the `drupal/oauth` directory.
 4. Install Drupal as usual. Use the standard installation profile. You can do it via the UI or using this command: `lando drush si --site-name="My great site neame here"
-5. Configure the next drupal module by issuing the command:  `lando install-recipe wunder_next_setup`
+5. Run the `lando install-recipe wunder_next_setup` command to set up the `next` drupal module
 6. You can now export your configuration.
 7. Create some content :-)
 
@@ -31,13 +32,14 @@ All next.js code  is in the `next` directory.
 
 Follow these steps to get started:
 
-1. `cd next`
-2. `npm install`
+1. start in the `drupal` directory, and execute the command: `lando drush wunder_next:setup-user-and-consumer`
+2. `cd ../next`
 3. `cp .env.example .env.local`
-4. back in the drupal directory, execute `lando drush wunder_next:setup-user-and-consumer`
-5. copy the lines that the command outputs into your `.env.local` file in the next directory.
-4. `npm run dev`
-5. visit `localhost:3000` and you should see your content displayed by the frontend.
-6. you will also be able to view unpublished content as previews inside drupal.
-> If you get a `https://next4drupal-project.lndo.site/jsonapi failed, reason: unable to verify the first certificate`,
-  decomment the `NODE_TLS_REJECT_UNAUTHORIZED=0` line in .env.local
+4. add the output of the command in step 1 to your `.env.local` file and save it.
+5. `npm install`
+6. `npm run dev`
+7. visit `localhost:3000` and you should see your content displayed by the frontend.
+8. when viewing a piece of content inside Drupal, you should be able to preview it in the frontend, including unpublished content and revisions.
+
+> NOTE: If you get a `https://next4drupal-project.lndo.site/jsonapi failed, reason: unable to verify the first certificate`,
+decomment the `NODE_TLS_REJECT_UNAUTHORIZED=0` line in .env.local
