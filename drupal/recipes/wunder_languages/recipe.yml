@@ -1,0 +1,17 @@
+# A recipe that sets up the basic language setup for a site.
+name: 'Wunder languages'
+description: "A recipe to set up basic language setup for a site."
+type: 'Configuration'
+install:
+  - language
+  - config_translation
+  - content_translation
+  - locale
+  - file
+  - tour
+  - wunder_translations
+config:
+  import:
+    language: '*'
+    config_translation: '*'
+    content_translation: '*'

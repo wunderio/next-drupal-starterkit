@@ -1,0 +1,5 @@
+services:
+  wunder_translations.commands:
+    class: \Drupal\wunder_translations\Commands\WunderNextCommands
+    tags:
+      - { name: drush.command }

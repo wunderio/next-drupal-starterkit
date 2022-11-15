@@ -1,0 +1,7 @@
+name: wunder_translations
+type: module
+description: Adds translations to the content types.
+package: Custom
+core_version_requirement: ^9 || ^10
+dependencies:
+  - wunder_next
