@@ -1,0 +1,15 @@
+uuid: cdde3d87-907c-4a64-bede-812b1583a0be
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - subrequests
+id: next_api_role
+label: next_api_role
+weight: 4
+is_admin: null
+permissions:
+  - 'access user profiles'
+  - 'bypass node access'
+  - 'issue subrequests'

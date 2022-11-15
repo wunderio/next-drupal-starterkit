@@ -41,6 +41,13 @@ tooling:
     dir: /app/web
     user: www-data
 
+  generate-oauth-keys:
+    description: 'Generates a pair of public and private keys into the oauth directory'
+    cmd:
+      - appserver: /app/.lando/generate_oauth_keys.sh
+    dir: /app/oauth
+    user: www-data
+
 services:
   database:
     # User random static high port for database connection.

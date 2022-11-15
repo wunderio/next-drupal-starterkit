@@ -6,3 +6,4 @@ install:
   - next
   - next_jsonapi
   - pathauto
+  - wunder_next

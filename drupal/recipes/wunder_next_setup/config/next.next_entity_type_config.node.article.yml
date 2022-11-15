@@ -1,0 +1,10 @@
+uuid: b004b8b0-55c4-4e82-9190-163c2e846f3e
+langcode: en
+status: true
+dependencies: {  }
+id: node.article
+site_resolver: site_selector
+configuration:
+  sites:
+    next_js_localhost: next_js_localhost
+  field_name: {  }
