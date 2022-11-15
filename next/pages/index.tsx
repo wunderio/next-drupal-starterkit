@@ -46,6 +46,7 @@ export async function getStaticProps(
     {
       params: {
         "filter[status]": 1,
+        "filter[langcode]": context.locale,
         "fields[node--article]": "title,path,field_image,uid,created",
         include: "field_image,uid",
         sort: "-created",

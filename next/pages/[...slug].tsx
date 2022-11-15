@@ -50,9 +50,11 @@ export async function getStaticProps(
   const type = path.jsonapi.resourceName
 
   let params = {}
+
   if (type === "node--article") {
     params = {
       include: "field_image,uid",
+      "filter[langcode]": context.locale,
     }
   }
 
