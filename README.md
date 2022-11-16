@@ -21,11 +21,10 @@ Follow these steps to get started:
 2. `lando start`
 3. `lando composer install`
 4. generate oauth keys using the command `lando generate-oauth-keys`. The keys will be created in the `drupal/oauth` directory.
-5. Install Drupal as usual. Use the standard installation profile. You can do it via the UI or using this command: `lando drush si --site-name="My great site neame here"`
-6. Run the `lando install-recipe wunder_next_setup` command to set up the `next` drupal module
-7. Run the `lando install-recipe wunder_languages` command to set up the basic languages.
-8. You can now export your configuration.
-9. Create some content and translate it :-)
+5. Install Drupal as usual. Use the standard installation profile. You can do it via the UI or using this command: `lando drush si --site-name="My great site neame here"`.
+6. Run the `lando install-recipe wunder_next_setup` to set up all necessary modules and configuration.
+7. You can now export your configuration.
+8. Create some content and translate it :-)
 
 #### Next.js setup
 
