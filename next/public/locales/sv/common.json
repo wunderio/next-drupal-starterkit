@@ -1,3 +1,6 @@
 {
-  "latest-articles": "Senaste artiklarna"
+  "latest-articles": "Senaste artiklarna",
+  "no-content-found": "Inget innehåll hittades",
+  "posted-by": "Författare: {{author}}",
+  "read-article": "Läs artikeln"
 }

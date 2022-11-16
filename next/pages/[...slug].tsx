@@ -1,6 +1,7 @@
 import { GetStaticPathsResult, GetStaticPropsResult } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import * as React from "react";
 import { Layout } from "components/layout";
 import { NodeArticle } from "components/node--article";
@@ -80,10 +81,13 @@ export async function getStaticProps(
       notFound: true,
     };
   }
-
   return {
     props: {
       resource,
+      ...(await serverSideTranslations(
+        context.locale ?? context.defaultLocale,
+        ["common"]
+      )),
     },
   };
 }

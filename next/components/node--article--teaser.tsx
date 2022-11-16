@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DrupalNode } from "next-drupal";
+import { useTranslation } from "next-i18next";
 
 import { absoluteUrl, formatDate } from "../lib/utils";
 
@@ -9,6 +10,7 @@ interface NodeArticleTeaserProps {
 }
 
 export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
+  const { t } = useTranslation("common");
   return (
     <article {...props}>
       <Link href={node.path.alias} passHref>
@@ -18,10 +20,7 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
       </Link>
       <div className="mb-4 text-gray-600">
         {node.uid?.display_name ? (
-          <span>
-            Posted by{" "}
-            <span className="font-semibold">{node.uid?.display_name}</span>
-          </span>
+          <span>{t("posted-by", { author: node.uid?.display_name })}</span>
         ) : null}
         <span> - {formatDate(node.created)}</span>
       </div>
@@ -39,7 +38,7 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
       )}
       <Link href={node.path.alias} passHref>
         <a className="inline-flex items-center px-6 py-2 border border-gray-600 rounded-full hover:bg-gray-100">
-          Read article
+          {t("read-article")}
           <svg
             viewBox="0 0 24 24"
             fill="none"

@@ -1,3 +1,6 @@
 {
-  "latest-articles": "Viimeisimmät artikkelit"
+  "latest-articles": "Viimeisimmät artikkelit",
+  "no-content-found": "Sisältöä ei löydy",
+  "posted-by": "Kirjoittaja: {{author}}",
+  "read-article": "Lue artikkeli"
 }

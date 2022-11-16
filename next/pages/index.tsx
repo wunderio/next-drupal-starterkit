@@ -33,7 +33,7 @@ export default function IndexPage({ nodes }: IndexPageProps) {
             </div>
           ))
         ) : (
-          <p className="py-4">No nodes found</p>
+          <p className="py-4">{t("no-content-found")}</p>
         )}
       </div>
     </Layout>
