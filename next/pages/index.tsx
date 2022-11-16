@@ -1,12 +1,12 @@
-import Head from "next/head";
 import { GetStaticPropsResult } from "next";
+import Head from "next/head";
 import { DrupalNode } from "next-drupal";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { drupal } from "../lib/drupal";
 import { Layout } from "../components/layout";
 import { NodeArticleTeaser } from "../components/node--article--teaser";
+import { drupal } from "../lib/drupal";
 
 interface IndexPageProps {
   nodes: DrupalNode[];

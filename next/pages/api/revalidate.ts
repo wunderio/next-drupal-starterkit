@@ -4,7 +4,7 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  let slug = request.query.slug as string;
+  const slug = request.query.slug as string;
   const secret = request.query.secret as string;
 
   // Validate secret.
