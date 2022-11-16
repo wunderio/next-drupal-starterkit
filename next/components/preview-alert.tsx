@@ -1,16 +1,17 @@
-import * as React from "react"
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
+import * as React from "react";
 
 export function PreviewAlert() {
-  const { isPreview } = useRouter()
-  const [showPreviewAlert, setShowPreviewAlert] = React.useState<boolean>(false)
+  const { isPreview } = useRouter();
+  const [showPreviewAlert, setShowPreviewAlert] =
+    React.useState<boolean>(false);
 
   React.useEffect(() => {
-    setShowPreviewAlert(isPreview && window.top === window.self)
-  }, [isPreview])
+    setShowPreviewAlert(isPreview && window.top === window.self);
+  }, [isPreview]);
 
   if (!showPreviewAlert) {
-    return null
+    return null;
   }
 
   return (
@@ -24,5 +25,5 @@ export function PreviewAlert() {
         to exit preview mode.
       </p>
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { PreviewAlert } from "../components/preview-alert"
+import { PreviewAlert } from "../components/preview-alert";
 
 export function Layout({ children }) {
   return (
@@ -24,5 +24,5 @@ export function Layout({ children }) {
         <main className="container py-10 mx-auto">{children}</main>
       </div>
     </>
-  )
+  );
 }

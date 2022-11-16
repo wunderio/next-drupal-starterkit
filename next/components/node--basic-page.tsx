@@ -1,7 +1,7 @@
-import { DrupalNode } from "next-drupal"
+import { DrupalNode } from "next-drupal";
 
 interface NodeBasicPageProps {
-  node: DrupalNode
+  node: DrupalNode;
 }
 
 export function NodeBasicPage({ node, ...props }: NodeBasicPageProps) {
@@ -15,5 +15,5 @@ export function NodeBasicPage({ node, ...props }: NodeBasicPageProps) {
         />
       )}
     </article>
-  )
+  );
 }
