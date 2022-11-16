@@ -1,16 +1,19 @@
-import Head from "next/head"
-import { GetStaticPropsResult } from "next"
-import { DrupalNode } from "next-drupal"
+import Head from "next/head";
+import { GetStaticPropsResult } from "next";
+import { DrupalNode } from "next-drupal";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
-import { drupal } from "../lib/drupal"
-import { Layout } from "../components/layout"
-import { NodeArticleTeaser } from "../components/node--article--teaser"
+import { drupal } from "../lib/drupal";
+import { Layout } from "../components/layout";
+import { NodeArticleTeaser } from "../components/node--article--teaser";
 
 interface IndexPageProps {
-  nodes: DrupalNode[]
+  nodes: DrupalNode[];
 }
 
 export default function IndexPage({ nodes }: IndexPageProps) {
+  const { t } = useTranslation("common");
   return (
     <Layout>
       <Head>
@@ -21,7 +24,7 @@ export default function IndexPage({ nodes }: IndexPageProps) {
         />
       </Head>
       <div>
-        <h1 className="mb-10 text-6xl font-black">Latest Articles.</h1>
+        <h1 className="mb-10 text-6xl font-black">{t("latest-articles")}</h1>
         {nodes?.length ? (
           nodes.map((node) => (
             <div key={node.id}>
@@ -34,7 +37,7 @@ export default function IndexPage({ nodes }: IndexPageProps) {
         )}
       </div>
     </Layout>
-  )
+  );
 }
 
 export async function getStaticProps(
@@ -52,11 +55,12 @@ export async function getStaticProps(
         sort: "-created",
       },
     }
-  )
+  );
 
   return {
     props: {
       nodes,
+      ...(await serverSideTranslations(context.locale, ["common"])),
     },
-  }
+  };
 }

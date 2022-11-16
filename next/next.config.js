@@ -1,12 +1,11 @@
+const { i18n } = require("./next-i18next.config");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     domains: [process.env.NEXT_IMAGE_DOMAIN],
   },
-  i18n: {
-    locales: ["en", "fi", "sv"],
-    defaultLocale: "en",
-  },
-}
+  i18n,
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
