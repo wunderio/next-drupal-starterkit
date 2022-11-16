@@ -9,7 +9,6 @@ install:
   - locale
   - file
   - tour
-  - wunder_translations
 config:
   import:
     language: '*'
