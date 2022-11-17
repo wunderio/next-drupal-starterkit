@@ -9,7 +9,6 @@ export default function LocaleSwitcher() {
     <div>
       <ul>
         {locales.map((locale) => {
-          const { pathname, query, asPath } = router;
           return (
             <li
               key={locale}
@@ -17,7 +16,7 @@ export default function LocaleSwitcher() {
                 locale === activeLocale ? "font-bold" : ""
               }`}
             >
-              <Link href={{ pathname, query }} as={asPath} locale={locale}>
+              <Link href="/" locale={locale}>
                 {locale}
               </Link>
             </li>
