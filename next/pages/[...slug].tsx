@@ -23,7 +23,7 @@ interface NodeProps extends NodePageProps {
 
 export default function NodePage({ resource }: NodeProps) {
   if (!resource) return null;
-
+  
   return (
     <LangContext.Provider
       value={{

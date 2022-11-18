@@ -7,6 +7,9 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Layout } from "../components/layout";
 import { NodeArticleTeaser } from "../components/node--article--teaser";
 import { drupal } from "../lib/drupal";
+import {setLanguageLinks} from "../utils/locale.utils";
+
+import { LangContext } from "./_app";
 
 interface IndexPageProps {
   nodes: DrupalNode[];
@@ -15,28 +18,34 @@ interface IndexPageProps {
 export default function IndexPage({ nodes }: IndexPageProps) {
   const { t } = useTranslation("common");
   return (
-    <Layout>
-      <Head>
-        <title>Next.js for Drupal</title>
-        <meta
-          name="description"
-          content="A Next.js site powered by a Drupal backend."
-        />
-      </Head>
-      <div>
-        <h1 className="mb-10 text-6xl font-black">{t("latest-articles")}</h1>
-        {nodes?.length ? (
-          nodes.map((node) => (
-            <div key={node.id}>
-              <NodeArticleTeaser node={node} />
-              <hr className="my-20" />
-            </div>
-          ))
-        ) : (
-          <p className="py-4">{t("no-content-found")}</p>
-        )}
-      </div>
-    </Layout>
+    <LangContext.Provider
+      value={{
+        languageLinks: setLanguageLinks([]),
+      }}
+    >
+      <Layout>
+        <Head>
+          <title>Next.js for Drupal</title>
+          <meta
+            name="description"
+            content="A Next.js site powered by a Drupal backend."
+          />
+        </Head>
+        <div>
+          <h1 className="mb-10 text-6xl font-black">{t("latest-articles")}</h1>
+          {nodes?.length ? (
+            nodes.map((node) => (
+              <div key={node.id}>
+                <NodeArticleTeaser node={node} />
+                <hr className="my-20" />
+              </div>
+            ))
+          ) : (
+            <p className="py-4">{t("no-content-found")}</p>
+          )}
+        </div>
+      </Layout>
+    </LangContext.Provider>
   );
 }
 

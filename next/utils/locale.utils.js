@@ -5,7 +5,7 @@ import siteConfig from "../site.config";
  *
  */
 export const setLanguageLinks = (translations = []) => {
-  const languageLinks = siteConfig.locales;
+  let languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
   Object.entries(translations).forEach((translation) => {
     languageLinks[translation[0]].path = translation[1];
   });
