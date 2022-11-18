@@ -23,7 +23,7 @@ interface NodeProps extends NodePageProps {
 
 export default function NodePage({ resource }: NodeProps) {
   if (!resource) return null;
-  
+
   return (
     <LangContext.Provider
       value={{
@@ -106,6 +106,7 @@ export async function getStaticProps(
     const translated = await drupal.getResource("node--article", resource.id, {
       locale: lang,
       defaultLocale: context.defaultLocale,
+      withAuth: true,
     });
     nodeTranslations[lang] = translated.path.alias;
   }
