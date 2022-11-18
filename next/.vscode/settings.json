@@ -1,0 +1,8 @@
+{
+  // explicitly tell eslint extension to watch typescript files for linting errors
+  "eslint.validate": ["typescript", "typescriptreact"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  }
+}

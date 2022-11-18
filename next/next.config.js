@@ -6,6 +6,9 @@ const nextConfig = {
     domains: [process.env.NEXT_IMAGE_DOMAIN],
   },
   i18n,
+  async rewrites() {
+    return [];
+  },
 };
 
 module.exports = nextConfig;
