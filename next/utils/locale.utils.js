@@ -1,7 +1,7 @@
 import siteConfig from "../site.config";
 
 /**
- * Returns language context value for a page.
+ * Gets the language links for the language switcher.
  *
  */
 export const setLanguageLinks = (translations = []) => {
