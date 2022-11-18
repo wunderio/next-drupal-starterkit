@@ -1,6 +1,8 @@
+const config = require("./site.config");
+
 module.exports = {
   i18n: {
-    locales: ["en", "fi", "sv"],
-    defaultLocale: "en",
+    defaultLocale: config.defaultLocale,
+    locales: Object.keys(config.locales),
   },
 };

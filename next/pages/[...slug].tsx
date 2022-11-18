@@ -2,11 +2,14 @@ import { GetStaticPathsResult, GetStaticPropsResult } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import * as React from "react";
+import React from "react";
 import { Layout } from "components/layout";
 import { NodeArticle } from "components/node--article";
 import { NodeBasicPage } from "components/node--basic-page";
 import { drupal } from "lib/drupal";
+
+import { setLanguageLinks } from "../utils/locale.utils";
+
 import { LangContext } from "./_app";
 
 const RESOURCE_TYPES = ["node--page", "node--article"];
@@ -22,11 +25,18 @@ export default function NodePage({ resource }: NodeProps) {
   if (!resource) return null;
 
   return (
-    <LangContext.Provider value={resource.translations}>
+    <LangContext.Provider
+      value={{
+        languageLinks: setLanguageLinks(resource.translations),
+      }}
+    >
       <Layout>
         <Head>
           <title>{resource.title}</title>
-          <meta name="description" content="A Next.js site powered by Drupal." />
+          <meta
+            name="description"
+            content="A Next.js site powered by Drupal."
+          />
         </Head>
         {resource.type === "node--page" && <NodeBasicPage node={resource} />}
         {resource.type === "node--article" && <NodeArticle node={resource} />}
@@ -54,7 +64,7 @@ export async function getStaticProps(
       notFound: true,
     };
   }
-  
+
   const type = path.jsonapi.resourceName;
 
   let params = {};
@@ -90,21 +100,17 @@ export async function getStaticProps(
     };
   }
 
-  let node_translations = {};
-  for (let i=0; i < context.locales.length; i++) {
+  const nodeTranslations = {};
+  for (let i = 0; i < context.locales.length; i++) {
     const lang = context.locales[i];
-    const translated = await drupal.getResource(
-      "node--article",
-      resource.id,
-      {
-        locale: lang,
-        defaultLocale: context.defaultLocale,
-      }
-    );
-    node_translations[lang] = translated.path.alias;
+    const translated = await drupal.getResource("node--article", resource.id, {
+      locale: lang,
+      defaultLocale: context.defaultLocale,
+    });
+    nodeTranslations[lang] = translated.path.alias;
   }
 
-  resource.translations = node_translations;
+  resource.translations = nodeTranslations;
 
   return {
     props: {

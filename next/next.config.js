@@ -7,8 +7,7 @@ const nextConfig = {
   },
   i18n,
   async rewrites() {
-    return [
-    ]
+    return [];
   },
 };
 
