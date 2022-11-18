@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
-import React, { useEffect, useState } from 'react';
 
 import { absoluteUrl, formatDate } from "../lib/utils";
 
