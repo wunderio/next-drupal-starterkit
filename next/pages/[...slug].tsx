@@ -8,7 +8,10 @@ import { NodeArticle } from "components/node--article";
 import { NodeBasicPage } from "components/node--basic-page";
 import { drupal } from "lib/drupal";
 
-import { setLanguageLinks } from "../utils/locale.utils";
+import {
+  getNodeTranslatedVersions,
+  setLanguageLinks,
+} from "../utils/locale.utils";
 
 import { LangContext } from "./_app";
 
@@ -100,18 +103,12 @@ export async function getStaticProps(
     };
   }
 
-  const nodeTranslations = {};
-  for (let i = 0; i < context.locales.length; i++) {
-    const lang = context.locales[i];
-    const translated = await drupal.getResource("node--article", resource.id, {
-      locale: lang,
-      defaultLocale: context.defaultLocale,
-      withAuth: true,
-    });
-    nodeTranslations[lang] = translated.path.alias;
-  }
-
-  resource.translations = nodeTranslations;
+  // Add information about possible other language versions of this node.
+  resource.translations = await getNodeTranslatedVersions(
+    resource,
+    context,
+    drupal
+  );
 
   return {
     props: {
