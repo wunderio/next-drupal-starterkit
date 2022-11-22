@@ -21,6 +21,7 @@
         "drupal/admin_toolbar": "^3.1",
         "drupal/core-composer-scaffold": "^9.3",
         "drupal/core-recommended": "^9.3",
+        "drupal/jsonapi_menu_items": "^1.2",
         "drupal/monolog": "^2.0",
         "drupal/next": "^1.4",
         "drupal/simplei": "^1.2",
@@ -38,7 +39,7 @@
     "conflict": {
         "drupal/drupal": "*"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "prefer-stable": true,
     "config": {
         "sort-packages": true,
