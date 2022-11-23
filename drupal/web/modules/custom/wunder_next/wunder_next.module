@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Main module file for wunder_next.
+ */
+
+use Drupal\Core\Site\Settings;
+
+/**
+ * Implements hook_ENTITY_TYPE_load().
+ */
+function wunder_next_next_site_load($entities) {
+  // We want to override the configuration entity for the next site
+  // to set the frontend path based on our setting.
+  // The setting is then set according to an environment variable in
+  // settings.php.
+  $settings = Settings::get('wunder_next.settings');
+  // We expect one next site called "frontend", which we have added
+  // to the initial recipe.
+  foreach ($entities as $next_site) {
+    if ($next_site->id() == 'frontend') {
+      $next_site->setBaseUrl($settings['frontend_url']);
+      $next_site->setPreviewUrl($settings['frontend_url'] . '/api/preview');
+    }
+  }
+}
