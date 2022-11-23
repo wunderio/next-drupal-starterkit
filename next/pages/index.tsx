@@ -3,19 +3,20 @@ import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { getMenus } from "lib/get-menus";
+import { setLanguageLinks } from "lib/utils";
 
-import { Layout } from "../components/layout";
+import { Layout, LayoutProps } from "../components/layout";
 import { NodeArticleTeaser } from "../components/node--article--teaser";
 import { drupal } from "../lib/drupal";
-import {setLanguageLinks} from "../utils/locale.utils";
 
 import { LangContext } from "./_app";
 
-interface IndexPageProps {
+interface IndexPageProps extends LayoutProps {
   nodes: DrupalNode[];
 }
 
-export default function IndexPage({ nodes }: IndexPageProps) {
+export default function IndexPage({ nodes, menus }: IndexPageProps) {
   const { t } = useTranslation("common");
   return (
     <LangContext.Provider
@@ -23,7 +24,7 @@ export default function IndexPage({ nodes }: IndexPageProps) {
         languageLinks: setLanguageLinks([]),
       }}
     >
-      <Layout>
+      <Layout menus={menus}>
         <Head>
           <title>Next.js for Drupal</title>
           <meta
@@ -69,6 +70,7 @@ export async function getStaticProps(
   return {
     props: {
       nodes,
+      menus: await getMenus(context),
       ...(await serverSideTranslations(context.locale, ["common"])),
     },
   };

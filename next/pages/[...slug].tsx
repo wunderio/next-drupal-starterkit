@@ -3,28 +3,25 @@ import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
-import { Layout } from "components/layout";
+import { Layout, LayoutProps } from "components/layout";
 import { NodeArticle } from "components/node--article";
 import { NodeBasicPage } from "components/node--basic-page";
 import { drupal } from "lib/drupal";
-
-import {
-  getNodeTranslatedVersions,
-  setLanguageLinks,
-} from "../utils/locale.utils";
+import { getMenus } from "lib/get-menus";
+import { getNodeTranslatedVersions, setLanguageLinks } from "lib/utils";
 
 import { LangContext } from "./_app";
 
 const RESOURCE_TYPES = ["node--page", "node--article"];
 
-interface NodePageProps {
+interface NodePageProps extends LayoutProps {
   resource: DrupalNode;
 }
 interface NodeProps extends NodePageProps {
   translations: Array<string>;
 }
 
-export default function NodePage({ resource }: NodeProps) {
+export default function NodePage({ resource, menus }: NodeProps) {
   if (!resource) return null;
 
   return (
@@ -33,7 +30,7 @@ export default function NodePage({ resource }: NodeProps) {
         languageLinks: setLanguageLinks(resource.translations),
       }}
     >
-      <Layout>
+      <Layout menus={menus}>
         <Head>
           <title>{resource.title}</title>
           <meta
@@ -113,6 +110,7 @@ export async function getStaticProps(
   return {
     props: {
       resource,
+      menus: await getMenus(context),
       ...(await serverSideTranslations(
         context.locale ?? context.defaultLocale,
         ["common"]
