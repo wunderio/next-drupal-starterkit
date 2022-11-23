@@ -1,8 +1,8 @@
-uuid: 0d9144f8-6739-4594-b701-05ae9b54e633
 langcode: en
 status: true
 dependencies: {  }
-id: next_js_localhost
-label: 'Next.js localhost'
+id: frontend
+label: 'Next.js frontend'
 base_url: 'http://localhost:3000'
 preview_url: 'http://localhost:3000/api/preview'
+preview_secret: null

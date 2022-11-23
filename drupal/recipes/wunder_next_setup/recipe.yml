@@ -9,3 +9,4 @@ install:
   - next_jsonapi
   - pathauto
   - wunder_next
+  - jsonapi_menu_items

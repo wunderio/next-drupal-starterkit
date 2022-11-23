@@ -1,9 +1,8 @@
 langcode: en
 status: true
 dependencies: {  }
-id: node.article
+id: node.page
 site_resolver: site_selector
 configuration:
   sites:
     frontend: frontend
-  field_name: {  }
