@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: node.landing_page
+site_resolver: site_selector
+configuration:
+  sites:
+    frontend: frontend
+  field_name: {  }
