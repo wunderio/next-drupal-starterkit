@@ -58,6 +58,8 @@ services:
       - "composer install"
     overrides:
       environment:
+        # URL OF THE FRONTEND SITE:
+        WUNDER_NEXT_FRONTEND_URL: http://localhost:3000
         HASH_SALT: notsosecurehashnotsosecurehashnotsosecurehash
         ENVIRONMENT_NAME: lando
         DB_NAME_DRUPAL: drupal9
