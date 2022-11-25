@@ -4,9 +4,12 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.formatted_text.field_formatted_text
+    - field.field.paragraph.formatted_text.field_heading
     - paragraphs.paragraphs_type.formatted_text
   module:
     - text
+_core:
+  default_config_hash: GWEeAETmptXtkw_D0AXyyrBhjCPxn0tVHxp0LHffaC4
 id: paragraph.formatted_text.default
 targetEntityType: paragraph
 bundle: formatted_text
@@ -14,11 +17,24 @@ mode: default
 content:
   field_formatted_text:
     type: text_textarea
-    weight: 0
+    weight: 1
     region: content
     settings:
       rows: 5
       placeholder: ''
+    third_party_settings: {  }
+  field_heading:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 2
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true
