@@ -1,8 +1,10 @@
 import { DrupalParagraph } from "next-drupal";
+import { ParagraphImage } from "components/paragraph--image";
 import { ParagraphText } from "components/paragraph--text";
 
 const paragraphTypes = {
   "paragraph--formatted_text": ParagraphText,
+  "paragraph--image": ParagraphImage,
 };
 
 export interface ParagraphProps {

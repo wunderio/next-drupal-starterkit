@@ -8,7 +8,10 @@ export function getNodePageJsonApiParams(resourceType: string) {
   // The landing page content type has paragraphs, stored in the "field_content_elements" field:
   if (resourceType === "node--landing_page") {
     apiParams
-      .addInclude(["field_content_elements"])
+      .addInclude([
+        "field_content_elements",
+        "field_content_elements.field_image.field_media_image",
+      ])
       .addFields("node--landing_page", [
         "title",
         "field_content_elements",
