@@ -42,6 +42,9 @@ $settings['file_scan_ignore_directories'] = [
   'bower_components',
 ];
 
+// Get the url of the frontend from an environment variable:
+$settings['wunder_next.settings']['frontend_url'] = $_ENV['WUNDER_NEXT_FRONTEND_URL'];
+
 // Environment-specific settings.
 $env = $_ENV['ENVIRONMENT_NAME'];
 switch ($env) {
