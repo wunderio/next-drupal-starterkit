@@ -11,7 +11,7 @@ export function ParagraphText({ paragraph }: ParagraphProps) {
         </h2>
       )}
       <FormattedText
-        className="mt-4 text-lg leading-relaxed text-gray-500 sm:text-xl lg:text-xl "
+        className="mt-4 text-lg leading-relaxed text-gray-500 sm:text-xl lg:text-xl"
         processed={paragraph.field_formatted_text.processed}
       />
     </div>
