@@ -6,13 +6,15 @@ import React from "react";
 import { Layout, LayoutProps } from "components/layout";
 import { NodeArticle } from "components/node--article";
 import { NodeBasicPage } from "components/node--basic-page";
+import { NodeLandingPage } from "components/node--landing-page";
 import { drupal } from "lib/drupal";
 import { getMenus } from "lib/get-menus";
+import { getNodePageJsonApiParams } from "lib/get-params";
 import { getNodeTranslatedVersions, setLanguageLinks } from "lib/utils";
 
 import { LangContext } from "./_app";
 
-const RESOURCE_TYPES = ["node--page", "node--article"];
+const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
 
 interface NodePageProps extends LayoutProps {
   resource: DrupalNode;
@@ -40,6 +42,9 @@ export default function NodePage({ resource, menus }: NodeProps) {
         </Head>
         {resource.type === "node--page" && <NodeBasicPage node={resource} />}
         {resource.type === "node--article" && <NodeArticle node={resource} />}
+        {resource.type === "node--landing_page" && (
+          <NodeLandingPage node={resource} />
+        )}
       </Layout>
     </LangContext.Provider>
   );
@@ -59,7 +64,7 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<NodePageProps>> {
   const path = await drupal.translatePathFromContext(context);
 
-  if (!path) {
+  if (!path || !RESOURCE_TYPES.includes(path.jsonapi.resourceName)) {
     return {
       notFound: true,
     };
@@ -67,20 +72,11 @@ export async function getStaticProps(
 
   const type = path.jsonapi.resourceName;
 
-  let params = {};
-
-  if (type === "node--article") {
-    params = {
-      include: "field_image,uid",
-      "filter[langcode]": context.locale,
-    };
-  }
-
   const resource = await drupal.getResourceFromContext<DrupalNode>(
     path,
     context,
     {
-      params,
+      params: getNodePageJsonApiParams(type),
     }
   );
 

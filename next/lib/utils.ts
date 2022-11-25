@@ -50,3 +50,7 @@ export const getNodeTranslatedVersions = async (
 
   return nodeTranslations;
 };
+
+export function isRelative(url: string) {
+  return !new RegExp("^(?:[a-z]+:)?//", "i").test(url);
+}
