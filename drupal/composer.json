@@ -126,7 +126,11 @@
             },
             "drupal/core": {
                 "Add support for the experimental recipes functionality": "https://git.drupalcode.org/project/distributions_recipes/-/raw/patch/recipe.patch",
-                "Fix error when enabling the language module via recipe": "https://www.drupal.org/files/issues/2019-11-19/drupal.8.8.x-3002532-20.patch"
+                "Fix error when enabling the language module via recipe": "https://www.drupal.org/files/issues/2019-11-19/drupal.8.8.x-3002532-20.patch",
+                "Set MenuLinkContent getEntity to public visibility": "https://www.drupal.org/files/issues/2022-05-16/2997790-40.patch"
+            },
+            "drupal/jsonapi_menu_items": {
+                "Add info about the langcode for menu items (issue #3192576)": "https://git.drupalcode.org/project/jsonapi_menu_items/-/merge_requests/7.diff"
             }
         },
         "dropin-paths": {
