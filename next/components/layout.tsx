@@ -16,7 +16,7 @@ export function Layout({ menus, children }: LayoutProps) {
   return (
     <>
       <PreviewAlert />
-      <div className="max-w-screen-md px-6 mx-auto">
+      <div className="max-w-screen-xl px-6 mx-auto">
         <Navbar links={menus.main} />
 
         <main className="container py-10 mx-auto">{children}</main>

@@ -1,0 +1,9 @@
+{
+    "name": "drupal_recipe/wunder_roles",
+    "description": "Wunder roles example recipe",
+    "type": "drupal-recipe",
+    "require": {
+        "drupal/core": "^9.4"
+    },
+    "license": "GPL-2.0-or-later"
+}

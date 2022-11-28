@@ -1,0 +1,23 @@
+uuid: 4f636ba7-11d1-42a5-b5e7-cde0617fa187
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_formatted_text
+    - paragraphs.paragraphs_type.formatted_text
+  module:
+    - text
+_core:
+  default_config_hash: bDjpEPbOCFpgyR2-EYri2bRLtFN2-b8zXnqzxccmioc
+id: paragraph.formatted_text.field_formatted_text
+field_name: field_formatted_text
+entity_type: paragraph
+bundle: formatted_text
+label: 'Formatted text'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

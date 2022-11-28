@@ -1,0 +1,9 @@
+{
+    "name": "drupal_recipe/wunder_media",
+    "description": "Basic setup for the media module with translations",
+    "type": "drupal-recipe",
+    "require": {
+        "drupal/core": "^9.4"
+    },
+    "license": "GPL-2.0-or-later"
+}

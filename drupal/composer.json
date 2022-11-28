@@ -24,6 +24,7 @@
         "drupal/jsonapi_menu_items": "^1.2",
         "drupal/monolog": "^2.0",
         "drupal/next": "^1.4",
+        "drupal/paragraphs": "^1.15",
         "drupal/simplei": "^1.2",
         "drupal/warden": "^3.0@RC",
         "drush/drush": "^11.0",

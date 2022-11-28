@@ -4,6 +4,8 @@ import { useTranslation } from "next-i18next";
 
 import { absoluteUrl, formatDate } from "../lib/utils";
 
+import { FormattedText } from "./formatted-text";
+
 interface NodeArticleProps {
   node: DrupalNode;
 }
@@ -38,9 +40,9 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
         </figure>
       )}
       {node.body?.processed && (
-        <div
-          dangerouslySetInnerHTML={{ __html: node.body?.processed }}
-          className="mt-6 font-serif text-xl leading-loose prose"
+        <FormattedText
+          className="mt-4 text-lg leading-relaxed text-gray-500 sm:text-xl lg:text-xl"
+          processed={node.body?.processed}
         />
       )}
     </article>

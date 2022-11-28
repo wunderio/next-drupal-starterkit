@@ -1,0 +1,10 @@
+# An example recipe that shows the creation of a user role.
+name: 'Wunder role'
+description: "An example recipe showing the creation of a user role with basic permissions."
+type: 'User'
+install:
+  - user
+  - node
+  - path
+  - system
+  - toolbar

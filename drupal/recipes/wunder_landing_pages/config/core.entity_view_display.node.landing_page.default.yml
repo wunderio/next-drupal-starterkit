@@ -1,0 +1,29 @@
+uuid: a18c37e0-95e7-41a9-9745-8bad770ac688
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.landing_page.field_content_elements
+    - node.type.landing_page
+  module:
+    - entity_reference_revisions
+    - user
+_core:
+  default_config_hash: UOqcirBcMeLOY-6-HfSVRI6p7Jusy8cKyaDvTgsdNx8
+id: node.landing_page.default
+targetEntityType: node
+bundle: landing_page
+mode: default
+content:
+  field_content_elements:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  langcode: true
+  links: true

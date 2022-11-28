@@ -3,7 +3,7 @@ name: 'Wunder next setup'
 description: "Enable needed modules to use next-drupal and add pathauto setup"
 type: 'Setup'
 recipes:
-  - wunder_languages
+  - wunder_landing_pages
 install:
   - next
   - next_jsonapi
