@@ -5,8 +5,15 @@ import React from "react";
 import classNames from "classnames";
 import LocaleSwitcher from "components/locale-switcher";
 
+// We have applied a patch on the Drupal side that adds the langcode
+// property to the response of jsonapi menus, so we extend the type here:
+interface DrupalMenuLinkContentWithLangcode extends DrupalMenuLinkContent {
+  langcode: string;
+  items: DrupalMenuLinkContentWithLangcode[];
+}
+
 interface NavbarProps {
-  links: DrupalMenuLinkContent[];
+  links: DrupalMenuLinkContentWithLangcode[];
 }
 
 export function Navbar({ links, ...props }: NavbarProps) {
@@ -30,26 +37,29 @@ export function Navbar({ links, ...props }: NavbarProps) {
   );
 }
 
-function Menu({ items }: { items: DrupalMenuLinkContent[] }) {
+function Menu({ items }: { items: DrupalMenuLinkContentWithLangcode[] }) {
+  // Only show the menu items that match the current locale:
+  const { locale } = useRouter();
+  const filteredItems = items.filter((link) => link.langcode == locale);
   return (
     <ul
       className="grid grid-flow-col gap-4 mx-auto mt-6 md:mt-0 auto-cols-auto md:auto-rows-auto md:gap-8 lg:gap-12"
       data-cy="navbar-menu"
     >
-      {items.map((item) => (
+      {filteredItems.map((item) => (
         <MenuLink link={item} key={item.id} />
       ))}
     </ul>
   );
 }
 
-function MenuLink({ link }: { link: DrupalMenuLinkContent }) {
+function MenuLink({ link }: { link: DrupalMenuLinkContentWithLangcode }) {
   const { asPath, locale } = useRouter();
   const actualPath = `/${locale}${asPath}`;
 
   return (
     <li>
-      <Link href={link.url} passHref>
+      <Link href={link.url} locale={locale} passHref>
         <a
           className={classNames(
             "py-4 hover:underline text-sm md:text-base",
