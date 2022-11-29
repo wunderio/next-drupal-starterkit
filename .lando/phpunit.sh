@@ -10,13 +10,13 @@ set -exu
 # configuration from core. From time to time it wouldn't hurt
 # try and update the file with 'lando regenerate-phpunit-config'.
 
-PHPUNIT_CONFIG=/app/phpunit.xml
+PHPUNIT_CONFIG=/app/drupal/phpunit.xml
 
 if [ -f "$PHPUNIT_CONFIG" ]; then
   rm "$PHPUNIT_CONFIG"
 fi
 
-cd /app
+cd /app/drupal
 cp -n web/core/phpunit.xml.dist "$PHPUNIT_CONFIG"
 sed -i 's|tests\/bootstrap\.php|./web/core/tests/bootstrap.php|g' "$PHPUNIT_CONFIG"
 sed -i 's|\.\/tests\/|./web/core/tests/|g' "$PHPUNIT_CONFIG"
