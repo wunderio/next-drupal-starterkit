@@ -65,6 +65,7 @@ services:
     # Install dependencies when building lando.
     build:
       - "cd drupal && composer install"
+      - echo "export PATH=/app/drupal/vendor/bin:${PATH}" >> /var/www/.bashrc
     overrides:
       environment:
         # URL OF THE FRONTEND SITE:
