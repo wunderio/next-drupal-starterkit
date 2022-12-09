@@ -18,12 +18,15 @@ const options: HTMLReactParserOptions = {
       if (domNode.name === "img") {
         const { src, alt, width = 100, height = 100 } = domNode.attribs;
 
+        const numberWidth = Number(width);
+        const numberHeight = Number(height);
+
         if (isRelative(src)) {
           return (
             <Image
               src={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`}
-              width={width}
-              height={height}
+              width={numberWidth}
+              height={numberHeight}
               alt={alt}
               style={{
                 maxWidth: "100%",
