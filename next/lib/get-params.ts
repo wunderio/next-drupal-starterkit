@@ -11,6 +11,7 @@ export function getNodePageJsonApiParams(resourceType: string) {
       .addInclude([
         "field_content_elements",
         "field_content_elements.field_image.field_media_image",
+        "field_content_elements.field_video",
       ])
       .addFields("node--landing_page", [
         "title",

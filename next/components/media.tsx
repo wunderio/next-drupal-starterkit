@@ -1,9 +1,11 @@
 import { DrupalMedia } from "next-drupal";
 
 import { MediaImage } from "./media--image";
+import { MediaVideo } from "./media--video";
 
 const mediaTypes = {
   "media--image": MediaImage,
+  "media--video": MediaVideo,
 };
 
 export interface MediaProps {
