@@ -1,8 +1,7 @@
 import { DrupalMenuLinkContent } from "next-drupal";
 import { Footer } from "components/footer";
 import { Navbar } from "components/navbar";
-
-import { PreviewAlert } from "../components/preview-alert";
+import { PreviewAlert } from "components/preview-alert";
 
 export interface LayoutProps {
   menus: {

@@ -2,8 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
-
-import { absoluteUrl, formatDate } from "../lib/utils";
+import { absoluteUrl, formatDate } from "lib/utils";
 
 interface NodeArticleTeaserProps {
   node: DrupalNode;

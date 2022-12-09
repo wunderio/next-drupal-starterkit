@@ -1,7 +1,6 @@
 import Image, { ImageProps } from "next/image";
 import { MediaProps } from "components/media";
-
-import { absoluteUrl } from "../lib/utils";
+import { absoluteUrl } from "lib/utils";
 
 interface MediaImageProps extends MediaProps, Partial<ImageProps> {}
 

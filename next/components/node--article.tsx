@@ -1,10 +1,8 @@
 import Image from "next/image";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
-
-import { absoluteUrl, formatDate } from "../lib/utils";
-
-import { FormattedText } from "./formatted-text";
+import { FormattedText } from "components/formatted-text";
+import { absoluteUrl, formatDate } from "lib/utils";
 
 interface NodeArticleProps {
   node: DrupalNode;

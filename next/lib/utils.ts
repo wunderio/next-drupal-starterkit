@@ -1,7 +1,6 @@
 import { GetStaticPropsContext } from "next";
 import { DrupalClient, DrupalNode } from "next-drupal";
-
-import siteConfig from "../site.config";
+import siteConfig from "site.config";
 
 export function formatDate(input: string): string {
   const date = new Date(input);
