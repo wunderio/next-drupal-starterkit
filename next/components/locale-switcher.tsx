@@ -23,6 +23,7 @@ export default function LocaleSwitcher() {
                 href={languageLinks[locale].path}
                 as={languageLinks[locale].path}
                 locale={locale}
+                legacyBehavior
               >
                 {languageLinks[locale].name}
               </Link>

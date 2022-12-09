@@ -25,8 +25,8 @@ export function Navbar({ links, ...props }: NavbarProps) {
       {...props}
     >
       <div className="container flex flex-col items-start justify-between px-6 mx-auto md:flex-row md:items-center">
-        <Link href="/" locale={locale}>
-          <a className="text-lg font-bold">Home</a>
+        <Link href="/" locale={locale} className="text-lg font-bold">
+          Home
         </Link>
         {links ? <Menu items={links} /> : null}
         <div className="absolute flex justify-end md:static top-2 right-4">
@@ -59,15 +59,17 @@ function MenuLink({ link }: { link: DrupalMenuLinkContentWithLangcode }) {
 
   return (
     <li>
-      <Link href={link.url} locale={locale} passHref>
-        <a
-          className={classNames(
-            "py-4 hover:underline text-sm md:text-base",
-            link.url === actualPath ? "font-semibold" : "font-normal"
-          )}
-        >
-          {link.title}
-        </a>
+      <Link
+        href={link.url}
+        locale={locale}
+        passHref
+        className={classNames(
+          "py-4 hover:underline text-sm md:text-base",
+          link.url === actualPath ? "font-semibold" : "font-normal"
+        )}>
+
+        {link.title}
+
       </Link>
       {link.items ? <Menu items={link.items} /> : null}
     </li>

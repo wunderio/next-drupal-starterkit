@@ -18,7 +18,7 @@ export function Footer({ links }: FooterProps) {
               {links.map((link) => (
                 <li key={link.id}>
                   <Link href={link.url} passHref>
-                    <a>{link.title}</a>
+                    {link.title}
                   </Link>
                 </li>
               ))}
