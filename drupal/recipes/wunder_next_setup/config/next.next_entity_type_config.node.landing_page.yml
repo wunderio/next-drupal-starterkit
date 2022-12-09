@@ -7,3 +7,5 @@ configuration:
   sites:
     frontend: frontend
   field_name: {  }
+revalidator: ''
+revalidator_configuration: {  }

@@ -6,3 +6,5 @@ site_resolver: site_selector
 configuration:
   sites:
     frontend: frontend
+revalidator: ''
+revalidator_configuration: {  }
