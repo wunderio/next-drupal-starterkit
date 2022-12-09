@@ -22,6 +22,7 @@ function wunder_next_next_site_load($entities) {
     if ($next_site->id() == 'frontend') {
       $next_site->setBaseUrl($settings['frontend_url']);
       $next_site->setPreviewUrl($settings['frontend_url'] . '/api/preview');
+      $next_site->setRevalidateUrl($settings['frontend_url'] . '/api/revalidate');
     }
   }
 }

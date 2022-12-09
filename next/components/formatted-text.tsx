@@ -16,17 +16,22 @@ const options: HTMLReactParserOptions = {
   replace: (domNode) => {
     if (isElement(domNode)) {
       if (domNode.name === "img") {
-        const { src, alt, width = "100px", height = "100px" } = domNode.attribs;
+        const { src, alt, width = 100, height = 100 } = domNode.attribs;
+
+        const numberWidth = Number(width);
+        const numberHeight = Number(height);
 
         if (isRelative(src)) {
           return (
             <Image
-              src={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/${src}`}
-              width={`${width}px`}
-              height={`${height}px`}
+              src={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`}
+              width={numberWidth}
+              height={numberHeight}
               alt={alt}
-              layout="intrinsic"
-              objectFit="cover"
+              style={{
+                maxWidth: "100%",
+                objectFit: "cover",
+              }}
             />
           );
         }
@@ -37,8 +42,8 @@ const options: HTMLReactParserOptions = {
 
         if (href && isRelative(href)) {
           return (
-            <Link href={href} passHref>
-              <a className={className}>{domToReact(domNode.children)}</a>
+            <Link href={href} passHref className={className}>
+              {domToReact(domNode.children)}
             </Link>
           );
         }

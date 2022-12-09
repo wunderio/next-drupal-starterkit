@@ -1,6 +1,5 @@
+import { FormattedText } from "components/formatted-text";
 import { ParagraphProps } from "components/paragraph";
-
-import { FormattedText } from "./formatted-text";
 
 export function ParagraphText({ paragraph }: ParagraphProps) {
   return (

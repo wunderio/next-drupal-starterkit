@@ -1,10 +1,8 @@
 import Image from "next/image";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
-
-import { absoluteUrl, formatDate } from "../lib/utils";
-
-import { FormattedText } from "./formatted-text";
+import { FormattedText } from "components/formatted-text";
+import { absoluteUrl, formatDate } from "lib/utils";
 
 interface NodeArticleProps {
   node: DrupalNode;
@@ -27,10 +25,14 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
             src={absoluteUrl(node.field_image.uri.url)}
             width={768}
             height={400}
-            layout="responsive"
-            objectFit="cover"
             alt={node.field_image.resourceIdObjMeta.alt}
             priority
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "cover",
+            }}
           />
           {node.field_image.resourceIdObjMeta.title && (
             <figcaption className="py-2 text-sm text-center text-gray-600">
