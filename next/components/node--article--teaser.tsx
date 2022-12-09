@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
@@ -31,9 +31,13 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
             src={absoluteUrl(node.field_image.uri.url)}
             width={768}
             height={480}
-            layout="responsive"
-            objectFit="cover"
             alt={node.field_image.resourceIdObjMeta.alt}
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "cover",
+            }}
           />
         </figure>
       )}

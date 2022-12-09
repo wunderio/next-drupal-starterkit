@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 import {
   DOMNode,
@@ -17,17 +17,19 @@ const options: HTMLReactParserOptions = {
   replace: (domNode) => {
     if (isElement(domNode)) {
       if (domNode.name === "img") {
-        const { src, alt, width = "100px", height = "100px" } = domNode.attribs;
+        const { src, alt, width = 100, height = 100 } = domNode.attribs;
 
         if (isRelative(src)) {
           return (
             <Image
-              src={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/${src}`}
-              width={`${width}px`}
-              height={`${height}px`}
+              src={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`}
+              width={width}
+              height={height}
               alt={alt}
-              layout="intrinsic"
-              objectFit="cover"
+              style={{
+                maxWidth: "100%",
+                objectFit: "cover",
+              }}
             />
           );
         }
