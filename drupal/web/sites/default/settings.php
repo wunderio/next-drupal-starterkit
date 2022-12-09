@@ -44,6 +44,7 @@ $settings['file_scan_ignore_directories'] = [
 
 // Get the url of the frontend from an environment variable:
 $settings['wunder_next.settings']['frontend_url'] = $_ENV['WUNDER_NEXT_FRONTEND_URL'];
+$settings['wunder_next.settings']['revalidate_secret'] = $_ENV['DRUPAL_REVALIDATE_SECRET'];
 
 // Environment-specific settings.
 $env = $_ENV['ENVIRONMENT_NAME'];

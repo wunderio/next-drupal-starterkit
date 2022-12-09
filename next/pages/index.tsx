@@ -73,5 +73,6 @@ export async function getStaticProps(
       menus: await getMenus(context),
       ...(await serverSideTranslations(context.locale, ["common"])),
     },
+    revalidate: 60,
   };
 }
