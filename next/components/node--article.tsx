@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
 import { FormattedText } from "components/formatted-text";

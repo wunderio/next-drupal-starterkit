@@ -1,4 +1,4 @@
-import Image, { ImageProps } from "next/image";
+import Image, { ImageProps } from "next/legacy/image";
 import { MediaProps } from "components/media";
 import { absoluteUrl } from "lib/utils";
 
