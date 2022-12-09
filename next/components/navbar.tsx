@@ -66,10 +66,9 @@ function MenuLink({ link }: { link: DrupalMenuLinkContentWithLangcode }) {
         className={classNames(
           "py-4 hover:underline text-sm md:text-base",
           link.url === actualPath ? "font-semibold" : "font-normal"
-        )}>
-
+        )}
+      >
         {link.title}
-
       </Link>
       {link.items ? <Menu items={link.items} /> : null}
     </li>
