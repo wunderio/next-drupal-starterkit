@@ -7,8 +7,7 @@ import {
   HTMLReactParserOptions,
 } from "html-react-parser";
 import parse from "html-react-parser";
-
-import { isRelative } from "../lib/utils";
+import { isRelative } from "lib/utils";
 
 const isElement = (domNode: DOMNode): domNode is Element =>
   domNode.type === "tag";
