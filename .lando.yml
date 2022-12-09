@@ -4,7 +4,7 @@ recipe: drupal9
 config:
   php: "8.1"
   via: nginx
-  webroot: web
+  webroot: drupal/web
   database: "mariadb:10.3"
   composer_version: 2
   xdebug: off
@@ -15,15 +15,24 @@ tooling:
   grumphp:
     description: "Runs grumphp commands"
     cmd:
-      - appserver: ./vendor/bin/grumphp
+      - appserver: ./drupal/vendor/bin/grumphp
+
   npm:
     description: "Runs npm commands"
     service: node
+    dir: /app/next
+
+  composer:
+    dir: /app/drupal
+
+  drush:
+    cmd: /app/drupal/vendor/bin/drush
+
   phpunit:
     description: Runs PHPUnit commands
     user: www-data
     cmd:
-      - appserver: "php /app/vendor/bin/phpunit -c /app/phpunit.xml --testdox"
+      - appserver: "php /app/drupal/vendor/bin/phpunit -c /app/drupal/phpunit.xml --testdox"
   regenerate-phpunit-config:
     description: "Regenerates fresh PHPUnit configuration."
     cmd:
@@ -38,14 +47,14 @@ tooling:
     description: 'Installs the specified recipe. Accepts the recipe folder name. Recipes should be stored in /recipes'
     cmd:
       - appserver: /app/.lando/install_recipe.sh
-    dir: /app/web
+    dir: /app/drupal/web
     user: www-data
 
   generate-oauth-keys:
     description: 'Generates a pair of public and private keys into the oauth directory'
     cmd:
       - appserver: /app/.lando/generate_oauth_keys.sh
-    dir: /app/oauth
+    dir: /app/drupal/oauth
     user: www-data
 
 services:
@@ -55,7 +64,8 @@ services:
   appserver:
     # Install dependencies when building lando.
     build:
-      - "composer install"
+      - "cd drupal && composer install"
+      - echo "export PATH=/app/drupal/vendor/bin:${PATH}" >> /var/www/.bashrc
     overrides:
       environment:
         # URL OF THE FRONTEND SITE:
@@ -117,9 +127,13 @@ services:
     hogfrom:
       - appserver
   node:
-    type: "node:16"
+    type: node:16
+    overrides:
+      ports:
+        - "3000:3000"
     build:
-      - "npm install"
+      - "cd next && npm install"
+    scanner: false
 
 proxy:
   mailhog:
@@ -128,6 +142,8 @@ proxy:
   #   - elasticsearch.lndo.site:9200
   # kibana:
   #   - kibana.lndo.site:5601
+  node:
+    - frontend.lndo.site:3000
 
 events:
   post-db-import:
