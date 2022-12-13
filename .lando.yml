@@ -69,7 +69,12 @@ services:
     overrides:
       environment:
         # URL OF THE FRONTEND SITE:
-        WUNDER_NEXT_FRONTEND_URL: http://localhost:3000
+        # This needs to match the proxy value for the node service
+        # so if you change it, remember to change it here as well.
+        WUNDER_NEXT_FRONTEND_URL: https://frontend.lndo.site
+        # This same var is set in the node service below, the value should match.
+        # This is only used in local development so it can be a not secure value:
+        DRUPAL_REVALIDATE_SECRET: mysecret
         HASH_SALT: notsosecurehashnotsosecurehashnotsosecurehash
         ENVIRONMENT_NAME: lando
         DB_NAME_DRUPAL: drupal9
@@ -82,6 +87,20 @@ services:
         PHP_IDE_CONFIG: serverName=appserver
         # PHPUnit settings. @see: .lando/phpunit.sh
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chrome:9515"]'
+  node:
+    type: node:16
+    ssl: true
+    sslExpose: true
+    overrides:
+      ports:
+        - "3000:3000"
+      environment:
+        # This same var is set in the appserver service above, the value should match.
+        # This is only used in local development so it can be a not secure value:
+        DRUPAL_REVALIDATE_SECRET: mysecret
+    build:
+      - "cd next && npm install"
+    scanner: false
   chrome:
     type: compose
     services:
@@ -126,14 +145,6 @@ services:
     type: mailhog
     hogfrom:
       - appserver
-  node:
-    type: node:16
-    overrides:
-      ports:
-        - "3000:3000"
-    build:
-      - "cd next && npm install"
-    scanner: false
 
 proxy:
   mailhog:
@@ -143,6 +154,9 @@ proxy:
   # kibana:
   #   - kibana.lndo.site:5601
   node:
+  # This value is used by the appserver service to connect to the frontend
+  # so make sure that this value and the WUNDER_NEXT_FRONTEND_URL env var are
+  # in sync.
     - frontend.lndo.site:3000
 
 events:

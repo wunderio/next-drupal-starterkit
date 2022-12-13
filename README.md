@@ -12,7 +12,8 @@ This example is ready to be used together with the [Silta](https://wunderio.gith
 ### Lando setup
 
 Local development is handled by [Lando](https://lando.dev/). Both frontend and backend are covered by the Lando setup,
-so that is the only real requirement. 
+so that is the only real requirement. The frontend site can be run in either dev or prod mode, 
+and it will be proxied by lando at the configured url in lando. The default is [https://frontend.lndo.site](https://frontend.lndo.site)"
 
 ### Getting started
 
@@ -49,8 +50,9 @@ Follow these steps to get started:
 4. Add the output of the command in step 1 to the end of your newly created `.env.local` file and save it.
 5. `lando npm install`
 6. `lando npm run dev`
-7. Visit `localhost:3000` and you should see your content displayed by the frontend.
+7. Visit `https://frontend.lndo.site` and you should see your content displayed by the frontend.
 8. When viewing a piece of content inside Drupal, you should be able to preview it in the frontend, including unpublished content and revisions.
+9. The template includes automatic setup of [On demand revalidation](https://next-drupal.org/learn/on-demand-revalidation), so saving a piece of content will automatically revalidate the corresponding path in next.js.
 
 > NOTE: If you get ar error message saying `https://next4drupal-project.lndo.site/jsonapi failed, reason: unable to verify the first certificate`,
 decomment the `NODE_TLS_REJECT_UNAUTHORIZED=0` line in .env.local

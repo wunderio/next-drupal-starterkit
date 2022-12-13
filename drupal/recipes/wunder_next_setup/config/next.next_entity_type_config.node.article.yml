@@ -7,7 +7,7 @@ configuration:
   sites:
     frontend: frontend
   field_name: {  }
-revalidator: ''
+revalidator: path
 revalidator_configuration:
-  revalidate_page: null
-  additional_paths: null
+  revalidate_page: true
+  additional_paths: "/\r\n/fi\r\n/en\r\n/sv"

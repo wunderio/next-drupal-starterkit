@@ -6,5 +6,7 @@ site_resolver: site_selector
 configuration:
   sites:
     frontend: frontend
-revalidator: ''
-revalidator_configuration: {  }
+revalidator: path
+revalidator_configuration:
+  revalidate_page: true
+  additional_paths: ''

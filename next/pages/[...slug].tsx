@@ -112,5 +112,6 @@ export async function getStaticProps(
         ["common"]
       )),
     },
+    revalidate: 60,
   };
 }

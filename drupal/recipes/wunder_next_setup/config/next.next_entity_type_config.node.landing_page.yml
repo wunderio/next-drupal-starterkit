@@ -7,5 +7,7 @@ configuration:
   sites:
     frontend: frontend
   field_name: {  }
-revalidator: ''
-revalidator_configuration: {  }
+revalidator: path
+revalidator_configuration:
+  revalidate_page: true
+  additional_paths: ''
