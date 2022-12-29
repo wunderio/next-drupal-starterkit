@@ -64,9 +64,19 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<NodePageProps>> {
   const path = await drupal.translatePathFromContext(context);
 
-  if (!path || !RESOURCE_TYPES.includes(path.jsonapi.resourceName)) {
+  if (!path) {
     return {
       notFound: true,
+    };
+  }
+
+  if (path.redirect?.length) {
+    const [redirect] = path.redirect;
+    return {
+      redirect: {
+        destination: redirect.to,
+        permanent: false,
+      },
     };
   }
 
