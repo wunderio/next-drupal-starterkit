@@ -9,12 +9,9 @@ import {
   ErrorBoundary,
   Facet,
   Paging,
-  PagingInfo,
   Results,
-  ResultsPerPage,
   SearchBox,
   SearchProvider,
-  Sorting,
   WithSearch,
 } from "@elastic/react-search-ui";
 import { Layout as SearchLayout } from "@elastic/react-search-ui-views";
@@ -66,30 +63,45 @@ export default function SearchPage({ menus }: LayoutProps) {
         <div>
           <SearchProvider config={config}>
             <WithSearch
-              mapContextToProps={({ wasSearched }) => ({ wasSearched })}
+              mapContextToProps={({ wasSearched, results }) => ({
+                wasSearched,
+                results,
+              })}
             >
-              {({ wasSearched }) => (
+              {({ wasSearched, results }) => (
                 <div className="App">
                   <ErrorBoundary>
                     <SearchLayout
                       header={<SearchBox autocompleteSuggestions={false} />}
                       sideContent={
                         <div>
-                          <Facet
-                            field="tags"
-                            label="Tags"
-                            filterType="any"
-                            isFilterable={true}
-                          />
-                          <Facet field="content_type" label="Content type" />
+                          {wasSearched && results.length > 0 && (
+                            <>
+                              <Facet
+                                field="tags"
+                                label="Tags"
+                                filterType="any"
+                                isFilterable={true}
+                              />
+                              <Facet
+                                field="content_type"
+                                label="Content type"
+                              />
+                            </>
+                          )}
                         </div>
                       }
                       bodyContent={
-                        <Results
-                          titleField="title"
-                          urlField="path"
-                          shouldTrackClickThrough={false}
-                        />
+                        <>
+                          <Results
+                            titleField="title"
+                            urlField="path"
+                            shouldTrackClickThrough={false}
+                          />
+                          {wasSearched && results.length == 0 && (
+                            <p>No results found.</p>
+                          )}
+                        </>
                       }
                       bodyFooter={<Paging />}
                     />
