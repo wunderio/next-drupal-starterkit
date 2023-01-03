@@ -12,14 +12,47 @@ function buildSort(sortDirection, sortField) {
 }
 
 function buildMatch(searchTerm) {
-  return searchTerm
-    ? {
-        multi_match: {
+  const multi_match_query = [
+    // Match title:
+    {
+      match: {
+        title: {
           query: searchTerm,
-          fields: ["title", "body"],
+          operator: "and",
+          boost: 5,
         },
-      }
-    : { match_all: { boost: 1.0 } };
+      },
+    },
+    // Match body field:
+    {
+      match: {
+        body: {
+          query: searchTerm,
+          operator: "and",
+          boost: 3,
+        },
+      },
+    },
+    // Match phrase for trigram fields:
+    {
+      match_phrase: { "title.trigram": { query: searchTerm } },
+    },
+    {
+      match_phrase: { "body.trigram": { query: searchTerm } },
+    },
+    // Term query for the tags field:
+    { term: { tags: searchTerm } },
+  ];
+
+  // Build the dis max query.
+  const dis_max_query = {
+    dis_max: {
+      queries: multi_match_query,
+      tie_breaker: 0.7,
+    },
+  };
+
+  return searchTerm ? dis_max_query : { match_all: { boost: 1.0 } };
 }
 
 /*

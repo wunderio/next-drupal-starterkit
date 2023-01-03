@@ -154,9 +154,29 @@ class MultilingualContentIndex extends ElasticsearchIndexBase {
     // Add custom settings.
     $index_definition->getSettingsDefinition()->addOptions([
       'analysis' => [
+        // Define analyzers.
         'analyzer' => [
-          $analyzer => [
-            'tokenizer' => 'standard',
+          $analyzer,
+          // Trigrams are used for "partial search".
+          // phpcs:ignore
+          'trigram_analyzer' => [
+            'tokenizer' => 'trigram_tokenizer',
+            'filter' => [
+              'lowercase',
+              'asciifolding',
+            ],
+          ],
+        ],
+        // Define tokenizers. These are used by analyzers.
+        'tokenizer' => [
+          'trigram_tokenizer' => [
+            'type' => 'ngram',
+            'min_gram' => 3,
+            'max_gram' => 3,
+            'token_chars' => [
+              'letter',
+              'digit',
+            ],
           ],
         ],
       ],
@@ -176,9 +196,19 @@ class MultilingualContentIndex extends ElasticsearchIndexBase {
     return MappingDefinition::create()
       ->addProperty('id', FieldDefinition::create('integer'))
       ->addProperty('uuid', FieldDefinition::create('keyword'))
-      ->addProperty('title', FieldDefinition::create('text'))
       ->addProperty('status', FieldDefinition::create('keyword'))
-      ->addProperty('body', FieldDefinition::create('text'))
+      ->addProperty('body',
+        FieldDefinition::create('text')
+          ->addMultiField('trigram',
+            FieldDefinition::create('text', ['analyzer' => 'trigram_analyzer'])
+          ),
+      )
+      ->addProperty('title',
+        FieldDefinition::create('text')
+          ->addMultiField('trigram',
+            FieldDefinition::create('text', ['analyzer' => 'trigram_analyzer'])
+          )->addMultiField('keyword', FieldDefinition::create('keyword')),
+      )
       ->addProperty('content_type', FieldDefinition::create('keyword'))
       ->addProperty('tags', FieldDefinition::create('keyword'))
       ->addProperty('path', FieldDefinition::create('keyword'))
