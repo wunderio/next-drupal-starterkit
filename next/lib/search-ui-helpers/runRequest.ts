@@ -1,10 +1,7 @@
 /**
  * Pass the built search request to the backend proxy endpoint.
- *
- * @param {*} body
- *   The elasticsearch search request body.
  */
-export default async function runRequest(body, locale) {
+export default async function runRequest(body, locale: string) {
   // Create the request to our api route, passing the language in a header:
   const response = await fetch("/api/search", {
     method: "POST",

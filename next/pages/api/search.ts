@@ -1,9 +1,9 @@
-import type { NextApiRequest } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 /**
  * Example backend proxy for Elasticsearch Search-UI frontend client.
  */
-const Search = async (req: NextApiRequest, res) => {
+const Search = async (req: NextApiRequest, res: NextApiResponse) => {
   // The locale is passed in this header:
   const languagePrefix = req.headers["accept-language"];
 
