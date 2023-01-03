@@ -2,6 +2,7 @@ import "@elastic/react-search-ui-views/lib/styles/styles.css";
 
 import { GetStaticPropsResult } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
 import {
@@ -26,25 +27,25 @@ import { setLanguageLinks } from "lib/utils";
 
 import { LangContext } from "./_app";
 
-const config = {
-  debug: false,
-  hasA11yNotifications: true,
-  apiConnector: null,
-  onResultClick: () => {
-    /* Not implemented */
-  },
-  onSearch: async (state) => {
-    const { resultsPerPage } = state;
-    const requestBody = buildRequest(state);
-    const responseJson = await runRequest(requestBody);
-    return buildState(responseJson, resultsPerPage, state);
-  },
-};
-
 /**
  * Contains the search provider component.
  */
 export default function SearchPage({ menus }: LayoutProps) {
+  const router = useRouter();
+  const config = {
+    debug: false,
+    hasA11yNotifications: true,
+    apiConnector: null,
+    onResultClick: () => {
+      /* Not implemented */
+    },
+    onSearch: async (state) => {
+      const { resultsPerPage } = state;
+      const requestBody = buildRequest(state);
+      const responseJson = await runRequest(requestBody, router.locale);
+      return buildState(responseJson, resultsPerPage, state);
+    },
+  };
   return (
     <LangContext.Provider
       value={{
