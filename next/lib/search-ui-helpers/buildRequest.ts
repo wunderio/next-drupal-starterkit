@@ -66,12 +66,12 @@ export default function buildRequest(state) {
 
     // Define any source filtering here:
     // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-source-filtering.html#search-request-source-filtering
-    _source: ["id", "link", "title"],
+    _source: ["id", "link", "title", "body", "path"],
 
     // Define aggregations here:
     aggs: {
       tags: { terms: { field: "tags" } },
-      category: { terms: { field: "category" } },
+      content_type: { terms: { field: "content_type" } },
     },
 
     // Dynamic values based on current Search UI state

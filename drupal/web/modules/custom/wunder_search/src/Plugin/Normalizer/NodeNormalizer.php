@@ -14,6 +14,7 @@ use Drupal\Core\Theme\ThemeInitializationInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\wunder_search\IndexerUserSession;
 use Drupal\serialization\Normalizer\ContentEntityNormalizer;
+use Drupal\Core\Field\EntityReferenceFieldItemList;
 
 /**
  * Normalizes / denormalizes Drupal nodes into an array structure good for ES.
@@ -132,6 +133,9 @@ class NodeNormalizer extends ContentEntityNormalizer {
         'name' => $object->getRevisionUser()->getAccountName(),
         'uid' => $object->getRevisionUser()->id(),
       ],
+      'content_type' => $this->getContentTypeLabel($object, $context),
+      'tags' => $object->hasField('field_tags') ? $this->normalizeEntityReference($object->get('field_tags')) : NULL,
+      'path' => $object->toUrl()->toString(),
     ];
 
     return $data;
@@ -209,6 +213,64 @@ class NodeNormalizer extends ContentEntityNormalizer {
       }
     }
     return $render_markup;
+  }
+
+  /**
+   * Normalize entity reference to labels.
+   *
+   * @param \Drupal\Core\Field\EntityReferenceFieldItemList $items
+   *   The entity referenced terms.
+   * @param string $fieldName
+   *   (Optional) Pass the field name from which to extract the label.
+   *
+   * @return array
+   *   An array of labels.
+   */
+  public function normalizeEntityReference(EntityReferenceFieldItemList $items, $fieldName = NULL) {
+    $labels = [];
+    $entitys = $items->referencedEntities();
+
+    foreach ($entitys as $entity) {
+      // Use the custom label field if it exists and has a value.
+      // Otherwise fallback to the entity label.
+      if ($fieldName && $entity->hasField($fieldName) && !empty($entity->get($fieldName)->value)) {
+        $labels[] = $entity->get($fieldName)->value;
+      }
+      else {
+        $labels[] = $entity->label();
+      }
+    }
+
+    return $labels;
+  }
+
+  /**
+   * Transforms the bundle of an entity into a translated string.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityBase $entity
+   *   The entity.
+   * @param array $context
+   *   The context (used to get the language).
+   *
+   * @return string
+   *   The string to use as content label.
+   */
+  protected function getContentTypeLabel(ContentEntityBase $entity, array $context) {
+    $bundle_labels_map = [
+      'article' => 'Article',
+      'page' => 'Basic page',
+      'landing_page' => 'Landing page',
+    ];
+
+    // If this is a bundle that is not included in the map,
+    // just return the name of the bundle:
+    if (!isset($bundle_labels_map[$entity->bundle()])) {
+      return $entity->bundle();
+    }
+
+    // Get the label from the array map:
+    $label = $bundle_labels_map[$entity->bundle()];
+    return $this->translationManager->translate($label, [], ['langcode' => $context['language']])->__toString();
   }
 
 }

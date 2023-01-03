@@ -75,44 +75,21 @@ export default function SearchPage({ menus }: LayoutProps) {
                       header={<SearchBox autocompleteSuggestions={false} />}
                       sideContent={
                         <div>
-                          {wasSearched && (
-                            <Sorting
-                              label={"Sort by"}
-                              sortOptions={[
-                                {
-                                  name: "Relevance",
-                                  value: "",
-                                  direction: "",
-                                },
-                                {
-                                  name: "Title",
-                                  value: "title",
-                                  direction: "asc",
-                                },
-                              ]}
-                            />
-                          )}
                           <Facet
                             field="tags"
                             label="Tags"
                             filterType="any"
                             isFilterable={true}
                           />
-                          <Facet field="category" label="Recipe Category" />
+                          <Facet field="content_type" label="Content type" />
                         </div>
                       }
                       bodyContent={
                         <Results
                           titleField="title"
-                          urlField="link"
-                          shouldTrackClickThrough={true}
+                          urlField="path"
+                          shouldTrackClickThrough={false}
                         />
-                      }
-                      bodyHeader={
-                        <React.Fragment>
-                          {wasSearched && <PagingInfo />}
-                          {wasSearched && <ResultsPerPage />}
-                        </React.Fragment>
                       }
                       bodyFooter={<Paging />}
                     />

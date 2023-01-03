@@ -36,7 +36,7 @@ export default function buildRequestFilter(filters) {
   if (!filters) return;
 
   filters = filters.reduce((acc, filter) => {
-    if (["tags", "category"].includes(filter.field)) {
+    if (["tags", "content_type"].includes(filter.field)) {
       return [...acc, getTermFilter(filter)];
     }
     return acc;

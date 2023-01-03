@@ -75,6 +75,9 @@ class MultilingualContentIndex extends ElasticsearchIndexBase {
    * {@inheritdoc}
    */
   public function serialize($source, $context = []) {
+    // Set the language context.
+    $context['language'] = $source->language()->getId();
+
     $data = parent::serialize($source, $context);
 
     // Add the language code to be used as a token.
@@ -176,6 +179,9 @@ class MultilingualContentIndex extends ElasticsearchIndexBase {
       ->addProperty('title', FieldDefinition::create('text'))
       ->addProperty('status', FieldDefinition::create('keyword'))
       ->addProperty('body', FieldDefinition::create('text'))
+      ->addProperty('content_type', FieldDefinition::create('keyword'))
+      ->addProperty('tags', FieldDefinition::create('keyword'))
+      ->addProperty('path', FieldDefinition::create('keyword'))
       ->addProperty('user', $user_property);
   }
 

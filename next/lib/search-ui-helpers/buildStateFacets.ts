@@ -35,11 +35,11 @@ export default function buildStateFacets(aggregations) {
   const tags = getValueFacet(aggregations, "tags");
 
   // Get the facets from the category field value.
-  const category = getValueFacet(aggregations, "category");
+  const content_type = getValueFacet(aggregations, "content_type");
 
   const facets = {
     ...(tags && { tags }),
-    ...(category && { category }),
+    ...(content_type && { content_type }),
   };
 
   if (Object.keys(facets).length > 0) {
