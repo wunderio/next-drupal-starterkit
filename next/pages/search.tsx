@@ -9,7 +9,9 @@ import {
   ErrorBoundary,
   Facet,
   Paging,
+  PagingInfo,
   Results,
+  ResultsPerPage,
   SearchBox,
   SearchProvider,
   WithSearch,
@@ -102,6 +104,12 @@ export default function SearchPage({ menus }: LayoutProps) {
                             <p>No results found.</p>
                           )}
                         </>
+                      }
+                      bodyHeader={
+                        <React.Fragment>
+                          {wasSearched && <PagingInfo />}
+                          {wasSearched && <ResultsPerPage />}
+                        </React.Fragment>
                       }
                       bodyFooter={<Paging />}
                     />

@@ -47,6 +47,13 @@ function buildResults(hits) {
   });
 }
 
+const getPagingStart = (state) => (state.current - 1) * state.resultsPerPage;
+
+const getPagingEnd = (state, totalResults) => {
+  const pagingEnd = state.current * state.resultsPerPage;
+  return pagingEnd < totalResults ? pagingEnd : totalResults;
+};
+
 /*
   Converts an Elasticsearch response to new application state
 
@@ -61,12 +68,15 @@ function buildResults(hits) {
   We do similar things for facets and totals.
 */
 export default function buildState(response, resultsPerPage, state) {
+  console.log(state);
   const results = buildResults(response.hits.hits);
   const totalResults = buildTotalResults(response.hits);
   const totalPages = buildTotalPages(resultsPerPage, totalResults);
   const facets = buildStateFacets(response.aggregations);
   const requestId = "";
   const resultSearchTerm = state?.searchTerm || "";
+  const pagingStart = getPagingStart(state);
+  const pagingEnd = getPagingEnd(state, totalResults);
   return {
     results,
     totalPages,
@@ -76,7 +86,7 @@ export default function buildState(response, resultsPerPage, state) {
     ...(facets && { facets }),
     rawResponse: null,
     wasSearched: true,
-    pagingStart: null,
-    pagingEnd: null,
+    pagingStart,
+    pagingEnd,
   };
 }
