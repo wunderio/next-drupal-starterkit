@@ -19,6 +19,7 @@ import {
 } from "@elastic/react-search-ui";
 import { Layout, LayoutProps } from "components/layout";
 import { SearchBoxInput } from "components/search/search-box-input";
+import { SearchResult } from "components/search/search-result";
 import { getMenus } from "lib/get-menus";
 import buildRequest from "lib/search-ui-helpers/buildRequest";
 import buildState from "lib/search-ui-helpers/buildState";
@@ -37,9 +38,6 @@ export default function SearchPage({ menus }: LayoutProps) {
     debug: false,
     hasA11yNotifications: true,
     apiConnector: null,
-    onResultClick: () => {
-      /* Not implemented */
-    },
     onSearch: async (state) => {
       const { resultsPerPage } = state;
       const requestBody = buildRequest(state);
@@ -104,9 +102,8 @@ export default function SearchPage({ menus }: LayoutProps) {
                         <div className="flex-1 ">
                           <div className="search-results py-2">
                             <Results
-                              titleField="title"
-                              urlField="path"
                               shouldTrackClickThrough={false}
+                              resultView={SearchResult}
                             />
                           </div>
                           <div className="search-results-footer p-2">
