@@ -9,9 +9,9 @@ export function SearchResult({ result, onClickLink }: ResultViewProps) {
       key={result.id.raw}
       href={result.path.raw}
       target="_blank"
-      className="block p-6 my-2 border border-gray-200 rounded-md"
+      className="block p-4 my-2 border border-wunderpurple-50 rounded-md"
     >
-      <h5 className="mb-2 text-2xl font-bold tracking-tight text-wunderurple-900">
+      <h5 className="mb-1 text-xl font-bold tracking-tight text-wunderpurple-500">
         {result.title.raw}
       </h5>
       <p className="font-normal text-gray-700 mb-2">{result.body.raw}</p>

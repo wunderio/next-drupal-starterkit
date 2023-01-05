@@ -28,7 +28,7 @@ export const SearchBoxInput: React.ComponentType<InputViewProps> = ({
       </div>
       <input
         {...getInputProps()}
-        className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-wunderpurple-500 focus:border-wunderpurple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-wunderpurple-500 dark:focus:border-wunderpurple-500"
+        className="block w-full p-4 pl-10 text-sm text-gray-900 border border-wunderpurple-100 rounded-lg bg-gray-50 focus:ring-wunderpurple-500 focus:border-wunderpurple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-wunderpurple-500 dark:focus:border-wunderpurple-500"
         placeholder={t("search-bar-placeholder-text")}
       />
       <button

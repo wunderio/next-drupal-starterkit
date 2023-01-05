@@ -87,7 +87,7 @@ export default function SearchPage({ menus }: LayoutProps) {
                     </div>
                     <div className="flex flex-row">
                       <div className="flex">
-                        <aside className="w-56 flex-none">
+                        <aside className="w-56 flex-none mr-2">
                           {wasSearched && results.length > 0 && (
                             <div className="p-2">
                               <Facet field="tags" label={t("tags")} />
