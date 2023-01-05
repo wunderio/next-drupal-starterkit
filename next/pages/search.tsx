@@ -64,7 +64,7 @@ export default function SearchPage({ menus }: LayoutProps) {
 
         <h1 className="mb-10 text-6xl font-black">{t("search")}</h1>
 
-        <div>
+        <main>
           <SearchProvider config={config}>
             <WithSearch
               mapContextToProps={({ wasSearched, results }) => ({
@@ -101,7 +101,7 @@ export default function SearchPage({ menus }: LayoutProps) {
                           )}
                         </aside>
 
-                        <main className="flex-1 ">
+                        <div className="flex-1 ">
                           <div className="search-results py-2">
                             <Results
                               titleField="title"
@@ -112,7 +112,7 @@ export default function SearchPage({ menus }: LayoutProps) {
                           <div className="search-results-footer p-2">
                             {wasSearched && results.length > 0 && <Paging />}
                           </div>
-                        </main>
+                        </div>
                       </div>
                     </div>
                     {wasSearched && results.length == 0 && (
@@ -125,7 +125,7 @@ export default function SearchPage({ menus }: LayoutProps) {
               )}
             </WithSearch>
           </SearchProvider>
-        </div>
+        </main>
       </Layout>
     </LangContext.Provider>
   );

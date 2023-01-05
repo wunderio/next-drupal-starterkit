@@ -17,7 +17,11 @@ export function Footer({ links }: FooterProps) {
             <ul className="flex gap-4">
               {links.map((link) => (
                 <li key={link.id}>
-                  <Link href={link.url} passHref>
+                  <Link
+                    href={link.url}
+                    passHref
+                    className="no-underline text-wunderpurple-500 hover:text-wunderpurple-300"
+                  >
                     {link.title}
                   </Link>
                 </li>
