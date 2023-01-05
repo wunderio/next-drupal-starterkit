@@ -17,7 +17,6 @@ import {
   SearchProvider,
   WithSearch,
 } from "@elastic/react-search-ui";
-import { Layout as SearchLayout } from "@elastic/react-search-ui-views";
 import { Layout, LayoutProps } from "components/layout";
 import { SearchBoxInput } from "components/search/search-box-input";
 import { getMenus } from "lib/get-menus";
@@ -63,7 +62,7 @@ export default function SearchPage({ menus }: LayoutProps) {
           />
         </Head>
 
-        <h1>{t("search")}</h1>
+        <h1 className="mb-10 text-6xl font-black">{t("search")}</h1>
 
         <div>
           <SearchProvider config={config}>
@@ -74,58 +73,55 @@ export default function SearchPage({ menus }: LayoutProps) {
               })}
             >
               {({ wasSearched, results }) => (
-                <div className="App">
-                  <ErrorBoundary>
-                    <SearchLayout
-                      header={
-                        <SearchBox
-                          searchAsYouType={false}
-                          shouldClearFilters={false}
-                          // Here we specify out own custom
-                          // component to render the search bar:
-                          inputView={SearchBoxInput}
-                        />
-                      }
-                      sideContent={
-                        <div>
+                <ErrorBoundary>
+                  <div className="search-ui">
+                    <SearchBox
+                      searchAsYouType={false}
+                      shouldClearFilters={false}
+                      // Here we specify out own custom
+                      // component to render the search bar:
+                      inputView={SearchBoxInput}
+                      className="py-2"
+                    />
+                    <div className="search-results-header flex items-center justify-end gap-x-5 py-2">
+                      {wasSearched && results.length > 0 && <PagingInfo />}
+                      {wasSearched && results.length > 0 && <ResultsPerPage />}
+                    </div>
+                    <div className="flex flex-row">
+                      <div className="flex">
+                        <aside className="w-56 flex-none">
                           {wasSearched && results.length > 0 && (
-                            <>
-                              <Facet
-                                field="tags"
-                                label={t("tags")}
-                                filterType="any"
-                                isFilterable={true}
-                              />
+                            <div className="p-2">
+                              <Facet field="tags" label={t("tags")} />
                               <Facet
                                 field="content_type"
                                 label={t("content-type")}
                               />
-                            </>
+                            </div>
                           )}
-                        </div>
-                      }
-                      bodyContent={
-                        <>
-                          <Results
-                            titleField="title"
-                            urlField="path"
-                            shouldTrackClickThrough={false}
-                          />
-                          {wasSearched && results.length == 0 && (
-                            <p>{t("no-results-found")}</p>
-                          )}
-                        </>
-                      }
-                      bodyHeader={
-                        <React.Fragment>
-                          {wasSearched && <PagingInfo />}
-                          {wasSearched && <ResultsPerPage />}
-                        </React.Fragment>
-                      }
-                      bodyFooter={<Paging />}
-                    />
-                  </ErrorBoundary>
-                </div>
+                        </aside>
+
+                        <main className="flex-1 ">
+                          <div className="search-results py-2">
+                            <Results
+                              titleField="title"
+                              urlField="path"
+                              shouldTrackClickThrough={false}
+                            />
+                          </div>
+                          <div className="search-results-footer p-2">
+                            {wasSearched && results.length > 0 && <Paging />}
+                          </div>
+                        </main>
+                      </div>
+                    </div>
+                    {wasSearched && results.length == 0 && (
+                      <div className="search-no-results">
+                        {t("no-results-found")}
+                      </div>
+                    )}
+                  </div>
+                </ErrorBoundary>
               )}
             </WithSearch>
           </SearchProvider>
