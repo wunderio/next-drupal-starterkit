@@ -3,6 +3,7 @@ import "@elastic/react-search-ui-views/lib/styles/styles.css";
 import { GetStaticPropsResult } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
 import {
@@ -18,6 +19,7 @@ import {
 } from "@elastic/react-search-ui";
 import { Layout as SearchLayout } from "@elastic/react-search-ui-views";
 import { Layout, LayoutProps } from "components/layout";
+import { SearchBoxInput } from "components/search/search-box-input";
 import { getMenus } from "lib/get-menus";
 import buildRequest from "lib/search-ui-helpers/buildRequest";
 import buildState from "lib/search-ui-helpers/buildState";
@@ -30,6 +32,7 @@ import { LangContext } from "./_app";
  * Contains the search provider component.
  */
 export default function SearchPage({ menus }: LayoutProps) {
+  const { t } = useTranslation("common");
   const router = useRouter();
   const config = {
     debug: false,
@@ -60,7 +63,7 @@ export default function SearchPage({ menus }: LayoutProps) {
           />
         </Head>
 
-        <h1>Search</h1>
+        <h1>{t("search")}</h1>
 
         <div>
           <SearchProvider config={config}>
@@ -74,20 +77,28 @@ export default function SearchPage({ menus }: LayoutProps) {
                 <div className="App">
                   <ErrorBoundary>
                     <SearchLayout
-                      header={<SearchBox autocompleteSuggestions={false} />}
+                      header={
+                        <SearchBox
+                          searchAsYouType={false}
+                          shouldClearFilters={false}
+                          // Here we specify out own custom
+                          // component to render the search bar:
+                          inputView={SearchBoxInput}
+                        />
+                      }
                       sideContent={
                         <div>
                           {wasSearched && results.length > 0 && (
                             <>
                               <Facet
                                 field="tags"
-                                label="Tags"
+                                label={t("tags")}
                                 filterType="any"
                                 isFilterable={true}
                               />
                               <Facet
                                 field="content_type"
-                                label="Content type"
+                                label={t("content-type")}
                               />
                             </>
                           )}
@@ -101,7 +112,7 @@ export default function SearchPage({ menus }: LayoutProps) {
                             shouldTrackClickThrough={false}
                           />
                           {wasSearched && results.length == 0 && (
-                            <p>No results found.</p>
+                            <p>{t("no-results-found")}</p>
                           )}
                         </>
                       }

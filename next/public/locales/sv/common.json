@@ -2,5 +2,11 @@
   "latest-articles": "Senaste artiklarna",
   "no-content-found": "Inget innehåll hittades",
   "posted-by": "Författare: {{author}}",
-  "read-article": "Läs artikeln"
+  "read-article": "Läs artikeln",
+  "search-bar-placeholder-text": "Sök innehåll",
+  "search-button-text": "Sök",
+  "search": "Sök",
+  "no-results-found": "Inga resultat funna.",
+  "content-type": "Innehållstyp",
+  "tags": "Taggar"
 }
