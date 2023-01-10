@@ -4,6 +4,7 @@ import { DrupalMenuLinkContent } from "next-drupal";
 import React from "react";
 import classNames from "classnames";
 import LocaleSwitcher from "components/locale-switcher";
+import SearchBoxNavbar from "components/search/search-box-navbar";
 
 // We have applied a patch on the Drupal side that adds the langcode
 // property to the response of jsonapi menus, so we extend the type here:
@@ -31,6 +32,7 @@ export function Navbar({ links, ...props }: NavbarProps) {
         </Link>
         {links ? <Menu items={links} /> : null}
         <div className="absolute flex justify-end md:static top-2 right-4">
+          <SearchBoxNavbar />
           <LocaleSwitcher />
         </div>
       </div>
