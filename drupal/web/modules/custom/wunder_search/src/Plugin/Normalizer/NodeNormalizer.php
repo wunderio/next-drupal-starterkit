@@ -133,7 +133,7 @@ class NodeNormalizer extends ContentEntityNormalizer {
         'name' => $object->getRevisionUser()->getAccountName(),
         'uid' => $object->getRevisionUser()->id(),
       ],
-      'content_type' => $this->getContentTypeLabel($object, $context),
+      'content_type' => $object->type->entity->label(),
       'tags' => $object->hasField('field_tags') ? $this->normalizeEntityReference($object->get('field_tags')) : NULL,
       'path' => $object->toUrl()->toString(),
     ];
@@ -242,35 +242,6 @@ class NodeNormalizer extends ContentEntityNormalizer {
     }
 
     return $labels;
-  }
-
-  /**
-   * Transforms the bundle of an entity into a translated string.
-   *
-   * @param \Drupal\Core\Entity\ContentEntityBase $entity
-   *   The entity.
-   * @param array $context
-   *   The context (used to get the language).
-   *
-   * @return string
-   *   The string to use as content label.
-   */
-  protected function getContentTypeLabel(ContentEntityBase $entity, array $context) {
-    $bundle_labels_map = [
-      'article' => 'Article',
-      'page' => 'Basic page',
-      'landing_page' => 'Landing page',
-    ];
-
-    // If this is a bundle that is not included in the map,
-    // just return the name of the bundle:
-    if (!isset($bundle_labels_map[$entity->bundle()])) {
-      return $entity->bundle();
-    }
-
-    // Get the label from the array map:
-    $label = $bundle_labels_map[$entity->bundle()];
-    return $this->translationManager->translate($label, [], ['langcode' => $context['language']])->__toString();
   }
 
 }
