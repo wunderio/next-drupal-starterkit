@@ -19,6 +19,7 @@ import {
 } from "@elastic/react-search-ui";
 import { Layout, LayoutProps } from "components/layout";
 import { SearchBoxInput } from "components/search/search-box-input";
+import MultiCheckboxFacet from "components/search/search-multicheckbox-facet";
 import { SearchResult } from "components/search/search-result";
 import { getMenus } from "lib/get-menus";
 import buildRequest from "lib/search-ui-helpers/buildRequest";
@@ -90,8 +91,13 @@ export default function SearchPage({ menus }: LayoutProps) {
                         <aside className="w-56 flex-none mr-2">
                           {wasSearched && results.length > 0 && (
                             <div className="p-2">
-                              <Facet field="tags" label={t("tags")} />
                               <Facet
+                                view={MultiCheckboxFacet}
+                                field="tags"
+                                label={t("tags")}
+                              />
+                              <Facet
+                                view={MultiCheckboxFacet}
                                 field="content_type"
                                 label={t("content-type")}
                               />

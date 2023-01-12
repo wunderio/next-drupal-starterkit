@@ -33,7 +33,7 @@ Follow these steps to get started:
 4. Install Drupal as usual. Use the standard installation profile. You can do it via the UI or using this command: `lando drush si --site-name="My great site name here"`.
 5. Run the `lando install-recipe wunder_next_setup` to set up all necessary modules, content types and configuration.
 6. Run `lando drush eshs` to set up elasticsearch indexes.
-6. You can now export your drupal configuration the usual way: `lando drush cex`.
+7. You can now export your drupal configuration the usual way: `lando drush cex`.
 
 #### Next.js setup
 

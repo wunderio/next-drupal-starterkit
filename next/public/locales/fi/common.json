@@ -8,5 +8,6 @@
   "search": "Haku",
   "no-results-found": "Ei tuloksia.",
   "content-type": "Sisältötyyppi",
-  "tags": "Tunnisteet"
+  "tags": "Tunnisteet",
+  "search-show-more-options": "Näytä lisää"
 }
