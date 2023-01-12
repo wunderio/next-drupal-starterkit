@@ -12,7 +12,6 @@ import {
   Paging,
   PagingInfo,
   Results,
-  ResultsPerPage,
   SearchBox,
   SearchProvider,
   WithSearch,
@@ -20,6 +19,7 @@ import {
 import { Layout, LayoutProps } from "components/layout";
 import { SearchBoxInput } from "components/search/search-box-input";
 import MultiCheckboxFacet from "components/search/search-multicheckbox-facet";
+import PagingInfoView from "components/search/search-paging-info";
 import { SearchResult } from "components/search/search-result";
 import { getMenus } from "lib/get-menus";
 import buildRequest from "lib/search-ui-helpers/buildRequest";
@@ -83,8 +83,9 @@ export default function SearchPage({ menus }: LayoutProps) {
                       className="py-2"
                     />
                     <div className="search-results-header flex items-center justify-end gap-x-5 py-2">
-                      {wasSearched && results.length > 0 && <PagingInfo />}
-                      {wasSearched && results.length > 0 && <ResultsPerPage />}
+                      {wasSearched && results.length > 0 && (
+                        <PagingInfo view={PagingInfoView} />
+                      )}
                     </div>
                     <div className="flex flex-row">
                       <div className="flex">

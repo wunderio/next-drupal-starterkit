@@ -9,5 +9,8 @@
   "no-results-found": "Inga resultat funna.",
   "content-type": "Innehållstyp",
   "tags": "Taggar",
-  "search-show-more-options": "Visa fler alternativ"
+  "search-show-more-options": "Visa fler alternativ",
+  "search-showing": "Visar",
+  "search-out-of": "av",
+  "search-for": "för"
 }

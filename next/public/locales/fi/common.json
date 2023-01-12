@@ -9,5 +9,8 @@
   "no-results-found": "Ei tuloksia.",
   "content-type": "Sisältötyyppi",
   "tags": "Tunnisteet",
-  "search-show-more-options": "Näytä lisää"
+  "search-show-more-options": "Näytä lisää",
+  "search-showing": "Näytetään",
+  "search-out-of": "/",
+  "search-for": "haulle"
 }
