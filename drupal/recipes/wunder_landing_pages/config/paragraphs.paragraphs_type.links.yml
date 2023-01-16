@@ -1,0 +1,10 @@
+uuid: f796b11e-aa74-4bcd-ad8c-db3b2bbd8894
+langcode: en
+status: true
+dependencies: {  }
+id: links
+label: Links
+icon_uuid: null
+icon_default: null
+description: 'a paragraph type containing a list of links.'
+behavior_plugins: {  }

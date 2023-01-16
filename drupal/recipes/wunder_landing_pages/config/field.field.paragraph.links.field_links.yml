@@ -1,0 +1,23 @@
+uuid: 48722a2c-9456-4a94-9b54-f5acaa347931
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_links
+    - paragraphs.paragraphs_type.links
+  module:
+    - link
+id: paragraph.links.field_links
+field_name: field_links
+entity_type: paragraph
+bundle: links
+label: Links
+description: 'Add a list of links.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 2
+  link_type: 17
+field_type: link

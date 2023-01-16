@@ -1,5 +1,6 @@
 import { DrupalParagraph } from "next-drupal";
 import { ParagraphImage } from "components/paragraph--image";
+import { ParagraphLinks } from "components/paragraph--links";
 import { ParagraphText } from "components/paragraph--text";
 import { ParagraphVideo } from "components/paragraph--video";
 
@@ -7,6 +8,7 @@ const paragraphTypes = {
   "paragraph--formatted_text": ParagraphText,
   "paragraph--image": ParagraphImage,
   "paragraph--video": ParagraphVideo,
+  "paragraph--links": ParagraphLinks,
 };
 
 export interface ParagraphProps {
