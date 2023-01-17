@@ -39,9 +39,8 @@ export default function LocaleSwitcher() {
   const toggleList = () => {
     setOpen(!open)
   }
-  const [language, setLanguage] = useState('en');
-  const [languages, setLanguages] = useState(locales.filter(locale => locale != language));
-  console.log('*****locales', locales);
+  const [language, setLanguage] = useState(activeLocale);
+  const [languages, setLanguages] = useState(locales);
 
   const selectedLanguage = (locale) => {
     console.log('locale', locale)
@@ -62,7 +61,8 @@ export default function LocaleSwitcher() {
           className="dd-header relative"
           onClick={toggleList}
         >
-          <div className="dd-header-title">{languageLinks[language]?.name} </div>
+          <div className={`language ${activeLocale === language ? "font-bold" : ""
+            }`}>{languageLinks[language]?.name} </div>
 
         </button>
         {open && <ul className="menus">
@@ -70,7 +70,6 @@ export default function LocaleSwitcher() {
             return (
               <button
                 type="button"
-                className="dd-list-item"
                 key={locale}
                 onClick={() => selectedLanguage(locale)}
               >
