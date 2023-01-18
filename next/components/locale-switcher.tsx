@@ -22,7 +22,7 @@ export default function LocaleSwitcher() {
 
   useEffect(() => {
     setLanguages(locales.filter((locale) => locale != language));
-  }, [language]);
+  }, [language, locales]);
 
   return (
     <nav>
