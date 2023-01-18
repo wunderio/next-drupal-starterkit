@@ -1,0 +1,8 @@
+wunder_search.controller:
+  path: '/wunder_search/proxy'
+  methods: [POST,GET]
+  defaults:
+    _title: 'Elasticsearch proxy controller'
+    _controller: '\Drupal\wunder_search\Controller\WunderSearchController::query'
+  requirements:
+    _permission: 'access content'
