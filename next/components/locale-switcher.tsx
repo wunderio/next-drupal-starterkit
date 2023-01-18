@@ -2,38 +2,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { LangContext } from "pages/_app";
-import { LANGUAGES } from "../config"
 
 export default function LocaleSwitcher() {
   const router = useRouter();
   const { locales, locale: activeLocale } = router;
   const { languageLinks } = useContext(LangContext);
-  const [local, setLocal] = useState(activeLocale);
-
-  const handleLocal = (e) => {
-    console.log(e.target.value);
-    setLocal(e.target.value);
-  }
-
-  const defaultLinks = {
-    en: '/en',
-    fi: '/fi',
-    sv: '/sv',
-  };
-
-  // const [{ translationUrls }] = useGlobalState();
-  // const [links, setLinks] = useState({
-  //   ...defaultLinks,
-  //   ...translationUrls,
-  // });
-
-  // useEffect(() => {
-  //   setLinks({
-  //     ...defaultLinks,
-  //     ...translationUrls,
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [translationUrls]);
 
   const [open, setOpen] = useState(false);
   const toggleList = () => {
@@ -43,7 +16,6 @@ export default function LocaleSwitcher() {
   const [languages, setLanguages] = useState(locales);
 
   const selectedLanguage = (locale) => {
-    console.log('locale', locale)
     setLanguage(locale)
     setOpen(false);
   }
@@ -54,97 +26,43 @@ export default function LocaleSwitcher() {
 
 
   return (
-    <div>
-      <nav className="absolute">
-        <button
-          type="button"
-          className="dd-header relative"
-          onClick={toggleList}
-        >
-          <div className={`language ${activeLocale === language ? "font-bold" : ""
-            }`}>{languageLinks[language]?.name} </div>
-
-        </button>
-        {open && <ul className="menus">
-          {languages.map(locale => {
-            return (
-              <button
-                type="button"
-                key={locale}
-                onClick={() => selectedLanguage(locale)}
-              >
-                {/* {LANGUAGES[locale]} */}
-                <Link
-                  href={languageLinks[locale].path}
-                  as={languageLinks[locale].path}
-                  locale={locale}
-                  legacyBehavior
-                >
-                  {languageLinks[locale]?.name}
-                </Link>
-                {/* {item.title}
-                {' '}
-                {item.selected && <FontAwesome name="check" />} */}
-              </button>
-              // <li key={locale}
-              //   className={`language ${locale === activeLocale ? "font-bold" : ""
-              //     }`}
-              // >
-              //   <Link
-              //     href={languageLinks[locale].path}
-              //     as={languageLinks[locale].path}
-              //     locale={locale}
-              //     legacyBehavior
-              //   >
-              //     {languageLinks[locale].name}
-              //   </Link>
-              // </li>
-            );
-          })}
-
-        </ul>}
-      </nav>
-      {/* <select value={local} onChange={(handleLocal)}>
-
-        {locales.map((locale) => {
-          return (
-            <option
-              key={locale}
-              className={`language ${locale === activeLocale ? "font-bold" : ""
-                }`}
-            >
-              <Link
-                href={languageLinks[locale].path}
-                as={languageLinks[locale].path}
-                locale={locale}
-                legacyBehavior
-              >
-                {languageLinks[locale].name}
-              </Link>
-            </option>
-          );
-        })}
-      </select> */}
-      {/* <ul>
-        {locales.map((locale) => {
+    <nav>
+      <button
+        type="button"
+        className="flex flex-1 relative p-2.5"
+        onClick={toggleList}
+      >
+        <div className={`${activeLocale === language ? "font-bold" : ""
+          } pr-3`}>{languageLinks[language]?.name} </div>
+        {/* icons from https://heroicons.com/  */}
+        {open && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+        </svg>}
+        {!open && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>}
+      </button>
+      {open && <ul className="block">
+        {languages.map(locale => {
           return (
             <li
+              className="px-3 py-1"
               key={locale}
-              className={`language ${locale === activeLocale ? "font-bold" : ""
-                }`}
+              onClick={() => selectedLanguage(locale)}
             >
               <Link
                 href={languageLinks[locale].path}
                 as={languageLinks[locale].path}
                 locale={locale}
                 legacyBehavior
+                passHref
               >
-                {languageLinks[locale].name}
+                <a className="block">{languageLinks[locale]?.name}</a>
               </Link>
             </li>
           );
         })}
-      </ul> */}
-    </div>
+      </ul>}
+    </nav>
   );
 }
