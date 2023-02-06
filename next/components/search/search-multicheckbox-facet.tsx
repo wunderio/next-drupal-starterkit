@@ -2,7 +2,7 @@ import { useTranslation } from "next-i18next";
 import React from "react";
 import { FacetViewProps } from "@elastic/react-search-ui-views";
 import type { FieldValue } from "@elastic/search-ui";
-import appendClassName from "lib/search-ui-helpers/appendClassName";
+import clsx from "clsx";
 import getFilterValueDisplay from "lib/search-ui-helpers/getFilterValueDisplay";
 
 function MultiCheckboxFacet({
@@ -19,7 +19,7 @@ function MultiCheckboxFacet({
 }: FacetViewProps) {
   const { t } = useTranslation();
   return (
-    <fieldset className={appendClassName("mb-4", className)}>
+    <fieldset className={clsx(className, "mb-4")}>
       <legend className="uppercase text-wunderpurple-600">{label}</legend>
       {showSearch && (
         <div>
