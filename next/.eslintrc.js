@@ -52,7 +52,7 @@ module.exports = {
             groups: [
               ["^\\u0000"], // Side effect imports.
               ["^next", "^react", "^@?\\w"], // Packages. Put `next`/`react`-related packages first.
-              ["^@/(components|lib)(/.*|$)"], // Internal paths - change these to match your project structure defined in tsconfig.json.
+              ["^@/(components|lib|styles)(/.*|$)"], // Internal paths - change these to match your project structure defined in tsconfig.json.
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"], // Parent imports. Put `..` last.
               ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"], // Other relative imports. Put same-folder imports and `.` last.
             ],

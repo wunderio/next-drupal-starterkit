@@ -2,8 +2,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { DrupalMenuLinkContent } from "next-drupal";
 import clsx from "clsx";
-import LocaleSwitcher from "components/locale-switcher";
-import SearchBoxNavbar from "components/search/search-box-navbar";
+
+import LocaleSwitcher from "@/components/locale-switcher";
+import SearchBoxNavbar from "@/components/search/search-box-navbar";
 
 // We have applied a patch on the Drupal side that adds the langcode
 // property to the response of jsonapi menus, so we extend the type here:

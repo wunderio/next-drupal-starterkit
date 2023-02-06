@@ -1,9 +1,9 @@
 import { useTranslation } from "next-i18next";
-import React from "react";
 import { FacetViewProps } from "@elastic/react-search-ui-views";
 import type { FieldValue } from "@elastic/search-ui";
 import clsx from "clsx";
-import getFilterValueDisplay from "lib/search-ui-helpers/getFilterValueDisplay";
+
+import getFilterValueDisplay from "@/lib/search-ui-helpers/getFilterValueDisplay";
 
 function MultiCheckboxFacet({
   className,

@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
-import * as React from "react";
+import { useEffect, useState } from "react";
 
 export function PreviewAlert() {
   const { isPreview } = useRouter();
-  const [showPreviewAlert, setShowPreviewAlert] =
-    React.useState<boolean>(false);
+  const [showPreviewAlert, setShowPreviewAlert] = useState<boolean>(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setShowPreviewAlert(isPreview && window.top === window.self);
   }, [isPreview]);
 

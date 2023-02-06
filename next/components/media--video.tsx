@@ -1,6 +1,7 @@
 import YouTube from "react-youtube";
-import { MediaProps } from "components/media";
-import { getYouTubeId } from "lib/utils";
+
+import { MediaProps } from "@/components/media";
+import { getYouTubeId } from "@/lib/utils";
 
 export function MediaVideo({ media }: MediaProps) {
   if (!media?.field_media_oembed_video) {

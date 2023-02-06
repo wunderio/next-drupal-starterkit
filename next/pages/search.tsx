@@ -15,16 +15,17 @@ import {
   SearchProvider,
   WithSearch,
 } from "@elastic/react-search-ui";
-import { Layout, LayoutProps } from "components/layout";
-import { SearchBoxInput } from "components/search/search-box-input";
-import MultiCheckboxFacet from "components/search/search-multicheckbox-facet";
-import PagingInfoView from "components/search/search-paging-info";
-import { SearchResult } from "components/search/search-result";
-import { getMenus } from "lib/get-menus";
-import buildRequest from "lib/search-ui-helpers/buildRequest";
-import buildState from "lib/search-ui-helpers/buildState";
-import runRequest from "lib/search-ui-helpers/runRequest";
-import { setLanguageLinks } from "lib/utils";
+
+import { Layout, LayoutProps } from "@/components/layout";
+import { SearchBoxInput } from "@/components/search/search-box-input";
+import MultiCheckboxFacet from "@/components/search/search-multicheckbox-facet";
+import PagingInfoView from "@/components/search/search-paging-info";
+import { SearchResult } from "@/components/search/search-result";
+import { getMenus } from "@/lib/get-menus";
+import buildRequest from "@/lib/search-ui-helpers/buildRequest";
+import buildState from "@/lib/search-ui-helpers/buildState";
+import runRequest from "@/lib/search-ui-helpers/runRequest";
+import { setLanguageLinks } from "@/lib/utils";
 
 import { LangContext } from "./_app";
 

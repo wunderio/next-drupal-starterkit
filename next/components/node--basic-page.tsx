@@ -1,5 +1,6 @@
 import { DrupalNode } from "next-drupal";
-import { FormattedText } from "components/formatted-text";
+
+import { FormattedText } from "@/components/formatted-text";
 
 interface NodeBasicPageProps {
   node: DrupalNode;
