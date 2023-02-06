@@ -17,7 +17,7 @@ function MultiCheckboxFacet({
   onSearch,
   searchPlaceholder,
 }: FacetViewProps) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   return (
     <fieldset className={appendClassName("mb-4", className)}>
       <legend className="uppercase text-wunderpurple-600">{label}</legend>

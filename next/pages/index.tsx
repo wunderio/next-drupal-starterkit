@@ -17,7 +17,7 @@ interface IndexPageProps extends LayoutProps {
 }
 
 export default function IndexPage({ nodes, menus }: IndexPageProps) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   return (
     <LangContext.Provider
       value={{
@@ -71,7 +71,7 @@ export async function getStaticProps(
     props: {
       nodes,
       menus: await getMenus(context),
-      ...(await serverSideTranslations(context.locale, ["common"])),
+      ...(await serverSideTranslations(context.locale)),
     },
     revalidate: 60,
   };

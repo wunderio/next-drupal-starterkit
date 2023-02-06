@@ -117,10 +117,7 @@ export async function getStaticProps(
     props: {
       resource,
       menus: await getMenus(context),
-      ...(await serverSideTranslations(
-        context.locale ?? context.defaultLocale,
-        ["common"]
-      )),
+      ...(await serverSideTranslations(context.locale)),
     },
     revalidate: 60,
   };

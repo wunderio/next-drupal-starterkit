@@ -9,7 +9,7 @@ interface NodeArticleTeaserProps {
 }
 
 export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   return (
     <article {...props}>
       <Link

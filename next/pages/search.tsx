@@ -33,7 +33,7 @@ import { LangContext } from "./_app";
  * Contains the search provider component.
  */
 export default function SearchPage({ menus }: LayoutProps) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const router = useRouter();
   const config = {
     debug: false,
@@ -141,7 +141,7 @@ export async function getStaticProps(
   return {
     props: {
       menus: await getMenus(context),
-      ...(await serverSideTranslations(context.locale, ["common"])),
+      ...(await serverSideTranslations(context.locale)),
     },
     revalidate: 60,
   };
