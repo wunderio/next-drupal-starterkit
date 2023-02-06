@@ -1,4 +1,4 @@
-import { GetStaticPropsResult } from "next";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
@@ -16,7 +16,10 @@ interface IndexPageProps extends LayoutProps {
   nodes: DrupalNode[];
 }
 
-export default function IndexPage({ nodes, menus }: IndexPageProps) {
+export default function IndexPage({
+  nodes,
+  menus,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
   return (
     <LangContext.Provider
@@ -50,9 +53,9 @@ export default function IndexPage({ nodes, menus }: IndexPageProps) {
   );
 }
 
-export async function getStaticProps(
+export const getStaticProps: GetStaticProps<IndexPageProps> = async (
   context
-): Promise<GetStaticPropsResult<IndexPageProps>> {
+) => {
   const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
     "node--article",
     context,
@@ -75,4 +78,4 @@ export async function getStaticProps(
     },
     revalidate: 60,
   };
-}
+};
