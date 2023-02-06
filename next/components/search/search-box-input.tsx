@@ -1,5 +1,4 @@
 import { useTranslation } from "next-i18next";
-import React from "react";
 import { InputViewProps } from "@elastic/react-search-ui-views";
 
 export const SearchBoxInput: React.ComponentType<InputViewProps> = ({

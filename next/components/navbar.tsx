@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DrupalMenuLinkContent } from "next-drupal";
-import React from "react";
 import classNames from "classnames";
 import LocaleSwitcher from "components/locale-switcher";
 import SearchBoxNavbar from "components/search/search-box-navbar";

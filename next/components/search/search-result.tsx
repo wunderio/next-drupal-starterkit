@@ -1,4 +1,3 @@
-import React from "react";
 import { ResultViewProps } from "@elastic/react-search-ui-views";
 
 export function SearchResult({ result, onClickLink }: ResultViewProps) {
