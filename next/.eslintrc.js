@@ -14,7 +14,7 @@ module.exports = {
     },
   },
   plugins: ["prettier"],
-  extends: ["eslint:recommended", "prettier"],
+  extends: ["eslint:recommended", "next", "prettier"],
   rules: {
     "prettier/prettier": "error",
   },
@@ -29,11 +29,11 @@ module.exports = {
         browser: true,
         node: true,
       },
-      plugins: ["@typescript-eslint", "simple-import-sort"],
+      plugins: ["simple-import-sort"],
       extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "next",
+        "plugin:@next/next/recommended",
         "prettier",
       ],
       rules: {
