@@ -9,7 +9,7 @@ grumphp:
   tasks:
     php_compatibility:
       run_on: '%grumphp.run_on_paths%'
-      testVersion: '8.0'
+      testVersion: '8.1'
     check_file_permissions: ~
     php_check_syntax:
       run_on: '%grumphp.run_on_paths%'

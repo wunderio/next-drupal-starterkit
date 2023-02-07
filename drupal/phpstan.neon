@@ -10,6 +10,3 @@ parameters:
 		- '#Missing cache backend declaration for performance.#'
 		- '#Plugin manager has cache backend specified but does not declare cache tags.#'
 		- '#Unsafe usage of new static\(\)#'
-includes:
-	- %currentWorkingDirectory%/vendor/mglaman/phpstan-drupal/extension.neon
-	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon

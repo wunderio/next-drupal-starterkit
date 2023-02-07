@@ -9,14 +9,14 @@ use Drush\Commands\DrushCommands;
 use Drupal\consumers\Entity\Consumer;
 
 /**
- * A Drush commandfile.
- *
+ * Drush command file for the wunder_next module.
  */
 class WunderNextCommands extends DrushCommands {
 
   const API_USER_NAME = 'next-api-user';
   const API_USER_ROLE = 'next_api_role';
   const API_USER_MAIL = 'next-api-user@domain.tld';
+  const CONSUMER_NAME = 'next-drupal-consumer';
 
   /**
    * Generates a user and a consumer to be used to view next-drupal previews.
@@ -59,13 +59,14 @@ class WunderNextCommands extends DrushCommands {
         }
       }
       $account->save();
-    } catch (EntityStorageException $e) {
+    }
+    catch (EntityStorageException $e) {
       return new CommandError("Could not create a new user account with the name " . self::API_USER_NAME . ".");
     }
 
-    /** @var Consumer $consumer */
+    /** @var \Drupal\consumers\Entity\Consumer $consumer */
     $consumer = Consumer::create([
-      'client_id' => 'next-drupal-consumer',
+      'client_id' => self::CONSUMER_NAME,
       'label' => 'Consumer for next-drupal',
       'description' => 'This consumer was created by the wunder_next:create-user-and-consumer drush command.',
       'is_default' => FALSE,
@@ -85,15 +86,16 @@ class WunderNextCommands extends DrushCommands {
       }
 
       $consumer->save();
-    } catch (EntityStorageException $e) {
+    }
+    catch (EntityStorageException $e) {
       return new CommandError('Could not create a new consumer.');
     }
 
-    $uuid = $consumer->uuid();
+    $client_id = $consumer->getClientId();
 
     // Output instructions to the user:
     $this->logger()->success(dt('User and consumer created. Add these two lines to the .env file for the Next application:'));
-    $this->output()->writeln("DRUPAL_CLIENT_ID=$uuid");
+    $this->output()->writeln("DRUPAL_CLIENT_ID=$client_id");
     $this->output()->writeln("DRUPAL_CLIENT_SECRET=$secret");
   }
 
