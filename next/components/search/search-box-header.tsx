@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
-export default function SearchBoxNavbar() {
+export default function SearchBoxHeader() {
   const { t } = useTranslation();
   const router = useRouter();
   return (
