@@ -1,6 +1,7 @@
 import { DrupalMedia } from "next-drupal";
-import { MediaImage } from "components/media--image";
-import { MediaVideo } from "components/media--video";
+
+import { MediaImage } from "@/components/media--image";
+import { MediaVideo } from "@/components/media--video";
 
 const mediaTypes = {
   "media--image": MediaImage,

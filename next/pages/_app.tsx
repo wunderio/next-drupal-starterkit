@@ -1,10 +1,10 @@
-import "styles/globals.css";
+import "@/styles/globals.css";
 
 import { AppProps } from "next/app";
 import { appWithTranslation } from "next-i18next";
 import React from "react";
 
-import siteConfig from "../site.config";
+import siteConfig from "@/site.config";
 
 const defaultLanguageLinks = siteConfig.locales;
 

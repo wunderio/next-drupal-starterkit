@@ -1,6 +1,7 @@
 import { GetStaticPropsContext } from "next";
 import { DrupalMenuLinkContent } from "next-drupal";
-import { drupal } from "lib/drupal";
+
+import { drupal } from "@/lib/drupal";
 
 export async function getMenus(context: GetStaticPropsContext): Promise<{
   main: DrupalMenuLinkContent[];

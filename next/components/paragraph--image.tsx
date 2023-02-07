@@ -1,5 +1,5 @@
-import { MediaImage } from "components/media--image";
-import { ParagraphProps } from "components/paragraph";
+import { MediaImage } from "@/components/media--image";
+import { ParagraphProps } from "@/components/paragraph";
 
 export function ParagraphImage({ paragraph }: ParagraphProps) {
   return (

@@ -1,15 +1,16 @@
 import Image from "next/image";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
-import { FormattedText } from "components/formatted-text";
-import { absoluteUrl, formatDate } from "lib/utils";
+
+import { FormattedText } from "@/components/formatted-text";
+import { absoluteUrl, formatDate } from "@/lib/utils";
 
 interface NodeArticleProps {
   node: DrupalNode;
 }
 
 export function NodeArticle({ node, ...props }: NodeArticleProps) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   return (
     <article {...props}>
       <h1 className="mb-4 text-6xl font-black leading-tight">{node.title}</h1>

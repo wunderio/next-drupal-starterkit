@@ -1,10 +1,11 @@
-import { GetStaticPropsResult } from "next";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { getMenus } from "lib/get-menus";
-import { setLanguageLinks } from "lib/utils";
+
+import { getMenus } from "@/lib/get-menus";
+import { setLanguageLinks } from "@/lib/utils";
 
 import { Layout, LayoutProps } from "../components/layout";
 import { NodeArticleTeaser } from "../components/node--article--teaser";
@@ -16,8 +17,11 @@ interface IndexPageProps extends LayoutProps {
   nodes: DrupalNode[];
 }
 
-export default function IndexPage({ nodes, menus }: IndexPageProps) {
-  const { t } = useTranslation("common");
+export default function IndexPage({
+  nodes,
+  menus,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation();
   return (
     <LangContext.Provider
       value={{
@@ -50,9 +54,9 @@ export default function IndexPage({ nodes, menus }: IndexPageProps) {
   );
 }
 
-export async function getStaticProps(
+export const getStaticProps: GetStaticProps<IndexPageProps> = async (
   context
-): Promise<GetStaticPropsResult<IndexPageProps>> {
+) => {
   const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
     "node--article",
     context,
@@ -71,8 +75,8 @@ export async function getStaticProps(
     props: {
       nodes,
       menus: await getMenus(context),
-      ...(await serverSideTranslations(context.locale, ["common"])),
+      ...(await serverSideTranslations(context.locale)),
     },
     revalidate: 60,
   };
-}
+};

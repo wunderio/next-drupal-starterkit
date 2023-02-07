@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Key } from "react";
-import { ParagraphProps } from "components/paragraph";
+
+import { ParagraphProps } from "@/components/paragraph";
 
 type Link = {
   full_url: string;

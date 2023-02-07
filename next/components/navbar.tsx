@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DrupalMenuLinkContent } from "next-drupal";
-import React from "react";
-import classNames from "classnames";
-import LocaleSwitcher from "components/locale-switcher";
-import SearchBoxNavbar from "components/search/search-box-navbar";
+import clsx from "clsx";
+
+import LocaleSwitcher from "@/components/locale-switcher";
+import SearchBoxNavbar from "@/components/search/search-box-navbar";
 
 // We have applied a patch on the Drupal side that adds the langcode
 // property to the response of jsonapi menus, so we extend the type here:
@@ -66,7 +66,7 @@ function MenuLink({ link }: { link: DrupalMenuLinkContentWithLangcode }) {
         href={link.url}
         locale={locale}
         passHref
-        className={classNames(
+        className={clsx(
           "py-4 hover:underline text-sm md:text-base",
           link.url === actualPath ? "font-semibold" : "font-normal"
         )}
