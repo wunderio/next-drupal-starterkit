@@ -8,7 +8,7 @@ interface FooterProps {
 export function Footer({ links }: FooterProps) {
   return (
     <footer className="border-t">
-      <div className="container px-6 py-12 mx-auto">
+      <div className="container mx-auto px-6 py-12">
         <div className="flex flex-col items-center justify-between text-sm md:flex-row">
           <p className="mb-6 md:mb-0">
             © {new Date().getFullYear()} Next4drupal example
@@ -20,7 +20,7 @@ export function Footer({ links }: FooterProps) {
                   <Link
                     href={link.url}
                     passHref
-                    className="no-underline text-wunderpurple-500 hover:text-wunderpurple-300"
+                    className="text-wunderpurple-500 no-underline hover:text-wunderpurple-300"
                   >
                     {link.title}
                   </Link>

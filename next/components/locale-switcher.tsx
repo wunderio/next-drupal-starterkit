@@ -28,7 +28,7 @@ export default function LocaleSwitcher() {
     <nav>
       <button
         type="button"
-        className="flex flex-1 relative p-2.5"
+        className="relative flex flex-1 p-2.5"
         onClick={toggleList}
       >
         <div className={`${activeLocale === language ? "font-bold" : ""} pr-3`}>
@@ -42,7 +42,7 @@ export default function LocaleSwitcher() {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="h-6 w-6"
           >
             <path
               strokeLinecap="round"
@@ -58,7 +58,7 @@ export default function LocaleSwitcher() {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="h-6 w-6"
           >
             <path
               strokeLinecap="round"

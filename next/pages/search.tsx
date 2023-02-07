@@ -91,7 +91,7 @@ export default function SearchPage({
                     </div>
                     <div className="flex flex-row">
                       <div className="flex">
-                        <aside className="w-56 flex-none mr-2">
+                        <aside className="mr-2 w-56 flex-none">
                           {wasSearched && results.length > 0 && (
                             <div className="p-2">
                               <Facet

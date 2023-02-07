@@ -36,7 +36,7 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
             }}
           />
           {node.field_image.resourceIdObjMeta.title && (
-            <figcaption className="py-2 text-sm text-center text-gray-600">
+            <figcaption className="py-2 text-center text-sm text-gray-600">
               {node.field_image.resourceIdObjMeta.title}
             </figcaption>
           )}

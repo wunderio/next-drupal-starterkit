@@ -24,7 +24,7 @@ function MultiCheckboxFacet({
       {showSearch && (
         <div>
           <input
-            className="border w-full p-1 my-1"
+            className="my-1 w-full border p-1"
             type="search"
             placeholder={searchPlaceholder || "Search"}
             onChange={(e) => {
@@ -52,7 +52,7 @@ function MultiCheckboxFacet({
                     option.value
                   )}`}
                   type="checkbox"
-                  className="w-4 h-4 text-wunderpurple-600 bg-gray-100 border-gray-300 rounded focus:ring-wunderpurple-500"
+                  className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-wunderpurple-600 focus:ring-wunderpurple-500"
                   checked={checked}
                   onChange={() => (checked ? onRemove(value) : onSelect(value))}
                 />
@@ -70,7 +70,7 @@ function MultiCheckboxFacet({
       {showMore && (
         <button
           type="button"
-          className="text-xs bg-transparent hover:bg-wunderpurple-500 text-wunderpurple-700 font-semibold hover:text-white py-2 px-4 border border-wunderpurple-500 hover:border-transparent rounded"
+          className="rounded border border-wunderpurple-500 bg-transparent py-2 px-4 text-xs font-semibold text-wunderpurple-700 hover:border-transparent hover:bg-wunderpurple-500 hover:text-white"
           onClick={onMoreClick}
           aria-label={t("search-show-more-options")}
         >

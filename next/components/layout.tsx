@@ -16,10 +16,10 @@ export function Layout({ menus, children }: LayoutProps) {
   return (
     <>
       <PreviewAlert />
-      <div className="max-w-screen-xl px-6 mx-auto">
+      <div className="mx-auto max-w-screen-xl px-6">
         <Navbar links={menus.main} />
 
-        <main className="container py-10 mx-auto">{children}</main>
+        <main className="container mx-auto py-10">{children}</main>
         <Footer links={menus.footer} />
       </div>
     </>

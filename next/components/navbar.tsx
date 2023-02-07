@@ -23,15 +23,15 @@ export function Navbar({ links, ...props }: NavbarProps) {
 
   return (
     <header
-      className="static top-0 z-50 flex-shrink-0 py-4 bg-white md:sticky"
+      className="static top-0 z-50 flex-shrink-0 bg-white py-4 md:sticky"
       {...props}
     >
-      <div className="container flex flex-col items-start justify-between px-6 mx-auto md:flex-row md:items-center">
+      <div className="container mx-auto flex flex-col items-start justify-between px-6 md:flex-row md:items-center">
         <Link href="/" locale={locale} className="text-lg font-bold">
           Home
         </Link>
         {links ? <Menu items={links} /> : null}
-        <div className="absolute flex justify-end md:static top-2 right-4">
+        <div className="absolute top-2 right-4 flex justify-end md:static">
           <SearchBoxNavbar />
           <LocaleSwitcher />
         </div>
@@ -46,7 +46,7 @@ function Menu({ items }: { items: DrupalMenuLinkContentWithLangcode[] }) {
   const filteredItems = items.filter((link) => link.langcode == locale);
   return (
     <ul
-      className="grid grid-flow-col gap-4 mx-auto mt-6 md:mt-0 auto-cols-auto md:auto-rows-auto md:gap-8 lg:gap-12"
+      className="mx-auto mt-6 grid auto-cols-auto grid-flow-col gap-4 md:mt-0 md:auto-rows-auto md:gap-8 lg:gap-12"
       data-cy="navbar-menu"
     >
       {filteredItems.map((item) => (
@@ -67,7 +67,7 @@ function MenuLink({ link }: { link: DrupalMenuLinkContentWithLangcode }) {
         locale={locale}
         passHref
         className={clsx(
-          "py-4 hover:underline text-sm md:text-base",
+          "py-4 text-sm hover:underline md:text-base",
           link.url === actualPath ? "font-semibold" : "font-normal"
         )}
       >
