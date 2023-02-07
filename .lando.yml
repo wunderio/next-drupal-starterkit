@@ -1,5 +1,5 @@
 name: next4drupal-project
-recipe: drupal9
+recipe: drupal10
 
 config:
   php: "8.1"
@@ -77,9 +77,9 @@ services:
         DRUPAL_REVALIDATE_SECRET: mysecret
         HASH_SALT: notsosecurehashnotsosecurehashnotsosecurehash
         ENVIRONMENT_NAME: lando
-        DB_NAME_DRUPAL: drupal9
-        DB_USER_DRUPAL: drupal9
-        DB_PASS_DRUPAL: drupal9
+        DB_NAME_DRUPAL: drupal10
+        DB_USER_DRUPAL: drupal10
+        DB_PASS_DRUPAL: drupal10
         DB_HOST_DRUPAL: database
         DRUSH_OPTIONS_URI: https://next4drupal-project.lndo.site
         # Support debugging with XDEBUG 3.
@@ -167,4 +167,4 @@ env_file:
   - .lando/.env
 
 # Tested with Lando version
-version: v3.6.1
+version: v3.11.1
