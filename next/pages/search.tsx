@@ -65,73 +65,71 @@ export default function SearchPage({
 
         <h1 className="mb-10 text-6xl font-black">{t("search")}</h1>
 
-        <main>
-          <SearchProvider config={config}>
-            <WithSearch
-              mapContextToProps={({ wasSearched, results }) => ({
-                wasSearched,
-                results,
-              })}
-            >
-              {({ wasSearched, results }) => (
-                <ErrorBoundary>
-                  <div className="search-ui">
-                    <SearchBox
-                      searchAsYouType={false}
-                      shouldClearFilters={false}
-                      // Here we specify out own custom
-                      // component to render the search bar:
-                      inputView={SearchBoxInput}
-                      className="py-2"
-                    />
-                    <div className="search-results-header flex items-center justify-end gap-x-5 py-2">
-                      {wasSearched && results.length > 0 && (
-                        <PagingInfo view={PagingInfoView} />
-                      )}
-                    </div>
-                    <div className="flex flex-row">
-                      <div className="flex">
-                        <aside className="mr-2 w-56 flex-none">
-                          {wasSearched && results.length > 0 && (
-                            <div className="p-2">
-                              <Facet
-                                view={MultiCheckboxFacet}
-                                field="tags"
-                                label={t("tags")}
-                              />
-                              <Facet
-                                view={MultiCheckboxFacet}
-                                field="content_type"
-                                label={t("content-type")}
-                              />
-                            </div>
-                          )}
-                        </aside>
-
-                        <div className="flex-1 ">
-                          <div className="search-results py-2">
-                            <Results
-                              shouldTrackClickThrough={false}
-                              resultView={SearchResult}
+        <SearchProvider config={config}>
+          <WithSearch
+            mapContextToProps={({ wasSearched, results }) => ({
+              wasSearched,
+              results,
+            })}
+          >
+            {({ wasSearched, results }) => (
+              <ErrorBoundary>
+                <div className="search-ui">
+                  <SearchBox
+                    searchAsYouType={false}
+                    shouldClearFilters={false}
+                    // Here we specify out own custom
+                    // component to render the search bar:
+                    inputView={SearchBoxInput}
+                    className="py-2"
+                  />
+                  <div className="search-results-header flex items-center justify-end gap-x-5 py-2">
+                    {wasSearched && results.length > 0 && (
+                      <PagingInfo view={PagingInfoView} />
+                    )}
+                  </div>
+                  <div className="flex flex-row">
+                    <div className="flex">
+                      <aside className="mr-2 w-56 flex-none">
+                        {wasSearched && results.length > 0 && (
+                          <div className="p-2">
+                            <Facet
+                              view={MultiCheckboxFacet}
+                              field="tags"
+                              label={t("tags")}
+                            />
+                            <Facet
+                              view={MultiCheckboxFacet}
+                              field="content_type"
+                              label={t("content-type")}
                             />
                           </div>
-                          <div className="search-results-footer p-2">
-                            {wasSearched && results.length > 0 && <Paging />}
-                          </div>
+                        )}
+                      </aside>
+
+                      <div className="flex-1 ">
+                        <div className="search-results py-2">
+                          <Results
+                            shouldTrackClickThrough={false}
+                            resultView={SearchResult}
+                          />
+                        </div>
+                        <div className="search-results-footer p-2">
+                          {wasSearched && results.length > 0 && <Paging />}
                         </div>
                       </div>
                     </div>
-                    {wasSearched && results.length == 0 && (
-                      <div className="search-no-results">
-                        {t("no-results-found")}
-                      </div>
-                    )}
                   </div>
-                </ErrorBoundary>
-              )}
-            </WithSearch>
-          </SearchProvider>
-        </main>
+                  {wasSearched && results.length == 0 && (
+                    <div className="search-no-results">
+                      {t("no-results-found")}
+                    </div>
+                  )}
+                </div>
+              </ErrorBoundary>
+            )}
+          </WithSearch>
+        </SearchProvider>
       </Layout>
     </LangContext.Provider>
   );
