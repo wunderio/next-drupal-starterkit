@@ -32,7 +32,7 @@
         "elasticsearch/elasticsearch": "^7.0",
         "vlucas/phpdotenv": "^5.4",
         "webflo/drupal-finder": "^1.2",
-        "wunderio/drupal-ping": "^2.3"
+        "wunderio/drupal-ping": "^2.4"
     },
     "require-dev": {
         "drupal/core-dev": "^10.0",
