@@ -21,10 +21,10 @@ config:
       ensure_exists:
         label: 'Wunder content editor'
       grantPermissions:
-        - 'create wunder_landing_page content'
-        - 'delete any wunder_landing_page content'
-        - 'delete own wunder_landing_page content'
-        - 'edit any wunder_landing_page content'
-        - 'edit own wunder_landing_page content'
-        - 'revert wunder_landing_page revisions'
-        - 'view wunder_landing_page revisions'
+        - 'create landing_page content'
+        - 'delete any landing_page content'
+        - 'delete own landing_page content'
+        - 'edit any landing_page content'
+        - 'edit own landing_page content'
+        - 'revert landing_page revisions'
+        - 'view landing_page revisions'
