@@ -45,10 +45,7 @@ function Menu({ items }: { items: DrupalMenuLinkContentWithLangcode[] }) {
   const { locale } = useRouter();
   const filteredItems = items.filter((link) => link.langcode == locale);
   return (
-    <ul
-      className="mx-auto mt-6 grid auto-cols-auto grid-flow-col gap-4 md:mt-0 md:auto-rows-auto md:gap-8 lg:gap-12"
-      data-cy="navbar-menu"
-    >
+    <ul className="mx-auto mt-6 grid auto-cols-auto grid-flow-col gap-4 md:mt-0 md:auto-rows-auto md:gap-8 lg:gap-12">
       {filteredItems.map((item) => (
         <MenuLink link={item} key={item.id} />
       ))}
@@ -65,7 +62,6 @@ function MenuLink({ link }: { link: DrupalMenuLinkContentWithLangcode }) {
       <Link
         href={link.url}
         locale={locale}
-        passHref
         className={clsx(
           "py-4 text-sm hover:underline md:text-base",
           link.url === actualPath ? "font-semibold" : "font-normal"
