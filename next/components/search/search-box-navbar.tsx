@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import React from "react";
 
 export default function SearchBoxNavbar() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const router = useRouter();
   return (
     <form

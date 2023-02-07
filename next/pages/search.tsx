@@ -1,11 +1,10 @@
 import "@elastic/react-search-ui-views/lib/styles/styles.css";
 
-import { GetStaticPropsResult } from "next";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React from "react";
 import {
   ErrorBoundary,
   Facet,
@@ -16,24 +15,27 @@ import {
   SearchProvider,
   WithSearch,
 } from "@elastic/react-search-ui";
-import { Layout, LayoutProps } from "components/layout";
-import { SearchBoxInput } from "components/search/search-box-input";
-import MultiCheckboxFacet from "components/search/search-multicheckbox-facet";
-import PagingInfoView from "components/search/search-paging-info";
-import { SearchResult } from "components/search/search-result";
-import { getMenus } from "lib/get-menus";
-import buildRequest from "lib/search-ui-helpers/buildRequest";
-import buildState from "lib/search-ui-helpers/buildState";
-import runRequest from "lib/search-ui-helpers/runRequest";
-import { setLanguageLinks } from "lib/utils";
+
+import { Layout, LayoutProps } from "@/components/layout";
+import { SearchBoxInput } from "@/components/search/search-box-input";
+import MultiCheckboxFacet from "@/components/search/search-multicheckbox-facet";
+import PagingInfoView from "@/components/search/search-paging-info";
+import { SearchResult } from "@/components/search/search-result";
+import { getMenus } from "@/lib/get-menus";
+import buildRequest from "@/lib/search-ui-helpers/buildRequest";
+import buildState from "@/lib/search-ui-helpers/buildState";
+import runRequest from "@/lib/search-ui-helpers/runRequest";
+import { setLanguageLinks } from "@/lib/utils";
 
 import { LangContext } from "./_app";
 
 /**
  * Contains the search provider component.
  */
-export default function SearchPage({ menus }: LayoutProps) {
-  const { t } = useTranslation("common");
+export default function SearchPage({
+  menus,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation();
   const router = useRouter();
   const config = {
     debug: false,
@@ -135,14 +137,12 @@ export default function SearchPage({ menus }: LayoutProps) {
   );
 }
 
-export async function getStaticProps(
-  context
-): Promise<GetStaticPropsResult<LayoutProps>> {
+export const getStaticProps: GetStaticProps<LayoutProps> = async (context) => {
   return {
     props: {
       menus: await getMenus(context),
-      ...(await serverSideTranslations(context.locale, ["common"])),
+      ...(await serverSideTranslations(context.locale)),
     },
     revalidate: 60,
   };
-}
+};

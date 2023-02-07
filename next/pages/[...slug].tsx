@@ -2,15 +2,15 @@ import { GetStaticPathsResult, GetStaticPropsResult } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React from "react";
-import { Layout, LayoutProps } from "components/layout";
-import { NodeArticle } from "components/node--article";
-import { NodeBasicPage } from "components/node--basic-page";
-import { NodeLandingPage } from "components/node--landing-page";
-import { drupal } from "lib/drupal";
-import { getMenus } from "lib/get-menus";
-import { getNodePageJsonApiParams } from "lib/get-params";
-import { getNodeTranslatedVersions, setLanguageLinks } from "lib/utils";
+
+import { Layout, LayoutProps } from "@/components/layout";
+import { NodeArticle } from "@/components/node--article";
+import { NodeBasicPage } from "@/components/node--basic-page";
+import { NodeLandingPage } from "@/components/node--landing-page";
+import { drupal } from "@/lib/drupal";
+import { getMenus } from "@/lib/get-menus";
+import { getNodePageJsonApiParams } from "@/lib/get-params";
+import { getNodeTranslatedVersions, setLanguageLinks } from "@/lib/utils";
 
 import { LangContext } from "./_app";
 
@@ -117,10 +117,7 @@ export async function getStaticProps(
     props: {
       resource,
       menus: await getMenus(context),
-      ...(await serverSideTranslations(
-        context.locale ?? context.defaultLocale,
-        ["common"]
-      )),
+      ...(await serverSideTranslations(context.locale)),
     },
     revalidate: 60,
   };

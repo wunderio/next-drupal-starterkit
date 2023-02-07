@@ -1,5 +1,6 @@
 import { DrupalNode } from "next-drupal";
-import { Paragraph } from "components/paragraph";
+
+import { Paragraph } from "@/components/paragraph";
 
 interface NodeLandingPage {
   node: DrupalNode;

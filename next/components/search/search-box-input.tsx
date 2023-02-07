@@ -1,12 +1,11 @@
 import { useTranslation } from "next-i18next";
-import React from "react";
 import { InputViewProps } from "@elastic/react-search-ui-views";
 
 export const SearchBoxInput: React.ComponentType<InputViewProps> = ({
   getInputProps,
   getButtonProps,
 }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   return (
     <div className="relative w-full">
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

@@ -2,14 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
-import { absoluteUrl, formatDate } from "lib/utils";
+
+import { absoluteUrl, formatDate } from "@/lib/utils";
 
 interface NodeArticleTeaserProps {
   node: DrupalNode;
 }
 
 export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   return (
     <article {...props}>
       <Link
