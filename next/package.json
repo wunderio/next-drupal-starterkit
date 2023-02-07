@@ -9,6 +9,7 @@
     "start": "next start",
     "preview": "next build && next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
