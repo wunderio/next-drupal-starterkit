@@ -5,7 +5,7 @@
 # for all possible options.
 
 php:
-  drupalCoreVersion: "9"
+  drupalCoreVersion: "10"
 
 # Configure reference data that will be used when creating new environments.
 referenceData:
