@@ -16,12 +16,9 @@ export function Layout({ menus, children }: LayoutProps) {
   return (
     <>
       <PreviewAlert />
-      <div className="mx-auto max-w-screen-xl px-6">
-        <Header links={menus.main} />
-
-        <main className="container mx-auto py-10">{children}</main>
-        <Footer links={menus.footer} />
-      </div>
+      <Header links={menus.main} />
+      <main className="mx-auto max-w-6xl grow p-6">{children}</main>
+      <Footer links={menus.footer} />
     </>
   );
 }

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DrupalMenuLinkContent } from "next-drupal";
@@ -5,6 +6,7 @@ import clsx from "clsx";
 
 import LocaleSwitcher from "@/components/locale-switcher";
 import SearchBoxHeader from "@/components/search/search-box-header";
+import WunderIcon from "@/styles/icons/wunder.svg";
 
 // We have applied a patch on the Drupal side that adds the langcode
 // property to the response of jsonapi menus, so we extend the type here:
@@ -18,24 +20,20 @@ interface HeaderProps {
   links: DrupalMenuLinkContentWithLangcode[];
 }
 
-export function Header({ links, ...props }: HeaderProps) {
+export function Header({ links }: HeaderProps) {
   const { locale } = useRouter();
-
   return (
-    <header
-      className="static top-0 z-50 flex-shrink-0 bg-white py-4 md:sticky"
-      {...props}
-    >
-      <div className="container mx-auto flex flex-col items-start justify-between px-6 md:flex-row md:items-center">
-        <Link href="/" locale={locale} className="text-lg font-bold">
-          Home
+    <header className="z-50 flex-shrink-0 border-b bg-white md:sticky md:top-0">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Link href="/" locale={locale}>
+          <WunderIcon className="w-32 text-wunderpurple-700" />
         </Link>
-        {links ? <Menu items={links} /> : null}
+        {links && <Menu items={links} />}
         <div className="absolute top-2 right-4 flex justify-end md:static">
           <SearchBoxHeader />
           <LocaleSwitcher />
         </div>
-      </div>
+      </nav>
     </header>
   );
 }

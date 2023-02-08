@@ -8,26 +8,25 @@ interface FooterProps {
 export function Footer({ links }: FooterProps) {
   return (
     <footer className="border-t">
-      <div className="container mx-auto px-6 py-12">
-        <div className="flex flex-col items-center justify-between text-sm md:flex-row">
-          <p className="mb-6 md:mb-0">
-            © {new Date().getFullYear()} Next4drupal example
-          </p>
-          {links?.length ? (
-            <ul className="flex gap-4">
-              {links.map((link) => (
-                <li key={link.id}>
-                  <Link
-                    href={link.url}
-                    passHref
-                    className="text-wunderpurple-500 no-underline hover:text-wunderpurple-300"
-                  >
-                    {link.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="flex flex-col items-center gap-2 py-8 text-lg sm:flex-row sm:justify-between">
+          {links.length > 0 && (
+            <nav>
+              <ul className="flex gap-x-4">
+                {links.map((link) => (
+                  <li key={link.id}>
+                    <Link
+                      href={link.url}
+                      className="text-wunderpurple-500 no-underline hover:text-wunderpurple-300"
+                    >
+                      {link.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+          <p>© {new Date().getFullYear()} Wunder</p>
         </div>
       </div>
     </footer>

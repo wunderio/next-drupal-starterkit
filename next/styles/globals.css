@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#__next {
+  @apply flex min-h-screen flex-col;
+}
