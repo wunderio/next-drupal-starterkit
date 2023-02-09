@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { LangContext } from "pages/_app";
 
-export default function LocaleSwitcher() {
+export default function LanguageSwitcher() {
   const router = useRouter();
   const { locales, locale: activeLocale } = router;
   const { languageLinks } = useContext(LangContext);

@@ -1,10 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DrupalMenuLinkContent } from "next-drupal";
 import clsx from "clsx";
 
-import LocaleSwitcher from "@/components/locale-switcher";
+import LanguageSwitcher from "@/components/language-switcher";
 import SearchBoxHeader from "@/components/search/search-box-header";
 import WunderIcon from "@/styles/icons/wunder.svg";
 
@@ -31,7 +30,7 @@ export function Header({ links }: HeaderProps) {
         {links && <Menu items={links} />}
         <div className="absolute top-2 right-4 flex justify-end md:static">
           <SearchBoxHeader />
-          <LocaleSwitcher />
+          <LanguageSwitcher />
         </div>
       </nav>
     </header>
