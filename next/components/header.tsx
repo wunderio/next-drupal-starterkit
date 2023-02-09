@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { DrupalMenuLinkContent } from "next-drupal";
+import { useTranslation } from "next-i18next";
 import clsx from "clsx";
 
 import LanguageSwitcher from "@/components/language-switcher";
-import SearchBoxHeader from "@/components/search/search-box-header";
+import HamburgerIcon from "@/styles/icons/hamburger.svg";
+import MagnifierIcon from "@/styles/icons/magnifier.svg";
 import WunderIcon from "@/styles/icons/wunder.svg";
 
 // We have applied a patch on the Drupal side that adds the langcode
@@ -20,24 +22,50 @@ interface HeaderProps {
 }
 
 export function Header({ links }: HeaderProps) {
-  const { locale } = useRouter();
   return (
-    <header className="z-50 flex-shrink-0 border-b bg-white md:sticky md:top-0">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" locale={locale}>
-          <WunderIcon className="w-32 text-wunderpurple-700" />
-        </Link>
-        {links && <Menu items={links} />}
-        <div className="absolute top-2 right-4 flex justify-end md:static">
-          <SearchBoxHeader />
+    <header className="z-50 flex-shrink-0 border-b bg-white text-wunderpurple-700 md:sticky md:top-0">
+      <nav className="mx-auto flex max-w-6xl flex-row items-center justify-between px-6 py-4">
+        <HomeLink />
+        <div className="flex flex-row items-center justify-end gap-8">
           <LanguageSwitcher />
+          <SearchLink />
+          <Menu items={links} />
         </div>
       </nav>
     </header>
   );
 }
 
+function HomeLink() {
+  const { locale } = useRouter();
+  const { t } = useTranslation();
+  return (
+    <Link href="/" locale={locale} className="inline">
+      <WunderIcon className="w-32" />
+      <span className="sr-only">{t("homepage-link")}</span>
+    </Link>
+  );
+}
+
+function SearchLink() {
+  const { locale } = useRouter();
+  const { t } = useTranslation();
+  return (
+    <Link href="/search" locale={locale} className="hover:underline">
+      <span className="hidden sm:mr-2 sm:inline">{t("search")}</span>
+      <MagnifierIcon className="inline-block h-6 w-6" />
+    </Link>
+  );
+}
+
 function Menu({ items }: { items: DrupalMenuLinkContentWithLangcode[] }) {
+  // todo: menu functionality
+  return (
+    <button onClick={() => alert("Toggle menu")}>
+      <HamburgerIcon className="inline h-6 w-6" />
+    </button>
+  );
+
   // Only show the menu items that match the current locale:
   const { locale } = useRouter();
   const filteredItems = items.filter((link) => link.langcode == locale);
