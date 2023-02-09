@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import clsx from "clsx";
 import { LangContext } from "pages/_app";
+
+import ChevronIcon from "@/styles/icons/chevron.svg";
 
 export default function LanguageSwitcher() {
   const router = useRouter();
@@ -34,39 +37,7 @@ export default function LanguageSwitcher() {
         <div className={`${activeLocale === language ? "font-bold" : ""} pr-3`}>
           {languageLinks[language]?.name}{" "}
         </div>
-        {/* icons from https://heroicons.com/  */}
-        {open && (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4.5 15.75l7.5-7.5 7.5 7.5"
-            />
-          </svg>
-        )}
-        {!open && (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-            />
-          </svg>
-        )}
+        <ChevronIcon className={clsx("h-6 w-6", open && "rotate-180")} />
       </button>
       {open && (
         <ul className="block">
