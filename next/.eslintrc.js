@@ -14,7 +14,12 @@ module.exports = {
     },
   },
   plugins: ["prettier"],
-  extends: ["eslint:recommended", "next", "prettier"],
+  extends: [
+    "eslint:recommended",
+    "plugin:storybook/recommended",
+    "next",
+    "prettier",
+  ],
   rules: {
     "prettier/prettier": "error",
   },
@@ -38,22 +43,24 @@ module.exports = {
       ],
       rules: {
         "prettier/prettier": "error",
-
         // Relax some TypeScript rules to make them more accessible to beginners.
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
-
         // Sort imports.
         "simple-import-sort/imports": [
           "error",
           {
             groups: [
-              ["^\\u0000"], // Side effect imports.
-              ["^next", "^react", "^@?\\w"], // Packages. Put `next`/`react`-related packages first.
-              ["^@/(components|lib|styles)(/.*|$)"], // Internal paths - change these to match your project structure defined in tsconfig.json.
-              ["^\\.\\.(?!/?$)", "^\\.\\./?$"], // Parent imports. Put `..` last.
+              ["^\\u0000"],
+              // Side effect imports.
+              ["^next", "^react", "^@?\\w"],
+              // Packages. Put `next`/`react`-related packages first.
+              ["^@/(components|lib|styles)(/.*|$)"],
+              // Internal paths - change these to match your project structure defined in tsconfig.json.
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Parent imports. Put `..` last.
               ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"], // Other relative imports. Put same-folder imports and `.` last.
             ],
           },
