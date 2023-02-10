@@ -22,7 +22,7 @@ export function LanguageSwitcher() {
     <nav>
       <button type="button" className="hover:underline" onClick={toggle}>
         <span>{languageLinks[locale]?.name}</span>
-        <GlobeIcon className="ml-2 inline-block h-6 w-6" />
+        <GlobeIcon className="ml-2 hidden h-6 w-6 sm:inline-block" />
       </button>
       <ul
         className={clsx(
