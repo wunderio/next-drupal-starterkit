@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the wunder_next module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function wunder_next_install() {
+
+  // Currently these configs cannot be set via recipes, so we
+  // have to do this here.
+  // If this issue is resolved these can be moved as configuration
+  // import where they actually belong:
+  // https://www.drupal.org/project/distributions_recipes/issues/3307646
+  // Set the frontpage:
+  \Drupal::configFactory()
+    ->getEditable('system.site')
+    ->set('page.front', '/admin/content')
+    ->save();
+
+  // Set claro as the front theme as well:
+  \Drupal::configFactory()
+    ->getEditable('system.theme')
+    ->set('admin', 'claro')
+    ->save();
+
+}
