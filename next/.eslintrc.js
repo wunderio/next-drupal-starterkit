@@ -59,7 +59,7 @@ module.exports = {
               // Side effect imports.
               ["^next", "^react", "^@?\\w"],
               // Packages. Put `next`/`react`-related packages first.
-              ["^@/(components|lib|pages|styles)(/.*|$)"],
+              ["^@/(components|lib|pages|styles|types)(/.*|$)"],
               // Internal paths - change these to match your project structure defined in tsconfig.json.
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
               // Parent imports. Put `..` last.
