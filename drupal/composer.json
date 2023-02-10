@@ -27,6 +27,7 @@
         "drupal/next": "^1.6",
         "drupal/paragraphs": "^1.15",
         "drupal/redirect": "^1.8",
+        "drupal/require_login": "^3.0",
         "drupal/simplei": "^2.0@beta",
         "drush/drush": "^11.4",
         "elasticsearch/elasticsearch": "^7.0",

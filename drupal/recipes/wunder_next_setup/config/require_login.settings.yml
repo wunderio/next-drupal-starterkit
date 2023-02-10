@@ -1,0 +1,29 @@
+login_path: ''
+login_message: ''
+login_destination: ''
+requirements:
+  language:
+    id: language
+    negate: false
+    context_mapping:
+      language: '@language.current_language_context:language_interface'
+    langcodes: {  }
+  request_path:
+    id: request_path
+    negate: true
+    pages: "/subrequests/*\r\n/jsonapi\r\n/jsonapi/*\r\n/router/translate-path\r\n/next/preview-url\r\n/oauth/*\r\n/wunder_search/proxy"
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles: {  }
+  'entity_bundle:taxonomy_term':
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    context_mapping:
+      taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
+    bundles: {  }
+extra:
+  include_403: true
+  include_404: true

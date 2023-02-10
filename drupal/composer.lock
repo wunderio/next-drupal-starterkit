@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ca5456f975f86e548a6508e18bc39ba",
+    "content-hash": "c0acb598f4114f1a7b6bfa09370adb42",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2361,6 +2361,56 @@
             "homepage": "https://www.drupal.org/project/redirect",
             "support": {
                 "source": "https://git.drupalcode.org/project/redirect"
+            }
+        },
+        {
+            "name": "drupal/require_login",
+            "version": "3.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/require_login.git",
+                "reference": "3.0.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/require_login-3.0.4.zip",
+                "reference": "3.0.4",
+                "shasum": "74e7c65a0ccd583100396d4daadea01d11d5aa52"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10",
+                "php": ">=7.4"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "3.0.4",
+                    "datestamp": "1669657574",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Phillips",
+                    "homepage": "https://www.drupal.org/user/459772",
+                    "email": "rob@imagexmedia.com"
+                },
+                {
+                    "name": "sindurig",
+                    "homepage": "https://www.drupal.org/user/3684910"
+                }
+            ],
+            "description": "Easily require user authentication on all pages.",
+            "homepage": "https://www.drupal.org/project/require_login",
+            "support": {
+                "source": "https://git.drupalcode.org/project/require_login"
             }
         },
         {
