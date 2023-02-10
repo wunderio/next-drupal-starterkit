@@ -2,66 +2,52 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import clsx from "clsx";
-import { LangContext } from "pages/_app";
 
-import ChevronIcon from "@/styles/icons/chevron.svg";
+import GlobeIcon from "@/styles/icons/globe.svg";
 
-export default function LanguageSwitcher() {
-  const router = useRouter();
-  const { locales, locale: activeLocale } = router;
+import { LangContext } from "@/pages/_app";
+
+export function LanguageSwitcher() {
+  const { locale, locales } = useRouter();
   const { languageLinks } = useContext(LangContext);
 
-  const [open, setOpen] = useState(false);
-  const toggleList = () => {
-    setOpen(!open);
-  };
-  const [language, setLanguage] = useState(activeLocale);
-  const [languages, setLanguages] = useState(locales);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen((o) => !o);
+  const close = () => setIsOpen(false);
 
-  const selectedLanguage = (locale) => {
-    setLanguage(locale);
-    setOpen(false);
-  };
+  useEffect(close, [locale]);
 
-  useEffect(() => {
-    setLanguages(locales.filter((locale) => locale != language));
-  }, [language, locales]);
+  // todo: close on click outside
 
   return (
     <nav>
-      <button
-        type="button"
-        className="relative flex flex-1 p-2.5"
-        onClick={toggleList}
-      >
-        <div className={`${activeLocale === language ? "font-bold" : ""} pr-3`}>
-          {languageLinks[language]?.name}{" "}
-        </div>
-        <ChevronIcon className={clsx("h-6 w-6", open && "rotate-180")} />
+      <button type="button" className="hover:underline" onClick={toggle}>
+        <span>{languageLinks[locale]?.name}</span>
+        <GlobeIcon className="ml-2 inline-block h-6 w-6" />
       </button>
-      {open && (
-        <ul className="block">
-          {languages.map((locale) => {
+      <ul
+        className={clsx(
+          "absolute mt-1 w-fit border bg-white",
+          !isOpen && "hidden"
+        )}
+      >
+        {locales
+          .filter((l) => l !== locale)
+          .map((l) => {
+            const { name, path } = languageLinks[l];
             return (
-              <li
-                className="px-3 py-1"
-                key={locale}
-                onClick={() => selectedLanguage(locale)}
-              >
+              <li key={l}>
                 <Link
-                  href={languageLinks[locale].path}
-                  as={languageLinks[locale].path}
-                  locale={locale}
-                  legacyBehavior
-                  passHref
+                  className="block p-2 hover:bg-gray-100"
+                  locale={l}
+                  href={path}
                 >
-                  <a className="block">{languageLinks[locale]?.name}</a>
+                  {name}
                 </Link>
               </li>
             );
           })}
-        </ul>
-      )}
+      </ul>
     </nav>
   );
 }

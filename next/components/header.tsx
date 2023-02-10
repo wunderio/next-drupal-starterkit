@@ -4,7 +4,7 @@ import { DrupalMenuLinkContent } from "next-drupal";
 import { useTranslation } from "next-i18next";
 import clsx from "clsx";
 
-import LanguageSwitcher from "@/components/language-switcher";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import HamburgerIcon from "@/styles/icons/hamburger.svg";
 import MagnifierIcon from "@/styles/icons/magnifier.svg";
 import WunderIcon from "@/styles/icons/wunder.svg";
