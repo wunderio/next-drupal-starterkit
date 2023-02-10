@@ -1,4 +1,4 @@
-import buildStateFacets from "./buildStateFacets";
+import { buildStateFacets } from "./buildStateFacets";
 
 function buildTotalPages(resultsPerPage, totalResults) {
   if (!resultsPerPage) return 0;
@@ -67,7 +67,7 @@ const getPagingEnd = (state, totalResults) => {
 
   We do similar things for facets and totals.
 */
-export default function buildState(response, resultsPerPage, state) {
+export function buildState(response, resultsPerPage, state) {
   console.log(state);
   const results = buildResults(response.hits.hits);
   const totalResults = buildTotalResults(response.hits);

@@ -11,7 +11,7 @@ import { Layout, LayoutProps } from "../components/layout";
 import { NodeArticleTeaser } from "../components/node--article--teaser";
 import { drupal } from "../lib/drupal";
 
-import { LangContext } from "./_app";
+import { LangContext } from "@/pages/_app";
 
 interface IndexPageProps extends LayoutProps {
   nodes: DrupalNode[];

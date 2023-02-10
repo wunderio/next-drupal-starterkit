@@ -1,4 +1,4 @@
-import buildRequestFilter from "./buildRequestFilter";
+import { buildRequestFilter } from "./buildRequestFilter";
 
 function buildFrom(current, resultsPerPage) {
   if (!current || !resultsPerPage) return;
@@ -73,7 +73,7 @@ function buildMatch(searchTerm) {
 
   We then do similar things for searchTerm, filters, sort, etc.
 */
-export default function buildRequest(state) {
+export function buildRequest(state) {
   const {
     current,
     filters,
