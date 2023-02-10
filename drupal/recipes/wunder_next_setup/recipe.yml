@@ -12,6 +12,7 @@ install:
   - wunder_next
   - jsonapi_menu_items
   - redirect
+  - require_login
 config:
   import:
     redirect: '*'
