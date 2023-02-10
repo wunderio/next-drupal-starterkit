@@ -24,7 +24,7 @@ function wunder_next_install() {
   // Set claro as the front theme as well:
   \Drupal::configFactory()
     ->getEditable('system.theme')
-    ->set('admin', 'claro')
+    ->set('default', 'claro')
     ->save();
 
 }
