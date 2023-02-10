@@ -11,7 +11,6 @@ import { drupal } from "@/lib/drupal";
 import { getMenus } from "@/lib/get-menus";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
 import { getNodeTranslatedVersions, setLanguageLinks } from "@/lib/utils";
-
 import { LangContext } from "@/pages/_app";
 
 const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];

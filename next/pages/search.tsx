@@ -26,7 +26,6 @@ import { buildRequest } from "@/lib/search-ui-helpers/buildRequest";
 import { buildState } from "@/lib/search-ui-helpers/buildState";
 import { runRequest } from "@/lib/search-ui-helpers/runRequest";
 import { setLanguageLinks } from "@/lib/utils";
-
 import { LangContext } from "@/pages/_app";
 
 /**

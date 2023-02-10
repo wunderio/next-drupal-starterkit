@@ -3,9 +3,8 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import clsx from "clsx";
 
-import GlobeIcon from "@/styles/icons/globe.svg";
-
 import { LangContext } from "@/pages/_app";
+import GlobeIcon from "@/styles/icons/globe.svg";
 
 export function LanguageSwitcher() {
   const { locale, locales } = useRouter();
