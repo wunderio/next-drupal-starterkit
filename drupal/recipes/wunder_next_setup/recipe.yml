@@ -16,3 +16,10 @@ install:
 config:
   import:
     redirect: '*'
+  actions:
+    system.site:
+      simple_config_update:
+        page.front: '/admin/content'
+    system.theme:
+      simple_config_update:
+        default: 'claro'
