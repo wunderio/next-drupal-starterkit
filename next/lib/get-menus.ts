@@ -1,20 +1,19 @@
 import { GetStaticPropsContext } from "next";
-import { DrupalMenuLinkContent } from "next-drupal";
 
 import { drupal } from "@/lib/drupal";
 
-export async function getMenus(context: GetStaticPropsContext): Promise<{
-  main: DrupalMenuLinkContent[];
-  footer: DrupalMenuLinkContent[];
-}> {
-  const { tree: main } = await drupal.getMenu("main", {
-    locale: context.locale,
-    defaultLocale: context.defaultLocale,
-  });
-  const { tree: footer } = await drupal.getMenu("footer", {
-    locale: context.locale,
-    defaultLocale: context.defaultLocale,
-  });
+export async function getMenus({
+  locale,
+  defaultLocale,
+}: GetStaticPropsContext) {
+  const [{ tree: main }, { tree: footer }] = await Promise.all(
+    ["main", "footer"].map((menu) =>
+      drupal.getMenu(menu, {
+        locale,
+        defaultLocale,
+      })
+    )
+  );
 
   return {
     main,
