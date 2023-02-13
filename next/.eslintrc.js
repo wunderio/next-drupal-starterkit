@@ -57,7 +57,7 @@ module.exports = {
             groups: [
               ["^\\u0000"],
               // Side effect imports.
-              ["^next", "^react", "^@?\\w"],
+              ["^next", "^@next", "^react", "^@?\\w"],
               // Packages. Put `next`/`react`-related packages first.
               ["^@/(components|lib|pages|styles|types)(/.*|$)"],
               // Internal paths - change these to match your project structure defined in tsconfig.json.

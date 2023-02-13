@@ -1,3 +1,5 @@
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
 /** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
@@ -20,6 +22,9 @@ module.exports = {
           800: "#4e33a0",
           900: "#42307f",
         },
+      },
+      fontFamily: {
+        sans: ["var(--font-overpass)", ...fontFamily.sans],
       },
     },
   },
