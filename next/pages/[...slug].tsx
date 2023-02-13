@@ -81,6 +81,18 @@ export async function getStaticProps(
 
   const type = path.jsonapi.resourceName;
 
+  // If we are looking at the path of a frontpage node,
+  // redirect the user to the homepage for that language:
+
+  if (type === "node--frontpage") {
+    return {
+      redirect: {
+        destination: "/" + context.locale,
+        permanent: false,
+      },
+    };
+  }
+
   const resource = await drupal.getResourceFromContext<DrupalNode>(
     path,
     context,
