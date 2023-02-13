@@ -13,7 +13,9 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
   const { t } = useTranslation();
   return (
     <article {...props}>
-      <h1 className="mb-4 text-6xl font-bold leading-tight">{node.title}</h1>
+      <h1 className="mb-4 text-heading-2xl font-bold leading-md">
+        {node.title}
+      </h1>
       <div className="mb-4 text-gray-600">
         {node.uid?.display_name ? (
           <span>{t("posted-by", { author: node.uid?.display_name })}</span>
@@ -44,7 +46,7 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
       )}
       {node.body?.processed && (
         <FormattedText
-          className="mt-4 text-lg leading-relaxed text-gray-500 sm:text-xl lg:text-xl"
+          className="mt-4 text-md leading-xl text-gray-500 sm:text-lg"
           processed={node.body?.processed}
         />
       )}

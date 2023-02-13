@@ -18,7 +18,7 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
         passHref
         className="text-wunderpurple-500 no-underline hover:text-wunderpurple-400"
       >
-        <h2 className="mb-4 text-4xl font-bold">{node.title}</h2>
+        <h2 className="mb-4 text-heading-xl font-bold">{node.title}</h2>
       </Link>
       <div className="mb-4 text-gray-600">
         {node.uid?.display_name ? (

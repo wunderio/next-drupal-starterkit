@@ -62,7 +62,7 @@ export default function SearchPage({
           />
         </Head>
 
-        <h1 className="mb-10 text-6xl font-bold">{t("search")}</h1>
+        <h1 className="mb-10 text-heading-2xl font-bold">{t("search")}</h1>
 
         <SearchProvider config={config}>
           <WithSearch
