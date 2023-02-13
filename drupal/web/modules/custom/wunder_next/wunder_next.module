@@ -27,3 +27,12 @@ function wunder_next_next_site_load($entities) {
     }
   }
 }
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function wunder_next_entity_type_alter(array &$entity_types) {
+  // Add our custom validation constraint that makes sure
+  // that there is only one frontpage node per translation:
+  $entity_types['node']->addConstraint('UniqueFrontpage');
+}
