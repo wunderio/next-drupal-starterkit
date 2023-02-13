@@ -3,7 +3,7 @@ import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { Layout, LayoutProps } from "@/components/layout";
+import { LayoutProps } from "@/components/layout";
 import { NodeArticle } from "@/components/node--article";
 import { NodeBasicPage } from "@/components/node--basic-page";
 import { NodeLandingPage } from "@/components/node--landing-page";
@@ -17,7 +17,6 @@ const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
 
 export default function NodePage({
   resource,
-  menus,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!resource) return null;
 
@@ -27,20 +26,15 @@ export default function NodePage({
         languageLinks: setLanguageLinks(resource.translations),
       }}
     >
-      <Layout menus={menus}>
-        <Head>
-          <title>{resource.title}</title>
-          <meta
-            name="description"
-            content="A Next.js site powered by Drupal."
-          />
-        </Head>
-        {resource.type === "node--page" && <NodeBasicPage node={resource} />}
-        {resource.type === "node--article" && <NodeArticle node={resource} />}
-        {resource.type === "node--landing_page" && (
-          <NodeLandingPage node={resource} />
-        )}
-      </Layout>
+      <Head>
+        <title>{resource.title}</title>
+        <meta name="description" content="A Next.js site powered by Drupal." />
+      </Head>
+      {resource.type === "node--page" && <NodeBasicPage node={resource} />}
+      {resource.type === "node--article" && <NodeArticle node={resource} />}
+      {resource.type === "node--landing_page" && (
+        <NodeLandingPage node={resource} />
+      )}
     </LangContext.Provider>
   );
 }

@@ -10,7 +10,7 @@ import { getNodePageJsonApiParams } from "@/lib/get-params";
 import { setLanguageLinks } from "@/lib/utils";
 import { LangContext } from "@/pages/_app";
 
-import { Layout, LayoutProps } from "../components/layout";
+import { LayoutProps } from "../components/layout";
 import { NodeArticleTeaser } from "../components/node--article--teaser";
 import { drupal } from "../lib/drupal";
 
@@ -22,7 +22,6 @@ interface IndexPageProps extends LayoutProps {
 export default function IndexPage({
   articles,
   frontpageNode,
-  menus,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
   return (
@@ -31,33 +30,31 @@ export default function IndexPage({
         languageLinks: setLanguageLinks([]),
       }}
     >
-      <Layout menus={menus}>
-        <Head>
-          <title>Next.js for Drupal</title>
-          <meta
-            name="description"
-            content="A Next.js site powered by a Drupal backend."
-          />
-        </Head>
-        <div>
-          <>
-            {frontpageNode && <NodeFrontpage node={frontpageNode} />}
-            <h2 className="mb-10 text-heading-2xl font-bold">
-              {t("latest-articles")}
-            </h2>
-            {articles?.length ? (
-              articles.map((node) => (
-                <div key={node.id}>
-                  <NodeArticleTeaser node={node} />
-                  <hr className="my-20" />
-                </div>
-              ))
-            ) : (
-              <p className="py-4">{t("no-content-found")}</p>
-            )}
-          </>
-        </div>
-      </Layout>
+      <Head>
+        <title>Next.js for Drupal</title>
+        <meta
+          name="description"
+          content="A Next.js site powered by a Drupal backend."
+        />
+      </Head>
+      <div>
+        <>
+          {frontpageNode && <NodeFrontpage node={frontpageNode} />}
+          <h2 className="mb-10 text-heading-2xl font-bold">
+            {t("latest-articles")}
+          </h2>
+          {articles?.length ? (
+            articles.map((node) => (
+              <div key={node.id}>
+                <NodeArticleTeaser node={node} />
+                <hr className="my-20" />
+              </div>
+            ))
+          ) : (
+            <p className="py-4">{t("no-content-found")}</p>
+          )}
+        </>
+      </div>
     </LangContext.Provider>
   );
 }
