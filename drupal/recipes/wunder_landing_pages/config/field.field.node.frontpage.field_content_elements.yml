@@ -1,0 +1,38 @@
+uuid: 9ed8528b-05ac-4aa5-8a4a-48624ea856b7
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_elements
+    - node.type.frontpage
+  module:
+    - entity_reference_revisions
+id: node.frontpage.field_content_elements
+field_name: field_content_elements
+entity_type: node
+bundle: frontpage
+label: 'Content elements'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles: null
+    negate: 0
+    target_bundles_drag_drop:
+      formatted_text:
+        weight: 5
+        enabled: false
+      image:
+        weight: 6
+        enabled: false
+      links:
+        weight: 7
+        enabled: false
+      video:
+        weight: 8
+        enabled: false
+field_type: entity_reference_revisions
