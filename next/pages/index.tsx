@@ -2,10 +2,9 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { NodeFrontpage } from "@/components/node--frontpage";
-import { getMenus } from "@/lib/get-menus";
+import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
 import { setLanguageLinks } from "@/lib/utils";
 import { LangContext } from "@/pages/_app";
@@ -84,10 +83,9 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
 
   return {
     props: {
+      ...(await getCommonPageProps(context)),
       articles,
       frontpageNode: frontPageNodes[0] || null,
-      menus: await getMenus(context),
-      ...(await serverSideTranslations(context.locale)),
     },
     revalidate: 60,
   };

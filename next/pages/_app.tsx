@@ -5,12 +5,13 @@ import { appWithTranslation } from "next-i18next";
 import { Overpass } from "@next/font/google";
 import { createContext } from "react";
 
-import { Layout, LayoutProps } from "@/components/layout";
+import { Layout } from "@/components/layout";
+import { CommonPageProps } from "@/lib/get-common-page-props";
 
 import siteConfig from "@/site.config";
 
-interface AppPropsWithPageLayout extends AppProps {
-  pageProps: AppProps["pageProps"] & LayoutProps;
+interface AppPropsWithCommonPageProps extends AppProps {
+  pageProps: CommonPageProps & Record<string, unknown>;
 }
 
 // Language context
@@ -25,7 +26,7 @@ function Fonts({ children }: { children: React.ReactNode }) {
   return <div className={`${overpass.variable} font-sans`}>{children}</div>;
 }
 
-function App({ Component, pageProps }: AppPropsWithPageLayout) {
+function App({ Component, pageProps }: AppPropsWithCommonPageProps) {
   return (
     <Fonts>
       <LangContext.Provider

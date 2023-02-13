@@ -1,14 +1,13 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { LayoutProps } from "@/components/layout";
 import { NodeArticle } from "@/components/node--article";
 import { NodeBasicPage } from "@/components/node--basic-page";
 import { NodeLandingPage } from "@/components/node--landing-page";
 import { drupal } from "@/lib/drupal";
-import { getMenus } from "@/lib/get-menus";
+import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
 import { getNodeTranslatedVersions, setLanguageLinks } from "@/lib/utils";
 import { LangContext } from "@/pages/_app";
@@ -119,9 +118,8 @@ export const getStaticProps: GetStaticProps<NodePageProps> = async (
 
   return {
     props: {
+      ...(await getCommonPageProps(context)),
       resource,
-      menus: await getMenus(context),
-      ...(await serverSideTranslations(context.locale)),
     },
     revalidate: 60,
   };

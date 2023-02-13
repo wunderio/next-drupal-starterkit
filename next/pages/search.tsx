@@ -4,7 +4,6 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {
   ErrorBoundary,
   Facet,
@@ -16,12 +15,14 @@ import {
   WithSearch,
 } from "@elastic/react-search-ui";
 
-import { LayoutProps } from "@/components/layout";
 import { SearchBoxInput } from "@/components/search/search-box-input";
 import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-facet";
 import { PagingInfoView } from "@/components/search/search-paging-info";
 import { SearchResult } from "@/components/search/search-result";
-import { getMenus } from "@/lib/get-menus";
+import {
+  CommonPageProps,
+  getCommonPageProps,
+} from "@/lib/get-common-page-props";
 import { buildRequest } from "@/lib/search-ui-helpers/buildRequest";
 import { buildState } from "@/lib/search-ui-helpers/buildState";
 import { runRequest } from "@/lib/search-ui-helpers/runRequest";
@@ -130,11 +131,12 @@ export default function SearchPage() {
   );
 }
 
-export const getStaticProps: GetStaticProps<LayoutProps> = async (context) => {
+export const getStaticProps: GetStaticProps<CommonPageProps> = async (
+  context
+) => {
   return {
     props: {
-      menus: await getMenus(context),
-      ...(await serverSideTranslations(context.locale)),
+      ...(await getCommonPageProps(context)),
     },
     revalidate: 60,
   };
