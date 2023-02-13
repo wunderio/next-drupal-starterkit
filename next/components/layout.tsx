@@ -14,11 +14,11 @@ export interface LayoutProps {
 
 export function Layout({ menus, children }: LayoutProps) {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <PreviewAlert />
       <Header links={menus.main} />
       <main className="mx-auto w-full max-w-6xl grow p-6">{children}</main>
       <Footer links={menus.footer} />
-    </>
+    </div>
   );
 }
