@@ -1,4 +1,4 @@
-import { GetStaticPathsResult, GetStaticPropsResult } from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -15,14 +15,10 @@ import { LangContext } from "@/pages/_app";
 
 const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
 
-interface NodePageProps extends LayoutProps {
-  resource: DrupalNode;
-}
-interface NodeProps extends NodePageProps {
-  translations: Array<string>;
-}
-
-export default function NodePage({ resource, menus }: NodeProps) {
+export default function NodePage({
+  resource,
+  menus,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!resource) return null;
 
   return (
@@ -49,18 +45,21 @@ export default function NodePage({ resource, menus }: NodeProps) {
   );
 }
 
-export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
+export const getStaticPaths: GetStaticPaths = async (context) => {
   const paths = await drupal.getStaticPathsFromContext(RESOURCE_TYPES, context);
-
   return {
     paths: paths,
     fallback: "blocking",
   };
+};
+
+interface NodePageProps extends LayoutProps {
+  resource: DrupalNode;
 }
 
-export async function getStaticProps(
+export const getStaticProps: GetStaticProps<NodePageProps> = async (
   context
-): Promise<GetStaticPropsResult<NodePageProps>> {
+) => {
   const path = await drupal.translatePathFromContext(context);
 
   if (!path) {
@@ -132,4 +131,4 @@ export async function getStaticProps(
     },
     revalidate: 60,
   };
-}
+};
