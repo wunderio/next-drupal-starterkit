@@ -7,6 +7,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    // These properties *replace* the defaults:
     fontFamily: {
       sans: ["var(--font-overpass)", ...fontFamily.sans],
     },
@@ -15,6 +16,7 @@ module.exports = {
       regular: "400",
       bold: "700",
     },
+    // These properties *extend* the defaults:
     extend: {
       colors: {
         // Generated with https://uicolors.app/
