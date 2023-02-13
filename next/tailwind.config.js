@@ -7,6 +7,14 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      sans: ["var(--font-overpass)", ...fontFamily.sans],
+    },
+    fontWeight: {
+      light: "300",
+      regular: "400",
+      bold: "700",
+    },
     extend: {
       colors: {
         // Generated with https://uicolors.app/
@@ -22,14 +30,6 @@ module.exports = {
           800: "#4e33a0",
           900: "#42307f",
         },
-      },
-      fontFamily: {
-        sans: ["var(--font-overpass)", ...fontFamily.sans],
-      },
-      fontWeight: {
-        light: "300",
-        regular: "400",
-        bold: "700",
       },
     },
   },
