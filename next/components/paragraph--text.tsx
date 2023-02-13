@@ -5,7 +5,7 @@ export function ParagraphText({ paragraph }: ParagraphProps) {
   return (
     <div className="mb-7 flex flex-col items-center text-center md:items-start md:text-left">
       {paragraph.field_heading && (
-        <h2 className="text-2xl font-black sm:text-3xl lg:text-4xl">
+        <h2 className="text-2xl font-bold sm:text-3xl lg:text-4xl">
           {paragraph.field_heading}
         </h2>
       )}

@@ -13,7 +13,7 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
   const { t } = useTranslation();
   return (
     <article {...props}>
-      <h1 className="mb-4 text-6xl font-black leading-tight">{node.title}</h1>
+      <h1 className="mb-4 text-6xl font-bold leading-tight">{node.title}</h1>
       <div className="mb-4 text-gray-600">
         {node.uid?.display_name ? (
           <span>{t("posted-by", { author: node.uid?.display_name })}</span>

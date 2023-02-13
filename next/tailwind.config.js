@@ -26,6 +26,11 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-overpass)", ...fontFamily.sans],
       },
+      fontWeight: {
+        light: "300",
+        regular: "400",
+        bold: "700",
+      },
     },
   },
   corePlugins: {

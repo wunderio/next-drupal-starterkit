@@ -42,7 +42,7 @@ function MenuLink({ link }: { link: DrupalMenuLinkContentWithLangcode }) {
         locale={locale}
         className={clsx(
           "py-4 text-sm hover:underline md:text-base",
-          link.url === actualPath ? "font-semibold" : "font-normal"
+          link.url === actualPath && "font-bold"
         )}
       >
         {link.title}
