@@ -6,12 +6,11 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { getMenus } from "@/lib/get-menus";
 import { setLanguageLinks } from "@/lib/utils";
+import { LangContext } from "@/pages/_app";
 
 import { Layout, LayoutProps } from "../components/layout";
 import { NodeArticleTeaser } from "../components/node--article--teaser";
 import { drupal } from "../lib/drupal";
-
-import { LangContext } from "./_app";
 
 interface IndexPageProps extends LayoutProps {
   nodes: DrupalNode[];

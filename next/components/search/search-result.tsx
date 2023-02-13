@@ -8,13 +8,13 @@ export function SearchResult({ result, onClickLink }: ResultViewProps) {
       key={result.id.raw}
       href={result.path.raw}
       target="_blank"
-      className="block p-4 my-2 border border-wunderpurple-50 rounded-md"
+      className="my-2 block rounded-md border border-wunderpurple-50 p-4"
     >
       <h5 className="mb-1 text-xl font-bold tracking-tight text-wunderpurple-500">
         {result.title.raw}
       </h5>
-      <p className="font-normal text-gray-700 mb-2">{result.body.raw}</p>
-      <span className="uppercase bg-wunderpurple-100 text-wunderpurple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+      <p className="mb-2 font-normal text-gray-700">{result.body.raw}</p>
+      <span className="mr-2 rounded bg-wunderpurple-100 px-2.5 py-0.5 text-xs font-medium uppercase text-wunderpurple-800">
         {result.content_type.raw}
       </span>
     </a>

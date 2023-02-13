@@ -16,7 +16,7 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
       <Link
         href={node.path.alias}
         passHref
-        className="no-underline text-wunderpurple-500 hover:text-wunderpurple-400"
+        className="text-wunderpurple-500 no-underline hover:text-wunderpurple-400"
       >
         <h2 className="mb-4 text-4xl font-bold">{node.title}</h2>
       </Link>
@@ -45,7 +45,7 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
       <Link
         href={node.path.alias}
         passHref
-        className="inline-flex items-center px-6 py-2 border border-wunderpurple-500 text-wunderpurple-500 rounded-full hover:bg-wunderpurple-50"
+        className="inline-flex items-center rounded-full border border-wunderpurple-500 px-6 py-2 text-wunderpurple-500 hover:bg-wunderpurple-50"
       >
         {t("read-article")}
         <svg
@@ -55,7 +55,7 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="w-4 h-4 ml-2"
+          className="ml-2 h-4 w-4"
         >
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>

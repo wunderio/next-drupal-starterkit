@@ -25,7 +25,7 @@ export type PagingInfoContainerProps = BaseContainerProps &
     view?: React.ComponentType<PagingInfoViewProps>;
   };
 
-function PagingInfoView({
+export function PagingInfoView({
   className,
   end,
   searchTerm,
@@ -50,5 +50,3 @@ function PagingInfoView({
     </div>
   );
 }
-
-export default PagingInfoView;

@@ -68,9 +68,5 @@ interface FormattedTextProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function FormattedText({ processed, ...props }: FormattedTextProps) {
-  return (
-    <div data-cy="node--body" {...props}>
-      {parse(processed, options)}
-    </div>
-  );
+  return <div {...props}>{parse(processed, options)}</div>;
 }

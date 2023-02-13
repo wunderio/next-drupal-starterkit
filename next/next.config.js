@@ -9,6 +9,14 @@ const nextConfig = {
   async rewrites() {
     return [];
   },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.tsx$/i,
+      loader: "@svgr/webpack",
+    });
+    return config;
+  },
 };
 
 module.exports = nextConfig;

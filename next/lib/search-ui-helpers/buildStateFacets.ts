@@ -30,7 +30,7 @@ function getValueFacet(aggregations, fieldName) {
  *
  * @param {*} aggregations
  */
-export default function buildStateFacets(aggregations) {
+export function buildStateFacets(aggregations) {
   // Get the facets from the tags field value.
   const tags = getValueFacet(aggregations, "tags");
 

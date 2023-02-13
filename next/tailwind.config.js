@@ -1,3 +1,4 @@
+/** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -15,7 +16,7 @@ module.exports = {
           400: "#8f84f5",
           500: "#7d66ee",
           600: "#6f4ae1",
-          700: "#5b37bf",
+          700: "#5b37bf", // This is the official Wunder purple
           800: "#4e33a0",
           900: "#42307f",
         },

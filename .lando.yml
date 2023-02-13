@@ -94,6 +94,7 @@ services:
     overrides:
       ports:
         - "3000:3000"
+        - "6006:6006"
       environment:
         # This same var is set in the appserver service above, the value should match.
         # This is only used in local development so it can be a not secure value:

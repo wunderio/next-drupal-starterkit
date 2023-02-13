@@ -1,7 +1,7 @@
 import { DrupalMenuLinkContent } from "next-drupal";
 
 import { Footer } from "@/components/footer";
-import { Navbar } from "@/components/navbar";
+import { Header } from "@/components/header";
 import { PreviewAlert } from "@/components/preview-alert";
 
 export interface LayoutProps {
@@ -16,12 +16,9 @@ export function Layout({ menus, children }: LayoutProps) {
   return (
     <>
       <PreviewAlert />
-      <div className="max-w-screen-xl px-6 mx-auto">
-        <Navbar links={menus.main} />
-
-        <main className="container py-10 mx-auto">{children}</main>
-        <Footer links={menus.footer} />
-      </div>
+      <Header links={menus.main} />
+      <main className="mx-auto w-full max-w-6xl grow p-6">{children}</main>
+      <Footer links={menus.footer} />
     </>
   );
 }

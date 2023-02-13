@@ -32,7 +32,7 @@ function getTermFilter(filter) {
   }
 }
 
-export default function buildRequestFilter(filters) {
+export function buildRequestFilter(filters) {
   if (!filters) return;
 
   filters = filters.reduce((acc, filter) => {
