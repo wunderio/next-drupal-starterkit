@@ -1,0 +1,43 @@
+id: pages_translations
+label: Articles translations
+migration_group: default
+source:
+  plugin: csv
+  path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv
+  ids: [id]
+  constants:
+    status: 1
+    uid: 1
+process:
+  # We are interested here only in nodes that are translations:
+  skipped:
+    plugin: skip_on_value
+    method: row
+    not_equals: true
+    value:
+      - 0
+    source: 'Is source'
+  nid:
+    plugin: migration_lookup
+    source: Tnid
+    migration: pages_nodes
+  type:
+    plugin: default_value
+    default_value: page
+  title: Title
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+  'body/format':
+    plugin: default_value
+    default_value: basic_html
+  'body/value': Body
+
+
+destination:
+  plugin: entity:node
+  translations: true
+
+migration_dependencies:
+  required:
+    - pages_nodes

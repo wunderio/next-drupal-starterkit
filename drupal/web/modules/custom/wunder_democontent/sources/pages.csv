@@ -1,0 +1,7 @@
+id,Tnid,Is source,Langcode,Title,Body
+1,1,1,en,Contact us,Contact us at <a href=”mailto:mailto:wunder@wunder.io”>wunder@wunder.io</a>
+2,1,0,fi,Ota yhteyttä,Ota yhteyttä osoitteeseen <a href=”mailto:mailto:wunder@wunder.io”>wunder@wunder.io</a>
+3,1,0,sv,Kontakta oss,Kontakta oss på <a href=”mailto:mailto:wunder@wunder.io”>wunder@wunder.io</a>
+4,4,1,en,About us,We are Wunder and make websites.
+5,4,0,fi,Tietoa meistä,Olemme Wunder ja teemme verkkosivustoja.
+6,4,0,sv,Om Oss,Vi är Wunder och gör hemsidor.
