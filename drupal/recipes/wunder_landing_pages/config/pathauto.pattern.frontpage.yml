@@ -1,0 +1,22 @@
+uuid: 42918896-bedc-43ca-84a9-4af202957cc1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: frontpage
+label: frontpage
+type: 'canonical_entities:node'
+pattern: '/frontpage-[language:langcode]'
+selection_criteria:
+  9b7d0d83-0421-493f-ab79-80d62a55ea7f:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 9b7d0d83-0421-493f-ab79-80d62a55ea7f
+    context_mapping:
+      node: node
+    bundles:
+      frontpage: frontpage
+selection_logic: and
+weight: -5
+relationships: {  }

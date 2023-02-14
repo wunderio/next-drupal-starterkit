@@ -5,8 +5,11 @@ When installed, this recipe will create:
 * a "landing page" content type with:
   * field definitions
   * pathauto settings
-  * text paragraph
-  * image paragraph
+  * paragraphs
+* a "frontpage" content type with:
+  * field definitions
+  * pathauto settings
+  * paragraphs
 
 ### Manual Installation instructions
 

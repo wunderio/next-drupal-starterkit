@@ -10,6 +10,7 @@ use Drupal\elasticsearch_helper\Event\ElasticsearchOperations;
 use Drupal\elasticsearch_helper\Plugin\ElasticsearchIndexBase;
 use Elasticsearch\Client;
 use Psr\Log\LoggerInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Serializer\Serializer;
 
@@ -24,6 +25,8 @@ use Symfony\Component\Serializer\Serializer;
  * )
  */
 class MultilingualContentIndex extends ElasticsearchIndexBase {
+
+  const EXCLUDED_BUNDLES = ['frontpage'];
 
   /**
    * The language manager instance.
@@ -90,6 +93,12 @@ class MultilingualContentIndex extends ElasticsearchIndexBase {
    * {@inheritdoc}
    */
   public function index($source) {
+
+    // The entity is not allowed, we won't index it:
+    if (!$this->entityIsAllowed($source)) {
+      return;
+    }
+
     foreach ($source->getTranslationLanguages() as $langcode => $language) {
       $translation = $source->getTranslation($langcode);
       parent::index($translation);
@@ -100,6 +109,7 @@ class MultilingualContentIndex extends ElasticsearchIndexBase {
    * {@inheritdoc}
    */
   public function delete($source) {
+    /** @var \Drupal\node\NodeInterface $source */
     foreach ($source->getTranslationLanguages() as $langcode => $language) {
       $translation = $source->getTranslation($langcode);
       parent::delete($translation);
@@ -213,6 +223,19 @@ class MultilingualContentIndex extends ElasticsearchIndexBase {
       ->addProperty('tags', FieldDefinition::create('keyword'))
       ->addProperty('path', FieldDefinition::create('keyword'))
       ->addProperty('user', $user_property);
+  }
+
+  /**
+   * Determines if the entity should be operated on by this index.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $source
+   *   The entity.
+   *
+   * @return bool
+   *   Boolean value.
+   */
+  private function entityIsAllowed(EntityInterface $source) {
+    return !in_array($source->bundle(), self::EXCLUDED_BUNDLES);
   }
 
 }
