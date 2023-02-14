@@ -23,6 +23,7 @@
         "drupal/core-recommended": "^10.0",
         "drupal/elasticsearch_helper": "^7.0",
         "drupal/jsonapi_menu_items": "^1.2",
+        "drupal/migrate_source_csv": "^3.5",
         "drupal/monolog": "^3.0@beta",
         "drupal/next": "^1.6",
         "drupal/paragraphs": "^1.15",
