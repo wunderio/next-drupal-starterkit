@@ -10,10 +10,6 @@ import { CommonPageProps } from "@/lib/get-common-page-props";
 
 import siteConfig from "@/site.config";
 
-interface AppPropsWithCommonPageProps extends AppProps {
-  pageProps: CommonPageProps & Record<string, unknown>;
-}
-
 // Language context
 const defaultLanguageLinks = siteConfig.locales;
 export const LangContext = createContext({
@@ -26,7 +22,7 @@ function Fonts({ children }: { children: React.ReactNode }) {
   return <div className={`${overpass.variable} font-sans`}>{children}</div>;
 }
 
-function App({ Component, pageProps }: AppPropsWithCommonPageProps) {
+function App({ Component, pageProps }: AppProps<CommonPageProps>) {
   return (
     <Fonts>
       <LangContext.Provider
