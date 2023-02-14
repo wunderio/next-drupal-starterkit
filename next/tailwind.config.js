@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     // These properties *replace* the defaults:
     fontFamily: {
-      sans: ["var(--font-overpass)", ...fontFamily.sans],
+      overpass: ["var(--font-overpass)", ...fontFamily.sans],
     },
     fontSize: {
       xs: ["0.60rem", { lineHeight: "1.5" }],

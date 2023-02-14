@@ -11,7 +11,7 @@ import { CommonPageProps } from "@/lib/get-common-page-props";
 // Add fonts
 const overpass = Overpass({ subsets: ["latin"], variable: "--font-overpass" });
 function Fonts({ children }: { children: React.ReactNode }) {
-  return <div className={`${overpass.variable} font-sans`}>{children}</div>;
+  return <div className={`${overpass.variable} font-overpass`}>{children}</div>;
 }
 
 function App({ Component, pageProps }: AppProps<CommonPageProps>) {
