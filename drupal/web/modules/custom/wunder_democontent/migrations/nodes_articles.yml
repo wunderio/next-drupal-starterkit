@@ -4,7 +4,7 @@ migration_group: default
 source:
   plugin: csv
   path: /app/drupal/web/modules/custom/wunder_democontent/sources/articles.csv
-  ids: [id]
+  ids: [ id ]
   constants:
     status: 1
     uid: 1
@@ -29,9 +29,19 @@ process:
     plugin: default_value
     default_value: basic_html
   'body/value': Body
+  'field_image/target_id':
+    plugin: migration_lookup
+    migration: articles_images
+    source:
+      - id
+    'field_teaser_image/alt': Title
   field_tags:
     plugin: entity_generate
     source: Tag
 
 destination:
   plugin: entity:node
+
+migration_dependencies:
+  required:
+    - articles_images

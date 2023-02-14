@@ -32,6 +32,12 @@ process:
     plugin: default_value
     default_value: basic_html
   'body/value': Body
+  'field_image/target_id':
+    plugin: migration_lookup
+    migration: articles_images
+    source:
+      - id
+    'field_teaser_image/alt': Title
   field_tags:
     plugin: entity_generate
     source: Tag

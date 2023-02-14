@@ -1,7 +1,7 @@
-id,Tnid,Is source,Langcode,Title,Body,Tag
-1,1,1,en,Article 1,<p>this is my article</p>,Tag1
-2,1,0,fi,Artikkeli 1,<p>this is my article fi</p>,Tag1
-3,1,0,sv,Artikel 1,<p>this is my article sv</p>,Tag1
-4,4,1,en,Article 2,<p>this is my article</p>,Tag2
-5,4,0,fi,Artikkeli 2,<p>this is my article fi</p>,Tag2
-6,4,0,sv,Artikel 2,<p>this is my article sv</p>,Tag2
+id,Tnid,Is source,Langcode,Title,Body,Tag,Image
+1,1,1,en,Article 1,<p>this is my article</p>,Tag1,https://www.gstatic.com/webp/gallery/5.jpg
+2,1,0,fi,Artikkeli 1,<p>this is my article fi</p>,Tag1,https://picsum.photos/2000/1000.jpg
+3,1,0,sv,Artikel 1,<p>this is my article sv</p>,Tag1,https://picsum.photos/2000/1000.jpg
+4,4,1,en,Article 2,<p>this is my article</p>,Tag2,https://picsum.photos/2000/1000.jpg
+5,4,0,fi,Artikkeli 2,<p>this is my article fi</p>,Tag2,https://picsum.photos/2000/1000.jpg
+6,4,0,sv,Artikel 2,<p>this is my article sv</p>,Tag2,https://picsum.photos/2000/1000.jpg
