@@ -27,15 +27,10 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
           <Image
             src={absoluteUrl(node.field_image.uri.url)}
             width={768}
-            height={400}
             alt={node.field_image.resourceIdObjMeta.alt}
-            priority
             sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto",
-              objectFit: "cover",
-            }}
+            className="h-auto max-w-full object-cover"
+            priority
           />
           {node.field_image.resourceIdObjMeta.title && (
             <figcaption className="py-2 text-center text-sm text-gray-600">

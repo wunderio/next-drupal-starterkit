@@ -31,14 +31,9 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
           <Image
             src={absoluteUrl(node.field_image.uri.url)}
             width={768}
-            height={480}
             alt={node.field_image.resourceIdObjMeta.alt}
             sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto",
-              objectFit: "cover",
-            }}
+            className="h-auto max-w-full object-cover"
           />
         </figure>
       )}
