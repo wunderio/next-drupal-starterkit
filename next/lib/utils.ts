@@ -1,6 +1,8 @@
 import { GetStaticPropsContext } from "next";
 import { DrupalClient, DrupalNode } from "next-drupal";
 
+import { Translations } from "@/lib/contexts/language-links-context";
+
 export function formatDate(input: string): string {
   const date = new Date(input);
   return date.toLocaleDateString("en-US", {
@@ -22,7 +24,7 @@ export const getNodeTranslatedVersions = async (
   context: GetStaticPropsContext,
   drupal: DrupalClient
 ) => {
-  const nodeTranslations = {};
+  const nodeTranslations: Translations = {};
   for (let i = 0; i < context.locales.length; i++) {
     const lang = context.locales[i];
     const translated = await drupal.getResource(node.type, node.id, {
@@ -30,11 +32,9 @@ export const getNodeTranslatedVersions = async (
       defaultLocale: context.defaultLocale,
       withAuth: true,
     });
-    // Only consider a translation if there is actually a translated
-    // node:
+    // Only consider a translation if there is actually a translated node:
     nodeTranslations[translated.langcode] = translated.path.alias;
   }
-
   return nodeTranslations;
 };
 

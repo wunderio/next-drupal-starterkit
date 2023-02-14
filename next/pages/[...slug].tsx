@@ -2,13 +2,18 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 
-import { LayoutProps } from "@/components/layout";
 import { NodeArticle } from "@/components/node--article";
 import { NodeBasicPage } from "@/components/node--basic-page";
 import { NodeLandingPage } from "@/components/node--landing-page";
-import { useLanguageLinksContext } from "@/lib/contexts/language-links-context";
+import {
+  Translations,
+  useLanguageLinksContext,
+} from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal";
-import { getCommonPageProps } from "@/lib/get-common-page-props";
+import {
+  CommonPageProps,
+  getCommonPageProps,
+} from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
 import { useEffectOnce } from "@/lib/hooks/use-effect-once";
 import { getNodeTranslatedVersions } from "@/lib/utils";
@@ -48,8 +53,12 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
   };
 };
 
-interface NodePageProps extends LayoutProps {
-  resource: DrupalNode;
+interface DrupalNodeWithTranslations extends DrupalNode {
+  translations: Translations;
+}
+
+interface NodePageProps extends CommonPageProps {
+  resource: DrupalNodeWithTranslations;
 }
 
 export const getStaticProps: GetStaticProps<NodePageProps> = async (
@@ -87,36 +96,36 @@ export const getStaticProps: GetStaticProps<NodePageProps> = async (
     };
   }
 
-  const resource = await drupal.getResourceFromContext<DrupalNode>(
-    path,
-    context,
-    {
+  const resourceWithoutTranslations =
+    await drupal.getResourceFromContext<DrupalNode>(path, context, {
       params: getNodePageJsonApiParams(type),
-    }
-  );
+    });
 
   // At this point, we know the path exists and it points to a resource.
   // If we receive an error, it means something went wrong on Drupal.
   // We throw an error to tell revalidation to skip this for now.
   // Revalidation can try again on next request.
-  if (!resource) {
+  if (!resourceWithoutTranslations) {
     throw new Error(`Failed to fetch resource: ${path.jsonapi.individual}`);
   }
 
   // If we're not in preview mode and the resource is not published,
   // Return page not found.
-  if (!context.preview && resource?.status === false) {
+  if (!context.preview && resourceWithoutTranslations?.status === false) {
     return {
       notFound: true,
     };
   }
 
   // Add information about possible other language versions of this node.
-  resource.translations = await getNodeTranslatedVersions(
-    resource,
-    context,
-    drupal
-  );
+  const resource: DrupalNodeWithTranslations = {
+    ...resourceWithoutTranslations,
+    translations: await getNodeTranslatedVersions(
+      resourceWithoutTranslations,
+      context,
+      drupal
+    ),
+  };
 
   return {
     props: {

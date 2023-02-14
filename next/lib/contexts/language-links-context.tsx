@@ -6,7 +6,7 @@ import siteConfig from "@/site.config";
 const DEFAULT_LANGUAGE_LINKS = siteConfig.locales;
 
 type LanguageLinks = typeof siteConfig.locales;
-type Translations = Partial<Record<keyof LanguageLinks, `/${string}`>>;
+export type Translations = Partial<Record<keyof LanguageLinks, `/${string}`>>;
 interface LanguageLinksContext {
   languageLinks: LanguageLinks;
   updateLanguageLinks: (translations: Translations) => void;
