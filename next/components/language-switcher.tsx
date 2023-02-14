@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 
-import { LangContext } from "@/pages/_app";
+import { useLanguageLinksContext } from "@/lib/contexts/language-links-context";
 import GlobeIcon from "@/styles/icons/globe.svg";
 
 export function LanguageSwitcher() {
   const { locale, locales } = useRouter();
-  const { languageLinks } = useContext(LangContext);
+  const { languageLinks } = useLanguageLinksContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen((o) => !o);

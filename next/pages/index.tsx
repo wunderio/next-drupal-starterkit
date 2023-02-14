@@ -6,8 +6,6 @@ import { useTranslation } from "next-i18next";
 import { NodeFrontpage } from "@/components/node--frontpage";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
-import { setLanguageLinks } from "@/lib/utils";
-import { LangContext } from "@/pages/_app";
 
 import { LayoutProps } from "../components/layout";
 import { NodeArticleTeaser } from "../components/node--article--teaser";
@@ -24,11 +22,7 @@ export default function IndexPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
   return (
-    <LangContext.Provider
-      value={{
-        languageLinks: setLanguageLinks([]),
-      }}
-    >
+    <>
       <Head>
         <title>Next.js for Drupal</title>
         <meta
@@ -54,7 +48,7 @@ export default function IndexPage({
           )}
         </>
       </div>
-    </LangContext.Provider>
+    </>
   );
 }
 

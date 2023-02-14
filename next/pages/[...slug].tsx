@@ -6,25 +6,27 @@ import { LayoutProps } from "@/components/layout";
 import { NodeArticle } from "@/components/node--article";
 import { NodeBasicPage } from "@/components/node--basic-page";
 import { NodeLandingPage } from "@/components/node--landing-page";
+import { useLanguageLinksContext } from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
-import { getNodeTranslatedVersions, setLanguageLinks } from "@/lib/utils";
-import { LangContext } from "@/pages/_app";
+import { useEffectOnce } from "@/lib/hooks/use-effect-once";
+import { getNodeTranslatedVersions } from "@/lib/utils";
 
 const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
 
 export default function NodePage({
   resource,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { updateLanguageLinks } = useLanguageLinksContext();
+  useEffectOnce(() => {
+    updateLanguageLinks(resource.translations);
+  });
+
   if (!resource) return null;
 
   return (
-    <LangContext.Provider
-      value={{
-        languageLinks: setLanguageLinks(resource.translations),
-      }}
-    >
+    <>
       <Head>
         <title>{resource.title}</title>
         <meta name="description" content="A Next.js site powered by Drupal." />
@@ -34,7 +36,7 @@ export default function NodePage({
       {resource.type === "node--landing_page" && (
         <NodeLandingPage node={resource} />
       )}
-    </LangContext.Provider>
+    </>
   );
 }
 

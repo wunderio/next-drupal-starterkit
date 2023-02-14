@@ -26,8 +26,6 @@ import {
 import { buildRequest } from "@/lib/search-ui-helpers/buildRequest";
 import { buildState } from "@/lib/search-ui-helpers/buildState";
 import { runRequest } from "@/lib/search-ui-helpers/runRequest";
-import { setLanguageLinks } from "@/lib/utils";
-import { LangContext } from "@/pages/_app";
 
 /**
  * Contains the search provider component.
@@ -47,11 +45,7 @@ export default function SearchPage() {
     },
   };
   return (
-    <LangContext.Provider
-      value={{
-        languageLinks: setLanguageLinks([]),
-      }}
-    >
+    <>
       <Head>
         <title>Next.js for Drupal</title>
         <meta
@@ -127,7 +121,7 @@ export default function SearchPage() {
           )}
         </WithSearch>
       </SearchProvider>
-    </LangContext.Provider>
+    </>
   );
 }
 
