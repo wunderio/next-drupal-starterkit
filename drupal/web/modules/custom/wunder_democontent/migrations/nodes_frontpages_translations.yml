@@ -1,9 +1,9 @@
-id: nodes_pages_translations
-label: Basic pages translations
+id: nodes_frontpages_translations
+label: Frontpages translations
 migration_group: demo_content
 source:
   plugin: csv
-  path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv
+  path: /app/drupal/web/modules/custom/wunder_democontent/sources/frontpages.csv
   ids: [id]
   constants:
     status: 1
@@ -20,19 +20,14 @@ process:
   nid:
     plugin: migration_lookup
     source: Tnid
-    migration: nodes_pages
+    migration: nodes_frontpages
   type:
     plugin: default_value
-    default_value: page
+    default_value: frontpage
   title: Title
   status: constants/status
   uid: constants/uid
   langcode: Langcode
-  'body/format':
-    plugin: default_value
-    default_value: basic_html
-  'body/value': Body
-
 
 destination:
   plugin: entity:node
@@ -40,4 +35,5 @@ destination:
 
 migration_dependencies:
   required:
-    - nodes_pages
+    - nodes_frontpages
+    - paragraphs_frontpage_formatted_text_translations
