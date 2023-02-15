@@ -1,66 +1,60 @@
-import { GetStaticPathsResult, GetStaticPropsResult } from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { Layout, LayoutProps } from "@/components/layout";
 import { NodeArticle } from "@/components/node--article";
 import { NodeBasicPage } from "@/components/node--basic-page";
 import { NodeLandingPage } from "@/components/node--landing-page";
+import {
+  createLanguageLinks,
+  Translations,
+} from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal";
-import { getMenus } from "@/lib/get-menus";
+import {
+  CommonPageProps,
+  getCommonPageProps,
+} from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
-import { getNodeTranslatedVersions, setLanguageLinks } from "@/lib/utils";
-import { LangContext } from "@/pages/_app";
+import { getNodeTranslatedVersions } from "@/lib/utils";
 
 const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
 
-interface NodePageProps extends LayoutProps {
-  resource: DrupalNode;
-}
-interface NodeProps extends NodePageProps {
-  translations: Array<string>;
-}
-
-export default function NodePage({ resource, menus }: NodeProps) {
+export default function NodePage({
+  resource,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!resource) return null;
 
   return (
-    <LangContext.Provider
-      value={{
-        languageLinks: setLanguageLinks(resource.translations),
-      }}
-    >
-      <Layout menus={menus}>
-        <Head>
-          <title>{resource.title}</title>
-          <meta
-            name="description"
-            content="A Next.js site powered by Drupal."
-          />
-        </Head>
-        {resource.type === "node--page" && <NodeBasicPage node={resource} />}
-        {resource.type === "node--article" && <NodeArticle node={resource} />}
-        {resource.type === "node--landing_page" && (
-          <NodeLandingPage node={resource} />
-        )}
-      </Layout>
-    </LangContext.Provider>
+    <>
+      <Head>
+        <title>{resource.title}</title>
+        <meta name="description" content="A Next.js site powered by Drupal." />
+      </Head>
+      {resource.type === "node--page" && <NodeBasicPage node={resource} />}
+      {resource.type === "node--article" && <NodeArticle node={resource} />}
+      {resource.type === "node--landing_page" && (
+        <NodeLandingPage node={resource} />
+      )}
+    </>
   );
 }
 
-export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
+export const getStaticPaths: GetStaticPaths = async (context) => {
   const paths = await drupal.getStaticPathsFromContext(RESOURCE_TYPES, context);
-
   return {
     paths: paths,
     fallback: "blocking",
   };
+};
+
+interface NodePageProps extends CommonPageProps {
+  resource: DrupalNode;
+  languageLinks: Translations;
 }
 
-export async function getStaticProps(
+export const getStaticProps: GetStaticProps<NodePageProps> = async (
   context
-): Promise<GetStaticPropsResult<NodePageProps>> {
+) => {
   const path = await drupal.translatePathFromContext(context);
 
   if (!path) {
@@ -80,6 +74,18 @@ export async function getStaticProps(
   }
 
   const type = path.jsonapi.resourceName;
+
+  // If we are looking at the path of a frontpage node,
+  // redirect the user to the homepage for that language:
+
+  if (type === "node--frontpage") {
+    return {
+      redirect: {
+        destination: "/" + context.locale,
+        permanent: false,
+      },
+    };
+  }
 
   const resource = await drupal.getResourceFromContext<DrupalNode>(
     path,
@@ -106,18 +112,19 @@ export async function getStaticProps(
   }
 
   // Add information about possible other language versions of this node.
-  resource.translations = await getNodeTranslatedVersions(
+  const nodeTranslations = await getNodeTranslatedVersions(
     resource,
     context,
     drupal
   );
+  const languageLinks = createLanguageLinks(nodeTranslations);
 
   return {
     props: {
+      ...(await getCommonPageProps(context)),
       resource,
-      menus: await getMenus(context),
-      ...(await serverSideTranslations(context.locale)),
+      languageLinks,
     },
     revalidate: 60,
   };
-}
+};

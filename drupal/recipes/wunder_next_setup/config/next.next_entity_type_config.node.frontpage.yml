@@ -1,0 +1,13 @@
+uuid: 8772fee2-6539-43ad-bfbe-0932ee183285
+langcode: en
+status: true
+dependencies: {  }
+id: node.frontpage
+site_resolver: site_selector
+configuration:
+  sites:
+    frontend: frontend
+revalidator: path
+revalidator_configuration:
+  revalidate_page: true
+  additional_paths: "/\r\n/fi\r\n/en\r\n/sv"

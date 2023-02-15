@@ -1,7 +1,7 @@
 import { GetStaticPropsContext } from "next";
 import { DrupalClient, DrupalNode } from "next-drupal";
 
-import siteConfig from "@/site.config";
+import { Translations } from "@/lib/contexts/language-links-context";
 
 export function formatDate(input: string): string {
   const date = new Date(input);
@@ -17,17 +17,6 @@ export function absoluteUrl(input: string) {
 }
 
 /**
- * Gets the language links for the language switcher.
- */
-export const setLanguageLinks = (translations = []) => {
-  const languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
-  Object.entries(translations).forEach((translation) => {
-    languageLinks[translation[0]].path = translation[1];
-  });
-  return languageLinks;
-};
-
-/**
  * Given a node, it will return the node translations for it.
  */
 export const getNodeTranslatedVersions = async (
@@ -35,7 +24,7 @@ export const getNodeTranslatedVersions = async (
   context: GetStaticPropsContext,
   drupal: DrupalClient
 ) => {
-  const nodeTranslations = {};
+  const nodeTranslations: Translations = {};
   for (let i = 0; i < context.locales.length; i++) {
     const lang = context.locales[i];
     const translated = await drupal.getResource(node.type, node.id, {
@@ -43,11 +32,9 @@ export const getNodeTranslatedVersions = async (
       defaultLocale: context.defaultLocale,
       withAuth: true,
     });
-    // Only consider a translation if there is actually a translated
-    // node:
+    // Only consider a translation if there is actually a translated node:
     nodeTranslations[translated.langcode] = translated.path.alias;
   }
-
   return nodeTranslations;
 };
 

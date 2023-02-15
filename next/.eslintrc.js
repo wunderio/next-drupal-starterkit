@@ -38,6 +38,7 @@ module.exports = {
       extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:@next/next/recommended",
         "prettier",
       ],
@@ -48,7 +49,12 @@ module.exports = {
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
 
         // Sort imports.
         "simple-import-sort/imports": [
@@ -57,7 +63,7 @@ module.exports = {
             groups: [
               ["^\\u0000"],
               // Side effect imports.
-              ["^next", "^react", "^@?\\w"],
+              ["^next", "^@next", "^react", "^@?\\w"],
               // Packages. Put `next`/`react`-related packages first.
               ["^@/(components|lib|pages|styles|types)(/.*|$)"],
               // Internal paths - change these to match your project structure defined in tsconfig.json.

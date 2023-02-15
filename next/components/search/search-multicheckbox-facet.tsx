@@ -56,7 +56,7 @@ export function MultiCheckboxFacet({
                   checked={checked}
                   onChange={() => (checked ? onRemove(value) : onSelect(value))}
                 />
-                <span className="ml-2 text-sm font-medium text-gray-900">
+                <span className="ml-2 text-sm text-gray-900">
                   {getFilterValueDisplay(option.value)}{" "}
                   <span className="text-gray-400">
                     ({option.count.toLocaleString("en")})
@@ -70,7 +70,7 @@ export function MultiCheckboxFacet({
       {showMore && (
         <button
           type="button"
-          className="rounded border border-wunderpurple-500 bg-transparent py-2 px-4 text-xs font-semibold text-wunderpurple-700 hover:border-transparent hover:bg-wunderpurple-500 hover:text-white"
+          className="rounded border border-wunderpurple-500 bg-transparent py-2 px-4 text-sm font-bold text-wunderpurple-700 hover:border-transparent hover:bg-wunderpurple-500 hover:text-white"
           onClick={onMoreClick}
           aria-label={t("search-show-more-options")}
         >

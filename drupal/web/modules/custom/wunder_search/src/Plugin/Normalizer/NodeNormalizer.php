@@ -123,6 +123,11 @@ class NodeNormalizer extends ContentEntityNormalizer {
    * {@inheritdoc}
    */
   public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+    // It's not required to go through all the normalisation when deleting:
+    if (!empty($context) && isset($context['method']) && $context['method'] == 'delete') {
+      return [];
+    }
+
     $data = [
       'id' => $object->id(),
       'uuid' => $object->uuid(),

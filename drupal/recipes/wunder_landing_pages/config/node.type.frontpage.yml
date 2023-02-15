@@ -1,0 +1,17 @@
+uuid: 49a18379-7818-4fa6-b340-567777a70405
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Frontpage
+type: frontpage
+description: 'Represents the frontpage of the site. Only one content of this type can be created.'
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

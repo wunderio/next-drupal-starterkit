@@ -14,9 +14,16 @@ const isElement = (domNode: DOMNode): domNode is Element =>
   domNode.type === "tag";
 
 const options: HTMLReactParserOptions = {
+  /*
+   * If `undefined` is returned from this `replace` function, nothing is changed and the given DOMNode is rendered as usual.
+   * But if anything else is returned, that value replaces the original value.
+   * For example, return `null` to remove it, or some other component to replace it.
+   */
   replace: (domNode) => {
-    if (isElement(domNode)) {
-      if (domNode.name === "img") {
+    if (!isElement(domNode)) return;
+
+    switch (domNode.name) {
+      case "img": {
         const { src, alt, width = 100, height = 100 } = domNode.attribs;
 
         const numberWidth = Number(width);
@@ -29,16 +36,14 @@ const options: HTMLReactParserOptions = {
               width={numberWidth}
               height={numberHeight}
               alt={alt}
-              style={{
-                maxWidth: "100%",
-                objectFit: "cover",
-              }}
+              className="max-w-full object-cover"
             />
           );
         }
+        break;
       }
 
-      if (domNode.name === "a") {
+      case "a": {
         const { href, class: className } = domNode.attribs;
 
         if (href && isRelative(href)) {
@@ -48,14 +53,23 @@ const options: HTMLReactParserOptions = {
             </Link>
           );
         }
+        break;
       }
 
-      if (domNode.name === "input") {
+      case "p": {
+        return <p className="mb-8">{domToReact(domNode.children)}</p>;
+      }
+
+      case "input": {
         if (domNode.attribs.value === "") {
           delete domNode.attribs.value;
         }
 
         return domNode;
+      }
+
+      default: {
+        return undefined;
       }
     }
   },

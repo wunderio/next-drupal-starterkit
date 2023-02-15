@@ -18,7 +18,7 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
         passHref
         className="text-wunderpurple-500 no-underline hover:text-wunderpurple-400"
       >
-        <h2 className="mb-4 text-4xl font-bold">{node.title}</h2>
+        <h2 className="mb-4 text-heading-xl font-bold">{node.title}</h2>
       </Link>
       <div className="mb-4 text-gray-600">
         {node.uid?.display_name ? (
@@ -31,14 +31,9 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
           <Image
             src={absoluteUrl(node.field_image.uri.url)}
             width={768}
-            height={480}
             alt={node.field_image.resourceIdObjMeta.alt}
             sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto",
-              objectFit: "cover",
-            }}
+            className="h-auto max-w-full object-cover"
           />
         </figure>
       )}

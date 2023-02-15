@@ -1,0 +1,31 @@
+uuid: c510e2ec-8cc1-4cad-9c77-8fba67f9237c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.frontpage.field_content_elements
+    - node.type.frontpage
+  module:
+    - entity_reference_revisions
+    - user
+id: node.frontpage.default
+targetEntityType: node
+bundle: frontpage
+mode: default
+content:
+  field_content_elements:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true
