@@ -14,6 +14,11 @@ const isElement = (domNode: DOMNode): domNode is Element =>
   domNode.type === "tag";
 
 const options: HTMLReactParserOptions = {
+  /*
+   * If `undefined` is returned from this `replace` function, nothing is changed and the given DOMNode is rendered as usual.
+   * But if anything else is returned, that value replaces the original value.
+   * For example, return `null` to remove it, or some other component to replace it.
+   */
   replace: (domNode) => {
     if (!isElement(domNode)) return;
 
