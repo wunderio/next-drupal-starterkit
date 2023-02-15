@@ -137,7 +137,7 @@ services:
        - esdata:/usr/share/elasticsearch/data
    # Install ES plugins.
    build_as_root:
-     - elasticsearch-plugin install analysis-icu analysis-ukrainian
+     - elasticsearch-plugin install analysis-icu
    volumes:
      esdata:
        driver: local
