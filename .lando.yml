@@ -22,6 +22,12 @@ tooling:
     service: node
     dir: /app/next
 
+  # This command will stop (kill) any running npm operations
+  # in the node container in lando.
+  npm-stop:
+    cmd:
+      - node: kill $(ps aux | grep 'npm' | awk '{print $2}')
+
   composer:
     dir: /app/drupal
 

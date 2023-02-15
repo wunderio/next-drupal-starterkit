@@ -15,6 +15,21 @@ Local development is handled by [Lando](https://lando.dev/). Both frontend and b
 so that is the only real requirement. The frontend site can be run in either dev or prod mode, 
 and it will be proxied by lando at the configured url in lando. The default is [https://frontend.lndo.site](https://frontend.lndo.site)"
 
+#### Using npm inside lando ⚠️⚠️⚠️
+
+Instead of running npm operations in your host machine, this template assumes you use npm inside lando: this ensures 
+the same node version is used  by all developers participating in the project, and also that the node process has the 
+right environment variables to connect to the backend (these are defined in the `.lando.yml` file in the root of the project).
+
+Just prefix all npm operations with `lando`.
+
+So instead of `npm install`, run `lando npm install`, instead of `npm run dev` run `lando npm dev`, etc. 
+
+##### Stopping a running npm operation running inside the lando node container
+
+If you have closed the terminal window where you were running `lando npm`, or if the server was started with the "Quick one command setup" (see below), and you want 
+to stop the running npm operation, you can use the specially created `lando npm-stop` command.
+
 ### Getting started
 
 Follow this guide to get backend and frontend up and running. You can either do it all in one go, or step by steo
