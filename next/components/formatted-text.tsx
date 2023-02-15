@@ -56,6 +56,10 @@ const options: HTMLReactParserOptions = {
         break;
       }
 
+      case "p": {
+        return <p className="mb-8">{domToReact(domNode.children)}</p>;
+      }
+
       case "input": {
         if (domNode.attribs.value === "") {
           delete domNode.attribs.value;
