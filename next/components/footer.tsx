@@ -1,17 +1,21 @@
 import Link from "next/link";
 import { DrupalMenuLinkContent } from "next-drupal";
+import {useRouter} from "next/router";
 
 interface FooterProps {
   links: DrupalMenuLinkContent[];
 }
 
 export function Footer({ links }: FooterProps) {
+  // Only show the menu items that match the current locale:
+  const { locale } = useRouter();
+  const filteredItems = links.filter((link) => link.langcode == locale);
   return (
     <footer className="border-t">
       <div className="mx-auto max-w-6xl px-6">
         <nav className="flex flex-col items-center gap-2 py-8 text-lg sm:flex-row sm:justify-between">
           <ul className="flex gap-x-4">
-            {links.map((link) => (
+            {filteredItems.map((link) => (
               <li key={link.id}>
                 <FooterLink href={link.url}>{link.title}</FooterLink>
               </li>
