@@ -35,7 +35,7 @@ export function PagingInfoView({
 }: PagingInfoViewProps & React.HTMLAttributes<HTMLDivElement>) {
   const { t } = useTranslation();
   return (
-    <div className={clsx(className, "text-xs")} {...rest}>
+    <div className={clsx(className, "text-sm")} {...rest}>
       {t("search-showing")}{" "}
       <strong>
         {start} - {end}
