@@ -28,15 +28,22 @@ class WunderNextCommands extends DrushCommands {
    * @option secret
    *   The secret to assign to the consumer
    * @usage wunder_next-commandName --secret=somesecret
-   *   Use the --secret option to set the secret for the consumer, or leave
-   *   blank for a random value.
+   *   Use the --secret option to set the secret for the consumer.
+   *   If you leave it blank, the env var DRUPAL_CLIENT_SECRET
+   *   will be used, if not available a random value will be generated.
    *
    * @command wunder_next:setup-user-and-consumer
    * @aliases wnsuac
    */
   public function setupUserAndConsumer(array $options = ['secret' => '']) {
 
-    $secret = $options['secret'] ?: base64_encode(random_bytes('20'));
+    // For the secret, use the env var if defined, otherwise
+    // generate a random value:
+    $secret = $_ENV['DRUPAL_CLIENT_SECRET'] ?: base64_encode(random_bytes('20'));
+
+    // But if a value was provided as parameter to the command,
+    // use that instead:
+    $secret = $options['secret'] ?: $secret;
 
     // Create a new user with the required role:
     $new_user = [
@@ -66,7 +73,7 @@ class WunderNextCommands extends DrushCommands {
 
     /** @var \Drupal\consumers\Entity\Consumer $consumer */
     $consumer = Consumer::create([
-      'client_id' => self::CONSUMER_NAME,
+      'client_id' => $_ENV['DRUPAL_CLIENT_ID'] ?? self::CONSUMER_NAME,
       'label' => 'Consumer for next-drupal',
       'description' => 'This consumer was created by the wunder_next:create-user-and-consumer drush command.',
       'is_default' => FALSE,

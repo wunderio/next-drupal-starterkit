@@ -74,7 +74,9 @@ services:
         WUNDER_NEXT_FRONTEND_URL: https://frontend.lndo.site
         # This same var is set in the node service below, the value should match.
         # This is only used in local development so it can be a not secure value:
-        DRUPAL_REVALIDATE_SECRET: mysecret
+        DRUPAL_REVALIDATE_SECRET: revalidate_secret_not_secure_used_only_locally
+        DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
+        DRUPAL_CLIENT_ID: drupal-client-id
         HASH_SALT: notsosecurehashnotsosecurehashnotsosecurehash
         ENVIRONMENT_NAME: lando
         DB_NAME_DRUPAL: drupal10
@@ -96,9 +98,14 @@ services:
         - "3000:3000"
         - "6006:6006"
       environment:
-        # This same var is set in the appserver service above, the value should match.
-        # This is only used in local development so it can be a not secure value:
-        DRUPAL_REVALIDATE_SECRET: mysecret
+        # Having these values here will make the frontend site work
+        # out of the box when building and using the frontent site
+        # via lando npm, without the need of an .env.local file.
+        DRUPAL_REVALIDATE_SECRET: revalidate_secret_not_secure_used_only_locally
+        DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
+        DRUPAL_CLIENT_ID: drupal-client-id
+        NEXT_PUBLIC_DRUPAL_BASE_URL: https://next4drupal-project.lndo.site
+        NEXT_IMAGE_DOMAIN: next4drupal-project.lndo.site
     build:
       - "cd next && npm install"
     scanner: false
