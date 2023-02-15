@@ -33,7 +33,7 @@ export default function IndexPage({
       <div>
         <>
           {frontpageNode && <NodeFrontpage node={frontpageNode} />}
-          <h2 className="mb-10 text-heading-2xl font-bold">
+          <h2 className="text-heading-md font-bold md:text-heading-lg">
             {t("latest-articles")}
           </h2>
           {articles?.length ? (
