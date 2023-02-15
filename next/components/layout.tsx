@@ -1,8 +1,12 @@
 import { DrupalMenuLinkContent } from "next-drupal";
+import clsx from "clsx";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { PreviewAlert } from "@/components/preview-alert";
+import {
+  PreviewBanner,
+  useIsPreviewBannerVisible,
+} from "@/components/preview-banner";
 
 export interface LayoutProps {
   menus: {
@@ -13,12 +17,20 @@ export interface LayoutProps {
 }
 
 export function Layout({ menus, children }: LayoutProps) {
+  const isPreviewVisible = useIsPreviewBannerVisible();
   return (
     <>
-      <PreviewAlert />
-      <Header links={menus.main} />
-      <main className="mx-auto w-full max-w-6xl grow p-6">{children}</main>
-      <Footer links={menus.footer} />
+      <div
+        className={clsx(
+          "flex min-h-screen flex-col",
+          isPreviewVisible && "mt-10"
+        )}
+      >
+        <Header links={menus.main} />
+        <main className="mx-auto w-full max-w-6xl grow p-6">{children}</main>
+        <Footer links={menus.footer} />
+      </div>
+      <PreviewBanner isVisible={isPreviewVisible} />
     </>
   );
 }

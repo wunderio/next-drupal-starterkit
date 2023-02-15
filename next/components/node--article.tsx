@@ -13,7 +13,9 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
   const { t } = useTranslation();
   return (
     <article {...props}>
-      <h1 className="mb-4 text-6xl font-black leading-tight">{node.title}</h1>
+      <h1 className="mb-4 text-heading-2xl font-bold leading-md">
+        {node.title}
+      </h1>
       <div className="mb-4 text-gray-600">
         {node.uid?.display_name ? (
           <span>{t("posted-by", { author: node.uid?.display_name })}</span>
@@ -25,15 +27,10 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
           <Image
             src={absoluteUrl(node.field_image.uri.url)}
             width={768}
-            height={400}
             alt={node.field_image.resourceIdObjMeta.alt}
-            priority
             sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto",
-              objectFit: "cover",
-            }}
+            className="h-auto max-w-full object-cover"
+            priority
           />
           {node.field_image.resourceIdObjMeta.title && (
             <figcaption className="py-2 text-center text-sm text-gray-600">
@@ -44,7 +41,7 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
       )}
       {node.body?.processed && (
         <FormattedText
-          className="mt-4 text-lg leading-relaxed text-gray-500 sm:text-xl lg:text-xl"
+          className="mt-4 text-md leading-xl text-gray-500 sm:text-lg"
           processed={node.body?.processed}
         />
       )}

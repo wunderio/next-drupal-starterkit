@@ -24,10 +24,7 @@ export function MediaImage({
       height={height || image.resourceIdObjMeta.height}
       alt={image.resourceIdObjMeta.alt || "Image"}
       title={image.resourceIdObjMeta.title}
-      style={{
-        maxWidth: "100%",
-        height: "auto",
-      }}
+      className="h-auto max-w-full object-cover"
       {...props}
     />
   );

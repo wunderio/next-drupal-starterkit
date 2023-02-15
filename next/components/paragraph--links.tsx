@@ -14,7 +14,10 @@ export function ParagraphLinks({ paragraph }: ParagraphProps) {
     <ul className="list-disc p-2">
       {paragraph.field_links.map((link: Link, id: Key) => (
         <li key={id}>
-          <Link className="text-sm text-wunderpurple-600" href={link.full_url}>
+          <Link
+            className="text-md text-wunderpurple-600 hover:underline"
+            href={link.full_url}
+          >
             {link.title}
           </Link>
         </li>
