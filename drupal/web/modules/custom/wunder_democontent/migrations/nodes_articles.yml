@@ -1,6 +1,6 @@
-id: articles_nodes
+id: nodes_articles
 label: Article nodes
-migration_group: default
+migration_group: demo_content
 source:
   plugin: csv
   path: /app/drupal/web/modules/custom/wunder_democontent/sources/articles.csv
@@ -31,7 +31,7 @@ process:
   'body/value': Body
   'field_image/target_id':
     plugin: migration_lookup
-    migration: articles_images
+    migration: nodes_articles_images
     source:
       - id
     'field_teaser_image/alt': Title
@@ -44,4 +44,4 @@ destination:
 
 migration_dependencies:
   required:
-    - articles_images
+    - nodes_articles_images

@@ -1,6 +1,6 @@
-id: pages_nodes
+id: nodes_pages
 label: Basic page nodes
-migration_group: default
+migration_group: demo_content
 source:
   plugin: csv
   path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv

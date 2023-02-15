@@ -1,6 +1,6 @@
-id: articles_images
+id: nodes_articles_images
 label: Articles images
-migration_group: default
+migration_group: demo_content
 source:
   plugin: csv
   path: /app/drupal/web/modules/custom/wunder_democontent/sources/articles.csv

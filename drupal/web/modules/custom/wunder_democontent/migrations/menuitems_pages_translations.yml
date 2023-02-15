@@ -1,6 +1,6 @@
-id: pages_menu_items_translations
+id: menuitems_pages_translations
 label: Menu items connected to translated pages
-migration_group: default
+migration_group: demo_content
 source:
   plugin: csv
   path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv
@@ -11,7 +11,7 @@ process:
   nodeId:
     -
       plugin: migration_lookup
-      migration: pages_translations
+      migration: nodes_pages_translations
       source:
         - id
     -
@@ -63,4 +63,4 @@ destination:
 
 migration_dependencies:
   required:
-    - pages_translations
+    - nodes_pages_translations

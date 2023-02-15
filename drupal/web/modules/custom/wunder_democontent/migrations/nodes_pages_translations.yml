@@ -1,6 +1,6 @@
-id: pages_translations
+id: nodes_pages_translations
 label: Articles translations
-migration_group: default
+migration_group: demo_content
 source:
   plugin: csv
   path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv
@@ -20,7 +20,7 @@ process:
   nid:
     plugin: migration_lookup
     source: Tnid
-    migration: pages_nodes
+    migration: nodes_pages
   type:
     plugin: default_value
     default_value: page
@@ -40,4 +40,4 @@ destination:
 
 migration_dependencies:
   required:
-    - pages_nodes
+    - nodes_pages
