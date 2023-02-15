@@ -15,8 +15,10 @@ const isElement = (domNode: DOMNode): domNode is Element =>
 
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {
-    if (isElement(domNode)) {
-      if (domNode.name === "img") {
+    if (!isElement(domNode)) return;
+
+    switch (domNode.name) {
+      case "img": {
         const { src, alt, width = 100, height = 100 } = domNode.attribs;
 
         const numberWidth = Number(width);
@@ -33,9 +35,10 @@ const options: HTMLReactParserOptions = {
             />
           );
         }
+        break;
       }
 
-      if (domNode.name === "a") {
+      case "a": {
         const { href, class: className } = domNode.attribs;
 
         if (href && isRelative(href)) {
@@ -45,14 +48,19 @@ const options: HTMLReactParserOptions = {
             </Link>
           );
         }
+        break;
       }
 
-      if (domNode.name === "input") {
+      case "input": {
         if (domNode.attribs.value === "") {
           delete domNode.attribs.value;
         }
 
         return domNode;
+      }
+
+      default: {
+        return undefined;
       }
     }
   },
