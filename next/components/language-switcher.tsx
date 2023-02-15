@@ -3,12 +3,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 
-import { useLanguageLinksContext } from "@/lib/contexts/language-links-context";
+import { useLanguageLinks } from "@/lib/contexts/language-links-context";
 import GlobeIcon from "@/styles/icons/globe.svg";
 
 export function LanguageSwitcher() {
+  const languageLinks = useLanguageLinks();
   const { locale, locales } = useRouter();
-  const { languageLinks } = useLanguageLinksContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen((o) => !o);
@@ -21,7 +21,7 @@ export function LanguageSwitcher() {
   return (
     <nav>
       <button type="button" className="hover:underline" onClick={toggle}>
-        <span>{languageLinks[locale]?.name}</span>
+        <span>{languageLinks[locale].name}</span>
         <GlobeIcon className="ml-2 hidden h-6 w-6 sm:inline-block" />
       </button>
       <ul

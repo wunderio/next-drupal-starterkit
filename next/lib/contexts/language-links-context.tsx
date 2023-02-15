@@ -1,57 +1,45 @@
-import { useRouter } from "next/router";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext } from "react";
 
 import siteConfig from "@/site.config";
 
-const DEFAULT_LANGUAGE_LINKS = siteConfig.locales;
+export type LanguageLinks = typeof siteConfig.locales;
+export type Translations = Readonly<
+  Partial<Record<keyof LanguageLinks, `/${string}`>>
+>;
 
-type LanguageLinks = typeof siteConfig.locales;
-export type Translations = Partial<Record<keyof LanguageLinks, `/${string}`>>;
-interface LanguageLinksContext {
-  languageLinks: LanguageLinks;
-  updateLanguageLinks: (translations: Translations) => void;
+const LanguageLinksContext = createContext(siteConfig.locales);
+
+/**
+ * From the site config and available node translations, create links to be used in the language switcher.
+ */
+export function createLanguageLinks(nodeTranslations?: Translations) {
+  const languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
+  Object.entries(nodeTranslations).forEach(([key, path]) => {
+    languageLinks[key].path = path;
+  });
+  return languageLinks;
 }
 
-export const LanguageLinksContext = createContext({
-  languageLinks: siteConfig.locales,
-  updateLanguageLinks: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
-} as LanguageLinksContext);
-
+/**
+ * Provide the language links context.
+ */
 export function LanguageLinksProvider({
+  languageLinks,
   children,
 }: {
+  languageLinks?: typeof siteConfig.locales;
   children: React.ReactNode;
 }) {
-  const [languageLinks, setLanguageLinks] = useState(DEFAULT_LANGUAGE_LINKS);
-
-  // Update language links when the path changes
-  const { pathname } = useRouter();
-  useEffect(() => {
-    if (pathname === "/[...slug]") {
-      // Nothing to do here - this dynamic path sets the language links based on available translations
-    } else {
-      setLanguageLinks(DEFAULT_LANGUAGE_LINKS);
-    }
-  }, [pathname]);
-
-  // Provide a function to update the language links when translations are available
-  const updateLanguageLinks = (translations: Translations) => {
-    const updatedLinks = structuredClone(DEFAULT_LANGUAGE_LINKS);
-    Object.entries(translations).forEach(([key, path]) => {
-      updatedLinks[key].path = path;
-    });
-    setLanguageLinks(updatedLinks);
-  };
-
   return (
-    <LanguageLinksContext.Provider
-      value={{ languageLinks, updateLanguageLinks }}
-    >
+    <LanguageLinksContext.Provider value={languageLinks || siteConfig.locales}>
       {children}
     </LanguageLinksContext.Provider>
   );
 }
 
-export function useLanguageLinksContext() {
+/**
+ * Access the language links from the language links context.
+ */
+export function useLanguageLinks() {
   return useContext(LanguageLinksContext);
 }

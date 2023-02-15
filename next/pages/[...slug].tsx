@@ -6,8 +6,8 @@ import { NodeArticle } from "@/components/node--article";
 import { NodeBasicPage } from "@/components/node--basic-page";
 import { NodeLandingPage } from "@/components/node--landing-page";
 import {
+  createLanguageLinks,
   Translations,
-  useLanguageLinksContext,
 } from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal";
 import {
@@ -15,7 +15,6 @@ import {
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
-import { useEffectOnce } from "@/lib/hooks/use-effect-once";
 import { getNodeTranslatedVersions } from "@/lib/utils";
 
 const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
@@ -23,11 +22,6 @@ const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
 export default function NodePage({
   resource,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { updateLanguageLinks } = useLanguageLinksContext();
-  useEffectOnce(() => {
-    updateLanguageLinks(resource.translations);
-  });
-
   if (!resource) return null;
 
   return (
@@ -53,12 +47,9 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
   };
 };
 
-interface DrupalNodeWithTranslations extends DrupalNode {
-  translations: Translations;
-}
-
 interface NodePageProps extends CommonPageProps {
-  resource: DrupalNodeWithTranslations;
+  resource: DrupalNode;
+  languageLinks: Translations;
 }
 
 export const getStaticProps: GetStaticProps<NodePageProps> = async (
@@ -96,41 +87,43 @@ export const getStaticProps: GetStaticProps<NodePageProps> = async (
     };
   }
 
-  const resourceWithoutTranslations =
-    await drupal.getResourceFromContext<DrupalNode>(path, context, {
+  const resource = await drupal.getResourceFromContext<DrupalNode>(
+    path,
+    context,
+    {
       params: getNodePageJsonApiParams(type),
-    });
+    }
+  );
 
   // At this point, we know the path exists and it points to a resource.
   // If we receive an error, it means something went wrong on Drupal.
   // We throw an error to tell revalidation to skip this for now.
   // Revalidation can try again on next request.
-  if (!resourceWithoutTranslations) {
+  if (!resource) {
     throw new Error(`Failed to fetch resource: ${path.jsonapi.individual}`);
   }
 
   // If we're not in preview mode and the resource is not published,
   // Return page not found.
-  if (!context.preview && resourceWithoutTranslations?.status === false) {
+  if (!context.preview && resource?.status === false) {
     return {
       notFound: true,
     };
   }
 
   // Add information about possible other language versions of this node.
-  const resource: DrupalNodeWithTranslations = {
-    ...resourceWithoutTranslations,
-    translations: await getNodeTranslatedVersions(
-      resourceWithoutTranslations,
-      context,
-      drupal
-    ),
-  };
+  const nodeTranslations = await getNodeTranslatedVersions(
+    resource,
+    context,
+    drupal
+  );
+  const languageLinks = createLanguageLinks(nodeTranslations);
 
   return {
     props: {
       ...(await getCommonPageProps(context)),
       resource,
+      languageLinks,
     },
     revalidate: 60,
   };

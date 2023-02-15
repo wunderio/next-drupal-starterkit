@@ -6,15 +6,23 @@ import { Inter, Overpass } from "@next/font/google";
 import clsx from "clsx";
 
 import { Layout } from "@/components/layout";
-import { LanguageLinksProvider } from "@/lib/contexts/language-links-context";
+import {
+  LanguageLinks,
+  LanguageLinksProvider,
+} from "@/lib/contexts/language-links-context";
 import { CommonPageProps } from "@/lib/get-common-page-props";
 
-function App({ Component, pageProps }: AppProps<CommonPageProps>) {
+interface PageProps extends CommonPageProps {
+  languageLinks?: LanguageLinks;
+}
+
+function App({ Component, pageProps }: AppProps<PageProps>) {
+  const { menus, languageLinks, ...restPageProps } = pageProps;
   return (
     <Fonts>
-      <LanguageLinksProvider>
-        <Layout menus={pageProps.menus}>
-          <Component {...pageProps} />
+      <LanguageLinksProvider languageLinks={languageLinks}>
+        <Layout menus={menus}>
+          <Component {...restPageProps} />
         </Layout>
       </LanguageLinksProvider>
     </Fonts>
