@@ -26,7 +26,7 @@ If you are just testing for example for a pull request, and you want to get up a
 > NOTE: this will reinstall the site from scratch, export your database if you have something valuable in it. :)
 
 ```
-lando start && lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si --site-name="My great site name here" -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=default --execute-dependencies
+lando start && lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si --site-name="My great site name here" -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=demo_content --execute-dependencies
 ```
 
 You can then visit the site at https://frontend.lndo.site/.
@@ -62,7 +62,7 @@ Follow these steps to get started:
 
 1. Run `lando npm install`
 2. Run `lando npm run dev`
-3. If you want to populate the backend site with the provided example content, you can now run: `lando drush en wunder_democontent && lando drush mim --group=default --execute-dependencies`,  otherwise you can log into the backend with `lando drush uli` and create some content.
+3. If you want to populate the backend site with the provided example content, you can now run: `lando drush en wunder_democontent && lando drush mim --group=demo_content --execute-dependencies`,  otherwise you can log into the backend with `lando drush uli` and create some content.
 4. Visit `https://frontend.lndo.site` and you should see your content displayed by the frontend.
 5. When viewing a piece of content inside Drupal, you should be able to preview it in the frontend, including unpublished content and revisions.
 6. The template includes automatic setup of [On demand revalidation](https://next-drupal.org/learn/on-demand-revalidation), so saving a piece of content will automatically revalidate the corresponding path in next.js.
