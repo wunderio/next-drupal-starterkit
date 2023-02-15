@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Site\Settings;
+use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
 
 /**
  * Implements hook_ENTITY_TYPE_load().
@@ -35,4 +36,19 @@ function wunder_next_entity_type_alter(array &$entity_types) {
   // Add our custom validation constraint that makes sure
   // that there is only one frontpage node per translation:
   $entity_types['node']->addConstraint('UniqueFrontpage');
+}
+
+/**
+ * Implements hook_ckeditor5_plugin_info_alter().
+ */
+function wunder_next_ckeditor5_plugin_info_alter(array &$plugin_definitions): void {
+  // The frontend expects images with pixel dimensions, so we have to alter the
+  // image resize plugin configuration to set it to pixels instead of
+  // percentages  More info at:
+  // https://ckeditor.com/docs/ckeditor5/latest/api/module_image_image-ImageConfig.html#member-resizeUnit
+  if ($plugin_definitions['ckeditor5_imageResize'] instanceof CKEditor5PluginDefinition) {
+    $image_resize_plugin_definition = $plugin_definitions['ckeditor5_imageResize']->toArray();
+    $image_resize_plugin_definition["ckeditor5"]["config"]["image"]["resizeUnit"] = "px";
+    $plugin_definitions['ckeditor5_imageResize'] = new CKEditor5PluginDefinition($image_resize_plugin_definition);
+  };
 }
