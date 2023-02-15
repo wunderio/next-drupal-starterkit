@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { DrupalMenuLinkContent } from "next-drupal";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
+import { DrupalMenuLinkContentWithLangcode } from "@/types";
 interface FooterProps {
-  links: DrupalMenuLinkContent[];
+  links: DrupalMenuLinkContentWithLangcode[];
 }
 
 export function Footer({ links }: FooterProps) {
