@@ -1,0 +1,29 @@
+id: paragraphs_landing_page_links
+label: Landing page paragraphs links
+migration_group: demo_content
+source:
+  plugin: csv
+  path: /app/drupal/web/modules/custom/wunder_democontent/sources/landing_pages.csv
+  ids: [id]
+  constants:
+    uid: 1
+    status: 1
+process:
+  # We are interested here only in nodes that are not translations:
+  skipped:
+    plugin: skip_on_value
+    method: row
+    not_equals: true
+    value:
+      - 1
+    source: 'Is source'
+  'field_links/title': Paragraphs_0_links_title
+  'field_links/uri': Paragraph_0_links_uri
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: links
+

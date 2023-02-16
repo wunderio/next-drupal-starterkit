@@ -37,3 +37,4 @@ migration_dependencies:
   required:
     - nodes_landing_pages
     - paragraphs_landing_page_formatted_text_translations
+    - paragraphs_landing_page_links_translations
