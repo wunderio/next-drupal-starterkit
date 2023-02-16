@@ -3,12 +3,13 @@ import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
 
+import { Divider } from "@/components/divider";
+import { LatestArticles } from "@/components/latest-articles";
 import { NodeFrontpage } from "@/components/node--frontpage";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
 
 import { LayoutProps } from "../components/layout";
-import { NodeArticleTeaser } from "../components/node--article--teaser";
 import { drupal } from "../lib/drupal";
 
 interface IndexPageProps extends LayoutProps {
@@ -30,24 +31,11 @@ export default function IndexPage({
           content="A Next.js site powered by a Drupal backend."
         />
       </Head>
-      <div>
-        <>
-          {frontpageNode && <NodeFrontpage node={frontpageNode} />}
-          <h2 className="text-heading-md font-bold md:text-heading-lg">
-            {t("latest-articles")}
-          </h2>
-          {articles?.length ? (
-            articles.map((node) => (
-              <div key={node.id}>
-                <NodeArticleTeaser node={node} />
-                <hr className="my-20" />
-              </div>
-            ))
-          ) : (
-            <p className="py-4">{t("no-content-found")}</p>
-          )}
-        </>
-      </div>
+      <>
+        <NodeFrontpage node={frontpageNode} />
+        <Divider />
+        <LatestArticles articles={articles} />
+      </>
     </>
   );
 }

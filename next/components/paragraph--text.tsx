@@ -23,7 +23,7 @@ export function ParagraphText({ paragraph }: ParagraphProps) {
         </Heading>
       )}
       <FormattedText
-        className="mt-4 text-justify text-md leading-xl text-gray-500 sm:text-lg"
+        className="my-8 text-justify text-md leading-xl text-gray-500 sm:text-lg"
         processed={paragraph.field_formatted_text.processed}
       />
     </div>

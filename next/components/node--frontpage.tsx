@@ -1,16 +1,15 @@
-import { DrupalNode } from "next-drupal";
+import { DrupalNode, DrupalParagraph } from "next-drupal";
 
 import { Paragraph } from "@/components/paragraph";
 
-interface NodeFrontPage {
+interface NodeFrontPageProps {
   node: DrupalNode;
-  viewMode?: string;
 }
 
-export function NodeFrontpage({ node }: NodeFrontPage) {
+export function NodeFrontpage({ node }: NodeFrontPageProps) {
   if (!node.field_content_elements.length) return null;
 
-  return node.field_content_elements.map((paragraph) => {
+  return node.field_content_elements.map((paragraph: DrupalParagraph) => {
     return <Paragraph key={paragraph.id} paragraph={paragraph} />;
   });
 }
