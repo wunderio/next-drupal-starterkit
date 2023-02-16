@@ -9,11 +9,11 @@ export function ParagraphText({ paragraph }: ParagraphProps) {
   const isFrontPage = router.pathname === "/";
   const Heading = isFrontPage ? "h1" : "h2";
   return (
-    <div className="text-justify">
+    <div>
       {paragraph.field_heading && (
         <Heading
           className={clsx(
-            "font-bold",
+            "text-left font-bold",
             isFrontPage
               ? "text-heading-md md:text-heading-lg"
               : "text-heading-lg md:text-heading-xl"
@@ -23,7 +23,7 @@ export function ParagraphText({ paragraph }: ParagraphProps) {
         </Heading>
       )}
       <FormattedText
-        className="mt-4 text-md leading-xl text-gray-500 sm:text-lg"
+        className="mt-4 text-justify text-md leading-xl text-gray-500 sm:text-lg"
         processed={paragraph.field_formatted_text.processed}
       />
     </div>
