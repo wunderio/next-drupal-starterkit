@@ -16,6 +16,7 @@ import {
 } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
 import { getNodeTranslatedVersions } from "@/lib/utils";
+import { ResourceType } from "@/types";
 
 const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
 
@@ -73,7 +74,7 @@ export const getStaticProps: GetStaticProps<NodePageProps> = async (
     };
   }
 
-  const type = path.jsonapi.resourceName;
+  const type = path.jsonapi.resourceName as ResourceType;
 
   // If we are looking at the path of a frontpage node,
   // redirect the user to the homepage for that language:
