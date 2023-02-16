@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import { DrupalNode } from "next-drupal";
+import { DrupalNode, DrupalTranslatedPath } from "next-drupal";
 
 import { NodeArticle } from "@/components/node--article";
 import { NodeBasicPage } from "@/components/node--basic-page";
@@ -56,7 +56,9 @@ interface NodePageProps extends CommonPageProps {
 export const getStaticProps: GetStaticProps<NodePageProps> = async (
   context
 ) => {
-  const path = await drupal.translatePathFromContext(context);
+  const path: DrupalTranslatedPath = await drupal.translatePathFromContext(
+    context
+  );
 
   if (!path) {
     return {

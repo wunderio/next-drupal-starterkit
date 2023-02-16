@@ -12,7 +12,9 @@ const LanguageLinksContext = createContext(siteConfig.locales);
 /**
  * From the site config and available node translations, create links to be used in the language switcher.
  */
-export function createLanguageLinks(nodeTranslations?: Translations) {
+export function createLanguageLinks(
+  nodeTranslations?: Translations
+): LanguageLinks {
   const languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
   Object.entries(nodeTranslations).forEach(([key, path]) => {
     languageLinks[key].path = path;
