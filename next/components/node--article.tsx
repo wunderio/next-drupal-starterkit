@@ -43,7 +43,7 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
       {node.body?.processed && (
         <FormattedText
           className="mt-4 text-md leading-xl text-gray-500 sm:text-lg"
-          processed={node.body?.processed}
+          html={node.body?.processed}
         />
       )}
     </article>

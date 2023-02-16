@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { HTMLAttributes } from "react";
 import {
   DOMNode,
   domToReact,
@@ -75,12 +76,10 @@ const options: HTMLReactParserOptions = {
   },
 };
 
-interface FormattedTextProps extends React.HTMLAttributes<HTMLDivElement> {
-  format?: string;
-  processed: string;
-  value?: string;
+interface FormattedTextProps extends HTMLAttributes<HTMLDivElement> {
+  html: string;
 }
 
-export function FormattedText({ processed, ...props }: FormattedTextProps) {
-  return <div {...props}>{parse(processed, options)}</div>;
+export function FormattedText({ html, ...props }: FormattedTextProps) {
+  return <div {...props}>{parse(html, options)}</div>;
 }

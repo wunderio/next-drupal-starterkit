@@ -9,13 +9,13 @@ interface NodeBasicPageProps {
 export function NodeBasicPage({ node, ...props }: NodeBasicPageProps) {
   return (
     <article {...props}>
-      <h1 className="mb-4 text-heading-2xl font-bold leading-md">
+      <h1 className="text-left text-heading-md font-bold md:text-heading-lg">
         {node.title}
       </h1>
       {node.body?.processed && (
         <FormattedText
-          className="mt-4 text-lg leading-xl text-gray-500 sm:text-xl"
-          processed={node.body?.processed}
+          className="my-8 text-justify text-md leading-xl text-gray-500 sm:text-lg"
+          html={node.body?.processed}
         />
       )}
     </article>

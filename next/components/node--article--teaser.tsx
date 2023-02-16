@@ -14,7 +14,7 @@ export function NodeArticleTeaser({ node }: NodeArticleTeaserProps) {
   const author = node.uid?.display_name;
   const date = formatDate(node.created);
   return (
-    <div className="relative h-full rounded p-4 transition-all hover:bg-white hover:shadow-md">
+    <div className="relative h-full rounded border bg-white p-4 transition-all hover:shadow-md">
       <h3 className="text-heading-sm font-bold line-clamp-2">{node.title}</h3>
       <div className="mb-4 text-md text-gray-700 line-clamp-2">
         {author && <>{t("posted-by", { author })} - </>}
