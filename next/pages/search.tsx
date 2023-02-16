@@ -68,7 +68,7 @@ export default function SearchPage() {
         >
           {({ wasSearched, results }) => (
             <ErrorBoundary>
-              <div className="search-ui">
+              <div>
                 <SearchBox
                   searchAsYouType={false}
                   shouldClearFilters={false}
@@ -77,7 +77,7 @@ export default function SearchPage() {
                   inputView={SearchBoxInput}
                   className="py-2"
                 />
-                <div className="search-results-header flex items-center justify-end gap-x-5 py-2">
+                <div className="search-results-header flex items-center justify-end py-2">
                   {wasSearched && results.length > 0 && (
                     <PagingInfo view={PagingInfoView} />
                   )}
@@ -101,23 +101,20 @@ export default function SearchPage() {
                       )}
                     </aside>
 
-                    <div className="flex-1 ">
-                      <div className="search-results py-2">
-                        <Results
-                          shouldTrackClickThrough={false}
-                          resultView={SearchResult}
-                        />
-                      </div>
-                      <div className="search-results-footer p-2">
+                    <div className="flex-1">
+                      <Results
+                        className="py-2"
+                        shouldTrackClickThrough={false}
+                        resultView={SearchResult}
+                      />
+                      <div className="p-2">
                         {wasSearched && results.length > 0 && <Paging />}
                       </div>
                     </div>
                   </div>
                 </div>
-                {wasSearched && results.length == 0 && (
-                  <div className="search-no-results">
-                    {t("no-results-found")}
-                  </div>
+                {wasSearched && results.length === 0 && (
+                  <div>{t("no-results-found")}</div>
                 )}
               </div>
             </ErrorBoundary>

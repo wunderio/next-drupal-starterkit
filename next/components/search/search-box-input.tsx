@@ -9,7 +9,7 @@ export const SearchBoxInput: React.ComponentType<InputViewProps> = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <div className="relative w-full">
+    <div className="relative w-full max-w-xl">
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
         <MagnifierIcon
           aria-hidden
@@ -18,7 +18,7 @@ export const SearchBoxInput: React.ComponentType<InputViewProps> = ({
       </div>
       <input
         {...getInputProps()}
-        className="block w-full rounded-lg border border-wunderpurple-100 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-wunderpurple-500 focus:ring-wunderpurple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-wunderpurple-500 dark:focus:ring-wunderpurple-500"
+        className="block w-full rounded-lg border border-wunderpurple-100 bg-white p-4 pl-10 text-sm text-gray-900 focus:border-wunderpurple-500 focus:ring-wunderpurple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-wunderpurple-500 dark:focus:ring-wunderpurple-500"
         placeholder={t("search-bar-placeholder-text")}
       />
       <button
