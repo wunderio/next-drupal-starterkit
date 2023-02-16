@@ -1,6 +1,8 @@
 import { useTranslation } from "next-i18next";
 import { InputViewProps } from "@elastic/react-search-ui-views";
 
+import MagnifierIcon from "@/styles/icons/magnifier.svg";
+
 export const SearchBoxInput: React.ComponentType<InputViewProps> = ({
   getInputProps,
   getButtonProps,
@@ -9,21 +11,10 @@ export const SearchBoxInput: React.ComponentType<InputViewProps> = ({
   return (
     <div className="relative w-full">
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-        <svg
-          aria-hidden="true"
+        <MagnifierIcon
+          aria-hidden
           className="h-5 w-5 text-gray-500 dark:text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          ></path>
-        </svg>
+        />
       </div>
       <input
         {...getInputProps()}
