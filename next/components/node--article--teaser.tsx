@@ -4,6 +4,7 @@ import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
 
 import { absoluteUrl, formatDate } from "@/lib/utils";
+import ArrowIcon from "@/styles/icons/arrow.svg";
 
 interface NodeArticleTeaserProps {
   node: DrupalNode;
@@ -43,17 +44,7 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
         className="inline-flex items-center rounded-full border border-wunderpurple-500 px-6 py-2 text-wunderpurple-500 hover:bg-wunderpurple-50"
       >
         {t("read-article")}
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="ml-2 h-4 w-4"
-        >
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
+        <ArrowIcon className="ml-2 h-4 w-4" />
       </Link>
     </article>
   );
