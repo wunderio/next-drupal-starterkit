@@ -18,6 +18,7 @@
     "@elastic/react-search-ui-views": "^1.19.1",
     "@elastic/search-ui": "^1.19.1",
     "@next/font": "^13.1.6",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "clsx": "^1.2.1",
     "drupal-jsonapi-params": "^2.2.0",
     "html-react-parser": "^3.0.8",
