@@ -16,6 +16,7 @@ import {
 } from "@elastic/react-search-ui";
 import { SearchDriverOptions } from "@elastic/search-ui";
 
+import { HeadingPage } from "@/components/heading--page";
 import { SearchBoxInput } from "@/components/search/search-box-input";
 import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-facet";
 import { PagingInfoView } from "@/components/search/search-paging-info";
@@ -57,7 +58,7 @@ export default function SearchPage() {
         />
       </Head>
 
-      <h1 className="mb-10 text-heading-2xl font-bold">{t("search")}</h1>
+      <HeadingPage>{t("search")}</HeadingPage>
 
       <SearchProvider config={config}>
         <WithSearch

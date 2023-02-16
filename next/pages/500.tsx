@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
+import { HeadingPage } from "@/components/heading--page";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -11,8 +12,8 @@ export default function NotFoundPage() {
   const { t } = useTranslation();
   return (
     <>
-      <h1 className="mb-4 text-heading-2xl font-bold">{t("Error")}</h1>
-      <p className="text-lg">
+      <HeadingPage>{t("Error")}</HeadingPage>
+      <p className="mt-8 text-lg">
         {t("There was an error.")}{" "}
         <Link href="/" className="text-wunderpurple-500 hover:underline">
           {t("Go back to the homepage?")}

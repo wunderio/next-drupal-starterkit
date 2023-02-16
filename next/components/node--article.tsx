@@ -3,6 +3,7 @@ import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
 
 import { FormattedText } from "@/components/formatted-text";
+import { HeadingPage } from "@/components/heading--page";
 import { absoluteUrl, formatDate } from "@/lib/utils";
 
 interface NodeArticleProps {
@@ -13,9 +14,7 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
   const { t } = useTranslation();
   return (
     <article {...props}>
-      <h1 className="mb-4 text-heading-2xl font-bold leading-md">
-        {node.title}
-      </h1>
+      <HeadingPage>{node.title}</HeadingPage>
       <div className="mb-4 text-gray-600">
         {node.uid?.display_name ? (
           <span>{t("posted-by", { author: node.uid?.display_name })}</span>

@@ -1,6 +1,7 @@
 import { DrupalNode } from "next-drupal";
 
 import { FormattedText } from "@/components/formatted-text";
+import { HeadingPage } from "@/components/heading--page";
 
 interface NodeBasicPageProps {
   node: DrupalNode;
@@ -9,9 +10,7 @@ interface NodeBasicPageProps {
 export function NodeBasicPage({ node, ...props }: NodeBasicPageProps) {
   return (
     <article {...props}>
-      <h1 className="text-left text-heading-md font-bold md:text-heading-lg">
-        {node.title}
-      </h1>
+      <HeadingPage>{node.title}</HeadingPage>
       {node.body?.processed && (
         <FormattedText
           className="my-8 text-justify text-md leading-xl text-gray-500 sm:text-lg"
