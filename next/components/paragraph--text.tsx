@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import clsx from "clsx";
 
 import { FormattedText } from "@/components/formatted-text";
 import { ParagraphProps } from "@/components/paragraph";

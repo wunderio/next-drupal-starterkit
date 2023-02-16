@@ -1,7 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { DrupalNode } from "next-drupal";
-import { useTranslation } from "next-i18next";
 
 import { Divider } from "@/components/divider";
 import { LatestArticles } from "@/components/latest-articles";
@@ -21,7 +20,6 @@ export default function IndexPage({
   articles,
   frontpageNode,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = useTranslation();
   return (
     <>
       <Head>
