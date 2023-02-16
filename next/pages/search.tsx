@@ -14,6 +14,7 @@ import {
   SearchProvider,
   WithSearch,
 } from "@elastic/react-search-ui";
+import { SearchDriverOptions } from "@elastic/search-ui";
 
 import { SearchBoxInput } from "@/components/search/search-box-input";
 import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-facet";
@@ -33,7 +34,8 @@ import { runRequest } from "@/lib/search-ui-helpers/runRequest";
 export default function SearchPage() {
   const { t } = useTranslation();
   const router = useRouter();
-  const config = {
+
+  const config: SearchDriverOptions = {
     debug: false,
     hasA11yNotifications: true,
     apiConnector: null,
@@ -44,6 +46,7 @@ export default function SearchPage() {
       return buildState(responseJson, resultsPerPage, state);
     },
   };
+
   return (
     <>
       <Head>
