@@ -7,7 +7,7 @@ import { NodeBasicPage } from "@/components/node--basic-page";
 import { NodeLandingPage } from "@/components/node--landing-page";
 import {
   createLanguageLinks,
-  Translations,
+  LanguageLinks,
 } from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal";
 import {
@@ -50,7 +50,7 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 
 interface NodePageProps extends CommonPageProps {
   resource: DrupalNode;
-  languageLinks: Translations;
+  languageLinks: LanguageLinks;
 }
 
 export const getStaticProps: GetStaticProps<NodePageProps> = async (
