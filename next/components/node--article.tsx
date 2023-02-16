@@ -27,6 +27,7 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
           <Image
             src={absoluteUrl(node.field_image.uri.url)}
             width={768}
+            height={480}
             alt={node.field_image.resourceIdObjMeta.alt}
             sizes="100vw"
             className="h-auto max-w-full object-cover"
