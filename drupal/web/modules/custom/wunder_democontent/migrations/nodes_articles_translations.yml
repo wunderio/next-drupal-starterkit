@@ -37,7 +37,7 @@ process:
     migration: nodes_articles_images
     source:
       - id
-    'field_teaser_image/alt': Title
+  'field_image/alt': Title
   field_tags:
     plugin: entity_generate
     source: Tag
