@@ -41,7 +41,7 @@ If you are just testing for example for a pull request, and you want to get up a
 > NOTE: this will reinstall the site from scratch, export your database if you have something valuable in it. :)
 
 ```
-lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si --site-name="My great site name here" -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=demo_content --execute-dependencies
+lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si --site-name="My great site name here" -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=demo_content --execute-dependencies && lando drush uli
 ```
 
 You can then visit the site at https://frontend.lndo.site/.
