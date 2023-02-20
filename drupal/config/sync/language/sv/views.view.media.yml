@@ -1,0 +1,18 @@
+display:
+  default:
+    display_title: Förvald
+    display_options:
+      fields:
+        bundle:
+          label: Typ
+        status:
+          label: Status
+        operations:
+          label: Funktioner
+      exposed_form:
+        options:
+          reset_button_label: Återställ
+      filters:
+        bundle:
+          expose:
+            label: Typ

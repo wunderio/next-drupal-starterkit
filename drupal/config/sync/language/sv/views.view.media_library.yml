@@ -1,0 +1,14 @@
+display:
+  default:
+    display_title: Förvald
+    display_options:
+      exposed_form:
+        options:
+          reset_button_label: Återställ
+  page:
+    display_options:
+      fields:
+        edit_media:
+          text: Redigera
+        delete_media:
+          text: Radera

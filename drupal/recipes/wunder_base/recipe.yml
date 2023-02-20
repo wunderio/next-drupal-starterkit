@@ -28,6 +28,7 @@ install:
   - image
   - link
   - jsonapi
+  - datetime_range
 
 config:
   import:

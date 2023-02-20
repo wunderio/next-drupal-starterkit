@@ -1,0 +1,7 @@
+display:
+  default:
+    display_title: Oletus
+    display_options:
+      exposed_form:
+        options:
+          reset_button_label: Palauta

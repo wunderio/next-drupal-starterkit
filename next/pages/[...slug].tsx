@@ -3,7 +3,6 @@ import Head from "next/head";
 import { DrupalNode, DrupalTranslatedPath } from "next-drupal";
 
 import { NodeArticle } from "@/components/node--article";
-import { NodeBasicPage } from "@/components/node--basic-page";
 import { NodeLandingPage } from "@/components/node--landing-page";
 import {
   createLanguageLinks,
@@ -18,7 +17,7 @@ import { getNodePageJsonApiParams } from "@/lib/get-params";
 import { getNodeTranslatedVersions } from "@/lib/utils";
 import { ResourceType } from "@/types";
 
-const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
+const RESOURCE_TYPES = ["node--article", "node--landing_page"];
 
 export default function NodePage({
   resource,
@@ -31,7 +30,6 @@ export default function NodePage({
         <title>{resource.title}</title>
         <meta name="description" content="A Next.js site powered by Drupal." />
       </Head>
-      {resource.type === "node--page" && <NodeBasicPage node={resource} />}
       {resource.type === "node--article" && <NodeArticle node={resource} />}
       {resource.type === "node--landing_page" && (
         <NodeLandingPage node={resource} />
