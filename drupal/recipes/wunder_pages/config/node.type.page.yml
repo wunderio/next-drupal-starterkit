@@ -1,0 +1,20 @@
+uuid: 098d1424-5ae2-440a-ab61-459333485b77
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: 9WzxuWQnSJM-Qbcglj8feKwXojXyBiHvFQQYhjQEKlE
+name: 'Page'
+type: page
+description: 'Page content type. Contains paragraphs.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false
