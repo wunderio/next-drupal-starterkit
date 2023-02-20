@@ -41,6 +41,11 @@ process:
       migration: paragraphs_landing_page_image
       source: id
     - plugin: null_as_array
+  paragraph_video:
+    - plugin: migration_lookup
+      migration: paragraphs_landing_page_video
+      source: id
+    - plugin: null_as_array
 
   field_content_elements:
     plugin: sub_process
@@ -48,6 +53,7 @@ process:
       - '@paragraph_formatted_text'
       - '@paragraph_links'
       - '@paragraph_images'
+      - '@paragraph_video'
     process:
       target_id:
         -
