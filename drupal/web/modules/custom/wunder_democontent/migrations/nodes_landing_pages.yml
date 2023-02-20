@@ -36,12 +36,18 @@ process:
       migration: paragraphs_landing_page_links
       source: id
     - plugin: null_as_array
+  paragraph_images:
+    - plugin: migration_lookup
+      migration: paragraphs_landing_page_image
+      source: id
+    - plugin: null_as_array
 
   field_content_elements:
     plugin: sub_process
     source:
       - '@paragraph_formatted_text'
       - '@paragraph_links'
+      - '@paragraph_images'
     process:
       target_id:
         -
@@ -63,3 +69,4 @@ migration_dependencies:
   required:
     - paragraphs_landing_page_formatted_text
     - paragraphs_landing_page_links
+    - paragraphs_landing_page_image
