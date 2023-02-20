@@ -1,31 +1,21 @@
 import { useRouter } from "next/router";
-import clsx from "clsx";
 
 import { FormattedText } from "@/components/formatted-text";
+import { HeadingPage } from "@/components/heading--page";
+import { HeadingParagraph } from "@/components/heading--paragraph";
 import { ParagraphProps } from "@/components/paragraph";
 
 export function ParagraphText({ paragraph }: ParagraphProps) {
   const router = useRouter();
   const isFrontPage = router.pathname === "/";
-  const Heading = isFrontPage ? "h1" : "h2";
+  const Heading = isFrontPage ? HeadingPage : HeadingParagraph;
   return (
-    <div className="text-justify">
-      {paragraph.field_heading && (
-        <Heading
-          className={clsx(
-            "font-bold",
-            isFrontPage
-              ? "text-heading-md md:text-heading-lg"
-              : "text-heading-lg md:text-heading-xl"
-          )}
-        >
-          {paragraph.field_heading}
-        </Heading>
-      )}
+    <>
+      {paragraph.field_heading && <Heading>{paragraph.field_heading}</Heading>}
       <FormattedText
-        className="mt-4 text-md leading-xl text-gray-500 sm:text-lg"
-        processed={paragraph.field_formatted_text.processed}
+        className="my-8 text-justify text-md leading-xl text-gray-500 sm:text-lg"
+        html={paragraph.field_formatted_text.processed}
       />
-    </div>
+    </>
   );
 }

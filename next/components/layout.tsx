@@ -27,7 +27,9 @@ export function Layout({ menus, children }: LayoutProps) {
         )}
       >
         <Header links={menus.main} />
-        <main className="mx-auto w-full max-w-6xl grow p-6">{children}</main>
+        <main className="grow bg-gray-50">
+          <div className="mx-auto max-w-6xl py-8 px-6">{children}</div>
+        </main>
         <Footer links={menus.footer} />
       </div>
       <PreviewBanner isVisible={isPreviewVisible} />

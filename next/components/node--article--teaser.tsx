@@ -9,52 +9,30 @@ interface NodeArticleTeaserProps {
   node: DrupalNode;
 }
 
-export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
+export function NodeArticleTeaser({ node }: NodeArticleTeaserProps) {
   const { t } = useTranslation();
+  const author = node.uid?.display_name;
+  const date = formatDate(node.created);
   return (
-    <article {...props}>
-      <Link
-        href={node.path.alias}
-        passHref
-        className="text-wunderpurple-500 no-underline hover:text-wunderpurple-400"
-      >
-        <h2 className="mb-4 text-heading-xl font-bold">{node.title}</h2>
-      </Link>
-      <div className="mb-4 text-gray-600">
-        {node.uid?.display_name ? (
-          <span>{t("posted-by", { author: node.uid?.display_name })}</span>
-        ) : null}
-        <span> - {formatDate(node.created)}</span>
+    <div className="relative h-full rounded border bg-white p-4 transition-all hover:shadow-md">
+      <h3 className="text-heading-sm font-bold line-clamp-2">{node.title}</h3>
+      <div className="mb-4 text-md text-gray-700 line-clamp-2">
+        {author && <>{t("posted-by", { author })} - </>}
+        {date}
       </div>
       {node.field_image && (
-        <figure className="my-4">
-          <Image
-            src={absoluteUrl(node.field_image.uri.url)}
-            width={768}
-            alt={node.field_image.resourceIdObjMeta.alt}
-            sizes="100vw"
-            className="h-auto max-w-full object-cover"
-          />
-        </figure>
+        <Image
+          src={absoluteUrl(node.field_image.uri.url)}
+          width={384}
+          height={240}
+          alt={node.field_image.resourceIdObjMeta.alt}
+          className="max-w-full object-cover"
+        />
       )}
       <Link
         href={node.path.alias}
-        passHref
-        className="inline-flex items-center rounded-full border border-wunderpurple-500 px-6 py-2 text-wunderpurple-500 hover:bg-wunderpurple-50"
-      >
-        {t("read-article")}
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="ml-2 h-4 w-4"
-        >
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-      </Link>
-    </article>
+        className="absolute inset-0 cursor-pointer"
+      />
+    </div>
   );
 }
