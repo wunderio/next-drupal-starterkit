@@ -1,6 +1,8 @@
 import { DrupalJsonApiParams } from "drupal-jsonapi-params";
 
-export function getNodePageJsonApiParams(resourceType: string) {
+import { ResourceType } from "@/types";
+
+export function getNodePageJsonApiParams(resourceType: ResourceType) {
   const apiParams = new DrupalJsonApiParams().addFilter(
     "field_site.meta.drupal_internal__target_id",
     process.env.DRUPAL_SITE_ID

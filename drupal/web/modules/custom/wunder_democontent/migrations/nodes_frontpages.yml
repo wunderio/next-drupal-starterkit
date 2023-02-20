@@ -1,0 +1,58 @@
+id: nodes_frontpages
+label: Frontpage nodes
+migration_group: demo_content
+source:
+  plugin: csv
+  path: /app/drupal/web/modules/custom/wunder_democontent/sources/frontpages.csv
+  ids: [ id ]
+  constants:
+    status: 1
+    uid: 1
+process:
+  # We are interested here only in nodes that are not translations:
+  skipped:
+    plugin: skip_on_value
+    method: row
+    not_equals: true
+    value:
+      - 1
+    source: 'Is source'
+    message: Skipped because node is not source
+  type:
+    plugin: default_value
+    default_value: frontpage
+  title: Title
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+  # Paragraphs.
+  paragraph_formatted_text:
+    - plugin: migration_lookup
+      migration: paragraphs_frontpage_formatted_text
+      source: id
+    - plugin: null_as_array
+
+  field_content_elements:
+    plugin: sub_process
+    source:
+      - '@paragraph_formatted_text'
+    process:
+      target_id:
+        -
+          plugin: skip_on_empty
+          method: process
+          message: 'Cannot import empty paragraph'
+          source: '0'
+      target_revision_id:
+        -
+          plugin: skip_on_empty
+          method: process
+          message: 'Cannot import empty paragraph'
+          source: '1'
+
+destination:
+  plugin: entity:node
+
+migration_dependencies:
+  required:
+    - paragraphs_frontpage_formatted_text

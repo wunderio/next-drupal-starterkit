@@ -8,7 +8,7 @@ export function SearchResult({ result, onClickLink }: ResultViewProps) {
       key={result.id.raw}
       href={result.path.raw}
       target="_blank"
-      className="my-2 block rounded-md border border-wunderpurple-50 p-4"
+      className="my-2 block rounded-md border border-wunderpurple-50 bg-white p-4"
     >
       <h5 className="mb-1 text-heading-sm font-bold tracking-tight text-wunderpurple-500">
         {result.title.raw}

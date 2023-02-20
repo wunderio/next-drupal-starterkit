@@ -1,13 +1,13 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import { DrupalNode } from "next-drupal";
+import { DrupalNode, DrupalTranslatedPath } from "next-drupal";
 
 import { NodeArticle } from "@/components/node--article";
 import { NodeBasicPage } from "@/components/node--basic-page";
 import { NodeLandingPage } from "@/components/node--landing-page";
 import {
   createLanguageLinks,
-  Translations,
+  LanguageLinks,
 } from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal";
 import {
@@ -16,6 +16,7 @@ import {
 } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
 import { getNodeTranslatedVersions } from "@/lib/utils";
+import { ResourceType } from "@/types";
 
 const RESOURCE_TYPES = ["node--page", "node--article", "node--landing_page"];
 
@@ -49,13 +50,15 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 
 interface NodePageProps extends CommonPageProps {
   resource: DrupalNode;
-  languageLinks: Translations;
+  languageLinks: LanguageLinks;
 }
 
 export const getStaticProps: GetStaticProps<NodePageProps> = async (
   context
 ) => {
-  const path = await drupal.translatePathFromContext(context);
+  const path: DrupalTranslatedPath = await drupal.translatePathFromContext(
+    context
+  );
 
   if (!path) {
     return {
@@ -73,7 +76,7 @@ export const getStaticProps: GetStaticProps<NodePageProps> = async (
     };
   }
 
-  const type = path.jsonapi.resourceName;
+  const type = path.jsonapi.resourceName as ResourceType;
 
   // If we are looking at the path of a frontpage node,
   // redirect the user to the homepage for that language:

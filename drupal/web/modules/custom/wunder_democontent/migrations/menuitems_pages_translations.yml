@@ -1,0 +1,66 @@
+id: menuitems_pages_translations
+label: Menu items connected to translated pages
+migration_group: demo_content
+source:
+  plugin: csv
+  path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv
+  ids: [ id ]
+  constants:
+    slash: 'entity:node/'
+process:
+  nodeId:
+    -
+      plugin: migration_lookup
+      migration: nodes_pages_translations
+      source:
+        - id
+    -
+      plugin: extract
+      index:
+        - 0
+  # We are interested here only in nodes that are translations:
+  skipped:
+    plugin: skip_on_value
+    method: row
+    not_equals: true
+    value:
+      - 0
+    source: 'Is source'
+    message: Skipped because node is not source
+  path/pathauto:
+    plugin: default_value
+    default_value: 0 # Disable pathauto
+  title: Title
+  langcode: Langcode
+  menu_name:
+    - plugin: default_value
+      default_value: 'footer'
+  'link/uri':
+    - plugin: concat
+      source:
+        - constants/slash
+        - '@nodeId'
+    - plugin: link_uri
+  'link/options': options
+  route:
+    - plugin: concat
+      source:
+        - constants/slash
+        - '@nodeId'
+    - plugin: route
+  external:
+    plugin: default_value
+    default_value: 0
+  expanded:
+    plugin: default_value
+    default_value: 0
+  enabled:
+    plugin: default_value
+    default_value: 1
+destination:
+  plugin: 'entity:menu_link_content'
+  translations: true
+
+migration_dependencies:
+  required:
+    - nodes_pages_translations

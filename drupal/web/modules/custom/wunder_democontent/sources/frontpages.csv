@@ -1,0 +1,5 @@
+id,Tnid,Is source,Langcode,Title,Paragraph_0_text_title,Paragraph_0_text_body
+1,1,1,en,Frontpage en,Welcome to the wunder next-drupal template site!,This is the english frontpage for the template site. The site has been populated with test content to show its main features.
+2,1,0,fi,Frontpage fi,Tervetuloa wunderin next-drupal mallisivustolle!,Tämä on suomenkielinen etusivu mallisivustolle. Sivusto on täytetty testisisällöllä sen tärkeimpien ominaisuuksien näyttämiseksi.
+3,1,0,sv,Frontpage sv,Välkommen till next-drupal mallsida!,"Det här är
+ förstasidan på svenska för mallsidan. Webbplatsen har fyllts med testinnehåll för att visa dess huvuddrag."
