@@ -3,7 +3,7 @@ import Head from "next/head";
 import { DrupalNode, DrupalTranslatedPath } from "next-drupal";
 
 import { NodeArticle } from "@/components/node--article";
-import { NodeLandingPage } from "@/components/node--landing-page";
+import { NodePage } from "@/components/node--page";
 import {
   createLanguageLinks,
   LanguageLinks,
@@ -17,9 +17,9 @@ import { getNodePageJsonApiParams } from "@/lib/get-params";
 import { getNodeTranslatedVersions } from "@/lib/utils";
 import { ResourceType } from "@/types";
 
-const RESOURCE_TYPES = ["node--article", "node--landing_page"];
+const RESOURCE_TYPES = ["node--article", "node--page"];
 
-export default function NodePage({
+export default function Page({
   resource,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!resource) return null;
@@ -31,9 +31,7 @@ export default function NodePage({
         <meta name="description" content="A Next.js site powered by Drupal." />
       </Head>
       {resource.type === "node--article" && <NodeArticle node={resource} />}
-      {resource.type === "node--landing_page" && (
-        <NodeLandingPage node={resource} />
-      )}
+      {resource.type === "node--page" && <NodePage node={resource} />}
     </>
   );
 }

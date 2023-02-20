@@ -8,7 +8,4 @@ export interface DrupalMenuLinkContentWithLangcode
   items?: DrupalMenuLinkContentWithLangcode[];
 }
 
-export type ResourceType =
-  | "node--frontpage"
-  | "node--landing_page"
-  | "node--article";
+export type ResourceType = "node--frontpage" | "node--page" | "node--article";
