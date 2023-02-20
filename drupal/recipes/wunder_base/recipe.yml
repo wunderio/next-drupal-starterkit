@@ -52,4 +52,7 @@ config:
     block.block.claro_primary_local_tasks:
       simple_config_update:
         status: false
+    block.block.claro_secondary_local_tasks:
+      simple_config_update:
+        status: false
 
