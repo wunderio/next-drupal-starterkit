@@ -1,0 +1,14 @@
+display:
+  default:
+    display_title: Oletus
+    display_options:
+      exposed_form:
+        options:
+          reset_button_label: Palauta
+  page:
+    display_options:
+      fields:
+        edit_media:
+          text: Muokkaa
+        delete_media:
+          text: Poista

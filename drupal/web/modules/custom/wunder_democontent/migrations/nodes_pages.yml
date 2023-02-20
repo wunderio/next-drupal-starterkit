@@ -1,5 +1,5 @@
 id: nodes_pages
-label: Basic page nodes
+label: Pageage nodes
 migration_group: demo_content
 source:
   plugin: csv
@@ -25,10 +25,54 @@ process:
   status: constants/status
   uid: constants/uid
   langcode: Langcode
-  'body/format':
-    plugin: default_value
-    default_value: basic_html
-  'body/value': Body
+  # Paragraphs.
+  paragraph_formatted_text:
+    - plugin: migration_lookup
+      migration: paragraphs_page_formatted_text
+      source: id
+    - plugin: null_as_array
+  paragraph_links:
+    - plugin: migration_lookup
+      migration: paragraphs_page_links
+      source: id
+    - plugin: null_as_array
+  paragraph_images:
+    - plugin: migration_lookup
+      migration: paragraphs_page_image
+      source: id
+    - plugin: null_as_array
+  paragraph_video:
+    - plugin: migration_lookup
+      migration: paragraphs_page_video
+      source: id
+    - plugin: null_as_array
+
+  field_content_elements:
+    plugin: sub_process
+    source:
+      - '@paragraph_formatted_text'
+      - '@paragraph_links'
+      - '@paragraph_images'
+      - '@paragraph_video'
+    process:
+      target_id:
+        -
+          plugin: skip_on_empty
+          method: process
+          message: 'Cannot import empty paragraph'
+          source: '0'
+      target_revision_id:
+        -
+          plugin: skip_on_empty
+          method: process
+          message: 'Cannot import empty paragraph'
+          source: '1'
 
 destination:
   plugin: entity:node
+
+migration_dependencies:
+  required:
+    - paragraphs_page_formatted_text
+    - paragraphs_page_links
+    - paragraphs_page_image

@@ -2,6 +2,8 @@
 name: 'Wunder role'
 description: "An example recipe showing the creation of a user role with basic permissions."
 type: 'User'
+recipes:
+  - wunder_base
 install:
   - user
   - node

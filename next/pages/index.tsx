@@ -13,7 +13,7 @@ import { drupal } from "../lib/drupal";
 
 interface IndexPageProps extends LayoutProps {
   articles: DrupalNode[];
-  frontpageNode: DrupalNode;
+  frontpageNode?: DrupalNode;
 }
 
 export default function IndexPage({

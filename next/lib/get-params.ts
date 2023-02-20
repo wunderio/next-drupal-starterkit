@@ -7,15 +7,15 @@ export function getNodePageJsonApiParams(resourceType: ResourceType) {
     "field_site.meta.drupal_internal__target_id",
     process.env.DRUPAL_SITE_ID
   );
-  // The landing page content type has paragraphs, stored in the "field_content_elements" field:
-  if (resourceType === "node--landing_page") {
+  // The page content type has paragraphs, stored in the "field_content_elements" field:
+  if (resourceType === "node--page") {
     apiParams
       .addInclude([
         "field_content_elements",
         "field_content_elements.field_image.field_media_image",
         "field_content_elements.field_video",
       ])
-      .addFields("node--landing_page", [
+      .addFields("node--page", [
         "title",
         "field_content_elements",
         "path",

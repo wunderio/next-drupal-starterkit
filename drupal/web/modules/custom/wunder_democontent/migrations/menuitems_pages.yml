@@ -58,4 +58,4 @@ destination:
 
 migration_dependencies:
   required:
-    - nodes_articles
+    - nodes_pages

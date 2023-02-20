@@ -1,7 +1,10 @@
-id,Tnid,Is source,Langcode,Title,Body
-1,1,1,en,Contact us,"Contact us at <a href=""mailto:wunder@wunder.io"">wunder@wunder.io</a>"
-2,1,0,fi,Ota yhteyttä,"Ota yhteyttä osoitteeseen <a href=""mailto:wunder@wunder.io"">wunder@wunder.io</a>"
-3,1,0,sv,Kontakta oss,"Kontakta oss på <a href=""mailto:wunder@wunder.io"">wunder@wunder.io</a>"
-4,4,1,en,About us,We are Wunder and make websites.
-5,4,0,fi,Tietoa meistä,Olemme Wunder ja teemme verkkosivustoja.
-6,4,0,sv,Om Oss,Vi är Wunder och gör hemsidor.
+id,Tnid,Is source,Langcode,Title,Paragraph_0_text_title,Paragraph_0_text_body,Paragraph_0_links_uri,Paragraphs_0_links_title,Paragraphs_0_image,Paragraphs_0_video
+1,1,1,en,Paragraphs example en,This is a  page made of paragraphs,This is an example page for the template. It is made of paragraphs.,https://wunder.io,Wunder website,https://picsum.photos/2000/1000.jpg,https://www.youtube.com/watch?v=dN_RaYCrpCw
+2,1,0,fi,Paragraphs example fi,Tämä on kappaleista tehty aloitussivu,Tämä on esimerkki mallin aloitussivusta. Se on tehty kappaleista.,https://wunder.io/fi/,Wunder (finnish website),https://picsum.photos/2000/1000.jpg,https://www.youtube.com/watch?v=WG1hi4vWoxY
+3,1,0,sv,Paragraphs example sv,Detta är en målsida gjord av stycken,Detta är ett exempel på en målsida för mallen. Den är gjord av stycken.,https://wunder.io/lv/,Wunder in Latvian,https://picsum.photos/2000/1000.jpg,https://www.youtube.com/watch?v=hObZb_jPsMw
+4,4,1,en,Contact us,Contact us,"Contact us at <a href=""mailto:wunder@wunder.io"">wunder@wunder.io</a>",,,,
+5,4,0,fi,Ota yhteyttä,Ota yhteyttä,"Ota yhteyttä osoitteeseen <a href=""mailto:wunder@wunder.io"">wunder@wunder.io</a>",,,,
+6,4,0,sv,Kontakta oss,Kontakta oss,"Kontakta oss på <a href=""mailto:wunder@wunder.io"">wunder@wunder.io</a>",,,,
+7,7,1,en,About us,About us,We are Wunder and make websites.,,,,
+8,7,0,fi,Tietoa meistä,Tietoa meistä,Olemme Wunder ja teemme verkkosivustoja.,,,,
+9,7,0,sv,Om Oss,Om Oss,Vi är Wunder och gör hemsidor.,,,,

@@ -2,6 +2,8 @@
 name: 'Wunder languages'
 description: "A recipe to set up basic language setup for a site."
 type: 'Configuration'
+recipes:
+  - wunder_base
 install:
   - language
   - config_translation

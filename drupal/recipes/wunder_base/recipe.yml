@@ -1,0 +1,58 @@
+# An example recipe that shows the creation of a user role.
+name: 'Wunder base'
+description: "Enable base themes and configuration. Meant as a lighter base than the default installation profile"
+type: 'Setup'
+install:
+  - breakpoint
+  - claro
+  - help
+  - toolbar
+  - taxonomy
+  - menu_link_content
+  - menu_ui
+  - options
+  - path
+  - path_alias
+  - taxonomy
+  - token
+  - action
+  - automated_cron
+  - ckeditor5
+  - config
+  - field_ui
+  - editor
+  - views_ui
+  - views
+  - simplei
+  - datetime
+  - image
+  - link
+  - jsonapi
+  - datetime_range
+
+config:
+  import:
+    action: '*'
+    ckeditor5: '*'
+    taxonomy: '*'
+    claro: '*'
+  actions:
+    system.theme:
+      simple_config_update:
+        default: 'claro'
+    block.block.claro_branding:
+      simple_config_update:
+        status: false
+    block.block.claro_tools:
+      simple_config_update:
+        status: false
+    block.block.claro_admin:
+      simple_config_update:
+        status: false
+    block.block.claro_primary_local_tasks:
+      simple_config_update:
+        status: false
+    block.block.claro_secondary_local_tasks:
+      simple_config_update:
+        status: false
+

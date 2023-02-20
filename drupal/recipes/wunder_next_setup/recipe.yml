@@ -3,7 +3,7 @@ name: 'Wunder next setup'
 description: "Enable needed modules to use next-drupal and add pathauto setup"
 type: 'Setup'
 recipes:
-  - wunder_landing_pages
+  - wunder_pages
   - wunder_search
 install:
   - next
@@ -20,6 +20,3 @@ config:
     system.site:
       simple_config_update:
         page.front: '/admin/content'
-    system.theme:
-      simple_config_update:
-        default: 'claro'

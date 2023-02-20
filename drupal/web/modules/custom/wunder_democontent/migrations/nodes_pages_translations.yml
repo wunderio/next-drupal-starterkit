@@ -1,5 +1,5 @@
 id: nodes_pages_translations
-label: Basic pages translations
+label: Pageages translations
 migration_group: demo_content
 source:
   plugin: csv
@@ -28,11 +28,6 @@ process:
   status: constants/status
   uid: constants/uid
   langcode: Langcode
-  'body/format':
-    plugin: default_value
-    default_value: basic_html
-  'body/value': Body
-
 
 destination:
   plugin: entity:node
@@ -41,3 +36,5 @@ destination:
 migration_dependencies:
   required:
     - nodes_pages
+    - paragraphs_page_formatted_text_translations
+    - paragraphs_page_links_translations

@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-id: node.landing_page
+id: node.page
 site_resolver: site_selector
 configuration:
   sites:

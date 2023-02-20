@@ -1,0 +1,29 @@
+name: 'Wunder pages'
+description: "Adds the page and frontpage content type with paragraphs."
+type: 'Content type'
+# note, that this needs to be plural:
+recipes:
+  - wunder_base
+  - wunder_media
+install:
+  - menu_ui
+  - paragraphs
+  - node
+  - text
+  - pathauto
+config:
+  import:
+    paragraphs: '*'
+    pathauto: '*'
+  actions:
+    user.role.wunder_content_editor:
+      ensure_exists:
+        label: 'Wunder content editor'
+      grantPermissions:
+        - 'create page content'
+        - 'delete any page content'
+        - 'delete own page content'
+        - 'edit any page content'
+        - 'edit own page content'
+        - 'revert page revisions'
+        - 'view page revisions'

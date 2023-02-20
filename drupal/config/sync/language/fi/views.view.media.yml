@@ -1,0 +1,18 @@
+display:
+  default:
+    display_title: Oletus
+    display_options:
+      fields:
+        bundle:
+          label: Tyyppi
+        status:
+          label: Tila
+        operations:
+          label: Toimenpiteet
+      exposed_form:
+        options:
+          reset_button_label: Palauta
+      filters:
+        bundle:
+          expose:
+            label: Tyyppi
