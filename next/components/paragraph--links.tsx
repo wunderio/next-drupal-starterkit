@@ -1,19 +1,12 @@
 import Link from "next/link";
-import { Key } from "react";
 
-import { ParagraphProps } from "@/components/paragraph";
+import { Links } from "@/lib/zod/paragraph";
 
-type Link = {
-  full_url: string;
-  url: string;
-  title: string;
-};
-
-export function ParagraphLinks({ paragraph }: ParagraphProps) {
+export function ParagraphLinks({ paragraph }: { paragraph: Links }) {
   return (
     <ul className="list-disc p-2">
-      {paragraph.field_links.map((link: Link, id: Key) => (
-        <li key={id}>
+      {paragraph.field_links.map((link, index) => (
+        <li key={index}>
           <Link
             className="text-md text-wunderpurple-600 hover:underline"
             href={link.full_url}

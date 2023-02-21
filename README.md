@@ -50,7 +50,7 @@ If you are just testing for example for a pull request, and you want to get up a
 
 > NOTE: this will reinstall the site from scratch, export your database if you have started working with the template, and you have something valuable in it. :)
 
-```
+```bash
 lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si minimal -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=demo_content --execute-dependencies && lando drush uli
 ```
 
@@ -129,4 +129,10 @@ The indexing in elasticsearch takes into consideration the language for analysis
 
 ### Typescript
 
-The frontend site uses typescript.
+The frontend uses [TypeScript](https://www.typescriptlang.org) to provide type safety.
+
+TypeScript is configured quite loosely by default to minimise friction and make it accessible to developers who are not familiar with it. If you wish, you can increase type safety by enabling some of the disabled rules in `next/eslint.json`.
+
+[Zod](https://zod.dev) is also used on the frontend to type the data fetched from the backend. When it's necessary to change what data is fetched from the backend, check the following files:
+  - `next/lib/get-node-page-json-api-params.ts` - this file creates the parameters that are passed to JSON API when fetching page data.
+  - `next/lib/zod/*.ts` - these files contain the zod schemas that are used to validate and cleanup the data fetched from the backend. Any data that is not accounted for in these schemas will be removed, in order to prevent sending more data than necessary to the client. During development, it can be handy avoid this behaviour using [zod.passthrough()](https://zod.dev/?id=passthrough) to pass ALL data to the client, and then tighten the schema later to only pass the data that is actually needed.

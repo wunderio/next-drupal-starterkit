@@ -1,9 +1,13 @@
 import YouTube from "react-youtube";
 
-import { MediaProps } from "@/components/media";
 import { getYouTubeId } from "@/lib/utils";
+import { Video } from "@/lib/zod/paragraph";
 
-export function MediaVideo({ media }: MediaProps) {
+interface MediaVideoProps {
+  media: Video["field_video"];
+}
+
+export function MediaVideo({ media }: MediaVideoProps) {
   if (!media?.field_media_oembed_video) {
     return null;
   }

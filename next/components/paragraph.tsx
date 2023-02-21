@@ -1,31 +1,24 @@
-import { DrupalParagraph } from "next-drupal";
-
 import { ParagraphImage } from "@/components/paragraph--image";
 import { ParagraphLinks } from "@/components/paragraph--links";
 import { ParagraphText } from "@/components/paragraph--text";
 import { ParagraphVideo } from "@/components/paragraph--video";
+import { Paragraph } from "@/lib/zod/paragraph";
 
-const paragraphTypes = {
-  "paragraph--formatted_text": ParagraphText,
-  "paragraph--image": ParagraphImage,
-  "paragraph--video": ParagraphVideo,
-  "paragraph--links": ParagraphLinks,
-};
-
-export interface ParagraphProps {
-  paragraph: DrupalParagraph;
-}
-
-export function Paragraph({ paragraph, ...props }: ParagraphProps) {
+export function Paragraph({ paragraph, ...props }: { paragraph: Paragraph }) {
   if (!paragraph) {
     return null;
   }
 
-  const Component = paragraphTypes[paragraph.type];
-
-  if (!Component) {
-    return null;
+  switch (paragraph.type) {
+    case "paragraph--formatted_text":
+      return <ParagraphText paragraph={paragraph} {...props} />;
+    case "paragraph--image":
+      return <ParagraphImage paragraph={paragraph} {...props} />;
+    case "paragraph--video":
+      return <ParagraphVideo paragraph={paragraph} {...props} />;
+    case "paragraph--links":
+      return <ParagraphLinks paragraph={paragraph} {...props} />;
+    default:
+      return null;
   }
-
-  return <Component paragraph={paragraph} {...props} />;
 }

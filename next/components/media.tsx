@@ -1,15 +1,9 @@
-import { DrupalMedia } from "next-drupal";
-
 import { MediaImage } from "@/components/media--image";
 import { MediaVideo } from "@/components/media--video";
+import { Image, Video } from "@/lib/zod/paragraph";
 
-const mediaTypes = {
-  "media--image": MediaImage,
-  "media--video": MediaVideo,
-};
-
-export interface MediaProps {
-  media: DrupalMedia;
+interface MediaProps {
+  media: Image["field_image"] | Video["field_video"];
 }
 
 export function Media({ media, ...props }: MediaProps) {
@@ -17,11 +11,12 @@ export function Media({ media, ...props }: MediaProps) {
     return null;
   }
 
-  const Component = mediaTypes[media.type];
-
-  if (!Component) {
-    return null;
+  switch (media.type) {
+    case "media--image":
+      return <MediaImage media={media} {...props} />;
+    case "media--remote_video":
+      return <MediaVideo media={media} {...props} />;
+    default:
+      return null;
   }
-
-  return <Component media={media} {...props} />;
 }

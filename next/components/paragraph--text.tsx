@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingPage } from "@/components/heading--page";
 import { HeadingParagraph } from "@/components/heading--paragraph";
-import { ParagraphProps } from "@/components/paragraph";
+import { FormattedText as FormattedTextType } from "@/lib/zod/paragraph";
 
-export function ParagraphText({ paragraph }: ParagraphProps) {
+export function ParagraphText({ paragraph }: { paragraph: FormattedTextType }) {
   const router = useRouter();
   const isFrontPage = router.pathname === "/";
   const Heading = isFrontPage ? HeadingPage : HeadingParagraph;
