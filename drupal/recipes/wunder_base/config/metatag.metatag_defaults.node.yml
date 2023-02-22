@@ -8,4 +8,5 @@ id: node
 label: Content
 tags:
   description: '[node:field_excerpt]'
+  image_src: '[node:field_image:entity:url]'
   title: '[node:title]'
