@@ -23,7 +23,7 @@ export default function IndexPage({
   return (
     <>
       {frontpageNode && (
-        <Meta title={frontpageNode.title} metatags={frontpageNode.metatags} />
+        <Meta title={frontpageNode.title} metatags={frontpageNode.metatag} />
       )}
 
       <NodeFrontpage node={frontpageNode} />
