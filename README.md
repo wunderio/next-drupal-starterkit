@@ -3,12 +3,18 @@
 This is a starter template for a decoupled website using the open-source [Next.js for Drupal](https://next-drupal.org/) 
 by [Chapter Three](https://www.chapterthree.com) and contributors.
 
-The template includes all you need to have a working multi-language decoupled Drupal and Next.js site up and running in seconds, complete with demo content, an Elasticsearch-powered search interface, and more.
+The aims of this template are:
+* automating local environment set up as much as possible, lowering the effort needed to get the decoupled system working
+* presenting simple solutions for the most common feature requests for a Drupal site
+* focusing on the multilingual aspect which presents interesting challenges, and is a very common requirements in our projects.
 
-The Drupal configuration is added using the upcoming
-[Distributions and Recipes](https://www.drupal.org/about/core/strategic-initiatives-distributions-and-recipes) Drupal core initiative, so you can then export it and start your own project.
+Setting up [Next.js for Drupal](https://next-drupal.org/) normally requires various steps, in this template we have
+automated them using a combination of environment variables and the upcoming
+[Distributions and Recipes](https://www.drupal.org/about/core/strategic-initiatives-distributions-and-recipes) initiative
+on the drupal side.
 
-Check out the what's included section below for more details!
+The template includes all you need to have a working multi-language decoupled Drupal and Next.js site up and running in seconds, 
+complete with demo content, an Elasticsearch-powered search interface, and more. Check the "What's included" section for more details.
 
 This example is meant to be used together with the [Silta](https://wunderio.github.io/silta/) hosting system by [Wunder](https://www.wunder.io), but it can be used with any hosting system.
 
@@ -37,7 +43,7 @@ to stop the running npm operation, you can use the specially created `lando npm-
 
 Follow this guide to get backend and frontend up and running. You can either do it all in one go, or step by step.
 
-### Quick one command setup
+### 🚤 Quick one command setup 
 
 If you are just testing for example for a pull request, and you want to get up and running quickly, you can issue this big command, go get a cup of coffee and come back to a working backend and frontend setup:
 
@@ -49,9 +55,9 @@ lando rebuild -y && lando composer install && lando generate-oauth-keys && lando
 
 You can then visit the site at https://frontend.lndo.site/.
 
-### Step-by-step setup
+### 🪜 Step-by-step setup
 
-#### Drupal setup
+#### Backend Drupal setup
 
 All drupal code and configuration is in the `drupal` directory.
 All needed module dependencies have been added to the `composer.json` file.
@@ -83,3 +89,43 @@ Follow these steps to get started, after you have set up the backend:
 4. Visit `https://frontend.lndo.site` and you should see your content displayed by the frontend.
 5. When viewing a piece of content inside Drupal, you should be able to preview it in the frontend, including unpublished content and revisions.
 6. The template includes automatic setup of [On demand revalidation](https://next-drupal.org/learn/on-demand-revalidation), so saving a piece of content will automatically revalidate the corresponding path in Next.js.
+
+## 📦 What's included?
+
+We try to add to the template what we think are the most common requested features in website project. Most of these are based on the features provided by [Next.js for Drupal](https://next-drupal.org/), but we have paid
+special attention on making these work in a multilanguage setup.
+
+### Preview mode
+
+The template is set up to allow editors to use [Preview mode](https://next-drupal.org/docs/reference/preview). Visit the node page on the Drupal side while the frontend is running to see a preview of the page.
+
+### On-demand revalidation
+
+The template includes [On demand revalidation](https://next-drupal.org/learn/on-demand-revalidation), when saving or editing a piece of content the corresponding page in the
+frontend will be recreated. Because the frontpage includes a list of articles, the frontpage paths have been manually added to the configuration for the article content type.
+
+### Metatag support
+
+The template includes basic metatag support. Default metatag values are added to the frontend site's translation files, and content based metatags are added to the Drupal backend using the [Metatag](https://www.drupal.org/project/metatag) module.
+The Next.js site will then create the metatags using a combination of these two data sources.
+
+### Search indexing and frontend search interface
+
+The site is set up to work with Elasticsearch to provide a complete search experience.
+The lando setup includes spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module, 
+which in turn makes use of the [Elasticsearch  helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
+On the frontend side, the search user interface is created using the [Elastic UI library](https://elastic.github.io/eui/). 
+The frontend queries Elasticsearch via a simple proxy controller in Drupal, also provided by the `wunder_search` custom module.
+
+### Importable demo content
+
+The template includes a Drupal migration to populate the site with a set of translated demo content. This includes paragraphs, images, videos, etc. Most of the content has been generated by AI.
+
+### Multilanguage setup
+
+This template is set up to use three languages: English (default), Finnish and Swedish. These languages are added in Drupal using the usual translation modules, and to the frontend using the [next-i18next](https://github.com/i18next/next-i18next) npm package. 
+The indexing in elasticsearch takes into consideration the language for analysis. The interface is translated. (Note: translations have been done with Google Translate, so don't expect perfect Finnish or Swedish... or English for that matter. 🙂 ) 
+
+### Typescript
+
+The frontend site uses typescript.
