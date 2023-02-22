@@ -207,6 +207,12 @@ class MultilingualContentIndex extends ElasticsearchIndexBase {
       ->addProperty('id', FieldDefinition::create('integer'))
       ->addProperty('uuid', FieldDefinition::create('keyword'))
       ->addProperty('status', FieldDefinition::create('keyword'))
+      ->addProperty('excerpt',
+        FieldDefinition::create('text')
+          ->addMultiField('trigram',
+            FieldDefinition::create('text', ['analyzer' => 'trigram_analyzer'])
+          ),
+      )
       ->addProperty('body',
         FieldDefinition::create('text')
           ->addMultiField('trigram',
