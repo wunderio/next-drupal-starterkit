@@ -14,7 +14,7 @@ automated them using a combination of environment variables and the upcoming
 on the drupal side.
 
 The template includes all you need to have a working multi-language decoupled Drupal and Next.js site up and running in seconds, 
-complete with demo content, an Elasticsearch-powered search interface, and more. Check the "What's included" section for more details.
+complete with demo content, an Elasticsearch-powered search interface, and more. Check the [What's included](#-whats-included) section below for more details.
 
 This example is meant to be used together with the [Silta](https://wunderio.github.io/silta/) hosting system by [Wunder](https://www.wunder.io), but it can be used with any hosting system.
 
