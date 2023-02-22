@@ -45,7 +45,9 @@ export function Meta({ title, metatags }: MetaProps) {
     canonical: `${process.env.NEXT_PUBLIC_FRONTEND_URL}${languagePathFragment}${
       router.asPath !== "/" ? router.asPath : ""
     }`,
-    imageSrc: getTag("image_src", "rel")?.href,
+    imageSrc:
+      getTag("image_src", "rel")?.href ||
+      `${process.env.NEXT_PUBLIC_FRONTEND_URL}/metatags_default_image.png`,
   };
 
   data.title = data.title.concat(` | ${t("meta-site-name")}`);
