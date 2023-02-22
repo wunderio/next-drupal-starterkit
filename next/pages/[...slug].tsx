@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import Head from "next/head";
 import { DrupalNode, DrupalTranslatedPath } from "next-drupal";
 
+import { Meta } from "@/components/meta";
 import { NodeArticle } from "@/components/node--article";
 import { NodePage } from "@/components/node--page";
 import {
@@ -26,10 +26,7 @@ export default function Page({
 
   return (
     <>
-      <Head>
-        <title>{resource.title}</title>
-        <meta name="description" content="A Next.js site powered by Drupal." />
-      </Head>
+      <Meta title={resource.title} metatags={resource.metatags} />
       {resource.type === "node--article" && <NodeArticle node={resource} />}
       {resource.type === "node--page" && <NodePage node={resource} />}
     </>

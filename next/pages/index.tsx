@@ -1,9 +1,9 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import Head from "next/head";
 import { DrupalNode } from "next-drupal";
 
 import { Divider } from "@/components/divider";
 import { LatestArticles } from "@/components/latest-articles";
+import { Meta } from "@/components/meta";
 import { NodeFrontpage } from "@/components/node--frontpage";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/get-params";
@@ -22,18 +22,13 @@ export default function IndexPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Head>
-        <title>Next.js for Drupal</title>
-        <meta
-          name="description"
-          content="A Next.js site powered by a Drupal backend."
-        />
-      </Head>
-      <>
-        <NodeFrontpage node={frontpageNode} />
-        <Divider />
-        <LatestArticles articles={articles} />
-      </>
+      {frontpageNode && (
+        <Meta title={frontpageNode.title} metatags={frontpageNode.metatags} />
+      )}
+
+      <NodeFrontpage node={frontpageNode} />
+      <Divider />
+      <LatestArticles articles={articles} />
     </>
   );
 }

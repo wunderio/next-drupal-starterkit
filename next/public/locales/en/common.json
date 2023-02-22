@@ -15,5 +15,7 @@
   "search-for": "for",
   "Page not found": "Page not found",
   "The page you are looking for does not exist.": "The page you are looking for does not exist.",
-  "Go back to the homepage?": "Go back to the homepage?"
+  "Go back to the homepage?": "Go back to the homepage?",
+  "meta-site-name": "Next-drupal wunder template",
+  "meta-site-description": "Example website demonstrating the use of next-drupal in a multilingual site."
 }
