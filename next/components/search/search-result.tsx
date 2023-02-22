@@ -13,7 +13,7 @@ export function SearchResult({ result, onClickLink }: ResultViewProps) {
       <h5 className="mb-1 text-heading-sm font-bold tracking-tight text-wunderpurple-500">
         {result.title.raw}
       </h5>
-      <p className="mb-2 text-gray-700">{result.body.raw}</p>
+      <p className="mb-2 text-gray-700">{result.excerpt.raw}</p>
       <span className="mr-2 rounded bg-wunderpurple-100 px-2.5 py-0.5 text-sm uppercase text-wunderpurple-800">
         {result.content_type.raw}
       </span>
