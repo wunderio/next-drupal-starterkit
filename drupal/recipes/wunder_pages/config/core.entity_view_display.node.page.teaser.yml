@@ -5,11 +5,12 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.page.field_content_elements
+    - field.field.node.page.field_excerpt
     - node.type.page
   module:
     - user
 _core:
-  default_config_hash: QN7ona2M_jqDE2M5CivE7IDHq0x7089P6r113T4hYrQ
+  default_config_hash: 6gWZafBVr9iRwbQgOj5M5OvUIhDwTtD9htcQK3x5e74
 id: node.page.teaser
 targetEntityType: node
 bundle: page
@@ -22,4 +23,5 @@ content:
     region: content
 hidden:
   field_content_elements: true
+  field_excerpt: true
   langcode: true

@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.article.body
+    - field.field.node.article.field_excerpt
     - field.field.node.article.field_image
     - field.field.node.article.field_tags
     - image.style.wide
@@ -13,7 +14,7 @@ dependencies:
     - text
     - user
 _core:
-  default_config_hash: 7fb0j9HnIXfP9ndewzgPPzzeX_SV532wuYpkscrCMCk
+  default_config_hash: rQu7I7KFg5At6en_IYjDhg6UfCGKEUqZwQBPIK-kjCU
 id: node.article.default
 targetEntityType: node
 bundle: article
@@ -25,6 +26,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_excerpt:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
     region: content
   field_image:
     type: image

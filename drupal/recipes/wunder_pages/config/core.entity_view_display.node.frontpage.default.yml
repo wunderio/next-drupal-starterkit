@@ -4,10 +4,13 @@ status: true
 dependencies:
   config:
     - field.field.node.frontpage.field_content_elements
+    - field.field.node.frontpage.field_excerpt
     - node.type.frontpage
   module:
     - entity_reference_revisions
     - user
+_core:
+  default_config_hash: 3Xdt21KCLrtwe41NAvn9JfAKnU7nnINYPWCrntRAzY4
 id: node.frontpage.default
 targetEntityType: node
 bundle: frontpage
@@ -21,6 +24,13 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_excerpt:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 102
     region: content
   links:
     settings: {  }
