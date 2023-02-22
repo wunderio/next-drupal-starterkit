@@ -26,7 +26,7 @@ export default function Page({
 
   return (
     <>
-      <Meta title={resource.title} metatags={resource.metatags} />
+      <Meta title={resource.title} metatags={resource.metatag} />
       {resource.type === "node--article" && <NodeArticle node={resource} />}
       {resource.type === "node--page" && <NodePage node={resource} />}
     </>
