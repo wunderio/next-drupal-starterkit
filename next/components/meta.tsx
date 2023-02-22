@@ -69,10 +69,6 @@ export function Meta({ title, metatags }: MetaProps) {
       }}
       additionalMetaTags={[
         {
-          httpEquiv: "x-ua-compatible",
-          content: "ie=edge",
-        },
-        {
           name: "viewport",
           content: "width=device-width, initial-scale=1, shrink-to-fit=no",
         },
