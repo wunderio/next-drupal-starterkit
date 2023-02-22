@@ -25,6 +25,7 @@ process:
   status: constants/status
   uid: constants/uid
   langcode: Langcode
+  field_excerpt: Excerpt
   # Paragraphs.
   paragraph_formatted_text:
     - plugin: migration_lookup
