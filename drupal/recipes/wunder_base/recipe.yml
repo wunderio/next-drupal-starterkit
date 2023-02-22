@@ -29,6 +29,7 @@ install:
   - link
   - jsonapi
   - datetime_range
+  - metatag
 
 config:
   import:
