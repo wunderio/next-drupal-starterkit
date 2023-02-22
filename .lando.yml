@@ -112,6 +112,7 @@ services:
         DRUPAL_CLIENT_ID: drupal-client-id
         NEXT_PUBLIC_DRUPAL_BASE_URL: https://next4drupal-project.lndo.site
         NEXT_IMAGE_DOMAIN: next4drupal-project.lndo.site
+        NEXT_PUBLIC_FRONTEND_URL: https://frontend.lndo.site
     build:
       - "cd next && npm install"
     scanner: false
