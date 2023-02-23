@@ -41,6 +41,9 @@ config:
     system.theme:
       simple_config_update:
         default: 'claro'
+    block.block.claro_page_title:
+      simple_config_update:
+        region: header
     block.block.claro_branding:
       simple_config_update:
         status: false
@@ -52,8 +55,13 @@ config:
         status: false
     block.block.claro_primary_local_tasks:
       simple_config_update:
-        status: false
+        region: header
+        weight: -10
     block.block.claro_secondary_local_tasks:
       simple_config_update:
+        region: pre_content
+    block.block.claro_local_tasks:
+      simple_config_update:
         status: false
+
 
