@@ -26,9 +26,9 @@ export function ContactForm() {
       // TODO: why is this a problem?
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSubmit={handleSubmit}
-      className="borde mb-4 flex flex-col gap-5 rounded bg-white p-4 shadow-md transition-all hover:shadow-md"
+      className="mb-4 flex flex-col gap-5 rounded border bg-white p-4 shadow-md transition-all hover:shadow-md"
     >
-      <h2 className="text-left text-heading-md font-bold md:text-heading-lg">
+      <h2 className="text-heading-sm font-bold md:text-heading-md">
         Contact us!
       </h2>
       <p>
