@@ -20,6 +20,24 @@ export default function IndexPage({
   articles,
   frontpageNode,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const response = await fetch(`/api/contact`, {
+      method: "POST",
+      body: JSON.stringify({
+        name: event.target.name.value,
+        email: event.target.email.value,
+        message: event.target.message.value,
+        subject: event.target.subject.value,
+      }),
+    });
+
+    if (response.ok) {
+      alert("Thanks!");
+    }
+
+    // Handle error.
+  }
   return (
     <>
       {frontpageNode && (
@@ -29,6 +47,67 @@ export default function IndexPage({
       <NodeFrontpage node={frontpageNode} />
       <Divider />
       <LatestArticles articles={articles} />
+      <Divider />
+      <div>
+        <form
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onSubmit={handleSubmit}
+          className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md"
+        >
+          <h2 className="text-left text-heading-md font-bold md:text-heading-lg">
+            Contact us!
+          </h2>
+          <p>(webform example)</p>
+          <div>
+            <label className="mb-2 block text-sm font-bold" htmlFor="name">
+              Name:
+            </label>
+            <input
+              className=" focus:shadow-outline w-full appearance-none rounded border py-2 px-3  shadow "
+              type="text"
+              id="name"
+              name="name"
+              required
+            />
+          </div>
+          <div>
+            <label className="mb-2 block text-sm font-bold" htmlFor="email">
+              Email:
+            </label>
+            <input
+              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow "
+              type="email"
+              id="email"
+              name="email"
+              required
+            />
+            <label className="mb-2 block text-sm font-bold" htmlFor="subject">
+              Subject:
+            </label>
+            <input
+              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3  shadow "
+              type="text"
+              id="subject"
+              name="subject"
+            />
+            <label className="mb-2 block text-sm font-bold" htmlFor="message">
+              Message:
+            </label>
+            <textarea
+              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3  shadow "
+              id="message"
+              name="message"
+              required
+            />
+          </div>
+          <button
+            className="focus:shadow-outline rounded bg-wunderpurple-500 py-2 px-4 font-bold text-white hover:bg-wunderpurple-700 "
+            type="submit"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </>
   );
 }
