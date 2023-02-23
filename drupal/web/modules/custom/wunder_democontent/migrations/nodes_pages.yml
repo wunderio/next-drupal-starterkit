@@ -77,3 +77,4 @@ migration_dependencies:
     - paragraphs_page_formatted_text
     - paragraphs_page_links
     - paragraphs_page_image
+    - paragraphs_page_video
