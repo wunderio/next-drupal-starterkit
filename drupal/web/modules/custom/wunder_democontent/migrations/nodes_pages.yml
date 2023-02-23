@@ -25,6 +25,7 @@ process:
   status: constants/status
   uid: constants/uid
   langcode: Langcode
+  field_excerpt: Excerpt
   # Paragraphs.
   paragraph_formatted_text:
     - plugin: migration_lookup
@@ -76,3 +77,4 @@ migration_dependencies:
     - paragraphs_page_formatted_text
     - paragraphs_page_links
     - paragraphs_page_image
+    - paragraphs_page_video

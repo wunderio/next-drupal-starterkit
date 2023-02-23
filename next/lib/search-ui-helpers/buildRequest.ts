@@ -99,7 +99,7 @@ export function buildRequest(state) {
 
     // Define any source filtering here:
     // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-source-filtering.html#search-request-source-filtering
-    _source: ["id", "link", "title", "body", "path", "user", "content_type"],
+    _source: ["id", "link", "title", "excerpt", "path", "user", "content_type"],
 
     // Define aggregations here:
     aggs: {

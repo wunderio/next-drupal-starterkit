@@ -25,6 +25,7 @@ process:
     plugin: default_value
     default_value: page
   title: Title
+  field_excerpt: Excerpt
   status: constants/status
   uid: constants/uid
   langcode: Langcode

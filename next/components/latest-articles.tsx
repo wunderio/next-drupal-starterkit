@@ -10,7 +10,7 @@ export function LatestArticles({ articles }: { articles?: DrupalNode[] }) {
       <h2 className="text-heading-sm font-bold md:text-heading-md">
         {t("latest-articles")}
       </h2>
-      <ul className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <ul className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {articles?.map((node) => (
           <li key={node.id}>
             <NodeArticleTeaser node={node} />

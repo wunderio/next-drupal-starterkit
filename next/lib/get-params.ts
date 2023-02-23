@@ -20,6 +20,7 @@ export function getNodePageJsonApiParams(resourceType: ResourceType) {
         "field_content_elements",
         "path",
         "status",
+        "metatag",
       ]);
   }
 
@@ -33,7 +34,11 @@ export function getNodePageJsonApiParams(resourceType: ResourceType) {
       ])
       // Only published frontpages:
       .addFilter("status", "1")
-      .addFields("node--frontpage", ["title", "field_content_elements"]);
+      .addFields("node--frontpage", [
+        "title",
+        "field_content_elements",
+        "metatag",
+      ]);
   }
 
   // The article content type has an image field, and author information:
@@ -46,6 +51,7 @@ export function getNodePageJsonApiParams(resourceType: ResourceType) {
       "created",
       "field_image",
       "status",
+      "metatag",
     ]);
   }
 

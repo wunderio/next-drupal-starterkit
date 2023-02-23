@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
 import { HeadingPage } from "@/components/heading--page";
+import { Meta } from "@/components/meta";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -12,6 +13,7 @@ export default function NotFoundPage() {
   const { t } = useTranslation();
   return (
     <>
+      <Meta title={t("Error")} metatags={[]} />
       <HeadingPage>{t("Error")}</HeadingPage>
       <p className="mt-8 text-lg">
         {t("There was an error.")}{" "}

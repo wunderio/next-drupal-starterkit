@@ -1,7 +1,6 @@
 import "@elastic/react-search-ui-views/lib/styles/styles.css";
 
 import { GetStaticProps } from "next";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import {
@@ -17,6 +16,7 @@ import {
 import { SearchDriverOptions } from "@elastic/search-ui";
 
 import { HeadingPage } from "@/components/heading--page";
+import { Meta } from "@/components/meta";
 import { SearchBoxInput } from "@/components/search/search-box-input";
 import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-facet";
 import { PagingInfoView } from "@/components/search/search-paging-info";
@@ -50,13 +50,7 @@ export default function SearchPage() {
 
   return (
     <>
-      <Head>
-        <title>Next.js for Drupal</title>
-        <meta
-          name="description"
-          content="A Next.js site powered by a Drupal backend."
-        />
-      </Head>
+      <Meta title={t("search")} metatags={[]} />
 
       <HeadingPage>{t("search")}</HeadingPage>
 

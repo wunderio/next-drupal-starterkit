@@ -4,12 +4,13 @@ status: true
 dependencies:
   config:
     - field.field.node.page.field_content_elements
+    - field.field.node.page.field_excerpt
     - node.type.page
   module:
     - entity_reference_revisions
     - user
 _core:
-  default_config_hash: UOqcirBcMeLOY-6-HfSVRI6p7Jusy8cKyaDvTgsdNx8
+  default_config_hash: XiCGemc-GS3dc4PksH4TSOAhafhuAZrjjwx2CJ63qGY
 id: node.page.default
 targetEntityType: node
 bundle: page
@@ -23,6 +24,13 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_excerpt:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
     region: content
 hidden:
   langcode: true
