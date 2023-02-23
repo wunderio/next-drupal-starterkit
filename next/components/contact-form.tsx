@@ -29,7 +29,7 @@ export function ContactForm() {
       className="mb-4 flex flex-col gap-5 rounded border bg-white p-4 shadow-md transition-all hover:shadow-md"
     >
       <h2 className="text-heading-sm font-bold md:text-heading-md">
-        Contact us!
+        Simple webform
       </h2>
       <p>
         This form is posting to the default contact webform in Drupal. Try it!
