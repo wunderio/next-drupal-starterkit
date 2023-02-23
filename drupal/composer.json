@@ -33,6 +33,8 @@
         "drupal/redirect": "^1.8",
         "drupal/require_login": "^3.0",
         "drupal/simplei": "^2.0@beta",
+        "drupal/webform": "^6.2@beta",
+        "drupal/webform_rest": "^4.0",
         "drush/drush": "^11.4",
         "elasticsearch/elasticsearch": "^7.0",
         "vlucas/phpdotenv": "^5.4",
