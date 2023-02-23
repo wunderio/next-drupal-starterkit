@@ -1,4 +1,4 @@
-# 🚀 Next.js for Drupal template by Wunder
+# 🚀 Next.js for Drupal multilingual template by Wunder
 
 This is a starter template for a decoupled website using the open-source [Next.js for Drupal](https://next-drupal.org/)
 by [Chapter Three](https://www.chapterthree.com) and contributors.
@@ -15,17 +15,17 @@ automated them using a combination of environment variables and the upcoming
 on the drupal side.
 
 The template includes all you need to have a working multi-language decoupled Drupal and Next.js site up and running in seconds,
-complete with demo content, an Elasticsearch-powered search interface, and more. Check the [What's included](#-whats-included) section below for more details.
+complete with demo content, an Elasticsearch-powered search interface, and more. Check the [what's included section ↘️](#-whats-included) for more details.
 
 This example is meant to be used together with the [Silta](https://wunderio.github.io/silta/) hosting system by [Wunder](https://www.wunder.io), but it can be used with any hosting system.
 
-## Lando for local development
+## 🤓 Local development with Lando
 
 Local development is handled by [Lando](https://lando.dev/). Both frontend and backend are covered by the Lando setup,
 so that is the only real requirement. The frontend site can be run in either dev or prod mode,
 and it will be proxied by lando. The default url for the frontend is [https://frontend.lndo.site](https://frontend.lndo.site)"
 
-### ⚠️ NOTE: Use npm inside lando!
+### ⚠️⚠️ NOTE: Use npm inside lando!
 
 Instead of running npm operations in your host machine, _this template assumes you use npm inside Lando_: this ensures
 the same node version is used by all developers participating in the project, and also that the node process has the
@@ -40,11 +40,11 @@ So instead of `npm install`, run `lando npm install`, instead of `npm run dev` r
 If you have closed the terminal window where you were running `lando npm`, or if the server was started with the "Quick one command setup" (see below), and you want
 to stop the running npm operation, you can use the specially created `lando npm-stop` command.
 
-## Getting started
+## 🤸 Getting started
 
 Follow this guide to get backend and frontend up and running. You can either do it all in one go, or step by step.
 
-## 🚤 Quick one command setup
+### 🏎️ Quick one command setup
 
 If you are just testing for example for a pull request, and you want to get up and running quickly, you can issue this big command, go get a cup of coffee and come back to a working backend and frontend setup:
 
