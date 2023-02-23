@@ -1,5 +1,5 @@
-id,Tnid,Is source,Langcode,Title,Paragraph_0_text_title,Paragraph_0_text_body
-1,1,1,en,Frontpage en,Welcome to the wunder next-drupal template site!,This is the english frontpage for the template site. The site has been populated with test content to show its main features.
-2,1,0,fi,Frontpage fi,Tervetuloa wunderin next-drupal mallisivustolle!,Tämä on suomenkielinen etusivu mallisivustolle. Sivusto on täytetty testisisällöllä sen tärkeimpien ominaisuuksien näyttämiseksi.
-3,1,0,sv,Frontpage sv,Välkommen till next-drupal mallsida!,"Det här är
+id,Tnid,Is source,Langcode,Title,Excerpt,Paragraph_0_text_title,Paragraph_0_text_body
+1,1,1,en,Frontpage en,This site is meant as an example to show the setup of drupal and next.js using next-drupal,Welcome to the wunder next-drupal template site!,This is the english frontpage for the template site. The site has been populated with test content to show its main features.
+2,1,0,fi,Frontpage fi,Tämä sivusto on tarkoitettu esimerkkinä drupalin ja next.js:n asennuksesta next-drupalilla,Tervetuloa wunderin next-drupal mallisivustolle!,Tämä on suomenkielinen etusivu mallisivustolle. Sivusto on täytetty testisisällöllä sen tärkeimpien ominaisuuksien näyttämiseksi.
+3,1,0,sv,Frontpage sv,Denna sida är avsedd som ett exempel för att visa installationen av drupal och next.js med hjälp av next-drupal,Välkommen till next-drupal mallsida!,"Det här är
  förstasidan på svenska för mallsidan. Webbplatsen har fyllts med testinnehåll för att visa dess huvuddrag."

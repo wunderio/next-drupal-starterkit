@@ -28,6 +28,7 @@ process:
   status: constants/status
   uid: constants/uid
   langcode: Langcode
+  field_excerpt: Excerpt
   'body/format':
     plugin: default_value
     default_value: basic_html

@@ -20,7 +20,7 @@ process:
   'field_video/target_id':
     plugin: migration_lookup
     source: id
-    migration: nodes_pages_media_video
+    migration: nodes_pages_media_remote_video
   status: constants/status
   uid: constants/uid
   langcode: Langcode
@@ -28,4 +28,8 @@ process:
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: video
+
+migration_dependencies:
+  required:
+    - nodes_pages_media_remote_video
 

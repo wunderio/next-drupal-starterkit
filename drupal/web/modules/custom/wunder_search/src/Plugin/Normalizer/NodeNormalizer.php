@@ -133,6 +133,7 @@ class NodeNormalizer extends ContentEntityNormalizer {
       'uuid' => $object->uuid(),
       'title' => $object->getTitle(),
       'status' => $object->isPublished(),
+      'excerpt' => $object->hasField('field_excerpt') ? $object->field_excerpt->value : NULL,
       'body' => $this->renderEntityPlainText($object, 'search_index', $context),
       'user' => [
         'name' => $object->getRevisionUser()->getAccountName(),
