@@ -7,5 +7,3 @@ export interface DrupalMenuLinkContentWithLangcode
   langcode?: string;
   items?: DrupalMenuLinkContentWithLangcode[];
 }
-
-export type ResourceType = "node--frontpage" | "node--page" | "node--article";

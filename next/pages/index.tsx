@@ -3,32 +3,35 @@ import { DrupalNode } from "next-drupal";
 
 import { Divider } from "@/components/divider";
 import { LatestArticles } from "@/components/latest-articles";
+import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
-import { NodeFrontpage } from "@/components/node--frontpage";
+import { Paragraph } from "@/components/paragraph";
+import { drupal } from "@/lib/drupal";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
-import { getNodePageJsonApiParams } from "@/lib/get-params";
-
-import { LayoutProps } from "../components/layout";
-import { drupal } from "../lib/drupal";
+import { getNodePageJsonApiParams } from "@/lib/get-node-page-json-api-params";
+import {
+  ArticleTeaser,
+  validateAndCleanupArticleTeaser,
+} from "@/lib/zod/article-teaser";
+import { Frontpage, validateAndCleanupFrontpage } from "@/lib/zod/frontpage";
 
 interface IndexPageProps extends LayoutProps {
-  articles: DrupalNode[];
-  frontpageNode?: DrupalNode;
+  frontpage: Frontpage;
+  articleTeasers: ArticleTeaser[];
 }
 
 export default function IndexPage({
-  articles,
-  frontpageNode,
+  frontpage,
+  articleTeasers,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      {frontpageNode && (
-        <Meta title={frontpageNode.title} metatags={frontpageNode.metatag} />
-      )}
-
-      <NodeFrontpage node={frontpageNode} />
+      <Meta title={frontpage.title} metatags={frontpage.metatag} />
+      {frontpage.field_content_elements.map((paragraph) => (
+        <Paragraph key={paragraph.id} paragraph={paragraph} />
+      ))}
       <Divider />
-      <LatestArticles articles={articles} />
+      <LatestArticles articles={articleTeasers} />
     </>
   );
 }
@@ -36,31 +39,35 @@ export default function IndexPage({
 export const getStaticProps: GetStaticProps<IndexPageProps> = async (
   context
 ) => {
-  const articles = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
-    "node--article",
-    context,
-    {
-      params: {
-        "filter[status]": 1,
-        "filter[langcode]": context.locale,
-        "fields[node--article]": "title,path,field_image,uid,created",
-        include: "field_image,uid",
-        sort: "-created",
-      },
-    }
-  );
+  const frontpage = (
+    await drupal.getResourceCollectionFromContext<DrupalNode[]>(
+      "node--frontpage",
+      context,
+      {
+        params: getNodePageJsonApiParams("node--frontpage"),
+      }
+    )
+  ).at(0);
 
-  const frontPageNodes = await drupal.getResourceCollectionFromContext<
+  const articleTeasers = await drupal.getResourceCollectionFromContext<
     DrupalNode[]
-  >("node--frontpage", context, {
-    params: getNodePageJsonApiParams("node--frontpage"),
+  >("node--article", context, {
+    params: {
+      "filter[status]": 1,
+      "filter[langcode]": context.locale,
+      "fields[node--article]": "title,path,field_image,uid,created",
+      include: "field_image,uid",
+      sort: "-created",
+    },
   });
 
   return {
     props: {
       ...(await getCommonPageProps(context)),
-      articles,
-      frontpageNode: frontPageNodes[0] || null,
+      frontpage: validateAndCleanupFrontpage(frontpage),
+      articleTeasers: articleTeasers.map((teaser) =>
+        validateAndCleanupArticleTeaser(teaser)
+      ),
     },
     revalidate: 60,
   };

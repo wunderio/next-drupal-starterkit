@@ -1,36 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
-import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
 
 import { absoluteUrl, formatDate } from "@/lib/utils";
+import { ArticleTeaser } from "@/lib/zod/article-teaser";
 
-interface NodeArticleTeaserProps {
-  node: DrupalNode;
+interface ArticleTeaserProps {
+  article: ArticleTeaser;
 }
 
-export function NodeArticleTeaser({ node }: NodeArticleTeaserProps) {
+export function ArticleTeaser({ article }: ArticleTeaserProps) {
   const { t } = useTranslation();
-  const author = node.uid?.display_name;
-  const date = formatDate(node.created);
+  const author = article.uid?.display_name;
+  const date = formatDate(article.created);
   return (
     <div className="relative h-full rounded border bg-white p-4 transition-all hover:shadow-md">
-      <h3 className="text-heading-sm font-bold line-clamp-2">{node.title}</h3>
+      <h3 className="text-heading-sm font-bold line-clamp-2">
+        {article.title}
+      </h3>
       <div className="mb-4 text-md text-gray-700 line-clamp-2">
         {author && <>{t("posted-by", { author })} - </>}
         {date}
       </div>
-      {node.field_image && (
+      {article.field_image && (
         <Image
-          src={absoluteUrl(node.field_image.uri.url)}
+          src={absoluteUrl(article.field_image.uri.url)}
           width={384}
           height={240}
-          alt={node.field_image.resourceIdObjMeta.alt}
+          alt={article.field_image.resourceIdObjMeta.alt}
           className="max-w-full object-cover"
         />
       )}
       <Link
-        href={node.path.alias}
+        href={article.path.alias}
         className="absolute inset-0 cursor-pointer"
       />
     </div>
