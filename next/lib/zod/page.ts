@@ -1,6 +1,7 @@
 import { DrupalNode } from "next-drupal";
 import { z } from "zod";
 
+import { MetatagsSchema } from "@/lib/zod/metatag";
 import {
   FormattedTextSchema,
   ImageSchema,
@@ -20,6 +21,7 @@ export const PageSchema = z.object({
       LinksSchema,
     ])
   ),
+  metatag: MetatagsSchema.optional(),
 });
 
 export function validateAndCleanupPage(page: DrupalNode): Page | null {

@@ -1,6 +1,7 @@
 import { DrupalNode } from "next-drupal";
 import { z } from "zod";
 
+import { MetatagsSchema } from "@/lib/zod/metatag";
 import { ImageShape } from "@/lib/zod/paragraph";
 
 export const ArticleSchema = z.object({
@@ -16,6 +17,7 @@ export const ArticleSchema = z.object({
     display_name: z.string(),
   }),
   field_image: ImageShape,
+  metatag: MetatagsSchema.optional(),
 });
 
 export function validateAndCleanupArticle(article: DrupalNode): Article | null {
