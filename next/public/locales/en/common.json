@@ -24,5 +24,6 @@
   "form-label-email": "Email:",
   "form-label-subject": "Subject:",
   "form-label-message": "Message:",
-  "form-submit": "Submit"
+  "form-submit": "Submit",
+  "form-thank-you-message": "Thanks!"
 }
