@@ -17,5 +17,12 @@
   "The page you are looking for does not exist.": "The page you are looking for does not exist.",
   "Go back to the homepage?": "Go back to the homepage?",
   "meta-site-name": "Next-drupal wunder template",
-  "meta-site-description": "Example website demonstrating the use of next-drupal in a multilingual site."
+  "meta-site-description": "Example website demonstrating the use of next-drupal in a multilingual site.",
+  "form-description": "This contact form will post to the default Contact webform on the Drupal side.",
+  "form-title": "Simple webform example",
+  "form-label-name": "Name:",
+  "form-label-email": "Email:",
+  "form-label-subject": "Subject:",
+  "form-label-message": "Message:",
+  "form-submit": "Submit"
 }

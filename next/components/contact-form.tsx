@@ -1,6 +1,7 @@
-// TODO: Add translations.
+import { useTranslation } from "next-i18next";
 
 export function ContactForm() {
+  const { t } = useTranslation();
   async function handleSubmit(event) {
     event.preventDefault();
     const response = await fetch(`/api/contact`, {
@@ -23,18 +24,17 @@ export function ContactForm() {
 
   return (
     <form
-      onSubmit={void handleSubmit}
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      onSubmit={handleSubmit}
       className="mb-4 flex flex-col gap-5 rounded border bg-white p-4 shadow-md transition-all hover:shadow-md"
     >
       <h2 className="text-heading-sm font-bold md:text-heading-md">
-        Simple webform
+        {t("form-title")}
       </h2>
-      <p>
-        This form is posting to the default contact webform in Drupal. Try it!
-      </p>
+      <p>{t("form-description")}</p>
       <div>
         <label className="mb-2 block text-sm font-bold" htmlFor="name">
-          Name:
+          {t("form-label-name")}
         </label>
         <input
           className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3  shadow "
@@ -46,7 +46,7 @@ export function ContactForm() {
       </div>
       <div>
         <label className="mb-2 block text-sm font-bold" htmlFor="email">
-          Email:
+          {t("form-label-email")}
         </label>
         <input
           className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
@@ -58,7 +58,7 @@ export function ContactForm() {
       </div>
       <div>
         <label className="mb-2 block text-sm font-bold" htmlFor="subject">
-          Subject:
+          {t("form-label-subject")}
         </label>
         <input
           className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
@@ -69,7 +69,7 @@ export function ContactForm() {
       </div>
       <div>
         <label className="mb-2 block text-sm font-bold" htmlFor="message">
-          Message:
+          {t("form-label-message")}
         </label>
         <textarea
           className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
@@ -83,7 +83,7 @@ export function ContactForm() {
         className="focus:shadow-outline rounded bg-wunderpurple-500 py-2 px-4 font-bold text-white hover:bg-wunderpurple-700"
         type="submit"
       >
-        Submit
+        {t("form-submit")}
       </button>
     </form>
   );
