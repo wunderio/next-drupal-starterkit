@@ -17,7 +17,7 @@ export function ContactForm() {
     formState: { isSubmitted },
   } = useForm<Inputs>();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: Inputs) => {
     const response = await fetch(`/api/contact`, {
       method: "POST",
       body: JSON.stringify({
