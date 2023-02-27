@@ -63,9 +63,15 @@ export const LinksSchema = z.object({
   ),
 });
 
+export const AccordionSchema = z.object({
+  type: z.literal("paragraph--accordion"),
+  id: z.string(),
+});
+
 export type FormattedText = z.infer<typeof FormattedTextSchema>;
 export type Image = z.infer<typeof ImageSchema>;
 export type Video = z.infer<typeof VideoSchema>;
 export type Links = z.infer<typeof LinksSchema>;
+export type Accordion = z.infer<typeof AccordionSchema>;
 
-export type Paragraph = FormattedText | Image | Video | Links;
+export type Paragraph = FormattedText | Image | Video | Links | Accordion;
