@@ -17,7 +17,7 @@ import {
 import { Frontpage, validateAndCleanupFrontpage } from "@/lib/zod/frontpage";
 
 interface IndexPageProps extends LayoutProps {
-  frontpage: Frontpage;
+  frontpage: Frontpage | null;
   articleTeasers: ArticleTeaser[];
 }
 
@@ -27,8 +27,8 @@ export default function IndexPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Meta title={frontpage.title} metatags={frontpage.metatag} />
-      {frontpage.field_content_elements.map((paragraph) => (
+      <Meta title={frontpage?.title} metatags={frontpage?.metatag} />
+      {frontpage?.field_content_elements?.map((paragraph) => (
         <Paragraph key={paragraph.id} paragraph={paragraph} />
       ))}
       <Divider />
@@ -67,7 +67,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
   return {
     props: {
       ...(await getCommonPageProps(context)),
-      frontpage: validateAndCleanupFrontpage(frontpage),
+      frontpage: frontpage ? validateAndCleanupFrontpage(frontpage) : null,
       articleTeasers: articleTeasers.map((teaser) =>
         validateAndCleanupArticleTeaser(teaser)
       ),
