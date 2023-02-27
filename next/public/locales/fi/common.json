@@ -25,5 +25,6 @@
   "form-label-subject": "Aihe:",
   "form-label-message": "Viesti:",
   "form-label-submit": "Lähetä",
-  "form-thank-you-message": "Kiitos!"
+  "form-thank-you-message": "Kiitos!",
+  "form-send-another-message": "Lähetä toinen viesti"
 }

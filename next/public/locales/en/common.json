@@ -25,5 +25,6 @@
   "form-label-subject": "Subject:",
   "form-label-message": "Message:",
   "form-submit": "Submit",
-  "form-thank-you-message": "Thanks!"
+  "form-thank-you-message": "Thanks!",
+  "form-send-another-message": "Send another message"
 }

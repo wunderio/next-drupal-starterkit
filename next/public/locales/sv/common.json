@@ -25,5 +25,6 @@
   "form-label-subject": "Ämne:",
   "form-label-message": "Meddelande:",
   "form-label-submit": "Skicka",
-  "form-thank-you-message": "Tack!"
+  "form-thank-you-message": "Tack!",
+  "form-send-another-message": "Skicka ett annat meddelande"
 }
