@@ -3,22 +3,12 @@ import { useTranslation } from "next-i18next";
 import { NextSeo } from "next-seo";
 import * as React from "react";
 
-type Metatag = {
-  tag: string;
-  attributes: {
-    name?: string;
-    content?: string;
-    href?: string;
-    rel?: string;
-  };
-};
-
-type Metatags = Metatag[];
+import { Metatag } from "@/lib/zod/metatag";
 
 interface MetaProps {
   title?: string;
   path?: string;
-  metatags?: Metatags;
+  metatags?: Metatag[];
 }
 
 export function Meta({ title, metatags }: MetaProps) {

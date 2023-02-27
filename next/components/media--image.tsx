@@ -1,9 +1,11 @@
-import Image, { ImageProps } from "next/image";
+import NextImage, { ImageProps } from "next/image";
 
-import { MediaProps } from "@/components/media";
 import { absoluteUrl } from "@/lib/utils";
+import { Image } from "@/lib/zod/paragraph";
 
-interface MediaImageProps extends MediaProps, Partial<ImageProps> {}
+interface MediaImageProps extends Partial<ImageProps> {
+  media: Image["field_image"];
+}
 
 export function MediaImage({
   media,
@@ -18,7 +20,7 @@ export function MediaImage({
   }
 
   return (
-    <Image
+    <NextImage
       src={absoluteUrl(image.uri.url)}
       width={width || image.resourceIdObjMeta.width}
       height={height || image.resourceIdObjMeta.height}

@@ -1,9 +1,9 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { DrupalNode, DrupalTranslatedPath } from "next-drupal";
 
+import { Article } from "@/components/article";
 import { Meta } from "@/components/meta";
-import { NodeArticle } from "@/components/node--article";
-import { NodePage } from "@/components/node--page";
+import { Page } from "@/components/page";
 import {
   createLanguageLinks,
   LanguageLinks,
@@ -13,13 +13,18 @@ import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
-import { getNodePageJsonApiParams } from "@/lib/get-params";
+import { getNodePageJsonApiParams } from "@/lib/get-node-page-json-api-params";
+import { ResourceType } from "@/lib/get-node-page-json-api-params";
 import { getNodeTranslatedVersions } from "@/lib/utils";
-import { ResourceType } from "@/types";
+import {
+  Article as ArticleType,
+  validateAndCleanupArticle,
+} from "@/lib/zod/article";
+import { Page as PageType, validateAndCleanupPage } from "@/lib/zod/page";
 
 const RESOURCE_TYPES = ["node--article", "node--page"];
 
-export default function Page({
+export default function CustomPage({
   resource,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!resource) return null;
@@ -27,8 +32,8 @@ export default function Page({
   return (
     <>
       <Meta title={resource.title} metatags={resource.metatag} />
-      {resource.type === "node--article" && <NodeArticle node={resource} />}
-      {resource.type === "node--page" && <NodePage node={resource} />}
+      {resource.type === "node--article" && <Article article={resource} />}
+      {resource.type === "node--page" && <Page page={resource} />}
     </>
   );
 }
@@ -41,14 +46,12 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
   };
 };
 
-interface NodePageProps extends CommonPageProps {
-  resource: DrupalNode;
+interface PageProps extends CommonPageProps {
+  resource: PageType | ArticleType;
   languageLinks: LanguageLinks;
 }
 
-export const getStaticProps: GetStaticProps<NodePageProps> = async (
-  context
-) => {
+export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   const path: DrupalTranslatedPath = await drupal.translatePathFromContext(
     context
   );
@@ -115,10 +118,17 @@ export const getStaticProps: GetStaticProps<NodePageProps> = async (
   );
   const languageLinks = createLanguageLinks(nodeTranslations);
 
+  const validatedResource =
+    type === "node--article"
+      ? validateAndCleanupArticle(resource)
+      : type === "node--page"
+      ? validateAndCleanupPage(resource)
+      : null;
+
   return {
     props: {
       ...(await getCommonPageProps(context)),
-      resource,
+      resource: validatedResource,
       languageLinks,
     },
     revalidate: 60,

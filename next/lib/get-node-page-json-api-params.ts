@@ -1,6 +1,6 @@
 import { DrupalJsonApiParams } from "drupal-jsonapi-params";
 
-import { ResourceType } from "@/types";
+export type ResourceType = "node--frontpage" | "node--page" | "node--article";
 
 export function getNodePageJsonApiParams(resourceType: ResourceType) {
   const apiParams = new DrupalJsonApiParams().addFilter(

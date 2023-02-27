@@ -1,6 +1,6 @@
 # 🚀 Next.js for Drupal multilingual template by Wunder🥕
 
-This is a starter template for a decoupled website using the open-source [Next.js for Drupal](https://next-drupal.org/)
+This is a starter template created by [Wunder](https://www.wunder.io) for a decoupled website using the open-source [Next.js for Drupal](https://next-drupal.org/)
 by [Chapter Three](https://www.chapterthree.com) and contributors.
 
 The aims of this template are:
@@ -10,35 +10,28 @@ The aims of this template are:
 - focusing on the multilingual aspect which presents interesting challenges, and is a very common requirements in our projects.
 
 Setting up [Next.js for Drupal](https://next-drupal.org/) normally requires various steps, in this template we have
-automated them using a combination of environment variables and the upcoming
-[Distributions and Recipes](https://www.drupal.org/about/core/strategic-initiatives-distributions-and-recipes) initiative
-on the drupal side.
+automated them using a combination of environment variables and the upcoming [Distributions and Recipes](https://www.drupal.org/about/core/strategic-initiatives-distributions-and-recipes) initiative on the drupal side.
 
-The template includes all you need to have a working multi-language decoupled Drupal and Next.js site up and running in seconds,
-complete with demo content, an Elasticsearch-powered search interface, and more. Check the [what's included section ↘️](#-whats-included) for more details.
+The template includes all you need to have a working multi-language decoupled Drupal and Next.js site up and running in seconds, complete with demo content, an Elasticsearch-powered search interface, and more. Check the [what's included section ↘️](#-whats-included) for more details.
 
 This example is meant to be used together with the [Silta](https://wunderio.github.io/silta/) hosting system by [Wunder](https://www.wunder.io), but it can be used with any hosting system.
 
-## 🤓 Local development with Lando
+## 🤓 The only requirement: local development with Lando
 
-Local development is handled by [Lando](https://lando.dev/). Both frontend and backend are covered by the Lando setup,
-so that is the only real requirement. The frontend site can be run in either dev or prod mode,
-and it will be proxied by lando. The default url for the frontend is [https://frontend.lndo.site](https://frontend.lndo.site)"
+Local development is handled by [Lando](https://lando.dev/). Both frontend and backend are covered by the Lando setup, so that is the only real requirement. The frontend site can be run in either dev or prod mode,
+and it will be proxied by lando. The default url for the frontend is [https://frontend.lndo.site](https://frontend.lndo.site)", but it can be changed by editing the `.lando.yml` file.
 
 ### ⚠️⚠️ NOTE: Use npm inside lando!
 
-Instead of running npm operations in your host machine, _this template assumes you use npm inside Lando_: this ensures
-the same node version is used by all developers participating in the project, and also that the node process has the
-right environment variables to connect to the backend (these are defined in the `.lando.yml` file in the root of the project).
+Instead of running npm operations in your host machine, _this template assumes you use npm inside Lando_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend (these are defined in the `.lando.yml` file in the root of the project).
 
-Just prefix all npm operations with `lando`.
+**Just prefix all npm operations with `lando`.**
 
 So instead of `npm install`, run `lando npm install`, instead of `npm run dev` run `lando npm dev`, etc.
 
 #### Stopping a running npm operation running inside the Lando node container
 
-If you have closed the terminal window where you were running `lando npm`, or if the server was started with the "Quick one command setup" (see below), and you want
-to stop the running npm operation, you can use the specially created `lando npm-stop` command.
+If you have closed the terminal window where you were running `lando npm`, or if the server was started with the "Quick one command setup" (see below), and you want to stop the running npm operation, you can use the specially created `lando npm-stop` command.
 
 ## 🤸 Getting started
 
@@ -50,7 +43,7 @@ If you are just testing for example for a pull request, and you want to get up a
 
 > NOTE: this will reinstall the site from scratch, export your database if you have started working with the template, and you have something valuable in it. :)
 
-```
+```bash
 lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si minimal -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=demo_content --execute-dependencies && lando drush uli
 ```
 
@@ -93,8 +86,7 @@ Follow these steps to get started, after you have set up the backend:
 
 ## 📦 What's included?
 
-We try to add to the template what we think are the most common requested features in website project. Most of these are based on the features provided by [Next.js for Drupal](https://next-drupal.org/), but we have paid
-special attention on making these work in a multilanguage setup.
+We try to add to the template what we think are the most common requested features in website project. Most of these are based on the features provided by [Next.js for Drupal](https://next-drupal.org/), but we have paid special attention on making these work in a multilanguage setup.
 
 ### Preview mode
 
@@ -102,8 +94,7 @@ The template is set up to allow editors to use [Preview mode](https://next-drupa
 
 ### On-demand revalidation
 
-The template includes [On demand revalidation](https://next-drupal.org/learn/on-demand-revalidation), when saving or editing a piece of content the corresponding page in the
-frontend will be recreated. Because the frontpage includes a list of articles, the frontpage paths have been manually added to the configuration for the article content type.
+The template includes [On demand revalidation](https://next-drupal.org/learn/on-demand-revalidation), when saving or editing a piece of content the corresponding page in the frontend will be recreated. Because the frontpage in this example site includes a list of articles, the frontpage paths have been manually added to the configuration for the article content type.
 
 ### Metatag support
 
@@ -113,10 +104,9 @@ The Next.js site will then create the metatags using a combination of these two 
 ### Search indexing and frontend search interface
 
 The site is set up to work with Elasticsearch to provide a complete search experience.
-The lando setup includes spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module,
-which in turn makes use of the [Elasticsearch helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
+The lando setup includes spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module, which in turn makes use of the [Elasticsearch helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
 On the frontend side, the search user interface is created using the [Elastic UI library](https://elastic.github.io/eui/).
-The frontend queries Elasticsearch via a simple proxy controller in Drupal, also provided by the `wunder_search` custom module.
+The frontend site queries Elasticsearch via a simple proxy controller in Drupal, also provided by the `wunder_search` custom module.
 
 ### Importable demo content
 
@@ -125,8 +115,15 @@ The template includes a Drupal migration to populate the site with a set of tran
 ### Multilanguage setup
 
 This template is set up to use three languages: English (default), Finnish and Swedish. These languages are added in Drupal using the usual translation modules, and to the frontend using the [next-i18next](https://github.com/i18next/next-i18next) npm package.
-The indexing in elasticsearch takes into consideration the language for analysis. The interface is translated. (Note: translations have been done with Google Translate, so don't expect perfect Finnish or Swedish... or English for that matter. 🙂 )
+The indexing in elasticsearch takes into consideration the language of the content for analysis. The interface is translated. (Note: translations have mostly been done with Google Translate, so don't expect perfect Finnish or Swedish... or English for that matter. 🙂 )
 
 ### Typescript
 
-The frontend site uses typescript.
+The frontend uses [TypeScript](https://www.typescriptlang.org) to provide type safety.
+
+TypeScript is configured quite loosely by default to minimise friction and make it accessible to developers who are not familiar with it. If you wish, you can increase type safety by enabling some of the disabled rules in `next/eslint.json`.
+
+[Zod](https://zod.dev) is also used on the frontend to type the data fetched from the backend. When it's necessary to change what data is fetched from the backend, check the following files:
+
+- `next/lib/get-node-page-json-api-params.ts` - this file creates the parameters that are passed to JSON API when fetching page data.
+- `next/lib/zod/*.ts` - these files contain the zod schemas that are used to validate and cleanup the data fetched from the backend. Any data that is not accounted for in these schemas will be removed, in order to prevent sending more data than necessary to the client. During development, it can be handy avoid this behaviour using [zod.passthrough()](https://zod.dev/?id=passthrough) to pass ALL data to the client, and then tighten the schema later to only pass the data that is actually needed.
