@@ -5,8 +5,15 @@ dependencies:
   config:
     - field.storage.node.field_content_elements
     - node.type.page
+    - paragraphs.paragraphs_type.accordion
+    - paragraphs.paragraphs_type.formatted_text
+    - paragraphs.paragraphs_type.image
+    - paragraphs.paragraphs_type.links
+    - paragraphs.paragraphs_type.video
   module:
     - entity_reference_revisions
+_core:
+  default_config_hash: UaiLIzXC73hzQQfEbpJC6Srl5mmDNrSnE0GvRAWA45s
 id: node.page.field_content_elements
 field_name: field_content_elements
 entity_type: node
@@ -20,13 +27,30 @@ default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    target_bundles: null
+    target_bundles:
+      formatted_text: formatted_text
+      image: image
+      accordion: accordion
+      links: links
+      video: video
     negate: 0
     target_bundles_drag_drop:
+      accordion:
+        weight: 8
+        enabled: true
+      accordion_item:
+        weight: 7
+        enabled: false
       formatted_text:
         weight: -5
-        enabled: false
+        enabled: true
       image:
         weight: -4
-        enabled: false
+        enabled: true
+      links:
+        weight: 11
+        enabled: true
+      video:
+        weight: 12
+        enabled: true
 field_type: entity_reference_revisions
