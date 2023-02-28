@@ -10,7 +10,6 @@ source:
     status: 1
 process:
   # We are interested here only in rows that are translations:
-  # We are interested here only in rows that are translations:
   skipped:
     - plugin: skip_on_value
       method: row
@@ -33,13 +32,13 @@ process:
 
   pseudo_paragraph_field:
     plugin: migration_lookup
-    migration: paragraphs_pages_formatted_text
+    migration: paragraphs_pages_accordion_item1
     source: Tnid
   id:
     plugin: extract
     source: '@pseudo_paragraph_field'
     index:
-        - '0'
+      - '0'
   revision_id:
     plugin: extract
     source: '@pseudo_paragraph_field'

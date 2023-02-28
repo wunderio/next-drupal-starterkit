@@ -32,7 +32,7 @@ process:
 
   pseudo_paragraph_field:
     plugin: migration_lookup
-    migration: paragraphs_pages_formatted_text
+    migration: paragraphs_pages_accordion_item0
     source: Tnid
   id:
     plugin: extract
