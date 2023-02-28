@@ -63,9 +63,22 @@ export const LinksSchema = z.object({
   ),
 });
 
+export const AccordionItemSchema = z.object({
+  type: z.literal("paragraph--accordion_item"),
+  id: z.string(),
+  field_heading: z.string(),
+  field_formatted_text: z.object({
+    processed: z.string(),
+  }),
+});
+
 export const AccordionSchema = z.object({
   type: z.literal("paragraph--accordion"),
   id: z.string(),
+  field_heading: z.string(),
+  field_accordion_items: z.array(
+    z.discriminatedUnion("type", [AccordionItemSchema])
+  ),
 });
 
 export type FormattedText = z.infer<typeof FormattedTextSchema>;
@@ -73,5 +86,6 @@ export type Image = z.infer<typeof ImageSchema>;
 export type Video = z.infer<typeof VideoSchema>;
 export type Links = z.infer<typeof LinksSchema>;
 export type Accordion = z.infer<typeof AccordionSchema>;
+export type AccordionItem = z.infer<typeof AccordionSchema>;
 
 export type Paragraph = FormattedText | Image | Video | Links | Accordion;
