@@ -1,5 +1,5 @@
-id: paragraphs_pages_links_translations
-label: Page paragraphs links translations
+id: paragraphs_pages_accordion_item0_translations
+label: Paragraphs pages accordion_item0 translations
 migration_group: demo_content
 source:
   plugin: csv
@@ -19,23 +19,26 @@ process:
       source: 'Is source'
     - plugin: skip_on_empty
       method: row
-      source: Paragraph_0_links_uri
-      message: Skipped because node has no links
-  'field_links/title': Paragraphs_0_links_title
-  'field_links/uri': Paragraph_0_links_uri
+      source: Paragraphs_0_accordion_title
+      message: Skipped because node has no accordion
+  'field_formatted_text/format':
+    plugin: default_value
+    default_value: basic_html
+  'field_formatted_text/value': Paragraphs_0_accordion_item_text
+  field_heading: Paragraphs_0_accordion_item_title
   status: constants/status
   uid: constants/uid
   langcode: Langcode
 
   pseudo_paragraph_field:
     plugin: migration_lookup
-    migration: paragraphs_pages_links
+    migration: paragraphs_pages_formatted_text
     source: Tnid
   id:
     plugin: extract
     source: '@pseudo_paragraph_field'
     index:
-      - '0'
+        - '0'
   revision_id:
     plugin: extract
     source: '@pseudo_paragraph_field'
@@ -49,9 +52,9 @@ process:
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
-  default_bundle: links
+  default_bundle: accordion_item
   translations: true
 
 migration_dependencies:
   required:
-    - paragraphs_pages_links
+    - paragraphs_pages_accordion_item0

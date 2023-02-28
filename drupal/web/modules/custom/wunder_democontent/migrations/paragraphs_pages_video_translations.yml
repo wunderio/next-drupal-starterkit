@@ -1,5 +1,5 @@
-id: paragraphs_page_video_translations
-label: Pageage paragraphs video
+id: paragraphs_pages_video_translations
+label: Page paragraphs video
 migration_group: demo_content
 source:
   plugin: csv
@@ -11,12 +11,16 @@ source:
 process:
   # We are interested here only in rows that are translations:
   skipped:
-    plugin: skip_on_value
-    method: row
-    not_equals: true
-    value:
-      - 0
-    source: 'Is source'
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 0
+      source: 'Is source'
+    - plugin: skip_on_empty
+      method: row
+      source: Paragraphs_0_video
+      message: Skipped because node has no video
   'field_video/target_id':
     plugin: migration_lookup
     source: id
@@ -27,7 +31,7 @@ process:
 
   pseudo_paragraph_field:
     plugin: migration_lookup
-    migration: paragraphs_page_video
+    migration: paragraphs_pages_video
     source: Tnid
   id:
     plugin: extract
@@ -52,5 +56,5 @@ destination:
 
 migration_dependencies:
   required:
-    - paragraphs_page_video
+    - paragraphs_pages_video
 

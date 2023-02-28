@@ -1,5 +1,5 @@
 id: nodes_pages_media_remote_video
-label: Pageage remote_video (media entities)
+label: Page remote_video (media entities)
 migration_group: demo_content
 source:
   plugin: csv

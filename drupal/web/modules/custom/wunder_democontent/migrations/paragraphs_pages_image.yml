@@ -1,5 +1,5 @@
-id: paragraphs_page_image
-label: Pageage paragraphs image
+id: paragraphs_pages_image
+label: Page paragraphs image
 migration_group: demo_content
 source:
   plugin: csv
@@ -11,12 +11,16 @@ source:
 process:
   # We are interested here only in nodes that are not translations:
   skipped:
-    plugin: skip_on_value
-    method: row
-    not_equals: true
-    value:
-      - 1
-    source: 'Is source'
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 1
+      source: 'Is source'
+    - plugin: skip_on_empty
+      method: row
+      source: Paragraphs_0_image
+      message: Skipped because node has no image
   'field_image/target_id':
     plugin: migration_lookup
     source: id

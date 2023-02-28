@@ -1,5 +1,5 @@
-id: paragraphs_page_formatted_text_translations
-label: Pageage paragraphs formatted_text translations
+id: paragraphs_pages_formatted_text_translations
+label: Page paragraphs formatted_text translations
 migration_group: demo_content
 source:
   plugin: csv
@@ -28,7 +28,7 @@ process:
 
   pseudo_paragraph_field:
     plugin: migration_lookup
-    migration: paragraphs_page_formatted_text
+    migration: paragraphs_pages_formatted_text
     source: Tnid
   id:
     plugin: extract
@@ -53,4 +53,4 @@ destination:
 
 migration_dependencies:
   required:
-    - paragraphs_page_formatted_text
+    - paragraphs_pages_formatted_text

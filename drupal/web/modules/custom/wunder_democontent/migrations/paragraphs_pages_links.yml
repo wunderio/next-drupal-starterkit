@@ -1,5 +1,5 @@
-id: paragraphs_page_links
-label: Pageage paragraphs links
+id: paragraphs_pages_links
+label: Page paragraphs links
 migration_group: demo_content
 source:
   plugin: csv
@@ -11,12 +11,16 @@ source:
 process:
   # We are interested here only in nodes that are not translations:
   skipped:
-    plugin: skip_on_value
-    method: row
-    not_equals: true
-    value:
-      - 1
-    source: 'Is source'
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 1
+      source: 'Is source'
+    - plugin: skip_on_empty
+      method: row
+      source: Paragraph_0_links_uri
+      message: Skipped because node has no links
   'field_links/title': Paragraphs_0_links_title
   'field_links/uri': Paragraph_0_links_uri
   status: constants/status

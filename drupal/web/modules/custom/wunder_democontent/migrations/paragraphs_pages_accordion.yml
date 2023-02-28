@@ -1,0 +1,64 @@
+id: paragraphs_pages_accordion
+label: Page paragraphs accordion
+migration_group: demo_content
+source:
+  plugin: csv
+  path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv
+  ids: [id]
+  constants:
+    uid: 1
+    status: 1
+process:
+  # We are interested here only in nodes that are not translations:
+  skipped:
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 1
+      source: 'Is source'
+    - plugin: skip_on_empty
+      method: row
+      source: Paragraphs_0_accordion_title
+      message: Skipped because node has no accordion
+  field_heading: Paragraphs_0_accordion_title
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+  # Paragraphs.
+  paragraph_accordion_item0:
+    - plugin: migration_lookup
+      migration: paragraphs_pages_accordion_item0
+      source: id
+    - plugin: null_as_array
+  paragraph_accordion_item1:
+    - plugin: migration_lookup
+      migration: paragraphs_pages_accordion_item1
+      source: id
+    - plugin: null_as_array
+
+  field_accordion_items:
+    plugin: sub_process
+    source:
+      - '@paragraph_accordion_item0'
+      - '@paragraph_accordion_item1'
+    process:
+      target_id:
+        - plugin: skip_on_empty
+          method: process
+          message: 'Cannot import empty paragraph'
+          source: '0'
+      target_revision_id:
+        - plugin: skip_on_empty
+          method: process
+          message: 'Cannot import empty paragraph'
+          source: '1'
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: accordion
+
+migration_dependencies:
+  required:
+    - paragraphs_pages_accordion_item0
+    - paragraphs_pages_accordion_item1
