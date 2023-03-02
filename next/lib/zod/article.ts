@@ -18,6 +18,7 @@ export const ArticleBaseSchema = z.object({
 
 const ArticleSchema = ArticleBaseSchema.extend({
   metatag: MetatagsSchema.optional(),
+  field_excerpt: z.string().optional(),
   body: z.object({
     processed: z.string(),
   }),
