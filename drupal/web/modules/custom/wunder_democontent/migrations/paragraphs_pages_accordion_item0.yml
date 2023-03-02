@@ -28,11 +28,17 @@ process:
       migration: paragraphs_pages_acc_formatted_text0
       source: id
     - plugin: null_as_array
+  paragraph_accordion_item0_video:
+    - plugin: migration_lookup
+      migration: paragraphs_pages_acc_video0
+      source: id
+    - plugin: null_as_array
 
   field_content_elements:
     plugin: sub_process
     source:
       - '@paragraph_accordion_item0_formatted_text0'
+      - '@paragraph_accordion_item0_video'
 
     process:
       target_id:
@@ -57,3 +63,4 @@ destination:
 migration_dependencies:
   required:
     - paragraphs_pages_acc_formatted_text0
+    - paragraphs_pages_acc_video0
