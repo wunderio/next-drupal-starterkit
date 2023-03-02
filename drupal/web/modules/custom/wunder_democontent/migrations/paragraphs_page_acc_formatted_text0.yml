@@ -1,0 +1,35 @@
+id: paragraphs_page_acc_formatted_text0
+label: Page accordion paragraphs formatted_text for accordion item 0
+migration_group: demo_content
+source:
+  plugin: csv
+  path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv
+  ids: [id]
+  constants:
+    uid: 1
+    status: 1
+process:
+  # We are interested here only in nodes that are not translations:
+  skipped:
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 1
+      source: 'Is source'
+    - plugin: skip_on_empty
+      method: row
+      source: Paragraphs_0_accordion_title
+      message: Skipped because node has no accordion
+  'field_formatted_text/format':
+    plugin: default_value
+    default_value: basic_html
+  'field_formatted_text/value': Paragraphs_0_accordion_item_text
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: formatted_text
+

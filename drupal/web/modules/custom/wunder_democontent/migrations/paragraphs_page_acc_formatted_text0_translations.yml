@@ -1,9 +1,9 @@
-id: paragraphs_frontpage_formatted_text_translations
-label: Frontpage paragraphs formatted_text translations
+id: paragraphs_page_acc_formatted_text0_translations
+label: Frontpage paragraphs accordion formatted_text translations
 migration_group: demo_content
 source:
   plugin: csv
-  path: /app/drupal/web/modules/custom/wunder_democontent/sources/frontpages.csv
+  path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv
   ids: [id]
   constants:
     uid: 1
@@ -11,24 +11,27 @@ source:
 process:
   # We are interested here only in rows that are translations:
   skipped:
-    plugin: skip_on_value
-    method: row
-    not_equals: true
-    value:
-      - 0
-    source: 'Is source'
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 0
+      source: 'Is source'
+    - plugin: skip_on_empty
+      method: row
+      source: Paragraphs_0_accordion_title
+      message: Skipped because node has no accordion
   'field_formatted_text/format':
     plugin: default_value
     default_value: basic_html
-  'field_formatted_text/value': Paragraph_0_text_body
-  field_heading: Paragraph_0_text_title
+  'field_formatted_text/value': Paragraphs_0_accordion_item_text
   status: constants/status
   uid: constants/uid
   langcode: Langcode
 
   pseudo_paragraph_field:
     plugin: migration_lookup
-    migration: paragraphs_frontpage_formatted_text
+    migration: paragraphs_page_acc_formatted_text0
     source: Tnid
   id:
     plugin: extract
@@ -53,4 +56,4 @@ destination:
 
 migration_dependencies:
   required:
-    - paragraphs_frontpage_formatted_text
+    - paragraphs_page_acc_formatted_text0

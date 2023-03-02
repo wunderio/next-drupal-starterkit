@@ -22,6 +22,29 @@ process:
       source: Paragraphs_0_accordion_title
       message: Skipped because node has no accordion
   field_heading: Paragraphs_1_accordion_item_title
+  paragraph_accordion_item1_formatted_text1:
+    - plugin: migration_lookup
+      migration: paragraphs_page_acc_formatted_text1
+      source: id
+    - plugin: null_as_array
+
+  field_content_elements:
+    plugin: sub_process
+    source:
+      - '@paragraph_accordion_item1_formatted_text1'
+
+    process:
+      target_id:
+        - plugin: skip_on_empty
+          method: process
+          message: 'Cannot import empty paragraph'
+          source: '0'
+      target_revision_id:
+        - plugin: skip_on_empty
+          method: process
+          message: 'Cannot import empty paragraph'
+          source: '1'
+
   status: constants/status
   uid: constants/uid
   langcode: Langcode
