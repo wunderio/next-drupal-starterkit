@@ -58,6 +58,7 @@ export function getNodePageJsonApiParams(resourceType: ResourceType) {
       "field_image",
       "status",
       "metatag",
+      "field_excerpt",
     ]);
   }
 

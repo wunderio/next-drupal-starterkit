@@ -1,18 +1,9 @@
 import { DrupalNode } from "next-drupal";
 import { z } from "zod";
 
-import { ImageShape } from "@/lib/zod/paragraph";
+import { ArticleBaseSchema } from "@/lib/zod/article";
 
-export const ArticleTeaserSchema = z.object({
-  type: z.literal("node--article"),
-  id: z.string(),
-  title: z.string(),
-  created: z.string(),
-  uid: z.object({
-    id: z.string(),
-    display_name: z.string(),
-  }),
-  field_image: ImageShape,
+export const ArticleTeaserSchema = ArticleBaseSchema.extend({
   path: z.object({
     alias: z.string(),
   }),

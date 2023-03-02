@@ -62,12 +62,12 @@ export function ContactForm() {
               {t("form-label-name")}
             </label>
             <input
-              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3  shadow "
+              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
               type="text"
               id="name"
-              name="name"
-              required
-              {...register("name")}
+              {...register("name", {
+                required: true,
+              })}
             />
           </div>
           <div>
@@ -78,9 +78,9 @@ export function ContactForm() {
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
               type="email"
               id="email"
-              name="email"
-              {...register("email")}
-              required
+              {...register("email", {
+                required: true,
+              })}
             />
           </div>
           <div>
@@ -91,8 +91,9 @@ export function ContactForm() {
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
               type="text"
               id="subject"
-              name="subject"
-              {...register("subject")}
+              {...register("subject", {
+                required: true,
+              })}
             />
           </div>
           <div>
@@ -102,9 +103,9 @@ export function ContactForm() {
             <textarea
               className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
               id="message"
-              name="message"
-              {...register("message")}
-              required
+              {...register("message", {
+                required: true,
+              })}
             />
           </div>
 
