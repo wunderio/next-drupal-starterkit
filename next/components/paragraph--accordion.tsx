@@ -2,6 +2,7 @@ import * as AccordionUI from "@radix-ui/react-accordion";
 
 import { Paragraph } from "@/components/paragraph";
 import { Accordion } from "@/lib/zod/paragraph";
+import ChevronIcon from "@/styles/icons/chevron.svg";
 
 export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
   return (
@@ -18,7 +19,11 @@ export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
               value={item.id}
             >
               <AccordionUI.Header className="bg-wunderpurple-400 p-2 text-lg text-white">
-                <AccordionUI.Trigger className="h-full">
+                <AccordionUI.Trigger className="group flex w-full flex-row gap-1.5">
+                  <ChevronIcon
+                    aria-hidden
+                    className="h-7 w-6 group-data-[state=open]:rotate-180"
+                  />
                   {item.field_heading}
                 </AccordionUI.Trigger>
               </AccordionUI.Header>
