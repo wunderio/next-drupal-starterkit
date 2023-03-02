@@ -117,6 +117,11 @@ The template includes a Drupal migration to populate the site with a set of tran
 This template is set up to use three languages: English (default), Finnish and Swedish. These languages are added in Drupal using the usual translation modules, and to the frontend using the [next-i18next](https://github.com/i18next/next-i18next) npm package.
 The indexing in elasticsearch takes into consideration the language of the content for analysis. The interface is translated. (Note: translations have mostly been done with Google Translate, so don't expect perfect Finnish or Swedish... or English for that matter. 🙂 )
 
+### Webforms
+
+The Drupal setup includes the popular [Webform](https://www.drupal.org/project/webform) module. The frontpage on the frontend displays a form that will post data back to drupal's webform, with basic validation and a feedback message.
+We decided to implement a static form, in the sense that the "hardcoded" fields in the frontend need to match the fields in the webform in the backend. Creating a dynamic system of forms that automatically match what's coming from the user-defined webforms in Drupal is out of scope for this template.
+
 ### Typescript
 
 The frontend uses [TypeScript](https://www.typescriptlang.org) to provide type safety.

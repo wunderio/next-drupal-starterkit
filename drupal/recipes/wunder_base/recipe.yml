@@ -30,6 +30,8 @@ install:
   - jsonapi
   - datetime_range
   - metatag
+  - webform
+  - webform_ui
 
 config:
   import:
@@ -37,6 +39,8 @@ config:
     ckeditor5: '*'
     taxonomy: '*'
     claro: '*'
+    webform: '*'
+    webform_ui: '*'
   actions:
     system.theme:
       simple_config_update:

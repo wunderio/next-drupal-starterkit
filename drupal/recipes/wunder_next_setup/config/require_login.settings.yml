@@ -11,7 +11,12 @@ requirements:
   request_path:
     id: request_path
     negate: true
-    pages: "/subrequests/*\r\n/jsonapi\r\n/jsonapi/*\r\n/router/translate-path\r\n/next/preview-url\r\n/oauth/*\r\n/wunder_search/proxy"
+    pages: "/subrequests/*\r\n/jsonapi\r\n/jsonapi/*\r\n/router/translate-path\r\n/next/preview-url\r\n/oauth/*\r\n/wunder_search/proxy\r\n/webform_rest/*\r\n"
+  webform:
+    id: webform
+    negate: false
+    context_mapping: {  }
+    webforms: {  }
   'entity_bundle:node':
     id: 'entity_bundle:node'
     negate: false
@@ -23,6 +28,12 @@ requirements:
     negate: false
     context_mapping:
       taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
+    bundles: {  }
+  'entity_bundle:webform_submission':
+    id: 'entity_bundle:webform_submission'
+    negate: false
+    context_mapping:
+      webform_submission: '@webform.webform_submission_route_context:webform_submission'
     bundles: {  }
 extra:
   include_403: true

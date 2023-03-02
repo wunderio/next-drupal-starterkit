@@ -17,5 +17,14 @@
   "The page you are looking for does not exist.": "Hakemaasi sivua ei löydy.",
   "Go back to the homepage?": "Palaa etusivulle?",
   "meta-site-name": "Next-drupal wunder mallisivusto",
-  "meta-site-description": "Esimerkkisivusto, joka esittelee next-drupalin käyttöä monikielisessä sivustossa."
+  "meta-site-description": "Esimerkkisivusto, joka esittelee next-drupalin käyttöä monikielisessä sivustossa.",
+  "form-description": "Tämä yhteydenottolomake lähetetään oletusarvoiseen yhteydenottolomakkeeseen Drupal-puolella.",
+  "form-title": "Yksinkertainen verkkolomakeesimerkki",
+  "form-label-name": "Nimi:",
+  "form-label-email": "Sähköposti:",
+  "form-label-subject": "Aihe:",
+  "form-label-message": "Viesti:",
+  "form-label-submit": "Lähetä",
+  "form-thank-you-message": "Kiitos!",
+  "form-send-another-message": "Lähetä toinen viesti"
 }

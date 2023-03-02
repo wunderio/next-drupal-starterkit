@@ -17,5 +17,14 @@
   "The page you are looking for does not exist.": "Sidan du söker finns inte.",
   "Go back to the homepage?": "Gå tillbaka till hemsidan?",
   "meta-site-name": "Next-drupal Wunder mall webbplats",
-  "meta-site-description": "Exempelwebbplats som visar användningen av next-drupal på en flerspråkig webbplats."
+  "meta-site-description": "Exempelwebbplats som visar användningen av next-drupal på en flerspråkig webbplats.",
+  "form-description": "Detta kontaktformulär skickas till standardwebbformuläret för kontakt på Drupal-sidan.",
+  "form-title": "Enkelt webbformulärexempel",
+  "form-label-name": "Namn:",
+  "form-label-email": "E-post:",
+  "form-label-subject": "Ämne:",
+  "form-label-message": "Meddelande:",
+  "form-label-submit": "Skicka",
+  "form-thank-you-message": "Tack!",
+  "form-send-another-message": "Skicka ett annat meddelande"
 }

@@ -40,22 +40,24 @@ export function Meta({ title, metatags }: MetaProps) {
       `${process.env.NEXT_PUBLIC_FRONTEND_URL}/metatags_default_image.png`,
   };
 
-  data.title = data.title.concat(` | ${t("meta-site-name")}`);
+  const computedTitle = data.title
+    ? data.title.concat(` | ${t("meta-site-name")}`)
+    : t("meta-site-name");
 
   return (
     <NextSeo
-      title={data.title}
+      title={computedTitle}
       description={data.description}
       canonical={data.canonical}
       openGraph={{
-        title: title,
+        title: computedTitle,
         description: data.description,
         type: "website",
         url: data.canonical,
         images: [
           {
             url: data.imageSrc ?? "",
-            alt: title,
+            alt: computedTitle,
           },
         ],
       }}
