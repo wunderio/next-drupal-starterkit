@@ -27,11 +27,17 @@ process:
       migration: paragraphs_pages_acc_formatted_text1
       source: id
     - plugin: null_as_array
+  paragraph_accordion_item1_image1:
+    - plugin: migration_lookup
+      migration: paragraphs_pages_acc_image1
+      source: id
+    - plugin: null_as_array
 
   field_content_elements:
     plugin: sub_process
     source:
       - '@paragraph_accordion_item1_formatted_text1'
+      - '@paragraph_accordion_item1_image1'
 
     process:
       target_id:
