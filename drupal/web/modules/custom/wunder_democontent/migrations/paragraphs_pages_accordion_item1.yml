@@ -59,3 +59,8 @@ destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: accordion_item
 
+migration_dependencies:
+  required:
+    - paragraphs_pages_acc_formatted_text1
+    - paragraphs_pages_acc_image1
+
