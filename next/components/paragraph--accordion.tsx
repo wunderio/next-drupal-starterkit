@@ -18,11 +18,11 @@ export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
               key={item.id}
               value={item.id}
             >
-              <AccordionUI.Header className="bg-wunderpurple-400 p-2 text-lg text-white">
-                <AccordionUI.Trigger className="group flex w-full flex-row gap-1.5">
+              <AccordionUI.Header className="bg-wunderpurple-400 p-2 text-md text-white md:text-lg">
+                <AccordionUI.Trigger className="group flex w-full flex-row items-center gap-1 md:gap-1.5">
                   <ChevronIcon
                     aria-hidden
-                    className="h-7 w-6 group-data-[state=open]:rotate-180"
+                    className="h-3 w-3 group-data-[state=open]:rotate-180 md:h-7 md:w-6"
                   />
                   {item.field_heading}
                 </AccordionUI.Trigger>
