@@ -15,6 +15,9 @@ export function Article({ article, ...props }: ArticleProps) {
   return (
     <article {...props}>
       <HeadingPage>{article.title}</HeadingPage>
+      {article.field_excerpt && (
+        <div className="my-4 text-xl">{article.field_excerpt}</div>
+      )}
       <div className="mb-4 text-gray-600">
         {article.uid?.display_name && (
           <span>
