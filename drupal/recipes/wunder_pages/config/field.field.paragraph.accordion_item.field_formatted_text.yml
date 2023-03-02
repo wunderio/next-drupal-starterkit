@@ -7,6 +7,8 @@ dependencies:
     - paragraphs.paragraphs_type.accordion_item
   module:
     - text
+_core:
+  default_config_hash: twQB-EOdOOqPNXvJ8OG29n0-zsLE3z8G6hWr4nL8uAs
 id: paragraph.accordion_item.field_formatted_text
 field_name: field_formatted_text
 entity_type: paragraph

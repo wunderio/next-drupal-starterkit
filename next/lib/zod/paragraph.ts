@@ -6,7 +6,7 @@ export const FormattedTextSchema = z.object({
   field_formatted_text: z.object({
     processed: z.string(),
   }),
-  field_heading: z.string(),
+  field_heading: z.string().nullable(),
 });
 
 export const ImageShape = z.object({
@@ -67,18 +67,21 @@ export const AccordionItemSchema = z.object({
   type: z.literal("paragraph--accordion_item"),
   id: z.string(),
   field_heading: z.string(),
-  field_formatted_text: z.object({
-    processed: z.string(),
-  }),
+  field_content_elements: z.array(
+    z.discriminatedUnion("type", [
+      FormattedTextSchema,
+      ImageSchema,
+      VideoSchema,
+      LinksSchema,
+    ])
+  ),
 });
 
 export const AccordionSchema = z.object({
   type: z.literal("paragraph--accordion"),
   id: z.string(),
   field_heading: z.string(),
-  field_accordion_items: z.array(
-    z.discriminatedUnion("type", [AccordionItemSchema])
-  ),
+  field_accordion_items: z.array(AccordionItemSchema),
 });
 
 export type FormattedText = z.infer<typeof FormattedTextSchema>;
@@ -86,6 +89,12 @@ export type Image = z.infer<typeof ImageSchema>;
 export type Video = z.infer<typeof VideoSchema>;
 export type Links = z.infer<typeof LinksSchema>;
 export type Accordion = z.infer<typeof AccordionSchema>;
-export type AccordionItem = z.infer<typeof AccordionSchema>;
+export type AccordionItem = z.infer<typeof AccordionItemSchema>;
 
-export type Paragraph = FormattedText | Image | Video | Links | Accordion;
+export type Paragraph =
+  | FormattedText
+  | Image
+  | Video
+  | Links
+  | Accordion
+  | AccordionItem;

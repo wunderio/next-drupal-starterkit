@@ -1,11 +1,10 @@
-uuid: a05cd50b-5a97-4a70-b5d1-d7ef087d5cb4
+uuid: 24266c32-863f-45e5-b37b-e3d31fadf736
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_content_elements
-    - node.type.page
-    - paragraphs.paragraphs_type.accordion
+    - field.storage.paragraph.field_content_elements
+    - paragraphs.paragraphs_type.accordion_item
     - paragraphs.paragraphs_type.formatted_text
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.links
@@ -13,13 +12,13 @@ dependencies:
   module:
     - entity_reference_revisions
 _core:
-  default_config_hash: PgOUAJnAiwjzU2TqLyfk8SZ8BSccVFPFh80ink-3wN8
-id: node.page.field_content_elements
+  default_config_hash: gI9oa4eX3GU6bmtnilvYYWzqTIBnFP4QmP2DrvuBGlA
+id: paragraph.accordion_item.field_content_elements
 field_name: field_content_elements
-entity_type: node
-bundle: page
+entity_type: paragraph
+bundle: accordion_item
 label: 'Content elements'
-description: ''
+description: 'Add one or more paragraphs to display in this accordion item.'
 required: true
 translatable: false
 default_value: {  }
@@ -30,22 +29,21 @@ settings:
     target_bundles:
       formatted_text: formatted_text
       image: image
-      accordion: accordion
       links: links
       video: video
     negate: 0
     target_bundles_drag_drop:
       accordion:
-        weight: 8
-        enabled: true
-      accordion_item:
         weight: 7
         enabled: false
+      accordion_item:
+        weight: 8
+        enabled: false
       formatted_text:
-        weight: -5
+        weight: 9
         enabled: true
       image:
-        weight: -4
+        weight: 10
         enabled: true
       links:
         weight: 11

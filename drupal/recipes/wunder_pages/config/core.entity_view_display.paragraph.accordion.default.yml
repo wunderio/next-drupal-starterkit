@@ -8,6 +8,8 @@ dependencies:
     - paragraphs.paragraphs_type.accordion
   module:
     - entity_reference_revisions
+_core:
+  default_config_hash: 2F7qAofB4OBEpj9Zxu2JAZskLWS6-WYuwIeCbjxKKIY
 id: paragraph.accordion.default
 targetEntityType: paragraph
 bundle: accordion

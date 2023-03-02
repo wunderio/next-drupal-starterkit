@@ -3,23 +3,37 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.accordion_item.field_content_elements
     - field.field.paragraph.accordion_item.field_formatted_text
     - field.field.paragraph.accordion_item.field_heading
     - paragraphs.paragraphs_type.accordion_item
   module:
-    - text
+    - paragraphs
+_core:
+  default_config_hash: mJzDcpjw1rdr4CQg5PJoNn4AjSweaGFDJLXt9CJdJPQ
 id: paragraph.accordion_item.default
 targetEntityType: paragraph
 bundle: accordion_item
 mode: default
 content:
-  field_formatted_text:
-    type: text_textarea
-    weight: 1
+  field_content_elements:
+    type: paragraphs
+    weight: 2
     region: content
     settings:
-      rows: 5
-      placeholder: ''
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: formatted_text
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
     third_party_settings: {  }
   field_heading:
     type: string_textfield
@@ -31,4 +45,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_formatted_text: true
   status: true

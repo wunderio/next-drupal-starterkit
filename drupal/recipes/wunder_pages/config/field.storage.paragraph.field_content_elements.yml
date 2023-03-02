@@ -1,14 +1,12 @@
-uuid: 0189e4c1-cca9-4e93-8a75-326d07cd546e
+uuid: c753530b-4be8-446b-9724-ffb665bfc2dd
 langcode: en
 status: true
 dependencies:
   module:
     - entity_reference_revisions
     - paragraphs
-_core:
-  default_config_hash: ZQAUrK94u98AZI2P3aNGylqcMuK486k30HHsNLlM0Bg
-id: paragraph.field_accordion_items
-field_name: field_accordion_items
+id: paragraph.field_content_elements
+field_name: field_content_elements
 entity_type: paragraph
 type: entity_reference_revisions
 settings:

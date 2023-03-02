@@ -1,6 +1,6 @@
 import * as AccordionUI from "@radix-ui/react-accordion";
 
-import { FormattedText } from "@/components/formatted-text";
+import { Paragraph } from "@/components/paragraph";
 import { Accordion } from "@/lib/zod/paragraph";
 
 export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
@@ -23,7 +23,9 @@ export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
                 </AccordionUI.Trigger>
               </AccordionUI.Header>
               <AccordionUI.Content className="text-m bg-wunderpurple-50 p-2">
-                <FormattedText html={item.field_formatted_text.processed} />
+                {item.field_content_elements?.map((paragraph) => (
+                  <Paragraph key={paragraph.id} paragraph={paragraph} />
+                ))}
               </AccordionUI.Content>
             </AccordionUI.Item>
           ))}

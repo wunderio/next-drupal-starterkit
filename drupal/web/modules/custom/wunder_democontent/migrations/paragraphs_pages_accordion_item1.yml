@@ -21,10 +21,6 @@ process:
       method: row
       source: Paragraphs_0_accordion_title
       message: Skipped because node has no accordion
-  'field_formatted_text/format':
-    plugin: default_value
-    default_value: basic_html
-  'field_formatted_text/value': Paragraphs_1_accordion_item_text
   field_heading: Paragraphs_1_accordion_item_title
   status: constants/status
   uid: constants/uid
