@@ -24,7 +24,7 @@ process:
   field_heading: Paragraphs_1_accordion_item_title
   paragraph_accordion_item1_formatted_text1:
     - plugin: migration_lookup
-      migration: paragraphs_page_acc_formatted_text1
+      migration: paragraphs_pages_acc_formatted_text1
       source: id
     - plugin: null_as_array
 

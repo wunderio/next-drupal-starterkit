@@ -1,4 +1,4 @@
-id: paragraphs_page_acc_formatted_text0_translations
+id: paragraphs_pages_acc_formatted_text0_translations
 label: Frontpage paragraphs accordion formatted_text translations
 migration_group: demo_content
 source:
@@ -31,7 +31,7 @@ process:
 
   pseudo_paragraph_field:
     plugin: migration_lookup
-    migration: paragraphs_page_acc_formatted_text0
+    migration: paragraphs_pages_acc_formatted_text0
     source: Tnid
   id:
     plugin: extract
@@ -56,4 +56,4 @@ destination:
 
 migration_dependencies:
   required:
-    - paragraphs_page_acc_formatted_text0
+    - paragraphs_pages_acc_formatted_text0

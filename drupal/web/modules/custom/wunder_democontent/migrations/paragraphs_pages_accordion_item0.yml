@@ -25,7 +25,7 @@ process:
   field_heading: Paragraphs_0_accordion_item_title
   paragraph_accordion_item0_formatted_text0:
     - plugin: migration_lookup
-      migration: paragraphs_page_acc_formatted_text0
+      migration: paragraphs_pages_acc_formatted_text0
       source: id
     - plugin: null_as_array
 
@@ -56,4 +56,4 @@ destination:
 
 migration_dependencies:
   required:
-    - paragraphs_page_acc_formatted_text0
+    - paragraphs_pages_acc_formatted_text0
