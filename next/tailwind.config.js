@@ -41,7 +41,7 @@ module.exports = {
     extend: {
       colors: {
         steelgray: "#221f2d",
-        scarpaflow: "#555161",
+        scapaflow: "#555161",
         stone: "#767283",
         topaz: "#9b98a4",
         graysuit: "#c4c2cc",
