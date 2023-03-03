@@ -40,6 +40,13 @@ module.exports = {
     // These properties *extend* the defaults:
     extend: {
       colors: {
+        steelgray: "#221f2d",
+        scarpaflow: "#555161",
+        stone: "#767283",
+        topaz: "#9b98a4",
+        graysuit: "#c4c2cc",
+        finnishwinter: "#e7e6eb",
+        mischka: "#f7f7f8",
         // Generated with https://uicolors.app/
         wunderpurple: {
           50: "#eeefff",
