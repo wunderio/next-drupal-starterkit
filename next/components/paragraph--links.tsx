@@ -13,10 +13,13 @@ export function ParagraphLinks({ paragraph }: { paragraph: Links }) {
           key={index}
           role="listitem"
           href={link.full_url}
-          className="relative min-h-[6em] cursor-pointer rounded bg-wunderpurple-100 p-8 text-lg text-wunderpurple-600 shadow hover:bg-wunderpurple-200"
+          className="relative min-h-[6em] cursor-pointer rounded border border-finnishwinter bg-wunderpurple-100 p-8 text-lg text-black hover:bg-wunderpurple-200"
         >
           {link.title}
-          <ArrowIcon aria-hidden className="absolute top-1/4 right-2 h-6 w-6" />
+          <ArrowIcon
+            aria-hidden
+            className="absolute top-1/4 right-2 h-6 w-6 -rotate-90 text-wunderpurple-600"
+          />
         </Link>
       ))}
     </ul>
