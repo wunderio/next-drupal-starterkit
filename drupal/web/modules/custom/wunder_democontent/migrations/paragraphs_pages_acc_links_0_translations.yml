@@ -1,5 +1,5 @@
-id: paragraphs_pages_links_translations
-label: Page paragraphs links translations
+id: paragraphs_pages_acc_links_0_translations
+label: Page paragraphs links in accordion item 0
 migration_group: demo_content
 source:
   plugin: csv
@@ -54,4 +54,4 @@ destination:
 
 migration_dependencies:
   required:
-    - paragraphs_pages_links
+    - paragraphs_pages_acc_links_0

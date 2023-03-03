@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { MetatagsSchema } from "@/lib/zod/metatag";
 import {
+  AccordionSchema,
   FormattedTextSchema,
   ImageSchema,
   LinksSchema,
@@ -19,6 +20,7 @@ export const FrontpageSchema = z.object({
       ImageSchema,
       VideoSchema,
       LinksSchema,
+      AccordionSchema,
     ])
   ),
   metatag: MetatagsSchema.optional(),

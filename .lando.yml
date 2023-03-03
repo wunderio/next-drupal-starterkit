@@ -26,8 +26,7 @@ tooling:
   # in the node container in lando.
   npm-stop:
     cmd:
-      - node: kill $(ps aux | grep 'npm' | awk '{print $2}')
-
+      - node: kill $(ps aux | grep 'npm\|node' | awk '{print $2}')
   composer:
     dir: /app/drupal
 

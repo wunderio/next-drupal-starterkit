@@ -1,5 +1,5 @@
-id: paragraphs_page_formatted_text
-label: Pageage paragraphs formatted_text
+id: paragraphs_pages_formatted_text
+label: Page paragraphs formatted_text
 migration_group: demo_content
 source:
   plugin: csv

@@ -1,5 +1,5 @@
 id: nodes_pages
-label: Pageage nodes
+label: Page nodes
 migration_group: demo_content
 source:
   plugin: csv
@@ -29,22 +29,27 @@ process:
   # Paragraphs.
   paragraph_formatted_text:
     - plugin: migration_lookup
-      migration: paragraphs_page_formatted_text
+      migration: paragraphs_pages_formatted_text
       source: id
     - plugin: null_as_array
   paragraph_links:
     - plugin: migration_lookup
-      migration: paragraphs_page_links
+      migration: paragraphs_pages_links
       source: id
     - plugin: null_as_array
   paragraph_images:
     - plugin: migration_lookup
-      migration: paragraphs_page_image
+      migration: paragraphs_pages_image
       source: id
     - plugin: null_as_array
   paragraph_video:
     - plugin: migration_lookup
-      migration: paragraphs_page_video
+      migration: paragraphs_pages_video
+      source: id
+    - plugin: null_as_array
+  paragraph_accordion:
+    - plugin: migration_lookup
+      migration: paragraphs_pages_accordion
       source: id
     - plugin: null_as_array
 
@@ -55,6 +60,7 @@ process:
       - '@paragraph_links'
       - '@paragraph_images'
       - '@paragraph_video'
+      - '@paragraph_accordion'
     process:
       target_id:
         -
@@ -74,7 +80,8 @@ destination:
 
 migration_dependencies:
   required:
-    - paragraphs_page_formatted_text
-    - paragraphs_page_links
-    - paragraphs_page_image
-    - paragraphs_page_video
+    - paragraphs_pages_formatted_text
+    - paragraphs_pages_links
+    - paragraphs_pages_image
+    - paragraphs_pages_video
+    - paragraphs_pages_accordion

@@ -1,5 +1,5 @@
 id: nodes_pages_media_images
-label: Pageage images (media entities)
+label: Page images (media entities)
 migration_group: demo_content
 source:
   plugin: csv

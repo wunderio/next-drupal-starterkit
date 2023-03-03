@@ -4,6 +4,8 @@ import { ParagraphText } from "@/components/paragraph--text";
 import { ParagraphVideo } from "@/components/paragraph--video";
 import { Paragraph } from "@/lib/zod/paragraph";
 
+import { ParagraphAccordion } from "./paragraph--accordion";
+
 export function Paragraph({ paragraph, ...props }: { paragraph: Paragraph }) {
   if (!paragraph) {
     return null;
@@ -18,6 +20,8 @@ export function Paragraph({ paragraph, ...props }: { paragraph: Paragraph }) {
       return <ParagraphVideo paragraph={paragraph} {...props} />;
     case "paragraph--links":
       return <ParagraphLinks paragraph={paragraph} {...props} />;
+    case "paragraph--accordion":
+      return <ParagraphAccordion paragraph={paragraph} {...props} />;
     default:
       return null;
   }

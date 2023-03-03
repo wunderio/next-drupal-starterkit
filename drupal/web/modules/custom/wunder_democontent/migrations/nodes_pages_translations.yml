@@ -1,5 +1,5 @@
 id: nodes_pages_translations
-label: Pageages translations
+label: Pages translations
 migration_group: demo_content
 source:
   plugin: csv
@@ -37,5 +37,3 @@ destination:
 migration_dependencies:
   required:
     - nodes_pages
-    - paragraphs_page_formatted_text_translations
-    - paragraphs_page_links_translations

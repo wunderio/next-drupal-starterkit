@@ -1,0 +1,21 @@
+uuid: 64ba8cf9-9dd5-403b-898d-a9988c773134
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_heading
+    - paragraphs.paragraphs_type.accordion
+_core:
+  default_config_hash: iBTBfMZOTVwreYa_5KO_BQh4BwRn-6dGptQ0osZNIWw
+id: paragraph.accordion.field_heading
+field_name: field_heading
+entity_type: paragraph
+bundle: accordion
+label: Heading
+description: 'Heading for the whole accordion'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

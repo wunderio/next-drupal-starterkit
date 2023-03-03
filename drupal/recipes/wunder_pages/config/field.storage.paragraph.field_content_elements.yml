@@ -1,16 +1,13 @@
-uuid: 0a86c604-6827-4896-8680-a2fc7919f942
+uuid: c753530b-4be8-446b-9724-ffb665bfc2dd
 langcode: en
 status: true
 dependencies:
   module:
     - entity_reference_revisions
-    - node
     - paragraphs
-_core:
-  default_config_hash: U09rTtwKK4i4pcDXDHgLZ4jFs8WEx8raG0I-5qjDuzo
-id: node.field_content_elements
+id: paragraph.field_content_elements
 field_name: field_content_elements
-entity_type: node
+entity_type: paragraph
 type: entity_reference_revisions
 settings:
   target_type: paragraph

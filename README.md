@@ -122,6 +122,10 @@ The indexing in elasticsearch takes into consideration the language of the conte
 The Drupal setup includes the popular [Webform](https://www.drupal.org/project/webform) module. The frontpage on the frontend displays a form that will post data back to drupal's webform, with basic validation and a feedback message.
 We decided to implement a static form, in the sense that the "hardcoded" fields in the frontend need to match the fields in the webform in the backend. Creating a dynamic system of forms that automatically match what's coming from the user-defined webforms in Drupal is out of scope for this template.
 
+### Drupal Paragraphs (including nested paragraphs)
+
+The `frontpage` and `page` content types are configured to use the popular [Paragraphs drupal module](https://www.drupal.org/project/paragraphs). The setup includes basic paragraph types to add images, videos, text, and also a nested paragraph type to demonstrate how to handle this in backend and frontend.
+
 ### Typescript
 
 The frontend uses [TypeScript](https://www.typescriptlang.org) to provide type safety.

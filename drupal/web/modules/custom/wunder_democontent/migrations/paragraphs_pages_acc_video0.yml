@@ -1,5 +1,5 @@
-id: paragraphs_pages_video
-label: Page paragraphs video
+id: paragraphs_pages_acc_video0
+label: Page paragraphs video inside accordion
 migration_group: demo_content
 source:
   plugin: csv

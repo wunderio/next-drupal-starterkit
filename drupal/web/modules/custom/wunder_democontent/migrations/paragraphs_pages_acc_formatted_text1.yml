@@ -1,5 +1,5 @@
-id: paragraphs_pages_video
-label: Page paragraphs video
+id: paragraphs_pages_acc_formatted_text1
+label: Page accordion paragraphs formatted_text for accordion item 1
 migration_group: demo_content
 source:
   plugin: csv
@@ -19,21 +19,17 @@ process:
       source: 'Is source'
     - plugin: skip_on_empty
       method: row
-      source: Paragraphs_0_video
-      message: Skipped because node has no video
-  'field_video/target_id':
-    plugin: migration_lookup
-    source: id
-    migration: nodes_pages_media_remote_video
+      source: Paragraphs_0_accordion_title
+      message: Skipped because node has no accordion
+  'field_formatted_text/format':
+    plugin: default_value
+    default_value: basic_html
+  'field_formatted_text/value': Paragraphs_1_accordion_item_text
   status: constants/status
   uid: constants/uid
   langcode: Langcode
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
-  default_bundle: video
-
-migration_dependencies:
-  required:
-    - nodes_pages_media_remote_video
+  default_bundle: formatted_text
 

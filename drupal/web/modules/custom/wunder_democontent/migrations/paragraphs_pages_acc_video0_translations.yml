@@ -1,5 +1,5 @@
-id: paragraphs_pages_video
-label: Page paragraphs video
+id: paragraphs_pages_acc_video0_translations
+label: Page paragraphs video inside accordion
 migration_group: demo_content
 source:
   plugin: csv
@@ -9,13 +9,13 @@ source:
     uid: 1
     status: 1
 process:
-  # We are interested here only in nodes that are not translations:
+  # We are interested here only in rows that are translations:
   skipped:
     - plugin: skip_on_value
       method: row
       not_equals: true
       value:
-        - 1
+        - 0
       source: 'Is source'
     - plugin: skip_on_empty
       method: row
@@ -29,11 +29,32 @@ process:
   uid: constants/uid
   langcode: Langcode
 
+  pseudo_paragraph_field:
+    plugin: migration_lookup
+    migration: paragraphs_pages_video
+    source: Tnid
+  id:
+    plugin: extract
+    source: '@pseudo_paragraph_field'
+    index:
+      - '0'
+  revision_id:
+    plugin: extract
+    source: '@pseudo_paragraph_field'
+    index:
+      - '1'
+  skip_if_no_source:
+    plugin: skip_on_empty
+    method: row
+    source: '@id'
+    message: 'Source paragraph was not found, so this translation was skipped.'
+
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: video
+  translations: true
 
 migration_dependencies:
   required:
-    - nodes_pages_media_remote_video
+    - paragraphs_pages_acc_video0
 
