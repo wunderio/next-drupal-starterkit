@@ -29,7 +29,7 @@ export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
                 />
               </AccordionUI.Trigger>
             </AccordionUI.Header>
-            <AccordionUI.Content className="border border-t-0 border-finnishwinter bg-white p-6 text-md">
+            <AccordionUI.Content className="rounded-b border border-t-0 border-finnishwinter bg-white p-6 text-md">
               {item.field_content_elements?.map((paragraph) => (
                 <Paragraph key={paragraph.id} paragraph={paragraph} />
               ))}
