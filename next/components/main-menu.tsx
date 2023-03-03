@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
-import HamburgerIcon from "@/styles/icons/hamburger.svg";
+import MenuIcon from "@/styles/icons/menu.svg";
 import { DrupalMenuLinkContentWithLangcode } from "@/types";
 
 interface NavigationProps {
@@ -13,7 +13,7 @@ export function MainMenu({ items }: NavigationProps) {
   // todo: implement
   return (
     <button onClick={() => console.log("Toggle menu", { items })}>
-      <HamburgerIcon className="inline h-6 w-6" />
+      <MenuIcon className="inline h-6 w-6" />
     </button>
   );
 }

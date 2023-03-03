@@ -2,7 +2,7 @@ import * as AccordionUI from "@radix-ui/react-accordion";
 
 import { Paragraph } from "@/components/paragraph";
 import { Accordion } from "@/lib/zod/paragraph";
-import ChevronIcon from "@/styles/icons/chevron.svg";
+import ChevronIcon from "@/styles/icons/chevron-down.svg";
 
 export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
   return (

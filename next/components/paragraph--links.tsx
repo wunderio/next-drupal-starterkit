@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { Links } from "@/lib/zod/paragraph";
-import ArrowIcon from "@/styles/icons/arrow.svg";
+import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
 export function ParagraphLinks({ paragraph }: { paragraph: Links }) {
   if (!paragraph.field_links?.length) return null;
