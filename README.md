@@ -56,6 +56,7 @@ You can then visit the site at https://frontend.lndo.site/.
 All Drupal code and configuration is in the `drupal` directory.
 All needed module dependencies have been added to the `composer.json` file.
 Part of the setup process is automated using [Drupal recipes](https://www.drupal.org/project/distributions_recipes).
+You will need to have a recent installation of [Lando](https://lando.dev/) running on your development machine. 
 
 Follow these steps to get started:
 
