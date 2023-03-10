@@ -1,4 +1,4 @@
-id: menuitems_pages_translations
+id: menuitems_pages_translations_level_1
 label: Menu items connected to translated pages
 migration_group: demo_content
 source:
@@ -7,6 +7,7 @@ source:
   ids: [ id ]
   constants:
     slash: 'entity:node/'
+    url: '/node/'
 process:
   nodeId:
     -
@@ -30,7 +31,7 @@ process:
       method: row
       not_equals: true
       value:
-        - 0
+        - 1
       source: Menu_level
   path/pathauto:
     plugin: default_value
@@ -60,6 +61,32 @@ process:
   enabled:
     plugin: default_value
     default_value: 1
+  parent_plid:
+    plugin: migration_lookup
+    migration: menuitems_pages
+    source:
+      - Menu_parent
+
+  parent_nodeid:
+    plugin: migration_lookup
+    migration: nodes_pages
+    source:
+      - Menu_parent
+
+  parent_path:
+    - plugin: concat
+      source:
+        - constants/url
+        - '@parent_nodeid'
+
+  parent:
+    plugin: menu_link_parent
+    source:
+      - '@parent_plid'
+      - Menu_name
+      - '@parent_path'
+
+
 destination:
   plugin: 'entity:menu_link_content'
   translations: true
@@ -67,4 +94,4 @@ destination:
 migration_dependencies:
   required:
     - nodes_pages_translations
-    - menuitems_pages
+    - menuitems_pages_level_1
