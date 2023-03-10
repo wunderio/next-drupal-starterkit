@@ -38,6 +38,10 @@ process:
   title: Title
   langcode: Langcode
   menu_name: Menu_name
+  id:
+    plugin: migration_lookup
+    source: Tnid
+    migration: menuitems_pages
   'link/uri':
     - plugin: concat
       source:
