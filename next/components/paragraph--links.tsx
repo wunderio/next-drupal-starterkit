@@ -7,7 +7,7 @@ export function ParagraphLinks({ paragraph }: { paragraph: Links }) {
   if (!paragraph.field_links?.length) return null;
 
   return (
-    <ul className="my-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {paragraph.field_links.map((link, index) => (
         <Link
           key={index}
