@@ -11,7 +11,7 @@ export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
       <h2 className="mb-4 text-heading-sm font-bold md:text-heading-md">
         {paragraph.field_heading}
       </h2>
-      <AccordionUI.Root type="single" collapsible className="grid gap-2">
+      <AccordionUI.Root type="single" collapsible className="grid gap-4">
         {paragraph.field_accordion_items?.map((item) => (
           <AccordionUI.Item key={item.id} value={item.id}>
             <AccordionUI.Header>
@@ -30,9 +30,11 @@ export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
               </AccordionUI.Trigger>
             </AccordionUI.Header>
             <AccordionUI.Content className="rounded-b border border-t-0 border-finnishwinter bg-white p-6 text-md">
-              {item.field_content_elements?.map((paragraph) => (
-                <Paragraph key={paragraph.id} paragraph={paragraph} />
-              ))}
+              <div className="grid gap-4">
+                {item.field_content_elements?.map((paragraph) => (
+                  <Paragraph key={paragraph.id} paragraph={paragraph} />
+                ))}
+              </div>
             </AccordionUI.Content>
           </AccordionUI.Item>
         ))}
