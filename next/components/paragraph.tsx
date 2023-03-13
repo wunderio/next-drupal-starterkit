@@ -6,22 +6,22 @@ import { Paragraph } from "@/lib/zod/paragraph";
 
 import { ParagraphAccordion } from "./paragraph--accordion";
 
-export function Paragraph({ paragraph, ...props }: { paragraph: Paragraph }) {
+export function Paragraph({ paragraph }: { paragraph: Paragraph }) {
   if (!paragraph) {
     return null;
   }
 
   switch (paragraph.type) {
     case "paragraph--formatted_text":
-      return <ParagraphText paragraph={paragraph} {...props} />;
+      return <ParagraphText paragraph={paragraph} />;
     case "paragraph--image":
-      return <ParagraphImage paragraph={paragraph} {...props} />;
+      return <ParagraphImage paragraph={paragraph} />;
     case "paragraph--video":
-      return <ParagraphVideo paragraph={paragraph} {...props} />;
+      return <ParagraphVideo paragraph={paragraph} />;
     case "paragraph--links":
-      return <ParagraphLinks paragraph={paragraph} {...props} />;
+      return <ParagraphLinks paragraph={paragraph} />;
     case "paragraph--accordion":
-      return <ParagraphAccordion paragraph={paragraph} {...props} />;
+      return <ParagraphAccordion paragraph={paragraph} />;
     default:
       return null;
   }
