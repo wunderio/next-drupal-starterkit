@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 
 import { useLanguageLinks } from "@/lib/contexts/language-links-context";
-import GlobeIcon from "@/styles/icons/globe.svg";
+import LanguageIcon from "@/styles/icons/language.svg";
 
 export function LanguageSwitcher() {
   const languageLinks = useLanguageLinks();
@@ -20,9 +20,11 @@ export function LanguageSwitcher() {
 
   return (
     <nav>
-      <button type="button" className="hover:underline" onClick={toggle}>
-        <span>{languageLinks[locale].name}</span>
-        <GlobeIcon className="ml-2 hidden h-6 w-6 sm:inline-block" />
+      <button type="button" className="group" onClick={toggle}>
+        <span className="inline-block group-hover:underline">
+          {languageLinks[locale].name}
+        </span>
+        <LanguageIcon className="ml-2 hidden h-6 w-6 sm:inline-block" />
       </button>
       <ul
         className={clsx(

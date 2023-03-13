@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import clsx from "clsx";
 
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingPage } from "@/components/heading--page";
@@ -13,8 +14,11 @@ export function ParagraphText({ paragraph }: { paragraph: FormattedTextType }) {
     <>
       {paragraph.field_heading && <Heading>{paragraph.field_heading}</Heading>}
       <FormattedText
-        className="my-8 text-justify text-md leading-xl text-gray-500 sm:text-lg"
         html={paragraph.field_formatted_text.processed}
+        className={clsx(
+          "text-justify text-md leading-xl text-gray-500 sm:text-lg",
+          paragraph.field_heading && "mt-4"
+        )}
       />
     </>
   );

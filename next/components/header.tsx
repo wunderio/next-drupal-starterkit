@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { MainMenu } from "@/components/main-menu";
-import MagnifierIcon from "@/styles/icons/magnifier.svg";
+import SearchIcon from "@/styles/icons/search.svg";
 import WunderIcon from "@/styles/icons/wunder.svg";
 import { DrupalMenuLinkContentWithLangcode } from "@/types";
 
@@ -44,7 +44,7 @@ function SearchLink() {
   return (
     <Link href="/search" locale={locale} className="hover:underline">
       <span className="hidden sm:mr-2 sm:inline">{t("search")}</span>
-      <MagnifierIcon className="inline-block h-6 w-6" />
+      <SearchIcon className="inline-block h-6 w-6" />
     </Link>
   );
 }
