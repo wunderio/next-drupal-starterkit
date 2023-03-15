@@ -28,7 +28,7 @@ export function LanguageSwitcher() {
       </button>
       <ul
         className={clsx(
-          "absolute mt-1 w-fit border bg-white",
+          "absolute z-50 mt-1 w-fit border bg-white",
           !isOpen && "hidden"
         )}
       >

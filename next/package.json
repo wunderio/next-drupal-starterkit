@@ -19,6 +19,7 @@
     "@elastic/search-ui": "^1.19.1",
     "@next/font": "^13.1.6",
     "@radix-ui/react-accordion": "^1.1.0",
+    "@radix-ui/react-navigation-menu": "^1.1.2",
     "clsx": "^1.2.1",
     "drupal-jsonapi-params": "^2.2.0",
     "html-react-parser": "^3.0.8",
