@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { DrupalMenuLinkContentWithLangcode } from "@/types";
+import { Menu } from "@/lib/zod/menu";
+
 interface FooterProps {
-  links: DrupalMenuLinkContentWithLangcode[];
+  menu: Menu;
 }
 
-export function Footer({ links }: FooterProps) {
+export function Footer({ menu }: FooterProps) {
   // Only show the menu items that match the current locale:
   const { locale } = useRouter();
-  const filteredItems = links.filter((link) => link.langcode == locale);
+  const filteredItems = menu.filter((link) => link.langcode == locale);
   return (
     <footer className="border-t">
       <div className="mx-auto max-w-6xl px-6">

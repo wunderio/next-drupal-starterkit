@@ -1,5 +1,7 @@
 {
   "homepage-link": "Homepage",
+  "menu-toggle": "Toggle menu",
+  "menu-back": "Back",
   "latest-articles": "Latest articles",
   "no-content-found": "No content found",
   "posted-by": "Author: {{author}}",

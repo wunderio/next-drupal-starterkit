@@ -1,5 +1,5 @@
-id: menuitems_pages
-label: Menu items connected to pages
+id: menuitems_pages_level_2
+label: Menu items connected to pages level 2
 migration_group: demo_content
 source:
   plugin: csv
@@ -7,6 +7,7 @@ source:
   ids: [ id ]
   constants:
     slash: 'entity:node/'
+    url: '/node/'
 process:
   nodeId:
     plugin: migration_lookup
@@ -25,7 +26,7 @@ process:
       method: row
       not_equals: true
       value:
-        - 0
+        - 2
       source: Menu_level
   path/pathauto:
     plugin: default_value
@@ -51,14 +52,42 @@ process:
     default_value: 0
   expanded:
     plugin: default_value
-    default_value: 1
+    default_value: 0
   enabled:
     plugin: default_value
     default_value: 1
+
+  parent_plid:
+    plugin: migration_lookup
+    migration: menuitems_pages_level_1
+    source:
+      - Menu_parent
+
+  parent_nodeid:
+    plugin: migration_lookup
+    migration: nodes_pages
+    source:
+      - Menu_parent
+
+  parent_path:
+    - plugin: concat
+      source:
+        - constants/url
+        - '@parent_nodeid'
+
+  parent:
+    plugin: menu_link_parent
+    source:
+      - '@parent_plid'
+      - Menu_name
+      - '@parent_path'
+
 destination:
   plugin: 'entity:menu_link_content'
   no_stub: true
 
 migration_dependencies:
   required:
+    - menuitems_pages
     - nodes_pages
+    - menuitems_pages_level_1

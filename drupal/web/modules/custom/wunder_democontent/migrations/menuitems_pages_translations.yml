@@ -20,21 +20,28 @@ process:
         - 0
   # We are interested here only in nodes that are translations:
   skipped:
-    plugin: skip_on_value
-    method: row
-    not_equals: true
-    value:
-      - 0
-    source: 'Is source'
-    message: Skipped because node is not source
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 0
+      source: 'Is source'
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 0
+      source: Menu_level
   path/pathauto:
     plugin: default_value
     default_value: 0 # Disable pathauto
   title: Title
   langcode: Langcode
-  menu_name:
-    - plugin: default_value
-      default_value: 'footer'
+  menu_name: Menu_name
+  id:
+    plugin: migration_lookup
+    source: Tnid
+    migration: menuitems_pages
   'link/uri':
     - plugin: concat
       source:
@@ -53,7 +60,7 @@ process:
     default_value: 0
   expanded:
     plugin: default_value
-    default_value: 0
+    default_value: 1
   enabled:
     plugin: default_value
     default_value: 1
@@ -64,3 +71,4 @@ destination:
 migration_dependencies:
   required:
     - nodes_pages_translations
+    - menuitems_pages

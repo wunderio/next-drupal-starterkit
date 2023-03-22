@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 import { useLanguageLinks } from "@/lib/contexts/language-links-context";
+import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import LanguageIcon from "@/styles/icons/language.svg";
 
 export function LanguageSwitcher() {
@@ -14,9 +15,12 @@ export function LanguageSwitcher() {
   const toggle = () => setIsOpen((o) => !o);
   const close = () => setIsOpen(false);
 
+  // Close on locale change
   useEffect(close, [locale]);
 
-  // todo: close on click outside
+  // Close on click outside
+  const listRef = useRef<HTMLUListElement>(null);
+  useOnClickOutside(listRef, close, "mousedown");
 
   return (
     <nav>
@@ -27,8 +31,9 @@ export function LanguageSwitcher() {
         <LanguageIcon className="ml-2 hidden h-6 w-6 sm:inline-block" />
       </button>
       <ul
+        ref={listRef}
         className={clsx(
-          "absolute mt-1 w-fit border bg-white",
+          "absolute z-50 mt-1 w-fit border bg-white",
           !isOpen && "hidden"
         )}
       >

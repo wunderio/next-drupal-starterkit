@@ -1,6 +1,8 @@
 import { GetStaticPropsContext } from "next";
 
 import { drupal } from "@/lib/drupal";
+import { validateAndCleanupMenu } from "@/lib/zod/menu";
+import { DrupalMenuLinkContentWithLangcode } from "@/types";
 
 export async function getMenus({
   locale,
@@ -8,7 +10,7 @@ export async function getMenus({
 }: GetStaticPropsContext) {
   const [{ tree: main }, { tree: footer }] = await Promise.all(
     ["main", "footer"].map((menu) =>
-      drupal.getMenu(menu, {
+      drupal.getMenu<DrupalMenuLinkContentWithLangcode>(menu, {
         locale,
         defaultLocale,
       })
@@ -16,7 +18,7 @@ export async function getMenus({
   );
 
   return {
-    main,
-    footer,
+    main: validateAndCleanupMenu(main),
+    footer: validateAndCleanupMenu(footer),
   };
 }
