@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "preview": "next build && next start",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

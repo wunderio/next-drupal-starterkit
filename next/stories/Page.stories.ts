@@ -21,9 +21,11 @@ export const LoggedOut: Story = {};
 export const LoggedIn: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    /* eslint-disable @typescript-eslint/await-thenable */
     const loginButton = await canvas.getByRole("button", {
       name: /Log in/i,
     });
     await userEvent.click(loginButton);
+    /* eslint-enable @typescript-eslint/await-thenable */
   },
 };

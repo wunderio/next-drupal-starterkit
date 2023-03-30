@@ -52,7 +52,10 @@ export function ContactForm() {
         </div>
       )}
       {!isSubmitted && (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+        <form
+          onSubmit={void handleSubmit(onSubmit)}
+          className="flex flex-col gap-5"
+        >
           <h2 className="text-heading-sm font-bold md:text-heading-md">
             {t("form-title")}
           </h2>
