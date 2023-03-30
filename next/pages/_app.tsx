@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 
 import { AppProps } from "next/app";
+import { Inter, Overpass } from "next/font/google";
 import { appWithTranslation } from "next-i18next";
-import { Inter, Overpass } from "@next/font/google";
 import clsx from "clsx";
 
 import { Layout } from "@/components/layout";

@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "preview": "next build && next start",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -17,7 +17,6 @@
     "@elastic/react-search-ui": "^1.19.1",
     "@elastic/react-search-ui-views": "^1.19.1",
     "@elastic/search-ui": "^1.19.1",
-    "@next/font": "^13.2.4",
     "@radix-ui/react-accordion": "^1.1.1",
     "@radix-ui/react-navigation-menu": "^1.1.2",
     "clsx": "^1.2.1",
