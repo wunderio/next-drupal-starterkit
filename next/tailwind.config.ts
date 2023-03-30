@@ -1,7 +1,7 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
+import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
-/** @type {import("tailwindcss").Config} */
-module.exports = {
+const config = {
   content: [
     "./components/**/*.{tsx,ts,css}",
     "./pages/**/*.{tsx,ts,css}",
@@ -70,4 +70,6 @@ module.exports = {
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/typography"),
   ],
-};
+} satisfies Config;
+
+export default config;
