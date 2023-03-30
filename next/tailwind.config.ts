@@ -59,6 +59,7 @@ const config = {
           700: "#5b37bf", // This is the official Wunder purple
           800: "#4e33a0",
           900: "#42307f",
+          950: "#170e30",
         },
       },
     },

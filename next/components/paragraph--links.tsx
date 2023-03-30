@@ -13,7 +13,7 @@ export function ParagraphLinks({ paragraph }: { paragraph: Links }) {
           key={index}
           role="listitem"
           href={link.full_url}
-          className="relative min-h-[6em] cursor-pointer rounded border border-finnishwinter bg-wunderpurple-100 p-8 text-lg text-black hover:bg-wunderpurple-200"
+          className="relative min-h-[6em] cursor-pointer rounded border border-finnishwinter bg-wunderpurple-100 p-8 text-lg text-wunderpurple-950 hover:bg-wunderpurple-200"
         >
           {link.title}
           <ArrowIcon

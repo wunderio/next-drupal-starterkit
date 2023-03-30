@@ -15,7 +15,7 @@ export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
         {paragraph.field_accordion_items?.map((item) => (
           <AccordionUI.Item key={item.id} value={item.id}>
             <AccordionUI.Header>
-              <AccordionUI.Trigger className="group flex w-full flex-row items-center justify-between gap-1 rounded border border-finnishwinter bg-white p-6 text-md text-black aria-expanded:rounded-b-none aria-expanded:bg-mischka md:gap-1.5 md:text-lg">
+              <AccordionUI.Trigger className="group flex w-full flex-row items-center justify-between gap-1 rounded border border-finnishwinter bg-white p-6 text-md text-wunderpurple-950 aria-expanded:rounded-b-none aria-expanded:bg-mischka md:gap-1.5 md:text-lg">
                 <ListIcon
                   aria-hidden
                   className="shrink-0 text-wunderpurple-600"
