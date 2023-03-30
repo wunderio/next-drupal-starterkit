@@ -23,7 +23,7 @@ export const SearchBoxInput: React.ComponentType<InputViewProps> = ({
       />
       <button
         {...getButtonProps()}
-        className="absolute right-2.5 bottom-2.5 rounded-md bg-wunderpurple-700 px-4 py-2 text-sm text-white hover:bg-wunderpurple-800 focus:outline-none focus:ring-4 focus:ring-wunderpurple-300"
+        className="absolute bottom-2.5 right-2.5 rounded-md bg-wunderpurple-700 px-4 py-2 text-sm text-white hover:bg-wunderpurple-800 focus:outline-none focus:ring-4 focus:ring-wunderpurple-300"
       >
         {t("search-button-text")}
       </button>

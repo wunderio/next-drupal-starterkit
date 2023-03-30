@@ -44,7 +44,7 @@ export function ContactForm() {
             {t("form-thank-you-message")}
           </p>
           <button
-            className="rounded bg-wunderpurple-500 py-2 px-4 font-bold text-white hover:bg-wunderpurple-700"
+            className="rounded bg-wunderpurple-500 px-4 py-2 font-bold text-white hover:bg-wunderpurple-700"
             onClick={() => reset()}
           >
             {t("form-send-another-message")}
@@ -62,7 +62,7 @@ export function ContactForm() {
               {t("form-label-name")}
             </label>
             <input
-              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 shadow"
               type="text"
               id="name"
               {...register("name", {
@@ -75,7 +75,7 @@ export function ContactForm() {
               {t("form-label-email")}
             </label>
             <input
-              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 shadow"
               type="email"
               id="email"
               {...register("email", {
@@ -88,7 +88,7 @@ export function ContactForm() {
               {t("form-label-subject")}
             </label>
             <input
-              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 shadow"
               type="text"
               id="subject"
               {...register("subject", {
@@ -101,7 +101,7 @@ export function ContactForm() {
               {t("form-label-message")}
             </label>
             <textarea
-              className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 shadow"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 shadow"
               id="message"
               {...register("message", {
                 required: true,
@@ -110,7 +110,7 @@ export function ContactForm() {
           </div>
 
           <button
-            className="focus:shadow-outline rounded bg-wunderpurple-500 py-2 px-4 font-bold text-white hover:bg-wunderpurple-700"
+            className="focus:shadow-outline rounded bg-wunderpurple-500 px-4 py-2 font-bold text-white hover:bg-wunderpurple-700"
             type="submit"
           >
             {t("form-submit")}

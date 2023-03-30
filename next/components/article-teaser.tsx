@@ -15,10 +15,10 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
   const date = formatDate(article.created);
   return (
     <div className="relative h-full rounded border bg-white p-4 transition-all hover:shadow-md">
-      <h3 className="mb-2 text-heading-xs font-bold line-clamp-2">
+      <h3 className="mb-2 line-clamp-2 text-heading-xs font-bold">
         {article.title}
       </h3>
-      <div className="mb-4 text-md text-gray-700 line-clamp-2">
+      <div className="mb-4 line-clamp-2 text-md text-gray-700">
         {author && <>{t("posted-by", { author })} - </>}
         {date}
       </div>
