@@ -18,7 +18,7 @@ export function ParagraphLinks({ paragraph }: { paragraph: Links }) {
           {link.title}
           <ArrowIcon
             aria-hidden
-            className="absolute top-1/4 right-2 h-6 w-6 -rotate-90 text-wunderpurple-600"
+            className="absolute right-2 top-1/4 h-6 w-6 -rotate-90 text-wunderpurple-600"
           />
         </Link>
       ))}

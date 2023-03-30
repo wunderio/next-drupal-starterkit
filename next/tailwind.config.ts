@@ -1,7 +1,7 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
+import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
-/** @type {import("tailwindcss").Config} */
-module.exports = {
+const config = {
   content: [
     "./components/**/*.{tsx,ts,css}",
     "./pages/**/*.{tsx,ts,css}",
@@ -10,8 +10,8 @@ module.exports = {
   theme: {
     // These properties *replace* the defaults:
     fontFamily: {
-      inter: ["var(--font-inter)", ...fontFamily.sans],
-      overpass: ["var(--font-overpass)", ...fontFamily.sans],
+      inter: ["--font-inter", ...fontFamily.sans],
+      overpass: ["--font-overpass", ...fontFamily.sans],
     },
     fontSize: {
       xs: ["0.60rem", { lineHeight: "1.5" }],
@@ -68,7 +68,8 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/aspect-ratio"),
-    require("@tailwindcss/line-clamp"),
     require("@tailwindcss/typography"),
   ],
-};
+} satisfies Config;
+
+export default config;

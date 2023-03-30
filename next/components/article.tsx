@@ -45,7 +45,7 @@ export function Article({ article, ...props }: ArticleProps) {
       )}
       {article.body?.processed && (
         <FormattedText
-          className="mt-4 text-md leading-xl text-gray-500 sm:text-lg"
+          className="text-md/xl mt-4 text-gray-500 sm:text-lg"
           html={article.body?.processed}
         />
       )}
