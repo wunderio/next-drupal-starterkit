@@ -1,6 +1,7 @@
 {
   "name": "next4-drupal-template-by-wunder",
   "version": "0.1.0",
+  "description": "Next-drupal template by Wunder",
   "private": true,
   "license": "MIT",
   "scripts": {
