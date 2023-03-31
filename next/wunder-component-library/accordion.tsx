@@ -21,15 +21,12 @@ export function Accordion({ heading, items }: AccordionProps) {
         {items?.map((item) => (
           <AccordionUI.Item key={item.id} value={item.id}>
             <AccordionUI.Header>
-              <AccordionUI.Trigger className="group flex w-full flex-row items-center justify-between gap-1 rounded border border-finnishwinter bg-white p-6 text-md text-wunderpurple-950 aria-expanded:rounded-b-none aria-expanded:bg-mischka md:gap-1.5 md:text-lg">
-                <ListIcon
-                  aria-hidden
-                  className="shrink-0 text-wunderpurple-600"
-                />
+              <AccordionUI.Trigger className="group flex w-full flex-row items-center justify-between gap-1 rounded border border-finnishwinter bg-white p-6 text-md text-steelgray aria-expanded:rounded-b-none aria-expanded:bg-mischka md:gap-1.5 md:text-lg">
+                <ListIcon aria-hidden className="shrink-0 text-primary-600" />
                 <span className="mx-5 grow text-left">{item.heading}</span>
                 <ChevronIcon
                   aria-hidden
-                  className="shrink-0 text-wunderpurple-600 group-aria-expanded:rotate-180"
+                  className="shrink-0 text-primary-600 group-aria-expanded:rotate-180"
                 />
               </AccordionUI.Trigger>
             </AccordionUI.Header>

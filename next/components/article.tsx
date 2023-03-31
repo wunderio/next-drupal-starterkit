@@ -18,7 +18,7 @@ export function Article({ article, ...props }: ArticleProps) {
       {article.field_excerpt && (
         <div className="my-4 text-xl">{article.field_excerpt}</div>
       )}
-      <div className="mb-4 text-gray-600">
+      <div className="mb-4 text-scapaflow">
         {article.uid?.display_name && (
           <span>
             {t("posted-by", { author: article.uid?.display_name })} -{" "}
@@ -37,7 +37,7 @@ export function Article({ article, ...props }: ArticleProps) {
             priority
           />
           {article.field_image.resourceIdObjMeta.title && (
-            <figcaption className="py-2 text-center text-sm text-gray-600">
+            <figcaption className="py-2 text-center text-sm text-scapaflow">
               {article.field_image.resourceIdObjMeta.title}
             </figcaption>
           )}
@@ -45,7 +45,7 @@ export function Article({ article, ...props }: ArticleProps) {
       )}
       {article.body?.processed && (
         <FormattedText
-          className="mt-4 text-md/xl text-gray-500 sm:text-lg"
+          className="mt-4 text-md/xl text-scapaflow sm:text-lg"
           html={article.body?.processed}
         />
       )}

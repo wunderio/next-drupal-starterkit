@@ -46,7 +46,7 @@ export const MenuRoot = forwardRef(
         ref={ref}
         {...props}
         className={clsx(
-          "absolute inset-0 z-40 overflow-y-auto lg:bottom-auto lg:min-h-[75vh]",
+          "absolute inset-0 z-40 overflow-y-auto border-finnishwinter lg:bottom-auto lg:min-h-[75vh]",
           isOpen && "border-t bg-white lg:border",
           isOpen &&
             "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r"
@@ -79,7 +79,7 @@ export function MenuList({ children, level }) {
       className={clsx(
         "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r border-white bg-white lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
         level === 0 &&
-          "z-10 h-full lg:left-0 lg:z-auto lg:border-wunderpurple-700 lg:bg-wunderpurple-700",
+          "z-10 h-full lg:left-0 lg:z-auto lg:border-primary-600 lg:bg-primary-600",
         level === 1 && "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto",
         level === 2 && "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto"
       )}
@@ -97,7 +97,7 @@ export function MenuListTitle({
   children: ReactNode;
 }) {
   return (
-    <h2 className="border-b p-6 pt-0 text-heading-xs font-bold text-steelgray hover:underline lg:hidden">
+    <h2 className="border-b border-finnishwinter p-6 pt-0 text-heading-xs font-bold text-steelgray hover:underline lg:hidden">
       <MenuLink href={href} isTitle={true}>
         {children}
       </MenuLink>
@@ -130,8 +130,8 @@ export function MenuItem({
   return (
     <NavigationMenu.Item
       className={clsx(
-        "flex items-stretch border-b bg-white font-bold tracking-widest text-wunderpurple-700 underline-offset-4 lg:border-b-0",
-        isTopLevel && " lg:bg-wunderpurple-700 lg:text-mischka"
+        "flex items-stretch border-b border-finnishwinter bg-white font-bold tracking-widest text-primary-600 underline-offset-4 lg:border-b-0",
+        isTopLevel && " lg:bg-primary-600 lg:text-mischka"
       )}
       value={value}
     >
@@ -159,10 +159,10 @@ export function MenuLink({
       active={isActive}
       className={clsx(
         !isTitle &&
-          "aria-current:underline block h-full grow p-6 outline-4 -outline-offset-[5px] outline-wunderpurple-700 hover:underline focus-visible:outline data-[active]:underline",
+          "aria-current:underline block h-full grow p-6 outline-4 -outline-offset-[5px] outline-primary-600 hover:underline focus-visible:outline data-[active]:underline",
         isTopLevel
-          ? "outline-wunderpurple-700 focus-visible:outline-wunderpurple-700 lg:hover:outline-white lg:focus-visible:outline-white lg:aria-expanded:bg-white lg:aria-expanded:text-wunderpurple-700 lg:aria-expanded:outline-white"
-          : "outline-white hover:outline-wunderpurple-700 focus-visible:outline-wunderpurple-700 aria-expanded:outline-wunderpurple-700 aria-expanded:lg:bg-wunderpurple-700 aria-expanded:lg:text-white"
+          ? "outline-primary-600 focus-visible:outline-primary-600 lg:hover:outline-white lg:focus-visible:outline-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600 lg:aria-expanded:outline-white"
+          : "outline-white hover:outline-primary-600 focus-visible:outline-primary-600 aria-expanded:outline-primary-600 aria-expanded:lg:bg-primary-600 aria-expanded:lg:text-white"
       )}
     >
       <NextLink href={href}>{children}</NextLink>
@@ -177,8 +177,8 @@ export function MenuTrigger({ isTopLevel }: { isTopLevel?: boolean }) {
       className={clsx(
         "flex w-20 shrink-0 items-center justify-center outline-[3px] -outline-offset-2 hover:outline lg:border-none lg:outline",
         isTopLevel
-          ? "outline-wunderpurple-700 focus-visible:outline-wunderpurple-700 lg:hover:outline-white lg:focus-visible:outline-white lg:aria-expanded:bg-white lg:aria-expanded:text-wunderpurple-700 lg:aria-expanded:outline-white"
-          : "outline-white hover:outline-wunderpurple-700 focus-visible:outline-wunderpurple-700 aria-expanded:outline-wunderpurple-700 aria-expanded:lg:bg-wunderpurple-700 aria-expanded:lg:text-white"
+          ? "outline-primary-600 focus-visible:outline-primary-600 lg:hover:outline-white lg:focus-visible:outline-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600 lg:aria-expanded:outline-white"
+          : "outline-white hover:outline-primary-600 focus-visible:outline-primary-600 aria-expanded:outline-primary-600 aria-expanded:lg:bg-primary-600 aria-expanded:lg:text-white"
       )}
     >
       <Chevron className="-rotate-90 scale-150" />

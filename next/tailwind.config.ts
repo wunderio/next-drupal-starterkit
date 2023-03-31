@@ -9,7 +9,44 @@ const config = {
     "./wunder-component-library/**/*.{tsx,ts,css}",
   ],
   theme: {
-    // These properties *replace* the defaults:
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+
+      steelgray: "#221f2d",
+      scapaflow: "#555161",
+      stone: "#767283",
+      topaz: "#9b98a4",
+      graysuit: "#c4c2cc",
+      finnishwinter: "#e7e6eb",
+      mischka: "#f7f7f8",
+      white: "#ffffff",
+
+      primary: {
+        900: "#261da1",
+        800: "#3f29ae",
+        700: "#4d2fb6",
+        600: "#5b37bf", // "Wunder purple"
+        500: "#653cc5",
+        400: "#7d59ce",
+        300: "#9577d7",
+        200: "#b49fe2",
+        100: "#d2c5ed",
+        50: "#ede7f8",
+      },
+      secondary: {
+        900: "#9e005d",
+        800: "#c30a63",
+        700: "#d81066",
+        600: "#ef146b",
+        500: "#ff186e",
+        400: "#ff4185",
+        300: "#ff669d",
+        200: "#ff93b9",
+        100: "#ffbed5",
+        50: "#ffe5ee",
+      },
+    },
     fontFamily: {
       inter: ["--font-inter", ...fontFamily.sans],
       overpass: ["--font-overpass", ...fontFamily.sans],
@@ -37,32 +74,6 @@ const config = {
       md: "1.25",
       lg: "1.5",
       xl: "1.75",
-    },
-    // These properties *extend* the defaults:
-    extend: {
-      colors: {
-        steelgray: "#221f2d",
-        scapaflow: "#555161",
-        stone: "#767283",
-        topaz: "#9b98a4",
-        graysuit: "#c4c2cc",
-        finnishwinter: "#e7e6eb",
-        mischka: "#f7f7f8",
-        // Generated with https://uicolors.app/
-        wunderpurple: {
-          50: "#eeefff",
-          100: "#e1e2fe",
-          200: "#c8c9fd",
-          300: "#a9a7fa",
-          400: "#8f84f5",
-          500: "#7d66ee",
-          600: "#6f4ae1",
-          700: "#5b37bf", // This is the official Wunder purple
-          800: "#4e33a0",
-          900: "#42307f",
-          950: "#170e30",
-        },
-      },
     },
   },
   corePlugins: {
