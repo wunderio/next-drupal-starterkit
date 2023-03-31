@@ -6,6 +6,7 @@ const config = {
     "./components/**/*.{tsx,ts,css}",
     "./pages/**/*.{tsx,ts,css}",
     "./styles/**/*.{tsx,ts,css}",
+    "./wunder-component-library/**/*.{tsx,ts,css}",
   ],
   theme: {
     // These properties *replace* the defaults:
