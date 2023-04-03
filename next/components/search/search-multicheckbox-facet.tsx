@@ -70,7 +70,7 @@ export function MultiCheckboxFacet({
       {showMore && (
         <button
           type="button"
-          className="bg-transparent hover:border-transparent rounded border border-primary-500 px-4 py-2 text-sm font-bold text-primary-600 hover:bg-primary-500 hover:text-white"
+          className="rounded border border-primary-500 bg-transparent px-4 py-2 text-sm font-bold text-primary-600 hover:border-transparent hover:bg-primary-500 hover:text-white"
           onClick={onMoreClick}
           aria-label={t("search-show-more-options")}
         >
