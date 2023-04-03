@@ -46,7 +46,7 @@ export const MenuRoot = forwardRef(
         ref={ref}
         {...props}
         className={clsx(
-          "absolute inset-0 z-40 overflow-y-auto border-finnishwinter lg:bottom-auto lg:min-h-[75vh]",
+          "absolute inset-0 z-40 overflow-y-auto overflow-x-hidden border-finnishwinter lg:bottom-auto lg:min-h-[75vh]",
           isOpen && "border-t bg-white lg:border",
           isOpen &&
             "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r"
