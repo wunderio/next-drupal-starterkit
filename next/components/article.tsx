@@ -32,8 +32,9 @@ export function Article({ article, ...props }: ArticleProps) {
             src={absoluteUrl(article.field_image.uri.url)}
             width={768}
             height={480}
+            style={{ width: 768, height: 480 }}
             alt={article.field_image.resourceIdObjMeta.alt}
-            className="max-w-full object-cover"
+            className="object-cover"
             priority
           />
           {article.field_image.resourceIdObjMeta.title && (
