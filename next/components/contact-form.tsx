@@ -1,6 +1,8 @@
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
+import { Button } from "@/wunder-component-library/button";
+
 type Inputs = {
   name: string;
   email: string;
@@ -112,12 +114,7 @@ export function ContactForm() {
             />
           </div>
 
-          <button
-            className="focus:shadow-outline rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600"
-            type="submit"
-          >
-            {t("form-submit")}
-          </button>
+          <Button type="submit">{t("form-submit")}</Button>
         </form>
       )}
     </div>
