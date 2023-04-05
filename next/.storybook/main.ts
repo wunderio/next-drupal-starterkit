@@ -14,6 +14,28 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
+  webpackFinal: async (config) => {
+    config.module!.rules = [
+      ...config.module!.rules!.map((rule) => {
+        // @ts-ignore
+        // Remove existing Storybook loaders for SVG files:
+        if (/svg/.test(rule.test)) {
+          // @ts-ignore
+          return { ...rule, exclude: /\.svg$/i };
+        }
+        return rule;
+      }),
+      // Use @svgr to load SVG files as React components:
+      {
+        test: /\.svg$/i,
+        issuer: /\.tsx$/i,
+        loader: "@svgr/webpack",
+      },
+    ];
+
+    // Return the altered config
+    return config;
+  },
 };
 
 export default config;
