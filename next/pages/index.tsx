@@ -34,9 +34,9 @@ export default function IndexPage({
           <Paragraph paragraph={paragraph} key={paragraph.id} />
         ))}
       </div>
-      <Divider />
+      <Divider className="max-w-4xl" />
       <LatestArticles articles={articleTeasers} />
-      <Divider />
+      <Divider className="max-w-4xl" />
       <ContactForm />
     </>
   );
