@@ -13,7 +13,7 @@ interface AccordionProps {
 }
 export function Accordion({ heading, items }: AccordionProps) {
   return (
-    <div className="relative h-full rounded border bg-white p-4 transition-all hover:shadow-md">
+    <div className="relative h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md">
       <h2 className="mb-4 text-heading-sm font-bold md:text-heading-md">
         {heading}
       </h2>
