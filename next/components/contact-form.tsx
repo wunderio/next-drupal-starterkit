@@ -2,6 +2,8 @@ import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/wunder-component-library/button";
+import { Input } from "@/wunder-component-library/input";
+import { Textarea } from "@/wunder-component-library/textarea";
 
 type Inputs = {
   name: string;
@@ -66,8 +68,7 @@ export function ContactForm() {
             <label className="mb-2 block text-sm font-bold" htmlFor="name">
               {t("form-label-name")}
             </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border border-finnishwinter px-3 py-2 shadow"
+            <Input
               type="text"
               id="name"
               {...register("name", {
@@ -79,8 +80,7 @@ export function ContactForm() {
             <label className="mb-2 block text-sm font-bold" htmlFor="email">
               {t("form-label-email")}
             </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border border-finnishwinter px-3 py-2 shadow"
+            <Input
               type="email"
               id="email"
               {...register("email", {
@@ -92,8 +92,7 @@ export function ContactForm() {
             <label className="mb-2 block text-sm font-bold" htmlFor="subject">
               {t("form-label-subject")}
             </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border border-finnishwinter px-3 py-2 shadow"
+            <Input
               type="text"
               id="subject"
               {...register("subject", {
@@ -105,8 +104,7 @@ export function ContactForm() {
             <label className="mb-2 block text-sm font-bold" htmlFor="message">
               {t("form-label-message")}
             </label>
-            <textarea
-              className="focus:shadow-outline w-full appearance-none rounded border border-finnishwinter px-3 py-2 shadow"
+            <Textarea
               id="message"
               {...register("message", {
                 required: true,
