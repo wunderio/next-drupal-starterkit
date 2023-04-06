@@ -17,3 +17,10 @@ referenceData:
 nginx:
   basicauth:
     enabled: false
+
+mounts:
+  oauth-secrets:
+    enabled: true
+    secret:
+      secretName: oauth-secrets
+      mountPath: /var/www/html/oauth
