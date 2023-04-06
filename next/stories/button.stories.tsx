@@ -111,7 +111,7 @@ export const WithIconLeft: Story = {
 };
 
 export const WithIconRight: Story = {
-  name: "With icon on the right (tertianry variant)",
+  name: "With icon on the right (tertiary variant)",
   args: {
     variant: "tertiary",
     children: (

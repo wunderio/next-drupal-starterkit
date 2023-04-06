@@ -1,10 +1,10 @@
-import * as React from "react";
+import React from "react";
 import { cva } from "cva";
 
 import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
-  "flex border-2 rounded-[3px] transition-colors duration-200 active:enabled:scale-[0.98] disabled:cursor-not-allowed",
+  "flex border-2 rounded-[3px] transition-colors duration-200 active:enabled:scale-[0.98] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-steelgray disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
