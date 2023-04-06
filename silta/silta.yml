@@ -8,7 +8,7 @@ php:
   drupalCoreVersion: "9"
   env:
     WUNDER_NEXT_FRONTEND_URL: <|next_domain|>
-    name: DRUPAL_CLIENT_SECRET
+    DRUPAL_CLIENT_SECRET:
       valueFrom: 
         secretKeyRef: 
           key: drupal_client_secret
