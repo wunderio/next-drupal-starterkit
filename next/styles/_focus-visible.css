@@ -1,0 +1,11 @@
+:focus {
+  @apply ring-2 ring-steelgray ring-offset-2;
+}
+
+:focus-visible {
+  @apply !outline-none ring-2;
+}
+
+:focus:not(:focus-visible) {
+  @apply outline-none ring-0;
+}
