@@ -13,7 +13,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           "placeholder:text-stone",
           "hover:enabled:border-steelgray",
           "focus:border-primary-600 active:enabled:border-primary-600",
-          "disabled:cursor-not-allowed",
+          "disabled:cursor-not-allowed disabled:border-finnishwinter disabled:bg-finnishwinter disabled:text-finnishwinter",
           className,
         ])}
         ref={ref}
