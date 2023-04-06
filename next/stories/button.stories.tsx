@@ -59,64 +59,81 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {};
+export const Default: Story = {};
+
+export const Primary: Story = {
+  name: 'variant="primary"',
+  args: {
+    children: "Primary button",
+    variant: "primary",
+  },
+};
 
 export const Secondary: Story = {
+  name: 'variant="secondary"',
   args: {
+    children: "Secondary button",
     variant: "secondary",
   },
 };
 
 export const Tertiary: Story = {
+  name: 'variant="tertiary"',
   args: {
+    children: "Tertiary button",
     variant: "tertiary",
   },
 };
 
 export const Small: Story = {
+  name: 'size="sm"',
   args: {
+    children: "Small button",
     size: "sm",
   },
 };
 
 export const Medium: Story = {
+  name: 'size="md"',
   args: {
+    children: "Medium button",
     size: "md",
   },
 };
 
 export const Large: Story = {
+  name: 'size="lg"',
   args: {
+    children: "Large button",
     size: "lg",
   },
 };
 
 export const WithIconOnly: Story = {
-  name: "With icon only",
+  name: "Icon only",
   args: {
     children: <InfoIcon />,
   },
 };
 
 export const WithIconLeft: Story = {
-  name: "With icon on the left",
+  name: "Icon left",
   args: {
     children: (
       <>
         <InfoIcon className="mr-2 inline" />
-        <span>Click me</span>
+        <span>Icon left</span>
       </>
     ),
   },
 };
 
 export const WithIconRight: Story = {
-  name: "With icon on the right (tertiary variant)",
+  name: "Icon right",
   args: {
-    variant: "tertiary",
     children: (
       <>
-        <span>Click me</span>
+        <span>Icon right</span>
         <InfoIcon className="ml-2 inline" />
       </>
     ),
