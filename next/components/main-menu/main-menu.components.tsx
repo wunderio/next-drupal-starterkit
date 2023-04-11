@@ -111,7 +111,7 @@ export function MenuBack({ onClick }: { onClick: () => void }) {
       className="m-6 inline-flex items-center justify-center pr-2 hover:underline lg:hidden"
       onClick={onClick}
     >
-      <Chevron className="rotate-90" />
+      <Chevron className="h-6 w-6 rotate-90" />
       <span className="pl-4">{t("menu-back")}</span>
     </button>
   );
@@ -180,7 +180,7 @@ export function MenuTrigger({ isTopLevel }: { isTopLevel?: boolean }) {
           : "outline-white hover:outline-primary-600 focus-visible:outline-primary-600 aria-expanded:outline-primary-600 aria-expanded:lg:bg-primary-600 aria-expanded:lg:text-white"
       )}
     >
-      <Chevron className="-rotate-90 scale-150" />
+      <Chevron className="h-9 w-9 -rotate-90" />
     </NavigationMenu.Trigger>
   );
 }
