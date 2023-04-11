@@ -2,3 +2,7 @@
 .mainMenu [data-orientation="horizontal"] > :only-child {
   position: initial !important;
 }
+
+.mainMenu :focus {
+  @apply ring-offset-0;
+}
