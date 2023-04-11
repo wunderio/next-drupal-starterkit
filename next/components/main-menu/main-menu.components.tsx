@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { Dispatch, forwardRef, ReactNode, Ref, SetStateAction } from "react";
+import { Dispatch, forwardRef, ReactNode, SetStateAction } from "react";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import clsx from "clsx";
 
@@ -33,28 +33,27 @@ export function MenuContainer({
   );
 }
 
-export const MenuRoot = forwardRef(
-  (
-    {
-      isOpen,
-      ...props
-    }: { isOpen: boolean } & NavigationMenu.NavigationMenuProps,
-    ref: Ref<HTMLElement>
-  ) => {
-    return (
-      <NavigationMenu.Root
-        ref={ref}
-        {...props}
-        className={clsx(
-          "absolute inset-0 z-40 overflow-y-auto overflow-x-hidden border-finnishwinter lg:bottom-auto lg:min-h-[75vh]",
-          isOpen && "border-t bg-white lg:border",
-          isOpen &&
-            "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r"
-        )}
-      />
-    );
-  }
-);
+type MenuProps = NavigationMenu.NavigationMenuProps & {
+  isOpen: boolean;
+};
+
+export const MenuRoot = forwardRef<
+  React.ElementRef<typeof NavigationMenu.Root>,
+  MenuProps
+>(({ isOpen, ...props }, ref) => {
+  return (
+    <NavigationMenu.Root
+      ref={ref}
+      {...props}
+      className={clsx(
+        "absolute inset-0 z-40 overflow-y-auto overflow-x-hidden border-finnishwinter lg:bottom-auto lg:min-h-[75vh]",
+        isOpen && "border-t bg-white lg:border",
+        isOpen &&
+          "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r"
+      )}
+    />
+  );
+});
 MenuRoot.displayName = "MenuRoot";
 
 export function MenuToggle({
