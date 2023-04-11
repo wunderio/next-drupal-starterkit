@@ -7,6 +7,7 @@ module.exports = {
     "./pages/**/*.{tsx,ts,css}",
     "./styles/**/*.{tsx,ts,css}",
     "./wunder-component-library/**/*.{tsx,ts,css}",
+    "./stories/**/*.stories.{tsx,ts}",
   ],
   theme: {
     colors: {
