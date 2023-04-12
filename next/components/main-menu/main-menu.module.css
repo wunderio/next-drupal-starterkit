@@ -3,6 +3,6 @@
   position: initial !important;
 }
 
-.mainMenu :focus {
-  @apply ring-offset-0;
+.mainMenu :focus-visible {
+  @apply ring-inset ring-offset-0;
 }

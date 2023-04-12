@@ -122,7 +122,7 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
       >
         <MenuList level={0}>
           {menu.map((item) => (
-            <MenuItem key={item.id} value={item.id} isTopLevel={true}>
+            <MenuItem key={item.id} value={item.id} isTopLevel>
               <MenuLink href={item.url} isTopLevel>
                 {item.title}
               </MenuLink>

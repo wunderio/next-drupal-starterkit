@@ -130,7 +130,7 @@ export function MenuItem({
     <NavigationMenu.Item
       className={clsx(
         "flex items-stretch border-b border-finnishwinter bg-white font-bold tracking-widest text-primary-600 underline-offset-4 lg:border-b-0",
-        isTopLevel && " lg:bg-primary-600 lg:text-mischka"
+        isTopLevel && "lg:bg-primary-600 lg:text-mischka"
       )}
       value={value}
     >
@@ -158,10 +158,8 @@ export function MenuLink({
       active={isActive}
       className={clsx(
         !isTitle &&
-          "aria-current:underline block h-full grow p-6 outline-4 -outline-offset-[5px] outline-primary-600 hover:underline focus-visible:outline data-[active]:underline",
-        isTopLevel
-          ? "outline-primary-600 focus-visible:outline-primary-600 lg:hover:outline-white lg:focus-visible:outline-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600 lg:aria-expanded:outline-white"
-          : "outline-white hover:outline-primary-600 focus-visible:outline-primary-600 aria-expanded:outline-primary-600 aria-expanded:lg:bg-primary-600 aria-expanded:lg:text-white"
+          "aria-current:underline block h-full grow p-6 hover:underline data-[active]:underline",
+        isTopLevel && "lg:ring-white"
       )}
     >
       <NextLink href={href}>{children}</NextLink>
@@ -174,10 +172,10 @@ export function MenuTrigger({ isTopLevel }: { isTopLevel?: boolean }) {
     <NavigationMenu.Trigger
       {...disableHoverEvents}
       className={clsx(
-        "flex w-20 shrink-0 items-center justify-center outline-[3px] -outline-offset-2 hover:outline lg:border-none lg:outline",
+        "flex w-20 shrink-0 items-center justify-center ring-inset ring-primary-700 hover:ring-2 lg:border-none",
         isTopLevel
-          ? "outline-primary-600 focus-visible:outline-primary-600 lg:hover:outline-white lg:focus-visible:outline-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600 lg:aria-expanded:outline-white"
-          : "outline-white hover:outline-primary-600 focus-visible:outline-primary-600 aria-expanded:outline-primary-600 aria-expanded:lg:bg-primary-600 aria-expanded:lg:text-white"
+          ? "lg:ring-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600"
+          : "lg:aria-expanded:bg-primary-600 lg:aria-expanded:text-white lg:aria-expanded:ring-primary-600"
       )}
     >
       <Chevron className="h-9 w-9 -rotate-90" />
