@@ -1,0 +1,25 @@
+id: users
+label: Demo users
+migration_group: demo_content
+source:
+  plugin: csv
+  path: /app/drupal/web/modules/custom/wunder_democontent/sources/users.csv
+  ids: [ id ]
+  constants:
+    status: 1
+process:
+  name: name
+  mail: mail
+  pass:
+    plugin: callback
+    callable: md5
+    source: password
+  status: constants/status
+  roles:
+    plugin: explode
+    delimiter: '|'
+    source: roles
+
+destination:
+  plugin: entity:user
+  md5_passwords: true
