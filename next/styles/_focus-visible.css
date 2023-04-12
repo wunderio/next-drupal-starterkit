@@ -1,11 +1,7 @@
 :focus {
-  @apply ring-2 ring-steelgray ring-offset-2;
+  @apply !outline-none;
 }
 
 :focus-visible {
-  @apply !outline-none ring-2;
-}
-
-:focus:not(:focus-visible) {
-  @apply outline-none ring-0;
+  @apply ring-2 ring-primary-700 ring-offset-2;
 }
