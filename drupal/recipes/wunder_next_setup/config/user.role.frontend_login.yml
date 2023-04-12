@@ -1,9 +1,17 @@
 uuid: a5fcc86f-03e6-4553-9b19-d80ac853cad5
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - rest.resource.webform_rest_submit
+  module:
+    - rest
+_core:
+  default_config_hash: S4kOhP6W4bBjaYNIF00aDCKiW49K-Q7i4l5z7bvUing
 id: frontend_login
 label: 'Frontend login user'
 weight: 6
 is_admin: null
-permissions: {  }
+permissions:
+  - 'restful post webform_rest_submit'
+

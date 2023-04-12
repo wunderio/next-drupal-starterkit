@@ -1,14 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { getToken } from "next-auth/jwt";
 import { drupal } from "lib/drupal";
 
 export default async function handler(
-  request: NextApiRequest,
+  req: NextApiRequest,
   response: NextApiResponse
 ) {
+  // Because we want to allow only registered users to submit
+  // to the contact webform, we will get the jwt token here:
+  const token = await getToken({ req });
+
+  // If the token is not available, it means that the user
+  // is not registered, so return access denied:
+  if (!token) {
+    response.status(401).end();
+  }
+
   try {
-    if (request.method === "POST") {
+    if (req.method === "POST") {
       const url = drupal.buildUrl("/webform_rest/submit");
-      const body = JSON.parse(request.body);
+      const body = JSON.parse(req.body);
 
       // Submit to Drupal.
       const result = await drupal.fetch(url.toString(), {
@@ -22,13 +33,17 @@ export default async function handler(
         }),
         headers: {
           "Content-Type": "application/json",
+          // Pass the token to authenticate the request:
+          Authorization: `Bearer ${token.accessToken}`,
         },
       });
 
-      if (!result.ok) {
+      if (result.ok) {
+        response.status(200).end();
+      } else {
+        response.status(result.status).end();
         throw new Error();
       }
-      response.status(200).end();
     }
   } catch (error) {
     return response.status(400).json(error.message);

@@ -54,7 +54,7 @@ class WunderNextCommands extends DrushCommands {
       'mail' => self::API_USER_MAIL,
       'access' => '0',
       'status' => 1,
-      'roles' => [self::API_USER_ROLE, self::FRONTEND_LOGIN_ROLE],
+      'roles' => [self::API_USER_ROLE],
     ];
 
     $account = User::create($new_user);
@@ -80,7 +80,7 @@ class WunderNextCommands extends DrushCommands {
       'description' => 'This consumer was created by the wunder_next:create-user-and-consumer drush command.',
       'is_default' => FALSE,
       'user_id' => $account->id(),
-      'roles' => [self::API_USER_ROLE],
+      'roles' => [self::API_USER_ROLE, self::FRONTEND_LOGIN_ROLE],
       'secret' => $secret,
     ]);
 
