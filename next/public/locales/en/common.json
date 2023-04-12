@@ -28,5 +28,6 @@
   "form-label-message": "Message:",
   "form-submit": "Submit",
   "form-thank-you-message": "Thanks!",
-  "form-send-another-message": "Send another message"
+  "form-send-another-message": "Send another message",
+  "login-to-fill-form": "Please login to fill this form."
 }

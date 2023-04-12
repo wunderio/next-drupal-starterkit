@@ -14,7 +14,7 @@ export function ContactForm() {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitted },
+    formState: { isSubmitSuccessful },
   } = useForm<Inputs>();
 
   const onSubmit = async (data: Inputs) => {
@@ -33,9 +33,11 @@ export function ContactForm() {
     }
   };
 
+  const onErrors = (errors) => console.error(errors);
+
   return (
     <div className="mb-4 rounded border bg-white p-4 shadow-md transition-all hover:shadow-md">
-      {isSubmitted && (
+      {isSubmitSuccessful && (
         <div
           className="border-l-4 border-wunderpurple-500 bg-wunderpurple-100 p-4 text-wunderpurple-700"
           role="alert"
@@ -51,9 +53,10 @@ export function ContactForm() {
           </button>
         </div>
       )}
-      {!isSubmitted && (
+      {!isSubmitSuccessful && (
         <form
-          onSubmit={void handleSubmit(onSubmit)}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onSubmit={handleSubmit(onSubmit, onErrors)}
           className="flex flex-col gap-5"
         >
           <h2 className="text-heading-sm font-bold md:text-heading-md">

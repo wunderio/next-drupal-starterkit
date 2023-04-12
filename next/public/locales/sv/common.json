@@ -28,5 +28,6 @@
   "form-label-message": "Meddelande:",
   "form-label-submit": "Skicka",
   "form-thank-you-message": "Tack!",
-  "form-send-another-message": "Skicka ett annat meddelande"
+  "form-send-another-message": "Skicka ett annat meddelande",
+  "login-to-fill-form": "Logga in för att fylla i detta formulär."
 }

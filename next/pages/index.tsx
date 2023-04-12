@@ -1,6 +1,8 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { DrupalNode } from "next-drupal";
+import { useTranslation } from "next-i18next";
 
+import { AuthGate } from "@/components/auth-gate";
 import { ContactForm } from "@/components/contact-form";
 import { Divider } from "@/components/divider";
 import { LatestArticles } from "@/components/latest-articles";
@@ -25,6 +27,7 @@ export default function IndexPage({
   frontpage,
   articleTeasers,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation();
   return (
     <>
       <Meta title={frontpage?.title} metatags={frontpage?.metatag} />
@@ -36,7 +39,9 @@ export default function IndexPage({
       <Divider />
       <LatestArticles articles={articleTeasers} />
       <Divider />
-      <ContactForm />
+      <AuthGate text={t("login-to-fill-form")}>
+        <ContactForm />
+      </AuthGate>
     </>
   );
 }
