@@ -1,0 +1,9 @@
+uuid: a5fcc86f-03e6-4553-9b19-d80ac853cad5
+langcode: en
+status: true
+dependencies: {  }
+id: frontend_login
+label: 'Frontend login user'
+weight: 6
+is_admin: null
+permissions: {  }
