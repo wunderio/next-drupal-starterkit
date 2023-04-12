@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { cn } from "@/lib/utils";
-
 import { Checkbox } from "@/wunder-component-library/checkbox";
 
 const meta: Meta<typeof Checkbox> = {
@@ -21,9 +19,7 @@ export const WithLabel: Story = {
         <Checkbox id="withLabel" name="withLabel" />
         <label
           htmlFor="withLabel"
-          className={cn(
-            "cursor-pointer pl-2 text-sm peer-disabled:cursor-not-allowed peer-disabled:text-graysuit"
-          )}
+          className="cursor-pointer pl-2 text-sm peer-disabled:cursor-not-allowed peer-disabled:text-graysuit"
         >
           I accept the terms and conditions
         </label>
