@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 
@@ -15,8 +16,20 @@ interface HeaderProps {
 
 export function Header({ menu }: HeaderProps) {
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
+  const { data, status } = useSession();
   return (
     <header className="z-50 flex-shrink-0 border-b bg-white text-wunderpurple-700 md:sticky md:top-0">
+      {status === "authenticated" && (
+        <p>
+          You are logged in as <strong>{data.user.name}</strong> -{" "}
+          <button onClick={() => void signOut()}>Sign out</button>
+        </p>
+      )}
+      {status === "unauthenticated" && (
+        <Link href="/api/auth/signin" passHref>
+          Sign in
+        </Link>
+      )}
       <nav className="mx-auto flex max-w-6xl flex-row items-center justify-between px-6 py-4">
         <HomeLink />
         <div className="flex flex-row items-center justify-end gap-8">
