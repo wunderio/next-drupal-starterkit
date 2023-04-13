@@ -30,6 +30,7 @@ export const Default: Story = {};
 
 export const Disabled: Story = {
   args: {
+    placeholder: null,
     disabled: true,
   },
 };
