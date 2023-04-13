@@ -1,6 +1,8 @@
 import { useSession } from "next-auth/react";
 import React from "react";
 
+import InfoIcon from "@/styles/icons/info.svg";
+
 type AuthGateProps = {
   children: JSX.Element;
   text: string;
@@ -12,9 +14,13 @@ export function AuthGate({ children, text }: AuthGateProps) {
     return <>{children}</>;
   } else {
     return (
-      <p className="mb-4 rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
-        {text}
-      </p>
+      <div
+        className="relative rounded border border-secondary-900 bg-secondary-200 px-4 py-3 text-secondary-900"
+        role="alert"
+      >
+        <InfoIcon className="mr-2 inline h-6 w-6" />
+        <span>{text}</span>
+      </div>
     );
   }
 }

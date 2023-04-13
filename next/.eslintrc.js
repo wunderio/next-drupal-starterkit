@@ -61,15 +61,18 @@ module.exports = {
           "error",
           {
             groups: [
-              ["^\\u0000"],
               // Side effect imports.
-              ["^next", "^@next", "^react", "^@?\\w"],
+              ["^\\u0000"],
               // Packages. Put `next`/`react`-related packages first.
-              ["^@/(components|lib|pages|styles|types)(/.*|$)"],
+              ["^next", "^@next", "^react", "^@?\\w"],
               // Internal paths - change these to match your project structure defined in tsconfig.json.
-              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              ["^@/(components|lib|pages|styles|types)(/.*|$)"],
+              // Component library imports.
+              ["^@wunder-component-library(/.*|$)"],
               // Parent imports. Put `..` last.
-              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"], // Other relative imports. Put same-folder imports and `.` last.
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Other relative imports. Put same-folder imports and `.` last.
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
             ],
           },
         ],

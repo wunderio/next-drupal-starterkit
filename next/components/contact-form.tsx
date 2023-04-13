@@ -1,6 +1,10 @@
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
+import { Button } from "@/wunder-component-library/button";
+import { Input } from "@/wunder-component-library/input";
+import { Textarea } from "@/wunder-component-library/textarea";
+
 type Inputs = {
   name: string;
   email: string;
@@ -36,17 +40,17 @@ export function ContactForm() {
   const onErrors = (errors) => console.error(errors);
 
   return (
-    <div className="mb-4 rounded border bg-white p-4 shadow-md transition-all hover:shadow-md">
+    <div className="mb-4 rounded border border-finnishwinter bg-white p-4 shadow-md transition-all hover:shadow-md">
       {isSubmitSuccessful && (
         <div
-          className="border-l-4 border-wunderpurple-500 bg-wunderpurple-100 p-4 text-wunderpurple-700"
+          className="border-l-4 border-primary-500 bg-primary-100 p-4 text-primary-600"
           role="alert"
         >
           <p className="mb-3 text-xl font-bold">
             {t("form-thank-you-message")}
           </p>
           <button
-            className="rounded bg-wunderpurple-500 px-4 py-2 font-bold text-white hover:bg-wunderpurple-700"
+            className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600"
             onClick={() => reset()}
           >
             {t("form-send-another-message")}
@@ -67,8 +71,7 @@ export function ContactForm() {
             <label className="mb-2 block text-sm font-bold" htmlFor="name">
               {t("form-label-name")}
             </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 shadow"
+            <Input
               type="text"
               id="name"
               {...register("name", {
@@ -80,8 +83,7 @@ export function ContactForm() {
             <label className="mb-2 block text-sm font-bold" htmlFor="email">
               {t("form-label-email")}
             </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 shadow"
+            <Input
               type="email"
               id="email"
               {...register("email", {
@@ -93,8 +95,7 @@ export function ContactForm() {
             <label className="mb-2 block text-sm font-bold" htmlFor="subject">
               {t("form-label-subject")}
             </label>
-            <input
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 shadow"
+            <Input
               type="text"
               id="subject"
               {...register("subject", {
@@ -106,8 +107,7 @@ export function ContactForm() {
             <label className="mb-2 block text-sm font-bold" htmlFor="message">
               {t("form-label-message")}
             </label>
-            <textarea
-              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 shadow"
+            <Textarea
               id="message"
               {...register("message", {
                 required: true,
@@ -115,12 +115,7 @@ export function ContactForm() {
             />
           </div>
 
-          <button
-            className="focus:shadow-outline rounded bg-wunderpurple-500 px-4 py-2 font-bold text-white hover:bg-wunderpurple-700"
-            type="submit"
-          >
-            {t("form-submit")}
-          </button>
+          <Button type="submit">{t("form-submit")}</Button>
         </form>
       )}
     </div>

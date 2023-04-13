@@ -33,7 +33,7 @@ export function LanguageSwitcher() {
       <ul
         ref={listRef}
         className={clsx(
-          "absolute z-50 mt-1 w-fit border bg-white",
+          "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
           !isOpen && "hidden"
         )}
       >
@@ -44,7 +44,7 @@ export function LanguageSwitcher() {
             return (
               <li key={l}>
                 <Link
-                  className="block p-2 hover:bg-gray-100"
+                  className="block p-2 hover:bg-primary-50"
                   locale={l}
                   href={path}
                 >

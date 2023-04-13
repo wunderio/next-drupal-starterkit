@@ -1,44 +1,27 @@
-import * as AccordionUI from "@radix-ui/react-accordion";
-
 import { Paragraph } from "@/components/paragraph";
-import { Accordion } from "@/lib/zod/paragraph";
-import ChevronIcon from "@/styles/icons/chevron-down.svg";
-import ListIcon from "@/styles/icons/list.svg";
+import { Accordion as ParagraphAccordion } from "@/lib/zod/paragraph";
 
-export function ParagraphAccordion({ paragraph }: { paragraph: Accordion }) {
+import { Accordion } from "@/wunder-component-library/accordion";
+
+export function ParagraphAccordion({
+  paragraph,
+}: {
+  paragraph: ParagraphAccordion;
+}) {
   return (
-    <div className="relative h-full rounded border bg-white p-4 transition-all hover:shadow-md">
-      <h2 className="mb-4 text-heading-sm font-bold md:text-heading-md">
-        {paragraph.field_heading}
-      </h2>
-      <AccordionUI.Root type="single" collapsible className="grid gap-4">
-        {paragraph.field_accordion_items?.map((item) => (
-          <AccordionUI.Item key={item.id} value={item.id}>
-            <AccordionUI.Header>
-              <AccordionUI.Trigger className="group flex w-full flex-row items-center justify-between gap-1 rounded border border-finnishwinter bg-white p-6 text-md text-black aria-expanded:rounded-b-none aria-expanded:bg-mischka md:gap-1.5 md:text-lg">
-                <ListIcon
-                  aria-hidden
-                  className="shrink-0 text-wunderpurple-600"
-                />
-                <span className="mx-5 grow text-left">
-                  {item.field_heading}
-                </span>
-                <ChevronIcon
-                  aria-hidden
-                  className="shrink-0 text-wunderpurple-600 group-aria-expanded:rotate-180"
-                />
-              </AccordionUI.Trigger>
-            </AccordionUI.Header>
-            <AccordionUI.Content className="rounded-b border border-t-0 border-finnishwinter bg-white p-6 text-md">
-              <div className="grid gap-4">
-                {item.field_content_elements?.map((paragraph) => (
-                  <Paragraph key={paragraph.id} paragraph={paragraph} />
-                ))}
-              </div>
-            </AccordionUI.Content>
-          </AccordionUI.Item>
-        ))}
-      </AccordionUI.Root>
-    </div>
+    <Accordion
+      heading={paragraph.field_heading}
+      items={paragraph.field_accordion_items?.map((item) => ({
+        id: item.id,
+        heading: item.field_heading,
+        content: (
+          <div className="grid gap-4">
+            {item.field_content_elements?.map((paragraph) => (
+              <Paragraph key={paragraph.id} paragraph={paragraph} />
+            ))}
+          </div>
+        ),
+      }))}
+    />
   );
 }
