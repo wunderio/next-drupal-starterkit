@@ -1,0 +1,7 @@
+:focus {
+  @apply !outline-none;
+}
+
+:focus-visible {
+  @apply ring-2 ring-primary-700 ring-offset-2;
+}

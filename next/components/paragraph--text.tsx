@@ -16,7 +16,7 @@ export function ParagraphText({ paragraph }: { paragraph: FormattedTextType }) {
       <FormattedText
         html={paragraph.field_formatted_text.processed}
         className={clsx(
-          "text-justify text-md/xl text-gray-500 sm:text-lg",
+          "text-justify text-md/xl text-scapaflow sm:text-lg",
           paragraph.field_heading && "mt-4"
         )}
       />

@@ -12,9 +12,9 @@ export function Footer({ menu }: FooterProps) {
   const { locale } = useRouter();
   const filteredItems = menu.filter((link) => link.langcode == locale);
   return (
-    <footer className="border-t">
+    <footer className="border-t border-finnishwinter">
       <div className="mx-auto max-w-6xl px-6">
-        <nav className="flex flex-col items-center gap-2 py-8 text-lg sm:flex-row sm:justify-between">
+        <nav className="flex flex-col items-center gap-2 py-8 text-md sm:flex-row sm:justify-between">
           <ul className="mr-4 flex flex-wrap gap-x-8 gap-y-2">
             {filteredItems.map((link) => (
               <li key={link.id}>
@@ -44,7 +44,7 @@ function FooterLink({ href, newTab = false, children }: FooterLinkProps) {
       href={href}
       target={target}
       rel={rel}
-      className="text-wunderpurple-500 hover:underline"
+      className="text-primary-500 hover:underline"
     >
       {children}
     </Link>
