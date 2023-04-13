@@ -36,6 +36,14 @@ export function UserMenu() {
             )}
           >
             <li>
+              <Link
+                className="block p-2 hover:bg-primary-50"
+                href={"/dashboard"}
+              >
+                Your dashboard
+              </Link>
+            </li>
+            <li>
               <button
                 type="button"
                 className="block p-2 hover:bg-primary-50"

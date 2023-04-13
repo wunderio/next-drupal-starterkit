@@ -1,8 +1,9 @@
+import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt_decode from "jwt-decode";
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Drupal",
@@ -63,12 +64,13 @@ export default NextAuth({
         );
         session.user.email = decoded.email;
         session.user.name = decoded.username;
-        session.error = token.error;
+        session.user.image = null;
+        session.error = token.error || null;
       }
       return session;
     },
   },
-});
+};
 
 // Helper to obtain a new access_token from a refresh token.
 async function refreshAccessToken(token) {
@@ -110,3 +112,5 @@ async function refreshAccessToken(token) {
     };
   }
 }
+
+export default NextAuth(authOptions);
