@@ -29,5 +29,7 @@
   "form-label-submit": "Lähetä",
   "form-thank-you-message": "Kiitos!",
   "form-send-another-message": "Lähetä toinen viesti",
-  "login-to-fill-form": "Kirjaudu sisään täyttääksesi tämän lomakkeen."
+  "login-to-fill-form": "Kirjaudu sisään täyttääksesi tämän lomakkeen.",
+  "log-in": "Kirjaudu",
+  "log-out": "Kirjaudu ulos"
 }

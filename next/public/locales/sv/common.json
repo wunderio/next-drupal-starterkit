@@ -29,5 +29,7 @@
   "form-label-submit": "Skicka",
   "form-thank-you-message": "Tack!",
   "form-send-another-message": "Skicka ett annat meddelande",
-  "login-to-fill-form": "Logga in för att fylla i detta formulär."
+  "login-to-fill-form": "Logga in för att fylla i detta formulär.",
+  "log-in": "Logga in",
+  "log-out": "Logga ut"
 }
