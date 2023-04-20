@@ -1,19 +1,20 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getToken } from "next-auth/jwt";
+import { getServerSession } from "next-auth/next";
 import { drupal } from "lib/drupal";
+
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
-  response: NextApiResponse
+  res: NextApiResponse
 ) {
   // Because we want to allow only registered users to submit
-  // to the contact webform, we will get the jwt token here:
-  const token = await getToken({ req });
+  // to the contact webform, let's get the session:
+  const session = await getServerSession(req, res, authOptions);
 
-  // If the token is not available, it means that the user
-  // is not registered, so return access denied:
-  if (!token) {
-    response.status(401).end();
+  // if there is no session, return 401:
+  if (!session) {
+    res.status(401).end();
   }
 
   try {
@@ -34,18 +35,18 @@ export default async function handler(
         headers: {
           "Content-Type": "application/json",
           // Pass the token to authenticate the request:
-          Authorization: `Bearer ${token.accessToken}`,
+          Authorization: `Bearer ${session.accessToken}`,
         },
       });
 
       if (result.ok) {
-        response.status(200).end();
+        res.status(200).end();
       } else {
-        response.status(result.status).end();
+        res.status(result.status).end();
         throw new Error();
       }
     }
   } catch (error) {
-    return response.status(400).json(error.message);
+    return res.status(400).json(error.message);
   }
 }
