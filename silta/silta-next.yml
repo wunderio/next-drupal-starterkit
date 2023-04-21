@@ -4,8 +4,6 @@
 # for all possible options.
 #
 #
-projectName: "next4drupal"
-
 services:
   node:
     exposedRoute: '/'
