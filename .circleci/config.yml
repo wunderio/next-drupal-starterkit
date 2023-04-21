@@ -84,6 +84,7 @@ workflows:
           context: silta_dev
           executor: cicd81
           silta_config: silta/silta-next.yml
+          release-suffix: next
           codebase-build:
             # npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
             - run:
