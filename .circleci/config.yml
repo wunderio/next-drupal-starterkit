@@ -48,6 +48,7 @@ workflows:
                   public_key=LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF1bEp3Y29kcThQemJkcnhoS0J3ZQpkMVROUVE2NUVNZjBhL3AzazgvTUhYWEpGUDB4MzFYZHliNmdzdi9xWllHUHZCRHRlWWxSaTFlOUJiazhzVUNXCk9tdUdvUjFNMzBGN3ZhTGRIMkhHcEovVStDR3REY3Q5Z1l0S0F3d1RLOURTalZncUUwZTFlbUllVHVudThya3oKRlRLL3FWYkgwM0x1dWNwRVA0eXNFdFRTcHNwY0tpVlE1YXlxS3NIcGJJNmo4dkg0VUVIUThLak5ZNERvZ2xucgpCWmMyTUpNTFBrR3dHbVRJdzZNSjBmc0c5RVhUQXVpSy9SRGdjNjZwWE1ZTlBvK2lWbWk5SjFvWXdzSjYweDdDCnJ1T2lKNjZFS2RTanhCQ2pqOGRMYy9HcWNVdzZXMTRHU3k0a2NBaVh2TTk2VEtBdmYzTWo0YlpnazBJMDV4cmYKZndJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
                   echo $private_key | base64 -d > oauth/private.key
                   echo $public_key | base64 -d > oauth/public.key
+                chmod 600 oauth/private.key oauth/public.key
             - silta/drupal-composer-install
             - silta/npm-install-build
           context: silta_dev
