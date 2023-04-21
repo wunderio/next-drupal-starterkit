@@ -99,9 +99,11 @@ workflows:
                   next_domain=${release_name}.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
                   next_public_base_url=https://${next_domain}
                   drupal_client_secret=XmLM28mPZSq4e6boUcyP2raYvlY=
+                  drupal_client_id=next-drupal-consumer
                   echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=${next_public_base_url}" >> "$BASH_ENV"
                   echo "export NEXT_IMAGE_DOMAIN=${next_domain}" >> "$BASH_ENV"
                   echo "export DRUPAL_CLIENT_SECRET=${drupal_client_secret}" >> "$BASH_ENV"
+                  echo "export DRUPAL_CLIENT_ID=${drupal_client_id}" >> "$BASH_ENV"
                   escaped_next_public_base_url=$(printf '%s\n' "$next_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_drupal_client_secret=$(printf '%s\n' "$drupal_client_secret" | sed -e 's/[\/&]/\\&/g')
                   sed -i -e "s/<|next_public_base_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
