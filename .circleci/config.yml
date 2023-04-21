@@ -44,6 +44,47 @@ workflows:
                   fi
                   next_domain=${release_name}-next.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
                   sed -i -e "s/<|next_domain|>/$next_domain/" silta/silta.yml
+                  cat > oauth/private.key<<EOF
+                  -----BEGIN PRIVATE KEY-----
+                  MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC6UnByh2rw/Nt2
+                  vGEoHB53VM1BDrkQx/Rr+neTz8wddckU/THfVd3JvqCy/+plgY+8EO15iVGLV70F
+                  uTyxQJY6a4ahHUzfQXu9ot0fYcakn9T4Ia0Ny32Bi0oDDBMr0NKNWCoTR7V6Yh5O
+                  6e7yuTMVMr+pVsfTcu65ykQ/jKwS1NKmylwqJVDlrKoqwelsjqPy8fhQQdDwqM1j
+                  gOiCWesFlzYwkws+QbAaZMjDownR+wb0RdMC6Ir9EOBzrqlcxg0+j6JWaL0nWhjC
+                  wnrTHsKu46InroQp1KPEEKOPx0tz8apxTDpbXgZLLiRwCJe8z3pMoC9/cyPhtmCT
+                  QjTnGt9/AgMBAAECggEACgjoLnrn5n6diCLF5IFXwv/3bt3FxWvQobD+4UTiagd8
+                  dS4A7dWz2QX0XCQzDV4NMn/eCTZ0BKNoSI5GN5qJHMLKxTfoaDF74kFmU8skYVND
+                  PbrFcOGLRmQxcAtKOeSIfw+ZTjxhGv59HYjHbtRxWqfZQ7dPkkB1nSeR2CDtMrV+
+                  NBw23JPAso9uqn1LTcOYTUB5ogjpz1iVg4aj5O7D2ff8pyO9bp1U/sTk8/+TAR6b
+                  KF3Dy2PtGV7lORMuN+E3fENyOzANJYKi+2TckebOeH3hU9nGvaST3pm2UnmZ96o5
+                  9liQDdapXIjXL28xc/ow1N8svALp/wcOIXwNodxj4QKBgQDmz5q7n38hG+lUzfmN
+                  Nitl1tftwb5p5/U7WZas0FTwdePlj2te9VbiC1VxJBWnF1c0GPoAJyRrudtbXRM1
+                  BBugX4kIPfAVEl3EJr5gXEydK3hq+vNU4CTIxqpnQf5sELnIK6xs76NyWWS6M9vW
+                  XN2gAejTzWHt9vpttgKKC0yhnwKBgQDOp+dC3DMDF89WB/6UeD2YczbhNE4a8BiW
+                  SLar0Gm0ndBVRxe00UcW7q8V/h9VbT5x4frIM3fek5t+Uxe8odthqWqlKCc8Cn6/
+                  cRsiQeZG/VRXNzLoQH/Uiug1DDrDH6DZcwZ6pEu8CzLVunddRzUNzvtl2LAz/SHJ
+                  virOlc22IQKBgQCDaRW+1wtpjVumlfMMLBg/Tjf4PQOthow/8zzvPVnu4iATtjk6
+                  glKqNiu6VAIj9Q0IM2Q7LA33a4Txmqdx2tnj0CDT2XfUd3V9VVW0xTg1j+dqeWCL
+                  JWasDTg9u/wgCNHNntf32eRkGXNY9Geov4zLKesmk9u6wZBJYIRHljFWHwKBgFOK
+                  8STIXB79+yWuaa6fxVbiDOeR+5lMQsROdPqUcIdB3Tz8VosUp4aPy1w6tXQVi88C
+                  Kh3RIL5sMcop0UjCriuXD7Pgvau6Gm9OTEfXGD7Ons/7Uqstl//Wf/UiEodbO+1s
+                  YMwnqy5D4LMihKrC5KHGcT9FEEaUKJqkNC37xYPBAoGAMzLMjFIqp8LddEPcgO+z
+                  PoWge6i7gSD0fvcCOzrbo6VjEUzbLWgQMfy7gnFNw5VP/b85sjMPzzKgZRdqZEXT
+                  wg0rwVNfJt6DlMGmntJ93LymIyGRLQKmL3crp8TGbUGb39bKYdBwNVrr32gTGkAo
+                  Zwzkx2OHsHCuOkR5Ddxembs=
+                  -----END PRIVATE KEY-----
+                  EOF
+                  cat > oauth/public.key<<EOF
+                  -----BEGIN PUBLIC KEY-----
+                  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAulJwcodq8PzbdrxhKBwe
+                  d1TNQQ65EMf0a/p3k8/MHXXJFP0x31Xdyb6gsv/qZYGPvBDteYlRi1e9Bbk8sUCW
+                  OmuGoR1M30F7vaLdH2HGpJ/U+CGtDct9gYtKAwwTK9DSjVgqE0e1emIeTunu8rkz
+                  FTK/qVbH03LuucpEP4ysEtTSpspcKiVQ5ayqKsHpbI6j8vH4UEHQ8KjNY4Doglnr
+                  BZc2MJMLPkGwGmTIw6MJ0fsG9EXTAuiK/RDgc66pXMYNPo+iVmi9J1oYwsJ60x7C
+                  ruOiJ66EKdSjxBCjj8dLc/GqcUw6W14GSy4kcAiXvM96TKAvf3Mj4bZgk0I05xrf
+                  fwIDAQAB
+                  -----END PUBLIC KEY-----
+                  EOF
             - silta/drupal-composer-install
             - silta/npm-install-build
           context: silta_dev
@@ -94,12 +135,18 @@ workflows:
                   fi
                   next_domain=${release_name}.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
                   next_public_base_url=https://${next_domain}
+                  drupal_client_secret=uj1M/+Ovd88DsvHR2xBXuQE2Z7o=
+                  drupal_client_id=b7302bd7-f2b6-43b6-ae6f-d1b47c44cf54
                   echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=${next_public_base_url}" >> "$BASH_ENV"
                   echo "export NEXT_IMAGE_DOMAIN=${next_domain}" >> "$BASH_ENV"
+                  echo "export DRUPAL_CLIENT_SECRET=${drupal_client_secret}" >> "$BASH_ENV"
+                  echo "export DRUPAL_CLIENT_ID=${drupal_client_id}" >> "$BASH_ENV"
                   escaped_next_public_base_url=$(printf '%s\n' "$next_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_drupal_client_secret=$(printf '%s\n' "$drupal_client_secret" | sed -e 's/[\/&]/\\&/g')
                   sed -i -e "s/<|next_public_base_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
                   sed -i -e "s/<|next_image_domain|>/$next_domain/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_client_id|>/$drupal_client_id/" silta/silta-next.yml
             - silta/npm-install-build:
                 path: next
           image_build_steps:

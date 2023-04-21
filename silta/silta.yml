@@ -8,11 +8,7 @@ php:
   drupalCoreVersion: "9"
   env:
     WUNDER_NEXT_FRONTEND_URL: <|next_domain|>
-    DRUPAL_CLIENT_SECRET:
-      valueFrom: 
-        secretKeyRef: 
-          key: drupal_client_secret
-          name: drupal-client-secret
+
 # Configure reference data that will be used when creating new environments.
 referenceData:
   # The name of the environment from which reference data will be copied.
@@ -21,10 +17,3 @@ referenceData:
 nginx:
   basicauth:
     enabled: false
-
-    #mounts:
-    # oauth-secrets:
-    #enabled: true
-    #secret:
-    #  secretName: oauth-secrets
-    #  mountPath: /var/www/html/oauth
