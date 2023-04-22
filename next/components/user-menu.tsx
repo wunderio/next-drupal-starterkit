@@ -22,10 +22,8 @@ export function UserMenu() {
     <nav>
       {status === "authenticated" && (
         <>
-          <button type="button" className="group" onClick={toggle}>
-            <span className="hidden group-hover:underline sm:mr-2 sm:inline">
-              {data.user.name}
-            </span>
+          <button type="button" className="hover:underline" onClick={toggle}>
+            <span className="hidden sm:mr-2 sm:inline">{data.user.name}</span>
             <AccountIcon className="inline-block h-6 w-6" />
           </button>
           <ul
@@ -48,9 +46,9 @@ export function UserMenu() {
         </>
       )}
       {status === "unauthenticated" && (
-        <Link href="/api/auth/signin" passHref>
-          <span className=" sm:mr-2 sm:inline">{t("log-in")}</span>
-          <AccountIcon className="inline-block hidden h-6 w-6 sm:inline" />
+        <Link href="/api/auth/signin" passHref className="hover:underline">
+          <span className="hidden sm:mr-2 sm:inline">{t("log-in")}</span>
+          <AccountIcon className="inline-block h-6 w-6" />
         </Link>
       )}
     </nav>

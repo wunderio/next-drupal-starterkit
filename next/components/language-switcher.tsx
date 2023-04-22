@@ -24,8 +24,8 @@ export function LanguageSwitcher() {
 
   return (
     <nav>
-      <button type="button" className="group" onClick={toggle}>
-        <span className="hidden group-hover:underline sm:mr-2 sm:inline">
+      <button type="button" className="hover:underline" onClick={toggle}>
+        <span className="hidden sm:mr-2 sm:inline">
           {languageLinks[locale].name}
         </span>
         <LanguageIcon className="inline-block h-6 w-6" />
