@@ -16,7 +16,7 @@ export function UserMenu() {
 
   // Close on click outside
   const listRef = useRef<HTMLUListElement>(null);
-  useOnClickOutside(listRef, close, "mousedown");
+  useOnClickOutside(listRef, close);
 
   return (
     <nav>

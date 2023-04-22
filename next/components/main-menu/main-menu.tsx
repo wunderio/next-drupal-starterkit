@@ -54,7 +54,7 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
 
   // Close on click outside
   const rootRef = useRef<HTMLElement>(null);
-  useOnClickOutside(rootRef, close, "mousedown");
+  useOnClickOutside(rootRef, close);
 
   // Close when route changes
   useEffectOnce(() => {
