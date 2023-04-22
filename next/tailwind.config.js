@@ -19,6 +19,11 @@ module.exports = {
       mischka: "#f7f7f8",
       white: "#ffffff",
 
+      info: "#221f2d",
+      success: "#007f6c",
+      warning: "#f7a700",
+      error: "#c80909",
+
       primary: {
         900: "#261da1",
         800: "#3f29ae",
