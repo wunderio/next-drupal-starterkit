@@ -3,11 +3,7 @@ const { borderRadius, fontFamily } = require("tailwindcss/defaultTheme");
 /** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
-    "./components/**/*.{tsx,ts,css}",
-    "./pages/**/*.{tsx,ts,css}",
-    "./styles/**/*.{tsx,ts,css}",
-    "./wunder-component-library/**/*.{tsx,ts,css}",
-    "./stories/**/*.stories.{tsx,ts}",
+    "./{components,lib,pages,stories,styles,wunder-component-library}/**/*",
   ],
   theme: {
     colors: {
