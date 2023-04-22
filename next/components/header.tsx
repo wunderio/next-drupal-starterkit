@@ -21,10 +21,10 @@ export function Header({ menu }: HeaderProps) {
     <header className="z-50 flex-shrink-0 border-b border-finnishwinter bg-white text-primary-600 md:sticky md:top-0">
       <nav className="mx-auto flex max-w-6xl flex-row items-center justify-between px-6 py-4">
         <HomeLink />
-        <div className="flex flex-row items-center justify-end gap-8">
+        <div className="flex flex-row items-center justify-end gap-6 sm:gap-8">
+          <SearchLink />
           <UserMenu />
           <LanguageSwitcher />
-          <SearchLink />
           <MenuToggle isOpen={isMainMenuOpen} setIsOpen={setIsMainMenuOpen} />
         </div>
       </nav>

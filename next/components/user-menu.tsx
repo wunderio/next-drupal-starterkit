@@ -23,10 +23,10 @@ export function UserMenu() {
       {status === "authenticated" && (
         <>
           <button type="button" className="group" onClick={toggle}>
-            <span className="inline-block group-hover:underline">
+            <span className="hidden group-hover:underline sm:mr-2 sm:inline">
               {data.user.name}
             </span>
-            <AccountIcon className="ml-2 hidden h-6 w-6 sm:inline-block" />
+            <AccountIcon className="inline-block h-6 w-6" />
           </button>
           <ul
             ref={listRef}
