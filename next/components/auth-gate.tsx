@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
+import { useTranslation } from "next-i18next";
 
-import InfoIcon from "@/styles/icons/info.svg";
+import { StatusMessage } from "@/wunder-component-library/status-message";
 
 type AuthGateProps = {
   children: React.ReactNode;
@@ -8,6 +9,7 @@ type AuthGateProps = {
 };
 
 export function AuthGate({ children, text }: AuthGateProps) {
+  const { t } = useTranslation();
   const { status } = useSession();
 
   if (status === "authenticated") {
@@ -15,12 +17,8 @@ export function AuthGate({ children, text }: AuthGateProps) {
   }
 
   return (
-    <div
-      className="relative rounded border border-secondary-900 bg-secondary-200 px-4 py-3 text-secondary-900"
-      role="alert"
-    >
-      <InfoIcon className="mr-2 inline h-6 w-6" />
-      <span>{text}</span>
-    </div>
+    <StatusMessage level="warning" title={t("status-warning")}>
+      {text}
+    </StatusMessage>
   );
 }
