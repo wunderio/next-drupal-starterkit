@@ -1,4 +1,4 @@
-const { borderRadius, fontFamily } = require("tailwindcss/defaultTheme");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import("tailwindcss").Config} */
 module.exports = {
@@ -50,8 +50,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      inter: ["--font-inter", ...fontFamily.sans],
-      overpass: ["--font-overpass", ...fontFamily.sans],
+      inter: ["--font-inter", ...defaultTheme.fontFamily.sans],
+      overpass: ["--font-overpass", ...defaultTheme.fontFamily.sans],
     },
     fontSize: {
       xs: ["0.60rem", { lineHeight: "1.5" }],
@@ -79,8 +79,12 @@ module.exports = {
     },
     extend: {
       borderRadius: {
-        ...borderRadius,
+        ...defaultTheme.borderRadius,
         DEFAULT: "3px",
+      },
+      opacity: {
+        ...defaultTheme.opacity,
+        15: "0.15",
       },
     },
   },
