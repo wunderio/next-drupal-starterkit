@@ -4,6 +4,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import jwt_decode from "jwt-decode";
 
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/auth/signin",
+  },
   providers: [
     CredentialsProvider({
       name: "Drupal",
