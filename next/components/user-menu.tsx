@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import clsx from "clsx";
 
 import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
@@ -15,8 +15,7 @@ export function UserMenu() {
   const close = () => setIsOpen(false);
 
   // Close on click outside
-  const listRef = useRef<HTMLUListElement>(null);
-  useOnClickOutside(listRef, close);
+  const ref = useOnClickOutside<HTMLUListElement>(close);
 
   return (
     <nav>
@@ -27,7 +26,7 @@ export function UserMenu() {
             <AccountIcon className="inline-block h-6 w-6" />
           </button>
           <ul
-            ref={listRef}
+            ref={ref}
             className={clsx(
               "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
               !isOpen && "hidden"

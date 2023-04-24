@@ -1,13 +1,14 @@
-import { RefObject } from "react";
+import { useRef } from "react";
 
 import { useEventListener } from "./use-event-listener";
 
 type Handler = (event: MouseEvent) => void;
 
 export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
-  ref: RefObject<T>,
   handler: Handler
-): void {
+) {
+  const ref = useRef<T>(null);
+
   useEventListener({
     eventName: "mousedown",
     handler: (event: MouseEvent) => {
@@ -21,4 +22,6 @@ export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
       handler(event);
     },
   });
+
+  return ref;
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 
 import { useLanguageLinks } from "@/lib/contexts/language-links-context";
@@ -19,8 +19,7 @@ export function LanguageSwitcher() {
   useEffect(close, [locale]);
 
   // Close on click outside
-  const listRef = useRef<HTMLUListElement>(null);
-  useOnClickOutside(listRef, close);
+  const ref = useOnClickOutside<HTMLUListElement>(close);
 
   return (
     <nav>
@@ -31,7 +30,7 @@ export function LanguageSwitcher() {
         <LanguageIcon className="inline-block h-6 w-6" />
       </button>
       <ul
-        ref={listRef}
+        ref={ref}
         className={clsx(
           "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
           !isOpen && "hidden"
