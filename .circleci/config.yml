@@ -16,7 +16,7 @@ workflows:
           name: validate
           executor: cicd81
           drupal-root: "drupal"
-          web-root: "drupal/web"
+          web-root: "web"
           pre-validation:
             - run:
                 name: Link files for validation
