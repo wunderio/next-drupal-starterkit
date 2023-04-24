@@ -19,7 +19,11 @@ export default function SignIn() {
   const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit = async ({ username, password }: Inputs) => {
-    await signIn("credentials", { username, password });
+    await signIn("credentials", {
+      username,
+      password,
+      callbackUrl: "/",
+    });
   };
 
   return (
