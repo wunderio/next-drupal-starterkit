@@ -17,6 +17,8 @@ workflows:
           executor: cicd81
           drupal-root: "drupal"
           web-root: "drupal/web"
+          pre-validation:
+            - run: ln -s ../silta .
           post-validation:
             - run: echo "You can add additional validation here!"
 
