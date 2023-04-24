@@ -31,5 +31,9 @@
   "form-send-another-message": "Lähetä toinen viesti",
   "login-to-fill-form": "Kirjaudu sisään täyttääksesi tämän lomakkeen.",
   "log-in": "Kirjaudu",
-  "log-out": "Kirjaudu ulos"
+  "log-out": "Kirjaudu ulos",
+  "statusmessage-info": "Tiedot",
+  "statusmessage-success": "Onnistui",
+  "statusmessage-warning": "Varoitus",
+  "statusmessage-error": "Virhe"
 }

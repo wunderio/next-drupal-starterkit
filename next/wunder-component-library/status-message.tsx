@@ -1,12 +1,13 @@
 import React from "react";
+import { useTranslation } from "next-i18next";
 import { cva } from "cva";
 
-import { capitalise, cn } from "@/lib/utils";
-import SuccessIcon from "@/styles/icons/checkmark.svg";
-import ErrorIcon from "@/styles/icons/error.svg";
-import WarningIcon from "@/styles/icons/warning.svg";
+import { cn } from "@/lib/utils";
+import Success from "@/styles/icons/checkmark.svg";
+import Error from "@/styles/icons/error.svg";
+import Warning from "@/styles/icons/warning.svg";
 
-export const variants = /* className */ cva(
+export const variants = cva(
   "text-md text-steelgray w-full relative py-6 px-16",
   {
     variants: {
@@ -35,20 +36,14 @@ export const StatusMessage = React.forwardRef<
   HTMLDivElement,
   StatusMessageProps
 >(({ level = "info", title, className, children, ...props }, ref) => {
-  const Icon = {
-    info: WarningIcon,
-    success: SuccessIcon,
-    warning: WarningIcon,
-    error: ErrorIcon,
+  const { t } = useTranslation();
+
+  const [Icon, color] = {
+    info: [Warning, "text-info"],
+    success: [Success, "text-success"],
+    warning: [Warning, "text-warning"],
+    error: [Error, "text-error"],
   }[level];
-  const iconColor = {
-    info: "text-info",
-    success: "text-success",
-    warning: "text-warning",
-    error: "text-error",
-  }[level];
-  const computedTitle =
-    title ?? `${level.charAt(0).toUpperCase()}${level.slice(1)}`;
 
   return (
     <div
@@ -57,8 +52,10 @@ export const StatusMessage = React.forwardRef<
       ref={ref}
       {...props}
     >
-      <Icon className={cn("absolute left-6 top-6 h-6 w-6", iconColor)} />
-      <h3 className="mb-2 text-md font-bold">{computedTitle}</h3>
+      <Icon className={cn("absolute left-6 top-6 h-6 w-6", color)} />
+      <h3 className="mb-2 text-md font-bold">
+        {title ?? t(`statusmessage-${level}`)}
+      </h3>
       {children}
     </div>
   );

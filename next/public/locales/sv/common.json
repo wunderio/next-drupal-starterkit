@@ -31,5 +31,9 @@
   "form-send-another-message": "Skicka ett annat meddelande",
   "login-to-fill-form": "Logga in för att fylla i detta formulär.",
   "log-in": "Logga in",
-  "log-out": "Logga ut"
+  "log-out": "Logga ut",
+  "statusmessage-info": "Info",
+  "statusmessage-success": "Lyckades",
+  "statusmessage-warning": "Varning",
+  "statusmessage-error": "Fel"
 }
