@@ -29,6 +29,12 @@ workflows:
           name: Drupal build & deploy
           executor: cicd81
           drupal-root: drupal
+          pre-release:
+            - silta/build-docker-image:
+                dockerfile: silta/elasticsearch.Dockerfile
+                tag: with-icu-analysis
+                identifier: elasticsearch
+                expose_image: false
           codebase-build:
             - run:
                 name: Set environment variables

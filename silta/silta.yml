@@ -21,3 +21,9 @@ nginx:
     enabled: false
 elasticsearch:
   enabled: true
+  image: europe-north1-docker.pkg.dev/silta-dev/images/next4drupal-project-elasticsearch
+  imageTag: 'with-icu-analysis'
+  imagePullPolicy: Always
+  esConfig:
+    elasticsearch.yml: |
+      script.allowed_contexts: score
