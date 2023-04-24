@@ -18,7 +18,11 @@ workflows:
           drupal-root: "drupal"
           web-root: "drupal/web"
           pre-validation:
-            - run: ln -s ../silta .
+            - run:
+                name: Link files for validation
+                command: | 
+                  ln -s ../silta .
+                  ln -s ../.dockerignore .
           post-validation:
             - run: echo "You can add additional validation here!"
 
