@@ -32,6 +32,7 @@
   "login-to-fill-form": "Kirjaudu sisään täyttääksesi tämän lomakkeen.",
   "log-in": "Kirjaudu",
   "log-out": "Kirjaudu ulos",
+  "you-are-not-logged-in": "Et ole kirjautunut sisään.",
   "statusmessage-info": "Tiedot",
   "statusmessage-success": "Onnistui",
   "statusmessage-warning": "Varoitus",

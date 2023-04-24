@@ -17,7 +17,7 @@ export function AuthGate({ children, text }: AuthGateProps) {
   }
 
   return (
-    <StatusMessage level="warning" title={t("status-warning")}>
+    <StatusMessage level="warning" title={t("you-are-not-logged-in")}>
       {text}
     </StatusMessage>
   );

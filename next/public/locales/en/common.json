@@ -32,6 +32,7 @@
   "login-to-fill-form": "Please login to fill this form.",
   "log-in": "Sign in",
   "log-out": "Log out",
+  "you-are-not-logged-in": "You are not logged in",
   "statusmessage-info": "Info",
   "statusmessage-success": "Success",
   "statusmessage-warning": "Warning",
