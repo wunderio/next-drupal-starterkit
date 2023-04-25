@@ -32,6 +32,7 @@
   "login-to-fill-form": "Kirjaudu sisään täyttääksesi tämän lomakkeen.",
   "log-in": "Kirjaudu",
   "log-out": "Kirjaudu ulos",
+  "login-error-check-username-password": "Tarkista käyttäjätunnuksesi ja salasanasi ja yritä uudelleen.",
   "username": "Käyttäjätunnus",
   "password": "Salasana",
   "you-are-not-logged-in": "Et ole kirjautunut sisään.",

@@ -32,6 +32,7 @@
   "login-to-fill-form": "Please log in to fill this form.",
   "log-in": "Log in",
   "log-out": "Log out",
+  "login-error-check-username-password": "Check your username and password and try again.",
   "username": "Username",
   "password": "Password",
   "you-are-not-logged-in": "You are not logged in",

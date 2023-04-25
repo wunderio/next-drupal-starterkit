@@ -8,6 +8,7 @@ import { getCommonPageProps } from "@/lib/get-common-page-props";
 
 import { Button } from "@/wunder-component-library/button";
 import { Input } from "@/wunder-component-library/input";
+import { StatusMessage } from "@/wunder-component-library/status-message";
 
 type Inputs = {
   username: string;
@@ -19,8 +20,9 @@ export default function LogIn() {
   const { t } = useTranslation();
   const { register, handleSubmit } = useForm<Inputs>();
 
+  const { callbackUrl, error } = router.query;
+
   const onSubmit = async ({ username, password }: Inputs) => {
-    const { callbackUrl } = router.query;
     await signIn("credentials", {
       username,
       password,
@@ -29,40 +31,47 @@ export default function LogIn() {
   };
 
   return (
-    <form
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto flex max-w-md flex-col gap-4"
-    >
-      <div>
-        <label className="mb-1 block text-sm font-bold" htmlFor="username">
-          {t("username")}
-        </label>
-        <Input
-          id="username"
-          autoComplete="username"
-          {...register("username", {
-            required: true,
-          })}
-        />
-      </div>
+    <div className="mx-auto max-w-md">
+      {error && (
+        <StatusMessage level="error" className="mb-8">
+          {t("login-error-check-username-password")}
+        </StatusMessage>
+      )}
+      <form
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
+        <div>
+          <label className="mb-1 block text-sm font-bold" htmlFor="username">
+            {t("username")}
+          </label>
+          <Input
+            id="username"
+            autoComplete="username"
+            {...register("username", {
+              required: true,
+            })}
+          />
+        </div>
 
-      <div>
-        <label className="mb-1 block text-sm font-bold" htmlFor="password">
-          {t("password")}
-        </label>
-        <Input
-          id="password"
-          autoComplete="current-password"
-          type="password"
-          {...register("password", {
-            required: true,
-          })}
-        />
-      </div>
+        <div>
+          <label className="mb-1 block text-sm font-bold" htmlFor="password">
+            {t("password")}
+          </label>
+          <Input
+            id="password"
+            autoComplete="current-password"
+            type="password"
+            {...register("password", {
+              required: true,
+            })}
+          />
+        </div>
 
-      <Button type="submit">{t("log-in")}</Button>
-    </form>
+        <Button type="submit">{t("log-in")}</Button>
+      </form>
+    </div>
   );
 }
 
