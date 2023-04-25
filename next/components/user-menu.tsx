@@ -9,15 +9,19 @@ import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import AccountIcon from "@/styles/icons/account-circle.svg";
 
 export function UserMenu() {
-  const router = useRouter();
+  const { locale, asPath } = useRouter();
   const { t } = useTranslation();
   const { data, status } = useSession();
+
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen((o) => !o);
   const close = () => setIsOpen(false);
 
-  // Close on click outside
   const ref = useOnClickOutside<HTMLUListElement>(close);
+
+  const loginUrl = `/auth/login?callbackUrl=${encodeURIComponent(
+    `/${locale}${asPath}`
+  )}`;
 
   if (status === "authenticated") {
     return (
@@ -49,10 +53,7 @@ export function UserMenu() {
 
   return (
     <nav>
-      <Link
-        href={`/auth/login?callbackUrl=/${router.locale}${router.asPath}`}
-        className="hover:underline"
-      >
+      <Link href={loginUrl} className="hover:underline">
         <span
           className={clsx(
             "hidden sm:mr-2 sm:inline",
