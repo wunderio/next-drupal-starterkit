@@ -2,6 +2,7 @@ import type { GetStaticPropsContext } from "next";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useTranslation } from "next-i18next";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { getCommonPageProps } from "@/lib/get-common-page-props";
@@ -16,18 +17,19 @@ type Inputs = {
 };
 
 export default function LogIn() {
-  const router = useRouter();
+  const { callbackUrl, error } = useRouter().query;
   const { t } = useTranslation();
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const { callbackUrl, error } = router.query;
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit = async ({ username, password }: Inputs) => {
+    setIsSubmitting(true);
     await signIn("credentials", {
       username,
       password,
       callbackUrl: typeof callbackUrl === "string" ? callbackUrl : "/",
     });
+    setIsSubmitting(false);
   };
 
   return (
@@ -65,7 +67,9 @@ export default function LogIn() {
           />
         </div>
 
-        <Button type="submit">{t("log-in")}</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {t("log-in")}
+        </Button>
       </form>
     </div>
   );
