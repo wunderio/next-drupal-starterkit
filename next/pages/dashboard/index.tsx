@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 
@@ -8,18 +9,10 @@ import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
-
-import { authOptions } from "./api/auth/[...nextauth]";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default function DashboardPage({ submissions }) {
   const { data } = useSession();
-  const tableRows = submissions.map((submission) => (
-    <tr key={submission.uuid[0]["value"]}>
-      <td className="px-6 py-4">{submission.webform_id[0]["target_id"]}</td>
-      <td className="px-6 py-4">{submission.uuid[0]["value"]}</td>
-      <td className="px-6 py-4">{submission.created[0]["value"]}</td>
-    </tr>
-  ));
 
   return (
     <>
@@ -31,11 +24,28 @@ export default function DashboardPage({ submissions }) {
         <thead className="bg-primary-600 uppercase text-primary-100">
           <tr>
             <th className="px-6 py-3">Webform id</th>
-            <th className="px-6 py-3">Submission uuid</th>
             <th className="px-6 py-3">Created at</th>
+            <th className="px-6 py-3">See detail</th>
           </tr>
         </thead>
-        <tbody className="border-b bg-white">{tableRows}</tbody>
+        <tbody className="border-b bg-white">
+          {Array.isArray(submissions) &&
+            submissions.map((submission) => (
+              <tr key={submission.uuid[0]["value"]}>
+                <td className="px-6 py-4">
+                  {submission.webform_id[0]["target_id"]}
+                </td>
+                <td className="px-6 py-4">{submission.created[0]["value"]}</td>
+                <td className="px-6 py-4">
+                  <Link
+                    href={`/dashboard/webforms/${submission.webform_id[0]["target_id"]}/${submission.uuid[0]["value"]}`}
+                  >
+                    See detail
+                  </Link>
+                </td>
+              </tr>
+            ))}
+        </tbody>
       </table>
     </>
   );
