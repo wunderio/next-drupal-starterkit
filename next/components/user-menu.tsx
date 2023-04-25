@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
@@ -8,6 +9,7 @@ import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import AccountIcon from "@/styles/icons/account-circle.svg";
 
 export function UserMenu() {
+  const router = useRouter();
   const { t } = useTranslation();
   const { data, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
@@ -47,8 +49,18 @@ export function UserMenu() {
 
   return (
     <nav>
-      <Link href="/api/auth/signin" passHref className="hover:underline">
-        <span className="hidden sm:mr-2 sm:inline">{t("log-in")}</span>
+      <Link
+        href={`/auth/signin?callbackUrl=/${router.locale}${router.asPath}`}
+        className="hover:underline"
+      >
+        <span
+          className={clsx(
+            "hidden sm:mr-2 sm:inline",
+            status === "loading" && "opacity-0"
+          )}
+        >
+          {t("log-in")}
+        </span>
         <AccountIcon className="inline-block h-6 w-6" />
       </Link>
     </nav>

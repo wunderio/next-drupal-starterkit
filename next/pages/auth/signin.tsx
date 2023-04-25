@@ -1,4 +1,5 @@
 import type { GetStaticPropsContext } from "next";
+import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
@@ -14,15 +15,16 @@ type Inputs = {
 };
 
 export default function SignIn() {
+  const router = useRouter();
   const { t } = useTranslation();
-
   const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit = async ({ username, password }: Inputs) => {
+    const { callbackUrl } = router.query;
     await signIn("credentials", {
       username,
       password,
-      callbackUrl: "/",
+      callbackUrl: typeof callbackUrl === "string" ? callbackUrl : "/",
     });
   };
 
