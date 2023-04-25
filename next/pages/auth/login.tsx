@@ -37,11 +37,7 @@ export default function LogIn() {
           {t("login-error-check-username-password")}
         </StatusMessage>
       )}
-      <form
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div>
           <label className="mb-1 block text-sm font-bold" htmlFor="username">
             {t("username")}
