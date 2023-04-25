@@ -9,7 +9,7 @@ import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import AccountIcon from "@/styles/icons/account-circle.svg";
 
 export function UserMenu() {
-  const { locale, asPath } = useRouter();
+  const { locale, asPath, query } = useRouter();
   const { t } = useTranslation();
   const { data, status } = useSession();
 
@@ -20,7 +20,7 @@ export function UserMenu() {
   const ref = useOnClickOutside<HTMLUListElement>(close);
 
   const loginUrl = `/auth/login?callbackUrl=${encodeURIComponent(
-    `/${locale}${asPath}`
+    query.callbackUrl?.toString() || `/${locale}${asPath}`
   )}`;
 
   if (status === "authenticated") {
