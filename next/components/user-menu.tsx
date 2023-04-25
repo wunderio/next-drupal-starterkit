@@ -17,39 +17,40 @@ export function UserMenu() {
   // Close on click outside
   const ref = useOnClickOutside<HTMLUListElement>(close);
 
+  if (status === "authenticated") {
+    return (
+      <nav>
+        <button type="button" className="hover:underline" onClick={toggle}>
+          <span className="hidden sm:mr-2 sm:inline">{data.user.name}</span>
+          <AccountIcon className="inline-block h-6 w-6" />
+        </button>
+        <ul
+          ref={ref}
+          className={clsx(
+            "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
+            !isOpen && "hidden"
+          )}
+        >
+          <li>
+            <button
+              type="button"
+              className="block p-2 hover:bg-primary-50"
+              onClick={() => void signOut()}
+            >
+              {t("log-out")}
+            </button>
+          </li>
+        </ul>
+      </nav>
+    );
+  }
+
   return (
     <nav>
-      {status === "authenticated" && (
-        <>
-          <button type="button" className="hover:underline" onClick={toggle}>
-            <span className="hidden sm:mr-2 sm:inline">{data.user.name}</span>
-            <AccountIcon className="inline-block h-6 w-6" />
-          </button>
-          <ul
-            ref={ref}
-            className={clsx(
-              "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
-              !isOpen && "hidden"
-            )}
-          >
-            <li>
-              <button
-                type="button"
-                className="block p-2 hover:bg-primary-50"
-                onClick={() => void signOut()}
-              >
-                {t("log-out")}
-              </button>
-            </li>
-          </ul>
-        </>
-      )}
-      {status === "unauthenticated" && (
-        <Link href="/api/auth/signin" passHref className="hover:underline">
-          <span className="hidden sm:mr-2 sm:inline">{t("log-in")}</span>
-          <AccountIcon className="inline-block h-6 w-6" />
-        </Link>
-      )}
+      <Link href="/api/auth/signin" passHref className="hover:underline">
+        <span className="hidden sm:mr-2 sm:inline">{t("log-in")}</span>
+        <AccountIcon className="inline-block h-6 w-6" />
+      </Link>
     </nav>
   );
 }
