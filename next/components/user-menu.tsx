@@ -52,18 +52,16 @@ export function UserMenu() {
   }
 
   return (
-    <nav>
-      <Link href={loginUrl} className="hover:underline">
-        <span
-          className={clsx(
-            "hidden sm:mr-2 sm:inline",
-            status === "loading" && "opacity-0"
-          )}
-        >
-          {t("log-in")}
-        </span>
-        <AccountIcon className="inline-block h-6 w-6" />
-      </Link>
-    </nav>
+    <Link href={loginUrl} className="hover:underline">
+      <span
+        className={clsx(
+          "hidden sm:mr-2 sm:inline",
+          status === "loading" && "opacity-0"
+        )}
+      >
+        {t("log-in")}
+      </span>
+      <AccountIcon className="inline-block h-6 w-6" />
+    </Link>
   );
 }
