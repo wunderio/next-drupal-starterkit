@@ -50,7 +50,7 @@ export function UserMenu() {
   return (
     <nav>
       <Link
-        href={`/auth/signin?callbackUrl=/${router.locale}${router.asPath}`}
+        href={`/auth/login?callbackUrl=/${router.locale}${router.asPath}`}
         className="hover:underline"
       >
         <span

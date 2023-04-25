@@ -14,7 +14,7 @@ type Inputs = {
   password: string;
 };
 
-export default function SignIn() {
+export default function LogIn() {
   const router = useRouter();
   const { t } = useTranslation();
   const { register, handleSubmit } = useForm<Inputs>();
