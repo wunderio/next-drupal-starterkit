@@ -40,6 +40,7 @@ export default function LogIn() {
         </label>
         <Input
           id="username"
+          autoComplete="username"
           {...register("username", {
             required: true,
           })}
@@ -52,6 +53,7 @@ export default function LogIn() {
         </label>
         <Input
           id="password"
+          autoComplete="current-password"
           type="password"
           {...register("password", {
             required: true,
