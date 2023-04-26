@@ -12,6 +12,9 @@ php:
     DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
     DRUPAL_CLIENT_ID: drupal-client-id
   hashsalt: notsosecurehashnotsosecurehashnotsosecurehash
+  # This section is used in the template only, it will reinstall the site and apply
+  # all standard configuration at each commit. When creating a new project from this template
+  # you have to remove this section.
   postupgrade:
     afterCommand: |
       drush si minimal -y
