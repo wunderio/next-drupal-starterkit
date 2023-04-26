@@ -67,13 +67,15 @@ workflows:
                 name: Install drupal from scratch
                 command: |
                   pwd
+                  cd web
                   drush si minimal -y
                   // Install recipe
                   drush wunder_next:setup-user-and-consumer
                   drush eshd -y
                   drush eshs
                   drush en wunder_democontent -y
-                  cd /app/drupal/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
+                  core/scripts/drupal recipe ../recipes/wunder_next_setup
+                  cd /home/circleci/project/drupal/web
                   drush mim --group=demo_content --execute-dependencies
                   drush cr
           context: silta_dev
