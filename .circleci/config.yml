@@ -63,6 +63,19 @@ workflows:
                   chmod 600 oauth/private.key oauth/public.key
             - silta/drupal-composer-install
             - silta/npm-install-build
+            - run:
+                name: Install drupal from scratch
+                command: |
+                  pwd
+                  drush si minimal -y
+                  // Install recipe
+                  drush wunder_next:setup-user-and-consumer
+                  drush eshd -y
+                  drush eshs
+                  drush en wunder_democontent -y
+                  cd /app/drupal/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
+                  drush mim --group=demo_content --execute-dependencies
+                  drush cr
           context: silta_dev
           filters:
             branches:
