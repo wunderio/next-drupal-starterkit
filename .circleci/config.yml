@@ -112,8 +112,8 @@ workflows:
                   fi
                   next_domain=${release_name}.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
                   next_public_base_url=https://${next_domain}
-                  drupal_client_secret=XmLM28mPZSq4e6boUcyP2raYvlY=
-                  drupal_client_id=next-drupal-consumer
+                  drupal_client_secret=drupal_client_secret_not_secure_used_only_locally
+                  drupal_client_id=drupal-client-id
                   echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=${next_public_base_url}" >> "$BASH_ENV"
                   echo "export NEXT_IMAGE_DOMAIN=${next_domain}" >> "$BASH_ENV"
                   echo "export DRUPAL_CLIENT_SECRET=${drupal_client_secret}" >> "$BASH_ENV"
