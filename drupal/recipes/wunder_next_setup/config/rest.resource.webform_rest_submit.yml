@@ -4,7 +4,7 @@ status: true
 dependencies:
   module:
     - serialization
-    - user
+    - simple_oauth
     - webform_rest
 id: webform_rest_submit
 plugin_id: webform_rest_submit
@@ -15,4 +15,4 @@ configuration:
   formats:
     - json
   authentication:
-    - cookie
+    - oauth2

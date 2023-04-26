@@ -127,6 +127,13 @@ We decided to implement a static form, in the sense that the "hardcoded" fields 
 
 The `frontpage` and `page` content types are configured to use the popular [Paragraphs drupal module](https://www.drupal.org/project/paragraphs). The setup includes basic paragraph types to add images, videos, text, and also a nested paragraph type to demonstrate how to handle this in backend and frontend.
 
+### Frontend authentication
+
+The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Next-auth](https://next-auth.js.org/).
+
+* Some test users are imported as part of the content migration (check the `users.csv' file for the credentials).
+* As an example, only registered users are allowed to post to the drupal `contact` webform, and parts of the interface in the frontend are available only for logged-in users.
+
 ### Typescript
 
 The frontend uses [TypeScript](https://www.typescriptlang.org) to provide type safety.

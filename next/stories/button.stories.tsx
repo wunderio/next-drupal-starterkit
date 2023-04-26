@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import InfoIcon from "@/styles/icons/info.svg";
+import WarningIcon from "@/styles/icons/warning.svg";
 
 import { Button } from "@/wunder-component-library/button";
 
@@ -112,7 +112,7 @@ export const Large: Story = {
 export const WithIconOnly: Story = {
   name: "Icon only",
   args: {
-    children: <InfoIcon className="h-6 w-6" />,
+    children: <WarningIcon className="h-6 w-6" />,
   },
 };
 
@@ -121,7 +121,7 @@ export const WithIconLeft: Story = {
   args: {
     children: (
       <>
-        <InfoIcon className="mr-2 inline h-6 w-6" />
+        <WarningIcon className="mr-2 inline h-6 w-6" />
         <span>Icon left</span>
       </>
     ),
@@ -134,7 +134,7 @@ export const WithIconRight: Story = {
     children: (
       <>
         <span>Icon right</span>
-        <InfoIcon className="ml-2 inline h-6 w-6" />
+        <WarningIcon className="ml-2 inline h-6 w-6" />
       </>
     ),
   },
