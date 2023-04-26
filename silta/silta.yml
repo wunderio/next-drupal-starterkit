@@ -15,6 +15,7 @@ php:
   postupgrade:
     afterCommand: |
       drush si minimal -y
+      chmod +x /app/web/core/scripts/drupal
       cd /app/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
       drush wunder_next:setup-user-and-consumer
       drush en wunder_democontent -y
