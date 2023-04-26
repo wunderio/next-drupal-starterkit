@@ -1,13 +1,9 @@
-const { borderRadius, fontFamily } = require("tailwindcss/defaultTheme");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
-    "./components/**/*.{tsx,ts,css}",
-    "./pages/**/*.{tsx,ts,css}",
-    "./styles/**/*.{tsx,ts,css}",
-    "./wunder-component-library/**/*.{tsx,ts,css}",
-    "./stories/**/*.stories.{tsx,ts}",
+    "./{components,lib,pages,stories,styles,wunder-component-library}/**/*",
   ],
   theme: {
     colors: {
@@ -22,6 +18,11 @@ module.exports = {
       finnishwinter: "#e7e6eb",
       mischka: "#f7f7f8",
       white: "#ffffff",
+
+      info: "#221f2d",
+      success: "#007f6c",
+      warning: "#f7a700",
+      error: "#c80909",
 
       primary: {
         900: "#261da1",
@@ -49,8 +50,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      inter: ["--font-inter", ...fontFamily.sans],
-      overpass: ["--font-overpass", ...fontFamily.sans],
+      inter: ["--font-inter", ...defaultTheme.fontFamily.sans],
+      overpass: ["--font-overpass", ...defaultTheme.fontFamily.sans],
     },
     fontSize: {
       xs: ["0.60rem", { lineHeight: "1.5" }],
@@ -78,8 +79,12 @@ module.exports = {
     },
     extend: {
       borderRadius: {
-        ...borderRadius,
+        ...defaultTheme.borderRadius,
         DEFAULT: "3px",
+      },
+      opacity: {
+        ...defaultTheme.opacity,
+        15: "0.15",
       },
     },
   },

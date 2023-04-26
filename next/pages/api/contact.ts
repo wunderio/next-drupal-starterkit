@@ -1,14 +1,26 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth/next";
 import { drupal } from "lib/drupal";
 
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+
 export default async function handler(
-  request: NextApiRequest,
-  response: NextApiResponse
+  req: NextApiRequest,
+  res: NextApiResponse
 ) {
+  // Because we want to allow only registered users to submit
+  // to the contact webform, let's get the session:
+  const session = await getServerSession(req, res, authOptions);
+
+  // if there is no session, return 401:
+  if (!session) {
+    res.status(401).end();
+  }
+
   try {
-    if (request.method === "POST") {
+    if (req.method === "POST") {
       const url = drupal.buildUrl("/webform_rest/submit");
-      const body = JSON.parse(request.body);
+      const body = JSON.parse(req.body);
 
       // Submit to Drupal.
       const result = await drupal.fetch(url.toString(), {
@@ -22,15 +34,19 @@ export default async function handler(
         }),
         headers: {
           "Content-Type": "application/json",
+          // Pass the token to authenticate the request:
+          Authorization: `Bearer ${session.accessToken}`,
         },
       });
 
-      if (!result.ok) {
+      if (result.ok) {
+        res.status(200).end();
+      } else {
+        res.status(result.status).end();
         throw new Error();
       }
-      response.status(200).end();
     }
   } catch (error) {
-    return response.status(400).json(error.message);
+    return res.status(400).json(error.message);
   }
 }

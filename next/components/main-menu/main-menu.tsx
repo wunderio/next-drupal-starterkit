@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import { useEffectOnce } from "@/lib/hooks/use-effect-once";
 import { useEventListener } from "@/lib/hooks/use-event-listener";
@@ -53,8 +53,7 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
   });
 
   // Close on click outside
-  const rootRef = useRef<HTMLElement>(null);
-  useOnClickOutside(rootRef, close, "mousedown");
+  const ref = useOnClickOutside<HTMLUListElement>(close);
 
   // Close when route changes
   useEffectOnce(() => {
@@ -118,7 +117,7 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
         value={activeMenu}
         onValueChange={setActiveMenu}
         isOpen={isOpen}
-        ref={rootRef}
+        ref={ref}
       >
         <MenuList level={0}>
           {menu.map((item) => (
