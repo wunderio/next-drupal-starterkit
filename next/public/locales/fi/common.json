@@ -28,5 +28,16 @@
   "form-label-message": "Viesti:",
   "form-label-submit": "Lähetä",
   "form-thank-you-message": "Kiitos!",
-  "form-send-another-message": "Lähetä toinen viesti"
+  "form-send-another-message": "Lähetä toinen viesti",
+  "login-to-fill-form": "Kirjaudu sisään täyttääksesi tämän lomakkeen.",
+  "log-in": "Kirjaudu",
+  "log-out": "Kirjaudu ulos",
+  "login-error-check-username-password": "Tarkista käyttäjätunnuksesi ja salasanasi ja yritä uudelleen.",
+  "username": "Käyttäjätunnus",
+  "password": "Salasana",
+  "you-are-not-logged-in": "Et ole kirjautunut sisään.",
+  "statusmessage-info": "Tiedot",
+  "statusmessage-success": "Onnistui",
+  "statusmessage-warning": "Varoitus",
+  "statusmessage-error": "Virhe"
 }

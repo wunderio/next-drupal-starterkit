@@ -28,5 +28,16 @@
   "form-label-message": "Meddelande:",
   "form-label-submit": "Skicka",
   "form-thank-you-message": "Tack!",
-  "form-send-another-message": "Skicka ett annat meddelande"
+  "form-send-another-message": "Skicka ett annat meddelande",
+  "login-to-fill-form": "Logga in för att fylla i detta formulär.",
+  "log-in": "Logga in",
+  "log-out": "Logga ut",
+  "login-error-check-username-password": "Kontrollera ditt användarnamn och lösenord och försök igen.",
+  "username": "Användarnamn",
+  "password": "Lösenord",
+  "you-are-not-logged-in": "Du är inte inloggad.",
+  "statusmessage-info": "Info",
+  "statusmessage-success": "Lyckades",
+  "statusmessage-warning": "Varning",
+  "statusmessage-error": "Fel"
 }
