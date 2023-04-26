@@ -17,8 +17,9 @@ php:
       drush si minimal -y
       chmod +x /app/web/core/scripts/drupal
       cd /app/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
+      drush cr
       drush simple-oauth:generate-keys /app/oauth
-      chmod 600 /app/oauth/private.key /app/oauth/oauth/public.key
+      chmod 600 /app/oauth/private.key /app/oauth/public.key
       drush wunder_next:setup-user-and-consumer
       drush en wunder_democontent -y
       drush cr
