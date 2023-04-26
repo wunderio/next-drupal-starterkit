@@ -12,6 +12,16 @@ php:
     DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
     DRUPAL_CLIENT_ID: drupal-client-id
   hashsalt: notsosecurehashnotsosecurehashnotsosecurehash
+  postupgrade:
+    afterCommand: |
+      drush si minimal -y
+      drush wunder_next:setup-user-and-consumer
+      drush eshd -y
+      drush eshs
+      drush en wunder_democontent -y
+      core/scripts/drupal recipe ../recipes/wunder_next_setup
+      drush mim --group=demo_content --execute-dependencies
+      drush cr
 
 # Configure reference data that will be used when creating new environments.
 referenceData:
