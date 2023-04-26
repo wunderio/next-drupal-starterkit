@@ -110,21 +110,24 @@ workflows:
                   if [ ${#release_name} -ge 35 ]; then
                     release_name="$(printf "$release_name" | cut -c 1-34)$(printf "$release_name" | shasum -a 256 | cut -c 1-3 )"
                   fi
-                  next_domain=${release_name}.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
+                  drupal_domain=${release_name}.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
+                  drupal_public_base_url=https://${drupal_domain}
+                  next_domain=${release_name}-next.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
                   next_public_base_url=https://${next_domain}
                   drupal_client_secret=drupal_client_secret_not_secure_used_only_locally
                   drupal_client_id=drupal-client-id
                   next_auth_secret=next_auth_secret_not_secure_used_only_locally
-                  echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=${next_public_base_url}" >> "$BASH_ENV"
-                  echo "export NEXT_IMAGE_DOMAIN=${next_domain}" >> "$BASH_ENV"
+                  echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=${drupal_public_base_url}" >> "$BASH_ENV"
+                  echo "export NEXT_IMAGE_DOMAIN=${drupal_domain}" >> "$BASH_ENV"
                   echo "export DRUPAL_CLIENT_SECRET=${drupal_client_secret}" >> "$BASH_ENV"
                   echo "export DRUPAL_CLIENT_ID=${drupal_client_id}" >> "$BASH_ENV"
                   echo "export NEXTAUTH_SECRET=${next_auth_secret}" >> "$BASH_ENV"
+                  escaped_drupal_public_base_url=$(printf '%s\n' "$drupal_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_next_public_base_url=$(printf '%s\n' "$next_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_drupal_client_secret=$(printf '%s\n' "$drupal_client_secret" | sed -e 's/[\/&]/\\&/g')
                   escaped_nextauth_secret=$(printf '%s\n' "$nextauth_secret" | sed -e 's/[\/&]/\\&/g')
                   sed -i -e "s/<|next_public_base_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
-                  sed -i -e "s/<|next_image_domain|>/$next_domain/" silta/silta-next.yml
+                  sed -i -e "s/<|next_image_domain|>/$drupal_domain/" silta/silta-next.yml
                   sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
