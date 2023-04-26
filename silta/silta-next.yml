@@ -13,3 +13,5 @@ services:
       NEXT_IMAGE_DOMAIN: <|next_image_domain|>
       DRUPAL_CLIENT_SECRET: <|drupal_client_secret|>
       DRUPAL_CLIENT_ID: drupal-client-id
+      NEXTAUTH_SECRET: <|nextauth_secret|>
+      NEXTAUTH_URL: <|nextauth_url|>
