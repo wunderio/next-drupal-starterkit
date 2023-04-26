@@ -23,7 +23,6 @@ php:
       drush cr
       drush wunder_next:setup-user-and-consumer
       drush en wunder_democontent -y
-      drush cr
       drush eshd -y
       drush eshs
       drush mim --group=demo_content --execute-dependencies --skip-progress-bar
