@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 
 export const authOptions: NextAuthOptions = {
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/auth/login",
   },
   providers: [
     CredentialsProvider({

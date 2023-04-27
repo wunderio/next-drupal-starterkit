@@ -13,7 +13,7 @@ export function AuthGate({ children, text }: AuthGateProps) {
   const { status } = useSession();
 
   if (status === "authenticated") {
-    return children;
+    return <>{children}</>;
   }
 
   return (

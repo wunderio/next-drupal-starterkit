@@ -40,77 +40,75 @@ export function ContactForm() {
 
   const onErrors = (errors) => console.error(errors);
 
-  return (
-    <div className="mb-4 rounded border border-finnishwinter bg-white p-4 shadow-md transition-all hover:shadow-md">
-      {isSubmitSuccessful && (
-        <StatusMessage level="success">
-          <p className="mb-4">{t("form-thank-you-message")}</p>
-          <Button type="button" onClick={() => reset()}>
-            {t("form-send-another-message")}
-          </Button>
-        </StatusMessage>
-      )}
-      {!isSubmitSuccessful && (
-        <form
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onSubmit={handleSubmit(onSubmit, onErrors)}
-          className="flex flex-col gap-5"
-        >
-          <h2 className="text-heading-sm font-bold md:text-heading-md">
-            {t("form-title")}
-          </h2>
-          <p>{t("form-description")}</p>
-          <div>
-            <label className="mb-2 block text-sm font-bold" htmlFor="name">
-              {t("form-label-name")}
-            </label>
-            <Input
-              type="text"
-              id="name"
-              {...register("name", {
-                required: true,
-              })}
-            />
-          </div>
-          <div>
-            <label className="mb-2 block text-sm font-bold" htmlFor="email">
-              {t("form-label-email")}
-            </label>
-            <Input
-              type="email"
-              id="email"
-              {...register("email", {
-                required: true,
-              })}
-            />
-          </div>
-          <div>
-            <label className="mb-2 block text-sm font-bold" htmlFor="subject">
-              {t("form-label-subject")}
-            </label>
-            <Input
-              type="text"
-              id="subject"
-              {...register("subject", {
-                required: true,
-              })}
-            />
-          </div>
-          <div>
-            <label className="mb-2 block text-sm font-bold" htmlFor="message">
-              {t("form-label-message")}
-            </label>
-            <Textarea
-              id="message"
-              {...register("message", {
-                required: true,
-              })}
-            />
-          </div>
+  if (isSubmitSuccessful) {
+    return (
+      <StatusMessage level="success">
+        <p className="mb-4">{t("form-thank-you-message")}</p>
+        <Button type="button" onClick={() => reset()}>
+          {t("form-send-another-message")}
+        </Button>
+      </StatusMessage>
+    );
+  }
 
-          <Button type="submit">{t("form-submit")}</Button>
-        </form>
-      )}
-    </div>
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit, onErrors)}
+      className="mb-4 flex flex-col gap-5 rounded border border-finnishwinter bg-white p-4 shadow-md transition-all hover:shadow-md"
+    >
+      <h2 className="text-heading-sm font-bold md:text-heading-md">
+        {t("form-title")}
+      </h2>
+      <p>{t("form-description")}</p>
+      <div>
+        <label className="mb-2 block text-sm font-bold" htmlFor="name">
+          {t("form-label-name")}
+        </label>
+        <Input
+          type="text"
+          id="name"
+          {...register("name", {
+            required: true,
+          })}
+        />
+      </div>
+      <div>
+        <label className="mb-2 block text-sm font-bold" htmlFor="email">
+          {t("form-label-email")}
+        </label>
+        <Input
+          type="email"
+          id="email"
+          {...register("email", {
+            required: true,
+          })}
+        />
+      </div>
+      <div>
+        <label className="mb-2 block text-sm font-bold" htmlFor="subject">
+          {t("form-label-subject")}
+        </label>
+        <Input
+          type="text"
+          id="subject"
+          {...register("subject", {
+            required: true,
+          })}
+        />
+      </div>
+      <div>
+        <label className="mb-2 block text-sm font-bold" htmlFor="message">
+          {t("form-label-message")}
+        </label>
+        <Textarea
+          id="message"
+          {...register("message", {
+            required: true,
+          })}
+        />
+      </div>
+
+      <Button type="submit">{t("form-submit")}</Button>
+    </form>
   );
 }

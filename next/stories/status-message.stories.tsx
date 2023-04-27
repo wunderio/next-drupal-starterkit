@@ -68,7 +68,8 @@ export const CustomTitle: Story = {
       title="By the way, the title can be customized."
     >
       <p className="my-4">
-        And the content can be anything too - it doesn't have to be a string.
+        And the content can be anything too - it doesn&apos;t have to be a
+        string.
       </p>
       <Button onClick={() => alert("See - this is a button!")}>
         Click me!

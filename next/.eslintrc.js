@@ -55,6 +55,14 @@ module.exports = {
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/no-misused-promises": [
+          2,
+          {
+            checksVoidReturn: {
+              attributes: false,
+            },
+          },
+        ],
 
         // Sort imports.
         "simple-import-sort/imports": [
