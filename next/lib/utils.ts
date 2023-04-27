@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
 
 import { Translations } from "@/lib/contexts/language-links-context";
+import { WebformSubmission } from "@/types";
 
 export function cn(...inputs: ClassNameValue[]) {
   return twMerge(inputs);
@@ -73,9 +74,9 @@ export function handleWebFormSubmissionSViewResult(result: any) {
   return result;
 }
 
-export function handleRawWebFormSubmission(result: any) {
-  if (result.webform_submission) {
-    return Object.entries(result.webform_submission);
-  }
-  return [];
+export function handleRawWebFormSubmission(result: any): WebformSubmission {
+  return {
+    formTitle: result.title,
+    formData: Object.entries(result.webform_submission),
+  };
 }

@@ -20,7 +20,7 @@ export default function DashboardPage({ submission }) {
       <Meta title={t("form-submission-details")} metatags={[]} />
       <HeadingPage>{t("form-submission-details")}</HeadingPage>
       <p className="mt-4 py-4 text-justify text-md/xl text-scapaflow sm:text-lg">
-        {t("form-submission-intro-text", { form: submission.title })}
+        {t("form-submission-intro-text", { form: submission.formTitle })}
       </p>
       <div>
         <table className="text-graysuit-200 w-full text-left ">
@@ -31,7 +31,7 @@ export default function DashboardPage({ submission }) {
             </tr>
           </thead>
           <tbody className="border-b bg-white">
-            {submission.map(([key, value], i) => (
+            {submission.formData.map(([key, value], i) => (
               <tr key={i}>
                 <td className="px-6 py-4">{key}:</td>
                 <td className="px-6 py-4">

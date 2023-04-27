@@ -22,3 +22,8 @@ declare module "next-auth" {
     refresh_token: string;
   }
 }
+
+export interface WebformSubmission {
+  formTitle: string;
+  formData: any;
+}
