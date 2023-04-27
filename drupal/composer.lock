@@ -2348,17 +2348,17 @@
         },
         {
             "name": "drupal/next",
-            "version": "1.6.2",
+            "version": "1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/next.git",
-                "reference": "1.6.2"
+                "reference": "1.6.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/next-1.6.2.zip",
-                "reference": "1.6.2",
-                "shasum": "c9ad4e5cc54149122b2b587d2841295a4d59bd2f"
+                "url": "https://ftp.drupal.org/files/projects/next-1.6.3.zip",
+                "reference": "1.6.3",
+                "shasum": "e5ce08189ae47ceb6933407f53bfd43a24a9b05c"
             },
             "require": {
                 "cweagans/composer-patches": "~1.0",
@@ -2380,8 +2380,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.6.2",
-                    "datestamp": "1672916703",
+                    "version": "1.6.3",
+                    "datestamp": "1681969041",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
