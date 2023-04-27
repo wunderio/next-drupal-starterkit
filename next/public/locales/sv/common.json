@@ -39,5 +39,16 @@
   "statusmessage-info": "Info",
   "statusmessage-success": "Lyckades",
   "statusmessage-warning": "Varning",
-  "statusmessage-error": "Fel"
+  "statusmessage-error": "Fel",
+  "user-dashboard": "Användardashboard",
+  "user-dashboard-intro-greeting": "Hej {{username}}! Det här är dina tidigare formulärinlämningar:",
+  "form-submission-details": "Information om formulärinlämning",
+  "form-submission-intro-text": "Dina inskickade data för formuläret {{form}}",
+  "form-field": "Fält",
+  "form-value": "Värde",
+  "form": "Form",
+  "date": "Datum",
+  "more-details": "Mer detaljer",
+  "see-more-details": "Se mer detaljer",
+  "no-submissions-yet": "Du har inte skickat in några formulär än."
 }

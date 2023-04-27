@@ -39,5 +39,16 @@
   "statusmessage-info": "Tiedot",
   "statusmessage-success": "Onnistui",
   "statusmessage-warning": "Varoitus",
-  "statusmessage-error": "Virhe"
+  "statusmessage-error": "Virhe",
+  "user-dashboard": "Kojelauta",
+  "user-dashboard-intro-greeting": "Hei {{username}}! Nämä ovat aiemmat lomakkeesi lähetykset:",
+  "form-submission-details": "Lomakkeen lähetyksen tiedot",
+  "form-submission-intro-text": "Tämä on {{form}} lomakkeen lähetyksen yhteenveto.",
+  "form-field": "Kenttä",
+  "form-value": "Arvo",
+  "form": "Lomake",
+  "date": "Päivämäära",
+  "more-details": "Lisätietoja",
+  "see-more-details": "Näytä lisää tietoja",
+  "no-submissions-yet": "Et ole vielä lähettänyt lomakkeita."
 }

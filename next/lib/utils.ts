@@ -56,3 +56,19 @@ export function getYouTubeId(url: string) {
   const arr = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
   return undefined !== arr[2] ? arr[2].split(/[^\w-]/i)[0] : arr[0];
 }
+
+/**
+ * Returns an empty array if the result is empty, or the array of results.
+ *
+ * We are using a drupal rest view for this, and it has this strange behaviour for empty results.
+ *
+ * @param result
+ */
+export function handleWebFormSubmissionViewResult(result: any) {
+  // Strangely, when there are no results, the result is a string containing "[]"
+  if (result.content === "[]") {
+    console.log("returning empty array");
+    return [];
+  }
+  return result;
+}

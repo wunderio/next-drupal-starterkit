@@ -39,7 +39,7 @@ export function UserMenu() {
         >
           <li>
             <Link className="block p-2 hover:bg-primary-50" href={"/dashboard"}>
-              Your dashboard
+              {t("user-dashboard")}
             </Link>
           </li>
           <li>
