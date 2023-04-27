@@ -9,6 +9,7 @@ import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
+import { handleRawWebFormSubmission } from "@/lib/utils";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default function DashboardPage({ submission }) {
@@ -30,18 +31,16 @@ export default function DashboardPage({ submission }) {
             </tr>
           </thead>
           <tbody className="border-b bg-white">
-            {Object.entries(submission.webform_submission).map(
-              ([key, value], i) => (
-                <tr key={i}>
-                  <td className="px-6 py-4">{key}:</td>
-                  <td className="px-6 py-4">
-                    <span className="border-2 border-primary-200 bg-primary-50 p-2">
-                      {value}
-                    </span>
-                  </td>
-                </tr>
-              )
-            )}
+            {submission.map(([key, value], i) => (
+              <tr key={i}>
+                <td className="px-6 py-4">{key}:</td>
+                <td className="px-6 py-4">
+                  <span className="border-2 border-primary-200 bg-primary-50 p-2">
+                    {value}
+                  </span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -76,7 +75,8 @@ export const getServerSideProps: GetServerSideProps<CommonPageProps> = async (
     },
   });
 
-  const submission = await result.json();
+  const rawSubmission = await result.json();
+  const submission = handleRawWebFormSubmission(rawSubmission);
 
   return {
     props: {

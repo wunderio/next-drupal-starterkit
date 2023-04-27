@@ -11,7 +11,7 @@ import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
-import { formatDate, handleWebFormSubmissionViewResult } from "@/lib/utils";
+import { formatDate, handleWebFormSubmissionSViewResult } from "@/lib/utils";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default function DashboardPage({ submissions }) {
@@ -94,7 +94,7 @@ export const getServerSideProps: GetServerSideProps<CommonPageProps> = async (
   });
 
   const submissionsViewResult = await result.json();
-  const submissions = handleWebFormSubmissionViewResult(submissionsViewResult);
+  const submissions = handleWebFormSubmissionSViewResult(submissionsViewResult);
 
   return {
     props: {
