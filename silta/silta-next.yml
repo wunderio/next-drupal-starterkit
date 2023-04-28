@@ -17,5 +17,4 @@ services:
       NEXTAUTH_URL: <|nextauth_url|>
 
 nginx:
-  security_headers:
-    content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self' https://<|next_public_base_url|>; base-uri 'self'; object-src 'self'; connect-src wss: https:"
+  content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self' https://<|next_public_base_url|>; base-uri 'self'; object-src 'self'; connect-src wss: https:"
