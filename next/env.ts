@@ -15,6 +15,7 @@ export const env = createEnv({
     NEXT_PUBLIC_FRONTEND_URL: zod.string().url(),
   },
   runtimeEnv: {
+    /* eslint-disable n/no-process-env */
     NODE_ENV: process.env.NODE_ENV,
     DRUPAL_SITE_ID: process.env.DRUPAL_SITE_ID,
     DRUPAL_CLIENT_ID: process.env.DRUPAL_CLIENT_ID,
@@ -23,5 +24,6 @@ export const env = createEnv({
     NEXT_IMAGE_DOMAIN: process.env.NEXT_IMAGE_DOMAIN,
     NEXT_PUBLIC_DRUPAL_BASE_URL: process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
     NEXT_PUBLIC_FRONTEND_URL: process.env.NEXT_PUBLIC_FRONTEND_URL,
+    /* eslint-enable n/no-process-env */
   },
 });

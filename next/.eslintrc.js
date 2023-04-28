@@ -34,7 +34,7 @@ module.exports = {
         browser: true,
         node: true,
       },
-      plugins: ["simple-import-sort"],
+      plugins: ["n", "simple-import-sort"],
       extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -63,6 +63,8 @@ module.exports = {
             },
           },
         ],
+
+        "n/no-process-env": ["error"],
 
         // Sort imports.
         "simple-import-sort/imports": [
