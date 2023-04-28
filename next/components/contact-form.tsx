@@ -42,7 +42,7 @@ export function ContactForm() {
 
   if (isSubmitSuccessful) {
     return (
-      <StatusMessage level="success">
+      <StatusMessage level="success" className="mx-auto w-full max-w-3xl">
         <p className="mb-4">{t("form-thank-you-message")}</p>
         <Button type="button" onClick={() => reset()}>
           {t("form-send-another-message")}
@@ -54,7 +54,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit, onErrors)}
-      className="mb-4 flex flex-col gap-5 rounded border border-finnishwinter bg-white p-4 shadow-md transition-all hover:shadow-md"
+      className="mx-auto mb-4 flex max-w-3xl flex-col gap-5 rounded border border-finnishwinter bg-white p-4 shadow-md transition-all hover:shadow-md"
     >
       <h2 className="text-heading-sm font-bold md:text-heading-md">
         {t("form-title")}

@@ -40,7 +40,7 @@ export default function IndexPage({
       <Divider className="max-w-4xl" />
       <LatestArticles articles={articleTeasers} />
       <Divider className="max-w-4xl" />
-      <AuthGate text={t("login-to-fill-form")}>
+      <AuthGate text={t("login-to-fill-form")} className="mx-auto max-w-3xl">
         <ContactForm />
       </AuthGate>
     </>
