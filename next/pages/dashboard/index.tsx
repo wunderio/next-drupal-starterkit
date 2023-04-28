@@ -82,7 +82,9 @@ export const getServerSideProps: GetServerSideProps<CommonPageProps> = async (
     };
   }
 
-  const url = drupal.buildUrl("/rest/my-webform-submissions?_format=json");
+  const url = drupal.buildUrl(
+    `/${context.locale}/rest/my-webform-submissions?_format=json`
+  );
 
   const result = await drupal.fetch(url.toString(), {
     method: "GET",

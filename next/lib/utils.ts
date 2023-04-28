@@ -68,13 +68,13 @@ export function getYouTubeId(url: string) {
 export function handleWebFormSubmissionSViewResult(result: any) {
   // Strangely, when there are no results, the result is a string containing "[]"
   if (result.content === "[]") {
-    console.log("returning empty array");
     return [];
   }
   return result;
 }
 
 export function handleRawWebFormSubmission(result: any): WebformSubmission {
+  console.log(result);
   return {
     formTitle: result.title,
     formData: Object.entries(result.webform_submission),

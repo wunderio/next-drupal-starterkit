@@ -63,7 +63,7 @@ export const getServerSideProps: GetServerSideProps<CommonPageProps> = async (
   }
 
   const url = drupal.buildUrl(
-    `/webform_rest/${context.params.webformName}/complete_submission/${context.params.webformSubmissionUuid}`
+    `/${context.locale}/webform_rest/${context.params.webformName}/complete_submission/${context.params.webformSubmissionUuid}`
   );
 
   const result = await drupal.fetch(url.toString(), {

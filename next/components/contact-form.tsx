@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
@@ -14,6 +15,7 @@ type Inputs = {
 };
 
 export function ContactForm() {
+  const router = useRouter();
   const { t } = useTranslation();
   const {
     register,
@@ -31,6 +33,10 @@ export function ContactForm() {
         message: data.message,
         subject: data.subject,
       }),
+      // This will record the submission with the right language:
+      headers: {
+        "accept-language": router.locale,
+      },
     });
 
     if (!response.ok) {
