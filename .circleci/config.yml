@@ -166,6 +166,35 @@ workflows:
           name: Next build & deploy main
           context: silta_dev
           silta_config: silta/silta-next.yml,silta/silta-next-main.yml
+          codebase-build:
+            # npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
+            - run:
+                name: Set environment variables 
+                command: |
+                  drupal_domain=cms.next4drupal.dev.wdr.io
+                  drupal_public_base_url=https://${drupal_domain}
+                  next_domain=next4drupal.dev.wdr.io
+                  next_public_base_url=https://${next_domain}
+                  drupal_client_secret=drupal_client_secret_not_secure_used_only_locally
+                  drupal_client_id=drupal-client-id
+                  nextauth_secret=next_auth_secret_not_secure_used_only_locally
+                  echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=${drupal_public_base_url}" >> "$BASH_ENV"
+                  echo "export NEXT_IMAGE_DOMAIN=${drupal_domain}" >> "$BASH_ENV"
+                  echo "export DRUPAL_CLIENT_SECRET=${drupal_client_secret}" >> "$BASH_ENV"
+                  echo "export DRUPAL_CLIENT_ID=${drupal_client_id}" >> "$BASH_ENV"
+                  echo "export NEXTAUTH_SECRET=${nextauth_secret}" >> "$BASH_ENV"
+                  escaped_drupal_public_base_url=$(printf '%s\n' "$drupal_public_base_url" | sed -e 's/[\/&]/\\&/g')
+                  escaped_next_public_base_url=$(printf '%s\n' "$next_public_base_url" | sed -e 's/[\/&]/\\&/g')
+                  escaped_drupal_client_secret=$(printf '%s\n' "$drupal_client_secret" | sed -e 's/[\/&]/\\&/g')
+                  escaped_nextauth_secret=$(printf '%s\n' "$nextauth_secret" | sed -e 's/[\/&]/\\&/g')
+                  sed -i -e "s/<|next_public_base_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
+                  sed -i -e "s/<|next_image_domain|>/$drupal_domain/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
+                  sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
+                  sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
+            - silta/npm-install-build:
+                path: next
+
           filters:
             branches:
               only: main

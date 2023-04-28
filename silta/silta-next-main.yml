@@ -8,15 +8,6 @@ exposeDomains:
   main-site:
     hostname: next4drupal.dev.wdr.io
 
-services:
-  node:
-    exposedRoute: '/'
-    port: 3000
-    env:
-      NEXT_PUBLIC_DRUPAL_BASE_URL: https://cms.next4drupal.dev.wdr.io
-      NEXT_IMAGE_DOMAIN: https://cms.next4drupal.dev.wdr.io 
-      NEXTAUTH_URL: https://next4drupal.dev.wdr.io
-
 nginx:
   basicauth:
     enabled: false
