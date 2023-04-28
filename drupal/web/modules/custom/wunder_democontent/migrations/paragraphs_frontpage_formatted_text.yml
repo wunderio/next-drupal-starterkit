@@ -3,7 +3,7 @@ label: Frontpage paragraphs formatted_text
 migration_group: demo_content
 source:
   plugin: csv
-  path: /app/drupal/web/modules/custom/wunder_democontent/sources/frontpages.csv
+  path: modules/custom/wunder_democontent/sources/frontpages.csv
   ids: [id]
   constants:
     uid: 1

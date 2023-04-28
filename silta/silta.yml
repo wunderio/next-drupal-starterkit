@@ -6,8 +6,42 @@
 
 php:
   drupalCoreVersion: "10"
+  env:
+    WUNDER_NEXT_FRONTEND_URL: https://<|next_domain|>
+    DRUPAL_REVALIDATE_SECRET: revalidate_secret_not_secure_used_only_locally
+    DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
+    DRUPAL_CLIENT_ID: drupal-client-id
+  hashsalt: notsosecurehashnotsosecurehashnotsosecurehash
+  # This section is used in the template only, it will reinstall the site and apply
+  # all standard configuration at each commit. When creating a new project from this template
+  # you have to remove this section.
+  postupgrade:
+    afterCommand: |
+      drush si minimal -y
+      chmod +x /app/web/core/scripts/drupal
+      cd /app/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
+      drush cr
+      drush wunder_next:setup-user-and-consumer
+      drush en wunder_democontent -y
+      drush eshd -y
+      drush eshs
+      drush mim --group=demo_content --execute-dependencies --skip-progress-bar
 
 # Configure reference data that will be used when creating new environments.
 referenceData:
   # The name of the environment from which reference data will be copied.
   referenceEnvironment: 'main'
+
+nginx:
+  basicauth:
+    enabled: false
+  content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self'; frame-src: https://<|next_domain|>; base-uri 'self'; object-src 'self'; connect-src wss: https:"
+
+elasticsearch:
+  enabled: true
+  image: europe-north1-docker.pkg.dev/silta-dev/images/next4drupal-project-elasticsearch
+  imageTag: 'with-icu-analysis'
+  imagePullPolicy: Always
+  esConfig:
+    elasticsearch.yml: |
+      script.allowed_contexts: score

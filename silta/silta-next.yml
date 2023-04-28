@@ -1,0 +1,20 @@
+# Values in this file override the default values of our helm chart.
+#
+# See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
+# for all possible options.
+#
+#
+services:
+  node:
+    exposedRoute: '/'
+    port: 3000
+    env:
+      NEXT_PUBLIC_DRUPAL_BASE_URL: <|next_public_base_url|>
+      NEXT_IMAGE_DOMAIN: <|next_image_domain|>
+      DRUPAL_CLIENT_SECRET: <|drupal_client_secret|>
+      DRUPAL_CLIENT_ID: drupal-client-id
+      NEXTAUTH_SECRET: <|nextauth_secret|>
+      NEXTAUTH_URL: <|nextauth_url|>
+
+nginx:
+  content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self' <|drupal_public_base_url|>; base-uri 'self'; object-src 'self'; connect-src wss: https:"

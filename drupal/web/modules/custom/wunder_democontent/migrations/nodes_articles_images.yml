@@ -3,7 +3,7 @@ label: Articles images
 migration_group: demo_content
 source:
   plugin: csv
-  path: /app/drupal/web/modules/custom/wunder_democontent/sources/articles.csv
+  path: modules/custom/wunder_democontent/sources/articles.csv
   ids:
     - id
   constants:

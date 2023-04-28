@@ -1,0 +1,14 @@
+# Values in this file override the default values of our helm chart.
+#
+# See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
+# for all possible options.
+#
+#
+exposeDomains:
+  main-site:
+    hostname: next4drupal.dev.wdr.io
+
+nginx:
+  basicauth:
+    enabled: false
+  content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self' https://cms.next4drupal.dev.wdr.io; base-uri 'self'; object-src 'self'; connect-src wss: https:"
