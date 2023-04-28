@@ -7,5 +7,5 @@ referenceData:
 
 php:
   env:
-    WUNDER_NEXT_FRONTEND_URL: https://next4drupal.dev.wrd.io
+    WUNDER_NEXT_FRONTEND_URL: https://next4drupal.dev.wdr.io
 
