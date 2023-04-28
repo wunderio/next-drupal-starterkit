@@ -23,6 +23,4 @@ php:
 
 
 nginx:
-  basicauth:
-    enabled: false
   content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self'; frame-src: https://next4drupal.dev.wdr.io; base-uri 'self'; object-src 'self'; connect-src wss: https:"
