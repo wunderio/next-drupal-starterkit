@@ -15,3 +15,10 @@ services:
     env:
       NEXT_PUBLIC_DRUPAL_BASE_URL: https://cms.next4drupal.dev.wdr.io
       NEXT_IMAGE_DOMAIN: https://cms.next4drupal.dev.wdr.io 
+      NEXTAUTH_URL: https://next4drupal.dev.wdr.io
+
+nginx:
+  basicauth:
+    enabled: false
+  security_headers:
+    content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self' https://cms.next4drupal.dev.wdr.io; base-uri 'self'; object-src 'self'; connect-src wss: https:"

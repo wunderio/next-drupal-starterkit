@@ -33,8 +33,9 @@ referenceData:
   referenceEnvironment: 'main'
 
 nginx:
-  basicauth:
-    enabled: false
+  security_headers:
+    content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self'; frame-src: https://<|next_domain|>; base-uri 'self'; object-src 'self'; connect-src wss: https:"
+
 elasticsearch:
   enabled: true
   image: europe-north1-docker.pkg.dev/silta-dev/images/next4drupal-project-elasticsearch
