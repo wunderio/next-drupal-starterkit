@@ -1,17 +1,57 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
-    "./components/**/*.{tsx,ts,css}",
-    "./pages/**/*.{tsx,ts,css}",
-    "./styles/**/*.{tsx,ts,css}",
+    "./{components,lib,pages,stories,styles,wunder-component-library}/**/*",
   ],
   theme: {
-    // These properties *replace* the defaults:
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+
+      steelgray: "#221f2d",
+      scapaflow: "#555161",
+      stone: "#767283",
+      topaz: "#9b98a4",
+      graysuit: "#c4c2cc",
+      finnishwinter: "#e7e6eb",
+      mischka: "#f7f7f8",
+      white: "#ffffff",
+
+      info: "#221f2d",
+      success: "#007f6c",
+      warning: "#f7a700",
+      error: "#c80909",
+
+      primary: {
+        900: "#261da1",
+        800: "#3f29ae",
+        700: "#4d2fb6",
+        600: "#5b37bf", // "Wunder purple"
+        500: "#653cc5",
+        400: "#7d59ce",
+        300: "#9577d7",
+        200: "#b49fe2",
+        100: "#d2c5ed",
+        50: "#ede7f8",
+      },
+      secondary: {
+        900: "#9e005d",
+        800: "#c30a63",
+        700: "#d81066",
+        600: "#ef146b",
+        500: "#ff186e",
+        400: "#ff4185",
+        300: "#ff669d",
+        200: "#ff93b9",
+        100: "#ffbed5",
+        50: "#ffe5ee",
+      },
+    },
     fontFamily: {
-      inter: ["var(--font-inter)", ...fontFamily.sans],
-      overpass: ["var(--font-overpass)", ...fontFamily.sans],
+      inter: ["--font-inter", ...defaultTheme.fontFamily.sans],
+      overpass: ["--font-overpass", ...defaultTheme.fontFamily.sans],
     },
     fontSize: {
       xs: ["0.60rem", { lineHeight: "1.5" }],
@@ -37,29 +77,14 @@ module.exports = {
       lg: "1.5",
       xl: "1.75",
     },
-    // These properties *extend* the defaults:
     extend: {
-      colors: {
-        steelgray: "#221f2d",
-        scapaflow: "#555161",
-        stone: "#767283",
-        topaz: "#9b98a4",
-        graysuit: "#c4c2cc",
-        finnishwinter: "#e7e6eb",
-        mischka: "#f7f7f8",
-        // Generated with https://uicolors.app/
-        wunderpurple: {
-          50: "#eeefff",
-          100: "#e1e2fe",
-          200: "#c8c9fd",
-          300: "#a9a7fa",
-          400: "#8f84f5",
-          500: "#7d66ee",
-          600: "#6f4ae1",
-          700: "#5b37bf", // This is the official Wunder purple
-          800: "#4e33a0",
-          900: "#42307f",
-        },
+      borderRadius: {
+        ...defaultTheme.borderRadius,
+        DEFAULT: "3px",
+      },
+      opacity: {
+        ...defaultTheme.opacity,
+        15: "0.15",
       },
     },
   },
@@ -68,7 +93,6 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/aspect-ratio"),
-    require("@tailwindcss/line-clamp"),
     require("@tailwindcss/typography"),
   ],
 };

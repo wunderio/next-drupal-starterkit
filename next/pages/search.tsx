@@ -63,55 +63,50 @@ export default function SearchPage() {
         >
           {({ wasSearched, results }) => (
             <ErrorBoundary>
-              <div>
-                <SearchBox
-                  searchAsYouType={false}
-                  shouldClearFilters={false}
-                  // Here we specify out own custom
-                  // component to render the search bar:
-                  inputView={SearchBoxInput}
-                  className="py-2"
-                />
-                <div className="search-results-header flex items-center justify-end py-2">
-                  {wasSearched && results.length > 0 && (
-                    <PagingInfo view={PagingInfoView} />
-                  )}
-                </div>
-                <div className="flex flex-row">
-                  <div className="flex">
-                    <aside className="mr-2 w-56 flex-none">
-                      {wasSearched && results.length > 0 && (
-                        <div className="p-2">
-                          <Facet
-                            view={MultiCheckboxFacet}
-                            field="tags"
-                            label={t("tags")}
-                          />
-                          <Facet
-                            view={MultiCheckboxFacet}
-                            field="content_type"
-                            label={t("content-type")}
-                          />
-                        </div>
-                      )}
-                    </aside>
-
-                    <div className="flex-1">
-                      <Results
-                        className="py-2"
-                        shouldTrackClickThrough={false}
-                        resultView={SearchResult}
-                      />
-                      <div className="p-2">
-                        {wasSearched && results.length > 0 && <Paging />}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {wasSearched && results.length === 0 && (
-                  <div>{t("no-results-found")}</div>
+              <SearchBox
+                searchAsYouType={false}
+                shouldClearFilters={false}
+                // Here we specify our own custom
+                // component to render the search bar:
+                inputView={SearchBoxInput}
+                className="py-8"
+              />
+              <div className="flex justify-end">
+                {wasSearched && results.length > 0 && (
+                  <PagingInfo view={PagingInfoView} />
                 )}
               </div>
+              <div className="flex flex-col md:flex-row">
+                <aside className="mr-2 w-56">
+                  {wasSearched && results.length > 0 && (
+                    <div className="py-2">
+                      <Facet
+                        view={MultiCheckboxFacet}
+                        field="tags"
+                        label={t("tags")}
+                      />
+                      <Facet
+                        view={MultiCheckboxFacet}
+                        field="content_type"
+                        label={t("content-type")}
+                      />
+                    </div>
+                  )}
+                </aside>
+
+                <div className="flex-1">
+                  <Results
+                    shouldTrackClickThrough={false}
+                    resultView={SearchResult}
+                  />
+                  <div className="flex items-center justify-center py-2">
+                    {wasSearched && results.length > 0 && <Paging />}
+                  </div>
+                </div>
+              </div>
+              {wasSearched && results.length === 0 && (
+                <div>{t("no-results-found")}</div>
+              )}
             </ErrorBoundary>
           )}
         </WithSearch>

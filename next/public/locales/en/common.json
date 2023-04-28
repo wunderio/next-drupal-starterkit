@@ -28,5 +28,16 @@
   "form-label-message": "Message:",
   "form-submit": "Submit",
   "form-thank-you-message": "Thanks!",
-  "form-send-another-message": "Send another message"
+  "form-send-another-message": "Send another message",
+  "login-to-fill-form": "Please log in to fill this form.",
+  "log-in": "Log in",
+  "log-out": "Log out",
+  "login-error-check-username-password": "Check your username and password and try again.",
+  "username": "Username",
+  "password": "Password",
+  "you-are-not-logged-in": "You are not logged in",
+  "statusmessage-info": "Info",
+  "statusmessage-success": "Success",
+  "statusmessage-warning": "Warning",
+  "statusmessage-error": "Error"
 }

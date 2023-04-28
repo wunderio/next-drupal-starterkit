@@ -56,7 +56,7 @@ You can then visit the site at https://frontend.lndo.site/.
 All Drupal code and configuration is in the `drupal` directory.
 All needed module dependencies have been added to the `composer.json` file.
 Part of the setup process is automated using [Drupal recipes](https://www.drupal.org/project/distributions_recipes).
-You will need to have a recent installation of [Lando](https://lando.dev/) running on your development machine. 
+You will need to have a recent installation of [Lando](https://lando.dev/) running on your development machine.
 
 Follow these steps to get started:
 
@@ -127,13 +127,26 @@ We decided to implement a static form, in the sense that the "hardcoded" fields 
 
 The `frontpage` and `page` content types are configured to use the popular [Paragraphs drupal module](https://www.drupal.org/project/paragraphs). The setup includes basic paragraph types to add images, videos, text, and also a nested paragraph type to demonstrate how to handle this in backend and frontend.
 
+### Frontend authentication
+
+The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Next-auth](https://next-auth.js.org/).
+
+* Some test users are imported as part of the content migration (check the `users.csv' file for the credentials).
+* As an example, only registered users are allowed to post to the drupal `contact` webform, and parts of the interface in the frontend are available only for logged-in users.
+
 ### Typescript
 
 The frontend uses [TypeScript](https://www.typescriptlang.org) to provide type safety.
 
-TypeScript is configured quite loosely by default to minimise friction and make it accessible to developers who are not familiar with it. If you wish, you can increase type safety by enabling some of the disabled rules in `next/eslint.json`.
+TypeScript is setup quite loosely by default to minimise friction and make it accessible to developers who are not familiar with it. It is recommended to increase type safety by enabling some of the disabled rules in `next/eslint.json`.
+
+#### Data fetching with TypeScript and Zod
 
 [Zod](https://zod.dev) is also used on the frontend to type the data fetched from the backend. When it's necessary to change what data is fetched from the backend, check the following files:
 
 - `next/lib/get-node-page-json-api-params.ts` - this file creates the parameters that are passed to JSON API when fetching page data.
 - `next/lib/zod/*.ts` - these files contain the Zod schemas that are used to validate and cleanup the data fetched from the backend. Any data that is not accounted for in these schemas will be removed, in order to prevent sending more data than necessary to the client. During development, it can be handy to avoid this behaviour using [zod.passthrough()](https://zod.dev/?id=passthrough) to pass ALL data to the client, and then tighten the schema later to only pass the data that is actually needed.
+
+### Wunder component library [WIP]
+
+The `wunder-component-library/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a base for many projects.

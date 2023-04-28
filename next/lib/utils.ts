@@ -1,7 +1,13 @@
 import { GetStaticPropsContext } from "next";
 import { DrupalClient, DrupalNode } from "next-drupal";
+import { twMerge } from "tailwind-merge";
+import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
 
 import { Translations } from "@/lib/contexts/language-links-context";
+
+export function cn(...inputs: ClassNameValue[]) {
+  return twMerge(inputs);
+}
 
 export function formatDate(input: string): string {
   const date = new Date(input);

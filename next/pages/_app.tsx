@@ -1,8 +1,10 @@
 import "@/styles/globals.css";
 
 import { AppProps } from "next/app";
+import { Inter, Overpass } from "next/font/google";
+import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from "next-i18next";
-import { Inter, Overpass } from "@next/font/google";
 import clsx from "clsx";
 
 import { Layout } from "@/components/layout";
@@ -14,18 +16,21 @@ import { CommonPageProps } from "@/lib/get-common-page-props";
 
 interface PageProps extends CommonPageProps {
   languageLinks?: LanguageLinks;
+  session?: Session;
 }
 
 function App({ Component, pageProps }: AppProps<PageProps>) {
-  const { menus, languageLinks, ...restPageProps } = pageProps;
+  const { menus, languageLinks, session, ...restPageProps } = pageProps;
   return (
-    <Fonts>
-      <LanguageLinksProvider languageLinks={languageLinks}>
-        <Layout menus={menus}>
-          <Component {...restPageProps} />
-        </Layout>
-      </LanguageLinksProvider>
-    </Fonts>
+    <SessionProvider session={session}>
+      <Fonts>
+        <LanguageLinksProvider languageLinks={languageLinks}>
+          <Layout menus={menus}>
+            <Component {...restPageProps} />
+          </Layout>
+        </LanguageLinksProvider>
+      </Fonts>
+    </SessionProvider>
   );
 }
 

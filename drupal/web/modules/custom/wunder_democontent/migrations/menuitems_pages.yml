@@ -3,7 +3,7 @@ label: Menu items connected to pages
 migration_group: demo_content
 source:
   plugin: csv
-  path: /app/drupal/web/modules/custom/wunder_democontent/sources/pages.csv
+  path: modules/custom/wunder_democontent/sources/pages.csv
   ids: [ id ]
   constants:
     slash: 'entity:node/'

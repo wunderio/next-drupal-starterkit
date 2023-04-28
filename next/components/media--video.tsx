@@ -20,7 +20,7 @@ export function MediaVideo({ media }: MediaVideoProps) {
   const videoId = getYouTubeId(media.field_media_oembed_video);
   return (
     <YouTube
-      className="aspect-w-16 aspect-h-9"
+      className="aspect-h-9 aspect-w-16"
       videoId={videoId}
       opts={options}
     />

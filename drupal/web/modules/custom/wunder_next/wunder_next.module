@@ -7,6 +7,8 @@
 
 use Drupal\Core\Site\Settings;
 use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
+use Drupal\simple_oauth\Entities\AccessTokenEntity;
+use Drupal\user\Entity\User;
 
 /**
  * Implements hook_ENTITY_TYPE_load().
@@ -79,4 +81,20 @@ function wunder_next_ckeditor5_plugin_info_alter(array &$plugin_definitions): vo
     $image_resize_plugin_definition["ckeditor5"]["config"]["image"]["resizeUnit"] = "px";
     $plugin_definitions['ckeditor5_imageResize'] = new CKEditor5PluginDefinition($image_resize_plugin_definition);
   };
+}
+
+/**
+ * Implements hook_simple_oauth_private_claims_alter().
+ */
+function wunder_next_simple_oauth_private_claims_alter(&$private_claims, AccessTokenEntity $access_token_entity) {
+  // Get the user id:
+  $user_id = $access_token_entity->getUserIdentifier();
+  $user = User::load($user_id);
+
+  // Add the email and the username to the claims.
+  $private_claims = [
+    'id' => $user->id(),
+    'email' => $user->getEmail(),
+    'username' => $user->getAccountName(),
+  ];
 }

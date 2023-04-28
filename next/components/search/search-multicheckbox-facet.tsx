@@ -20,11 +20,11 @@ export function MultiCheckboxFacet({
   const { t } = useTranslation();
   return (
     <fieldset className={clsx(className, "mb-4")}>
-      <legend className="uppercase text-wunderpurple-600">{label}</legend>
+      <legend className="uppercase text-primary-600">{label}</legend>
       {showSearch && (
         <div>
           <input
-            className="my-1 w-full border p-1"
+            className="my-1 w-full border border-finnishwinter p-1"
             type="search"
             placeholder={searchPlaceholder || "Search"}
             onChange={(e) => {
@@ -52,13 +52,13 @@ export function MultiCheckboxFacet({
                     option.value
                   )}`}
                   type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-wunderpurple-600 focus:ring-wunderpurple-500"
+                  className="h-4 w-4 rounded border-finnishwinter bg-mischka text-primary-600 focus:ring-primary-500"
                   checked={checked}
                   onChange={() => (checked ? onRemove(value) : onSelect(value))}
                 />
-                <span className="ml-2 text-sm text-gray-900">
+                <span className="ml-2 text-sm text-steelgray">
                   {getFilterValueDisplay(option.value)}{" "}
-                  <span className="text-gray-400">
+                  <span className="text-stone">
                     ({option.count.toLocaleString("en")})
                   </span>
                 </span>
@@ -70,7 +70,7 @@ export function MultiCheckboxFacet({
       {showMore && (
         <button
           type="button"
-          className="rounded border border-wunderpurple-500 bg-transparent py-2 px-4 text-sm font-bold text-wunderpurple-700 hover:border-transparent hover:bg-wunderpurple-500 hover:text-white"
+          className="rounded border border-primary-500 bg-transparent px-4 py-2 text-sm font-bold text-primary-600 hover:border-transparent hover:bg-primary-500 hover:text-white"
           onClick={onMoreClick}
           aria-label={t("search-show-more-options")}
         >

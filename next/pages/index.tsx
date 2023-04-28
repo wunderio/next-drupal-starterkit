@@ -1,8 +1,9 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { DrupalNode } from "next-drupal";
+import { useTranslation } from "next-i18next";
 
+import { AuthGate } from "@/components/auth-gate";
 import { ContactForm } from "@/components/contact-form";
-import { Divider } from "@/components/divider";
 import { LatestArticles } from "@/components/latest-articles";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
@@ -16,6 +17,8 @@ import {
 } from "@/lib/zod/article-teaser";
 import { Frontpage, validateAndCleanupFrontpage } from "@/lib/zod/frontpage";
 
+import { Divider } from "@/wunder-component-library/divider";
+
 interface IndexPageProps extends LayoutProps {
   frontpage: Frontpage | null;
   articleTeasers: ArticleTeaser[];
@@ -25,6 +28,7 @@ export default function IndexPage({
   frontpage,
   articleTeasers,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation();
   return (
     <>
       <Meta title={frontpage?.title} metatags={frontpage?.metatag} />
@@ -33,10 +37,12 @@ export default function IndexPage({
           <Paragraph paragraph={paragraph} key={paragraph.id} />
         ))}
       </div>
-      <Divider />
+      <Divider className="max-w-4xl" />
       <LatestArticles articles={articleTeasers} />
-      <Divider />
-      <ContactForm />
+      <Divider className="max-w-4xl" />
+      <AuthGate text={t("login-to-fill-form")}>
+        <ContactForm />
+      </AuthGate>
     </>
   );
 }

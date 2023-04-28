@@ -15,6 +15,8 @@ class WunderNextCommands extends DrushCommands {
 
   const API_USER_NAME = 'next-api-user';
   const API_USER_ROLE = 'next_api_role';
+  // This role will be associated with users that can log via the frontend:
+  const FRONTEND_LOGIN_ROLE = 'frontend_login';
   const API_USER_MAIL = 'next-api-user@domain.tld';
   const CONSUMER_NAME = 'next-drupal-consumer';
 
@@ -78,7 +80,7 @@ class WunderNextCommands extends DrushCommands {
       'description' => 'This consumer was created by the wunder_next:create-user-and-consumer drush command.',
       'is_default' => FALSE,
       'user_id' => $account->id(),
-      'roles' => [self::API_USER_ROLE],
+      'roles' => [self::API_USER_ROLE, self::FRONTEND_LOGIN_ROLE],
       'secret' => $secret,
     ]);
 
