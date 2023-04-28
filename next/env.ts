@@ -4,6 +4,7 @@ import zod from "zod";
 export const env = createEnv({
   server: {
     NODE_ENV: zod.enum(["development", "production", "test"]),
+    DRUPAL_SITE_ID: zod.string().optional(),
     DRUPAL_CLIENT_ID: zod.string(),
     DRUPAL_CLIENT_SECRET: zod.string(),
     DRUPAL_REVALIDATE_SECRET: zod.string(),
@@ -15,6 +16,7 @@ export const env = createEnv({
   },
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+    DRUPAL_SITE_ID: process.env.DRUPAL_SITE_ID,
     DRUPAL_CLIENT_ID: process.env.DRUPAL_CLIENT_ID,
     DRUPAL_CLIENT_SECRET: process.env.DRUPAL_CLIENT_SECRET,
     DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
