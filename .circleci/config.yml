@@ -168,6 +168,7 @@ workflows:
           filters:
             branches:
               only: main
+          requires: [ Drupal build & deploy main ]
 
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the production environment.
@@ -178,6 +179,7 @@ workflows:
           filters:
             branches:
               only: production
+          requires: [ Drupal build & deploy production ]
 
       - silta/frontend-build-deploy:
           <<: *frontend-build-deploy

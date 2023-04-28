@@ -2,6 +2,9 @@ exposeDomains:
   main-cms:
     hostname: cms.next4drupal.dev.wdr.io
 
+referenceData:
+  updateAfterDeployment: false
+
 php:
   env:
     WUNDER_NEXT_FRONTEND_URL: https://next4drupal.dev.wrd.io
