@@ -1,0 +1,21 @@
+# Values in this file override the default values of our helm chart.
+#
+# See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
+# for all possible options.
+#
+#
+exposeDomains:
+  main-site:
+    hostname: next4drupal.dev.wdr.io
+
+services:
+  node:
+    exposedRoute: '/'
+    port: 3000
+    env:
+      NEXT_PUBLIC_DRUPAL_BASE_URL: https://cms.next4drupal.dev.wdr.io
+      NEXT_IMAGE_DOMAIN: https://cms.next4drupal.dev.wdr.io 
+      DRUPAL_CLIENT_SECRET: <|drupal_client_secret|>
+      DRUPAL_CLIENT_ID: drupal-client-id
+      NEXTAUTH_SECRET: <|nextauth_secret|>
+      NEXTAUTH_URL: <|nextauth_url|>

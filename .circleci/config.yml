@@ -67,8 +67,19 @@ workflows:
           filters:
             branches:
               ignore:
+                - main
                 - production
                 - /dependabot\/.*/
+
+      - silta/drupal-build-deploy:
+          # Extend the build-deploy configuration for the production environment.
+          <<: *build-deploy
+          name: Drupal build & deploy main
+          silta_config: silta/silta.yml,silta/silta-main.yml
+          context: silta_dev
+          filters:
+            branches:
+              only: main
 
       - silta/drupal-build-deploy:
           # Extend the build-deploy configuration for the production environment.
@@ -143,10 +154,20 @@ workflows:
           filters:
             branches:
               ignore:
+                - main
                 - production
                 - /dependabot\/.*/
           requires: [ Drupal build & deploy ]
 
+      - silta/frontend-build-deploy:
+          # Extend the build-deploy configuration for the production environment.
+          <<: *frontend-build-deploy
+          name: Next build & deploy main
+          context: silta_dev
+          silta_config: silta/silta-next.yml,silta/silta-next-main.yml
+          filters:
+            branches:
+              only: main
 
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the production environment.
