@@ -8,4 +8,5 @@ referenceData:
 php:
   env:
     WUNDER_NEXT_FRONTEND_URL: https://next4drupal.dev.wdr.io
+    DRUSH_OPTIONS_URI: https://cms.next4drupal.dev.wdr.io
 
