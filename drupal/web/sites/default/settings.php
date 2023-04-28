@@ -45,9 +45,11 @@ $settings['file_scan_ignore_directories'] = [
   'bower_components',
 ];
 
-// Get the url of the frontend from an environment variable:
+// Get environment variables into settings:
 $settings['wunder_next.settings']['frontend_url'] = $_ENV['WUNDER_NEXT_FRONTEND_URL'];
 $settings['wunder_next.settings']['revalidate_secret'] = $_ENV['DRUPAL_REVALIDATE_SECRET'];
+$settings['wunder_next.settings']['client_secret'] = $_ENV['DRUPAL_CLIENT_SECRET'];
+$settings['wunder_next.settings']['client_id'] = $_ENV['DRUPAL_CLIENT_ID'];
 
 // Environment-specific settings.
 $env = $_ENV['ENVIRONMENT_NAME'];
