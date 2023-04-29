@@ -3,6 +3,8 @@
 This is a starter template created by [Wunder](https://www.wunder.io) for a decoupled website using the open-source [Next.js for Drupal](https://next-drupal.org/)
 by [Chapter Three](https://www.chapterthree.com) and contributors.
 
+## 🪂 Check out the running demo at https://next4drupal.dev.wdr.io !
+
 The aims of this template are:
 
 - automating local environment set up as much as possible, lowering the effort needed to get the decoupled system working
@@ -62,7 +64,7 @@ Follow these steps to get started:
 
 1. `lando start` (this will create the environment, and run `composer install` for you.)
 2. Generate oauth keys using the command `lando generate-oauth-keys`. The keys will be created in the `drupal/oauth` directory.
-3. Install Drupal as usual. Use the standard installation profile. You can do it via the UI or using this command: `lando drush si minimal`.
+3. Install Drupal as usual. Use the minimal installation profile. You can do it via the UI or using this command: `lando drush si minimal`.
 4. Run the `lando install-recipe wunder_next_setup` command to set up all necessary modules, content types and configuration.
 5. Run `lando drush eshs` to set up elasticsearch indexes.
 6. Execute the command: `lando drush wunder_next:setup-user-and-consumer`
