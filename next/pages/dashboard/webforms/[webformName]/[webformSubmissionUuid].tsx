@@ -19,31 +19,25 @@ export default function DashboardPage({ submission }) {
     <>
       <Meta title={t("form-submission-details")} metatags={[]} />
       <HeadingPage>{t("form-submission-details")}</HeadingPage>
-      <p className="mt-4 py-4 text-justify text-md/xl text-scapaflow sm:text-lg">
+      <p className="my-6 text-justify text-md/xl text-scapaflow sm:text-lg">
         {t("form-submission-intro-text", { form: submission.formTitle })}
       </p>
-      <div>
-        <table className="text-graysuit-200 w-full text-left ">
-          <thead className="bg-primary-600 uppercase text-primary-100">
-            <tr>
-              <th className="px-6 py-3">{t("form-field")}</th>
-              <th className="px-6 py-3">{t("form-value")}</th>
+      <table className="w-full border-collapse text-left">
+        <thead className="border border-primary-700 bg-primary-700 text-heading-xs font-bold text-white">
+          <tr>
+            <th className="px-3 py-4">{t("form-field")}</th>
+            <th className="px-3 py-4">{t("form-value")}</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white text-sm text-steelgray">
+          {submission.formData.map(([key, value]) => (
+            <tr key={key} className="border border-graysuit">
+              <td className="p-3">{key}</td>
+              <td className="p-3">{value}</td>
             </tr>
-          </thead>
-          <tbody className="border-b bg-white">
-            {submission.formData.map(([key, value], i) => (
-              <tr key={i}>
-                <td className="px-6 py-4">{key}:</td>
-                <td className="px-6 py-4">
-                  <span className="border-2 border-primary-200 bg-primary-50 p-2">
-                    {value}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }

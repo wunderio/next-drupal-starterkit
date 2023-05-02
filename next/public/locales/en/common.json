@@ -43,12 +43,12 @@
   "user-dashboard": "Dashboard",
   "user-dashboard-intro-greeting": "Hello {{username}}! These are your past form submissions:",
   "form-submission-details": "Form submission details",
-  "form-submission-intro-text": "Your submitted data for the {{form}} form",
+  "form-submission-intro-text": "Your submitted data for the {{form}} form:",
   "form-field": "Field",
   "form-value": "Value",
   "form": "Form",
   "date": "Date",
   "more-details": "More details",
-  "see-more-details": "See more details",
+  "see-more": "See more",
   "no-submissions-yet": "You have not yet submitted any forms."
 }

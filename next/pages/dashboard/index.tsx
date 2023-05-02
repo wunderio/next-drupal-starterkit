@@ -22,43 +22,42 @@ export default function DashboardPage({ submissions }) {
     <>
       <Meta title={t("user-dashboard")} metatags={[]} />
       <HeadingPage>{t("user-dashboard")}</HeadingPage>
-      <p className="mt-4 py-4 text-justify text-md/xl text-scapaflow sm:text-lg">
+      <p className="my-6 text-justify text-md/xl text-scapaflow sm:text-lg">
         {t("user-dashboard-intro-greeting", { username: data.user.name })}
       </p>
-      <table className="text-graysuit-200 w-full text-left ">
-        <thead className="bg-primary-600 uppercase text-primary-100">
+      <table className="w-full border-collapse text-left">
+        <thead className="border border-primary-700 bg-primary-700 text-heading-xs font-bold text-white">
           <tr>
-            <th className="px-6 py-3">{t("form")}</th>
-            <th className="px-6 py-3">{t("date")}</th>
-            <th className="px-6 py-3">{t("more-details")}</th>
+            <th className="px-3 py-4">{t("form")}</th>
+            <th className="px-3 py-4">{t("date")}</th>
+            <th className="px-3 py-4">{t("more-details")}</th>
           </tr>
         </thead>
-        <tbody className="border-b bg-white">
-          {submissions.length > 0 &&
-            submissions.map((submission) => (
-              <tr key={submission.uuid[0]["value"]}>
-                <td className="px-6 py-4">
-                  {submission.webform_id[0]["target_id"]}
-                </td>
-                <td className="px-6 py-4">
-                  {formatDate(submission.created[0]["value"])}
-                </td>
-                <td className="px-6 py-4">
-                  <Link
-                    href={`/dashboard/webforms/${submission.webform_id[0]["target_id"]}/${submission.uuid[0]["value"]}`}
-                  >
-                    {t("see-more-details")}
-                  </Link>
-                </td>
-              </tr>
-            ))}
+        <tbody className="bg-white text-sm text-steelgray">
+          {submissions.map((submission) => (
+            <tr
+              key={submission.uuid[0]["value"]}
+              className="border border-graysuit"
+            >
+              <td className="p-3">{submission.webform_id[0]["target_id"]}</td>
+              <td className="p-3">
+                {formatDate(submission.created[0]["value"])}
+              </td>
+              <td className="p-3">
+                <Link
+                  href={`/dashboard/webforms/${submission.webform_id[0]["target_id"]}/${submission.uuid[0]["value"]}`}
+                  className="text-primary-500 hover:underline"
+                >
+                  {t("see-more")}
+                </Link>
+              </td>
+            </tr>
+          ))}
 
           {submissions.length === 0 && (
-            <tr>
-              <td colSpan={3}>
-                <p className="p-4 text-center text-scapaflow">
-                  {t("no-submissions-yet")}
-                </p>
+            <tr className="border border-graysuit">
+              <td colSpan={3} className="p-3">
+                {t("no-submissions-yet")}
               </td>
             </tr>
           )}
