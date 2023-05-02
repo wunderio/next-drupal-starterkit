@@ -60,7 +60,7 @@ module.exports = {
       lg: ["1.25rem", { lineHeight: "1.5" }],
       xl: ["1.60rem", { lineHeight: "1.5" }],
       "2xl": ["1.9rem", { lineHeight: "1.5" }],
-      "heading-xs": ["1.25rem", { lineHeight: "1.25" }],
+      "heading-xs": ["1.125rem", { lineHeight: "1.25" }],
       "heading-sm": ["1.9rem", { lineHeight: "1.25" }],
       "heading-md": ["2.4rem", { lineHeight: "1.25" }],
       "heading-lg": ["3.1rem", { lineHeight: "1.25" }],
