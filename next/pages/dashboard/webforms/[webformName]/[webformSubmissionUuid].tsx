@@ -75,6 +75,12 @@ export const getServerSideProps: GetServerSideProps<CommonPageProps> = async (
     },
   });
 
+  if (!result.ok) {
+    return {
+      notFound: true,
+    };
+  }
+
   const rawSubmission = await result.json();
   const submission = handleRawWebFormSubmission(rawSubmission);
 
