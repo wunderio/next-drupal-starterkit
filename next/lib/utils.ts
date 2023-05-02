@@ -65,7 +65,7 @@ export function getYouTubeId(url: string) {
  *
  * @param result
  */
-export function handleWebFormSubmissionSViewResult(result: any) {
+export function handleWebFormSubmissionsViewResult(result: any) {
   // Strangely, when there are no results, the result is a string containing "[]"
   if (result.content === "[]") {
     return [];
