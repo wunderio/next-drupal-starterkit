@@ -17,11 +17,11 @@ export function UserMenu() {
   const toggle = () => setIsOpen((o) => !o);
   const close = () => setIsOpen(false);
 
-  const ref = useOnClickOutside<HTMLUListElement>(close);
-
   const loginUrl = `/auth/login?callbackUrl=${encodeURIComponent(
     query.callbackUrl?.toString() || `/${locale}${asPath}`
   )}`;
+
+  const ref = useOnClickOutside<HTMLUListElement>(close);
 
   if (status === "authenticated") {
     return (
@@ -38,7 +38,11 @@ export function UserMenu() {
           )}
         >
           <li>
-            <Link className="block p-2 hover:bg-primary-50" href={"/dashboard"}>
+            <Link
+              className="block p-2 hover:bg-primary-50"
+              href="/dashboard"
+              onClick={close}
+            >
               {t("user-dashboard")}
             </Link>
           </li>
