@@ -7,6 +7,8 @@ dependencies:
     - serialization
     - user
     - webform
+_core:
+  default_config_hash: IScV4MdOa5q9sKO9uZ_ziWZTzyX9Amy9V0ZUoK27yr4
 id: webform_submissions_by_user
 label: 'Webform submissions by user'
 module: views
@@ -113,7 +115,23 @@ display:
         type: tag
         options: {  }
       empty: {  }
-      sorts: {  }
+      sorts:
+        changed:
+          id: changed
+          table: webform_submission
+          field: changed
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: webform_submission
+          entity_field: changed
+          plugin_id: date
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+          granularity: second
       arguments:
         uid:
           id: uid
