@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
@@ -11,13 +12,16 @@ import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
-import { formatDate, handleWebFormSubmissionsViewResult } from "@/lib/utils";
+import {
+  formatDateComplete,
+  handleWebFormSubmissionsViewResult,
+} from "@/lib/utils";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default function DashboardPage({ submissions }) {
   const { t } = useTranslation();
   const { data } = useSession();
-
+  const router = useRouter();
   return (
     <>
       <Meta title={t("user-dashboard")} metatags={[]} />
@@ -41,7 +45,10 @@ export default function DashboardPage({ submissions }) {
             >
               <td className="p-3">{submission.webform_id[0]["target_id"]}</td>
               <td className="p-3">
-                {formatDate(submission.created[0]["value"])}
+                {formatDateComplete(
+                  submission.created[0]["value"],
+                  router.locale
+                )}
               </td>
               <td className="p-3">
                 <Link
