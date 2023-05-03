@@ -42,6 +42,7 @@
   "statusmessage-error": "Error",
   "user-dashboard": "Dashboard",
   "user-dashboard-intro-greeting": "Hello {{username}}! These are your past form submissions:",
+  "back-to-dashboard": "Back to dashboard",
   "form-submission-details": "Form submission details",
   "form-submission-intro-text": "Your submitted data for the {{form}} form:",
   "form-field": "Field",

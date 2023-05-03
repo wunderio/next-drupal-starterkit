@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { useTranslation } from "next-i18next";
 
@@ -19,6 +20,9 @@ export default function DashboardPage({ submission }) {
     <>
       <Meta title={t("form-submission-details")} metatags={[]} />
       <HeadingPage>{t("form-submission-details")}</HeadingPage>
+      <Link href="/dashboard" className="mt-4 block text-primary-500 underline">
+        {t("back-to-dashboard")}
+      </Link>
       <p className="my-6 text-justify text-md/xl text-scapaflow sm:text-lg">
         {t("form-submission-intro-text", { form: submission.formTitle })}
       </p>

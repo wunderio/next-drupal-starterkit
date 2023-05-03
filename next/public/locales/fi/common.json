@@ -42,6 +42,7 @@
   "statusmessage-error": "Virhe",
   "user-dashboard": "Kojelauta",
   "user-dashboard-intro-greeting": "Hei {{username}}! Nämä ovat aiemmat lomakkeesi lähetykset:",
+  "back-to-dashboard": "Takaisin kojelautaan",
   "form-submission-details": "Lomakkeen lähetyksen tiedot",
   "form-submission-intro-text": "Tämä on {{form}} lomakkeen lähetyksen yhteenveto:",
   "form-field": "Kenttä",

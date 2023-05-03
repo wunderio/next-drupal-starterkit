@@ -42,6 +42,7 @@
   "statusmessage-error": "Fel",
   "user-dashboard": "Användardashboard",
   "user-dashboard-intro-greeting": "Hej {{username}}! Det här är dina tidigare formulärinlämningar:",
+  "back-to-dashboard": "Tillbaka till dashboard",
   "form-submission-details": "Information om formulärinlämning",
   "form-submission-intro-text": "Dina inskickade data för formuläret {{form}}:",
   "form-field": "Fält",
