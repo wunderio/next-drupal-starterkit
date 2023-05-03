@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getServerSession } from "next-auth/next";
@@ -12,13 +12,18 @@ import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
+import { formatDateComplete } from "@/lib/utils";
 import {
-  formatDateComplete,
-  handleWebFormSubmissionsViewResult,
-} from "@/lib/utils";
+  isWebformSubmissionsListEmpty,
+  validateAndCleanupWebformSubmissionList,
+  WebformSubmissionsListEmpty,
+  WebformSubmissionsListItem,
+} from "@/lib/zod/webform-submission-list";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
-export default function DashboardPage({ submissions }) {
+export default function DashboardPage({
+  submissions,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation();
   const { data } = useSession();
   const router = useRouter();
@@ -46,7 +51,7 @@ export default function DashboardPage({ submissions }) {
               <td className="p-3">{submission.webform_id[0]["target_id"]}</td>
               <td className="p-3">
                 {formatDateComplete(
-                  submission.created[0]["value"],
+                  submission.completed[0]["value"],
                   router.locale
                 )}
               </td>
@@ -74,9 +79,11 @@ export default function DashboardPage({ submissions }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<CommonPageProps> = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps<
+  CommonPageProps & {
+    submissions: WebformSubmissionsListItem[];
+  }
+> = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session) {
@@ -101,8 +108,13 @@ export const getServerSideProps: GetServerSideProps<CommonPageProps> = async (
     },
   });
 
-  const submissionsViewResult = await result.json();
-  const submissions = handleWebFormSubmissionsViewResult(submissionsViewResult);
+  const submissionsViewResult = (await result.json()) as
+    | WebformSubmissionsListEmpty
+    | WebformSubmissionsListItem[];
+
+  const submissions = isWebformSubmissionsListEmpty(submissionsViewResult)
+    ? []
+    : validateAndCleanupWebformSubmissionList(submissionsViewResult);
 
   return {
     props: {

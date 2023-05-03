@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { useTranslation } from "next-i18next";
@@ -10,10 +10,16 @@ import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
-import { handleRawWebFormSubmission } from "@/lib/utils";
+import {
+  validateAndCleanupWebformSubmission,
+  WebformSubmission,
+  WebformSubmissionRaw,
+} from "@/lib/zod/webform-submission";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
-export default function DashboardPage({ submission }) {
+export default function DashboardPage({
+  submission,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation();
 
   return (
@@ -46,9 +52,11 @@ export default function DashboardPage({ submission }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<CommonPageProps> = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps<
+  CommonPageProps & {
+    submission: WebformSubmission;
+  }
+> = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session) {
@@ -79,8 +87,8 @@ export const getServerSideProps: GetServerSideProps<CommonPageProps> = async (
     };
   }
 
-  const rawSubmission = await result.json();
-  const submission = handleRawWebFormSubmission(rawSubmission);
+  const rawSubmission = (await result.json()) as WebformSubmissionRaw;
+  const submission = validateAndCleanupWebformSubmission(rawSubmission);
 
   return {
     props: {
