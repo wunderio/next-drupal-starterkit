@@ -74,7 +74,6 @@ export function handleWebFormSubmissionsViewResult(result: any) {
 }
 
 export function handleRawWebFormSubmission(result: any): WebformSubmission {
-  console.log(result);
   return {
     formTitle: result.title,
     formData: Object.entries(result.webform_submission),
