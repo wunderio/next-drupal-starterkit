@@ -34,6 +34,7 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
       <Link
         href={article.path.alias}
         className="absolute inset-0 cursor-pointer"
+        aria-label={`${t("article-link")}${" | "}${article.title}`}
       />
     </div>
   );
