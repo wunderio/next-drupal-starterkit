@@ -38,11 +38,11 @@ export default function IndexPage({
         ))}
       </div>
       <Divider className="max-w-4xl" />
-      <LatestArticles articles={articleTeasers} />
-      <Divider className="max-w-4xl" />
       <AuthGate text={t("login-to-fill-form")}>
         <ContactForm />
       </AuthGate>
+      <Divider className="max-w-4xl" />
+      <LatestArticles articles={articleTeasers} />
     </>
   );
 }
