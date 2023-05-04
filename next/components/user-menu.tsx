@@ -26,8 +26,8 @@ export function UserMenu() {
   if (status === "authenticated") {
     return (
       <nav>
-        <button type="button" className="hover:underline" onClick={toggle}>
-          <span className="hidden sm:mr-2 sm:inline">{data.user.name}</span>
+        <button type="button" className="hover:underline" onClick={toggle} aria-label={t("user-menu")}>
+          <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">{data.user.name}</span>
           <AccountIcon className="inline-block h-6 w-6" />
         </button>
         <ul
@@ -52,7 +52,7 @@ export function UserMenu() {
   }
 
   return (
-    <Link href={loginUrl} className="hover:underline">
+    <Link href={loginUrl} className="hover:underline" aria-label={t("user-menu")}>
       <span
         className={clsx(
           "hidden sm:mr-2 sm:inline",
