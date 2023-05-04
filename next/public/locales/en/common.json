@@ -39,5 +39,9 @@
   "statusmessage-info": "Info",
   "statusmessage-success": "Success",
   "statusmessage-warning": "Warning",
-  "statusmessage-error": "Error"
+  "statusmessage-error": "Error",
+  "language-switcher-button": "Language switcher button",
+  "user-menu": "User menu",
+  "search-link": "Search",
+  "article-link": "Article link"
 }
