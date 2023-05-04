@@ -39,5 +39,9 @@
   "statusmessage-info": "Info",
   "statusmessage-success": "Lyckades",
   "statusmessage-warning": "Varning",
-  "statusmessage-error": "Fel"
+  "statusmessage-error": "Fel",
+  "language-switcher-button": "Språkväxlingsknapp",
+  "user-menu": "Användarmeny",
+  "search-link": "Sök",
+  "article-link": "Artikellänk"
 }
