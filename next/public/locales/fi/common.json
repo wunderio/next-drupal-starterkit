@@ -39,5 +39,9 @@
   "statusmessage-info": "Tiedot",
   "statusmessage-success": "Onnistui",
   "statusmessage-warning": "Varoitus",
-  "statusmessage-error": "Virhe"
+  "statusmessage-error": "Virhe",
+  "language-switcher-button": "Kielenvaihtopainike",
+  "user-menu": "Käyttäjävalikko",
+  "search-link": "Haku",
+  "article-link": "Artikkeli-linkki"
 }
