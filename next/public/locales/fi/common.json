@@ -44,4 +44,16 @@
   "user-menu": "Käyttäjävalikko",
   "search-link": "Haku",
   "article-link": "Artikkeli-linkki"
+  "user-dashboard": "Kojelauta",
+  "user-dashboard-intro-greeting": "Hei {{username}}! Nämä ovat aiemmat lomakkeesi lähetykset:",
+  "back-to-dashboard": "Takaisin kojelautaan",
+  "form-submission-details": "Lomakkeen lähetyksen tiedot",
+  "form-submission-intro-text": "Tämä on {{form}} lomakkeen lähetyksen yhteenveto:",
+  "form-field": "Kenttä",
+  "form-value": "Arvo",
+  "form": "Lomake",
+  "date": "Päivämäära",
+  "more-details": "Lisätietoja",
+  "see-more": "Näytä lisää",
+  "no-submissions-yet": "Et ole vielä lähettänyt lomakkeita."
 }

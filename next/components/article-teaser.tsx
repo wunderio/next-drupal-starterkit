@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
 import { absoluteUrl, formatDate } from "@/lib/utils";
@@ -12,7 +13,8 @@ interface ArticleTeaserProps {
 export function ArticleTeaser({ article }: ArticleTeaserProps) {
   const { t } = useTranslation();
   const author = article.uid?.display_name;
-  const date = formatDate(article.created);
+  const router = useRouter();
+  const date = formatDate(article.created, router.locale);
   return (
     <div className="relative h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md">
       <h3 className="mb-2 line-clamp-2 text-heading-xs font-bold">

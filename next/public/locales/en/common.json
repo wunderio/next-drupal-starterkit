@@ -44,4 +44,16 @@
   "user-menu": "User menu",
   "search-link": "Search",
   "article-link": "Article link"
+  "user-dashboard": "Dashboard",
+  "user-dashboard-intro-greeting": "Hello {{username}}! These are your past form submissions:",
+  "back-to-dashboard": "Back to dashboard",
+  "form-submission-details": "Form submission details",
+  "form-submission-intro-text": "Your submitted data for the {{form}} form:",
+  "form-field": "Field",
+  "form-value": "Value",
+  "form": "Form",
+  "date": "Date",
+  "more-details": "More details",
+  "see-more": "See more",
+  "no-submissions-yet": "You have not yet submitted any forms."
 }
