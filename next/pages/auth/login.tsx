@@ -9,6 +9,7 @@ import { getCommonPageProps } from "@/lib/get-common-page-props";
 
 import { Button } from "@/wunder-component-library/button";
 import { Input } from "@/wunder-component-library/input";
+import { Label } from "@/wunder-component-library/label";
 import { StatusMessage } from "@/wunder-component-library/status-message";
 
 type Inputs = {
@@ -41,9 +42,7 @@ export default function LogIn() {
       )}
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div>
-          <label className="mb-1 block text-sm font-bold" htmlFor="username">
-            {t("username")}
-          </label>
+          <Label htmlFor="username">{t("username")}</Label>
           <Input
             id="username"
             autoComplete="username"
@@ -54,9 +53,7 @@ export default function LogIn() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-bold" htmlFor="password">
-            {t("password")}
-          </label>
+          <Label htmlFor="password">{t("password")}</Label>
           <Input
             id="password"
             autoComplete="current-password"

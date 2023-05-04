@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Input } from "@/wunder-component-library/input";
+import { Label } from "@/wunder-component-library/label";
 
 const meta: Meta<typeof Input> = {
   title: "Library/Input",
@@ -39,4 +40,17 @@ export const Password: Story = {
   args: {
     type: "password",
   },
+};
+
+export const InputWithLabel: Story = {
+  render: (args) => (
+    <>
+      <p className="mb-4">
+        In most cases, you'll want to use the Label component at the same time
+        as an Input component:
+      </p>
+      <Label htmlFor="input">My custom label</Label>
+      <Input id="input" {...args} />
+    </>
+  ),
 };
