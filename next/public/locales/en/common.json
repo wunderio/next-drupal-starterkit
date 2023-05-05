@@ -43,7 +43,7 @@
   "language-switcher-button": "Language switcher button",
   "user-menu": "User menu",
   "search-link": "Search",
-  "article-link": "Article link"
+  "article-link": "Article link",
   "user-dashboard": "Dashboard",
   "user-dashboard-intro-greeting": "Hello {{username}}! These are your past form submissions:",
   "back-to-dashboard": "Back to dashboard",

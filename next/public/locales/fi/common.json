@@ -43,7 +43,7 @@
   "language-switcher-button": "Kielenvaihtopainike",
   "user-menu": "Käyttäjävalikko",
   "search-link": "Haku",
-  "article-link": "Artikkeli-linkki"
+  "article-link": "Artikkeli-linkki",
   "user-dashboard": "Kojelauta",
   "user-dashboard-intro-greeting": "Hei {{username}}! Nämä ovat aiemmat lomakkeesi lähetykset:",
   "back-to-dashboard": "Takaisin kojelautaan",

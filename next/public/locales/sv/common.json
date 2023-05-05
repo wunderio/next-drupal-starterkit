@@ -43,7 +43,7 @@
   "language-switcher-button": "Språkväxlingsknapp",
   "user-menu": "Användarmeny",
   "search-link": "Sök",
-  "article-link": "Artikellänk"
+  "article-link": "Artikellänk",
   "user-dashboard": "Användardashboard",
   "user-dashboard-intro-greeting": "Hej {{username}}! Det här är dina tidigare formulärinlämningar:",
   "back-to-dashboard": "Tillbaka till dashboard",
