@@ -46,8 +46,8 @@ export const InputWithLabel: Story = {
   render: (args) => (
     <>
       <p className="mb-4">
-        In most cases, you'll want to use the Label component at the same time
-        as an Input component:
+        In most cases, you&apos;ll want to use the Label component at the same
+        time as an Input component:
       </p>
       <Label htmlFor="input">My custom label</Label>
       <Input id="input" {...args} />
