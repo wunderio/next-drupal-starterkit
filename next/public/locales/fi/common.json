@@ -2,6 +2,7 @@
   "homepage-link-sr": "Etusivu",
   "menu-toggle": "Vaihtaa valikkoa",
   "menu-back": "Takaisin",
+  "show-submenu": "Näytä alivalikko",
   "latest-articles": "Viimeisimmät artikkelit",
   "no-content-found": "Sisältöä ei löydy",
   "posted-by": "Kirjoittaja: {{author}}",

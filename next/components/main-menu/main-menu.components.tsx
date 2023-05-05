@@ -167,7 +167,14 @@ export function MenuLink({
   );
 }
 
-export function MenuTrigger({ isTopLevel }: { isTopLevel?: boolean }) {
+export function MenuTrigger({
+  isTopLevel,
+  parent,
+}: {
+  isTopLevel?: boolean;
+  parent?: string;
+}) {
+  const { t } = useTranslation();
   return (
     <NavigationMenu.Trigger
       {...disableHoverEvents}
@@ -177,6 +184,7 @@ export function MenuTrigger({ isTopLevel }: { isTopLevel?: boolean }) {
           ? "lg:ring-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600"
           : "lg:aria-expanded:bg-primary-600 lg:aria-expanded:text-white lg:aria-expanded:ring-primary-600"
       )}
+      aria-label={`${t("show-submenu")}${" "}${t(parent)}`}
     >
       <Chevron className="h-9 w-9 -rotate-90" />
     </NavigationMenu.Trigger>

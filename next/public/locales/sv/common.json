@@ -2,6 +2,7 @@
   "homepage-link-sr": "Hemsida",
   "menu-toggle": "Växla menyn",
   "menu-back": "Tillbaka",
+  "show-submenu": "Visa undermeny",
   "latest-articles": "Senaste artiklarna",
   "no-content-found": "Inget innehåll hittades",
   "posted-by": "Författare: {{author}}",

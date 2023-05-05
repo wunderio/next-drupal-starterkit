@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import { useEffectOnce } from "@/lib/hooks/use-effect-once";
@@ -29,6 +30,8 @@ interface MainMenuProps {
 
 export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
   const router = useRouter();
+
+  const { t } = useTranslation();
 
   const [didInit, setDidInit] = useState(false);
 
@@ -125,7 +128,9 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
               <MenuLink href={item.url} isTopLevel>
                 {item.title}
               </MenuLink>
-              {item.items?.length > 0 && <MenuTrigger isTopLevel />}
+              {item.items?.length > 0 && (
+                <MenuTrigger isTopLevel parent={item.title} />
+              )}
               <MenuContent>
                 <MenuSubmenu
                   value={activeSubmenu}
@@ -143,7 +148,9 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
                     {item.items?.map((subItem) => (
                       <MenuItem key={subItem.id} value={subItem.id}>
                         <MenuLink href={subItem.url}>{subItem.title}</MenuLink>
-                        {subItem.items?.length > 0 && <MenuTrigger />}
+                        {subItem.items?.length > 0 && (
+                          <MenuTrigger parent={subItem.title} />
+                        )}
                         <MenuContent>
                           <MenuSubmenu>
                             <MenuList level={2}>
