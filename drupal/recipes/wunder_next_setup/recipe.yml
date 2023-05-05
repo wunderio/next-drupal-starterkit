@@ -21,3 +21,8 @@ config:
     system.site:
       simple_config_update:
         page.front: '/admin/content'
+    user.role.anonymous:
+      ensure_exists:
+        label: 'Anonymous user'
+      grantPermissions:
+        - 'restful post user_registration'
