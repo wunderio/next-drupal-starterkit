@@ -27,9 +27,6 @@ import { buildRequest } from "@/lib/search-ui-helpers/buildRequest";
 import { buildState } from "@/lib/search-ui-helpers/buildState";
 import { runRequest } from "@/lib/search-ui-helpers/runRequest";
 
-/**
- * Contains the search provider component.
- */
 export default function SearchPage() {
   const { t } = useTranslation();
   const router = useRouter();

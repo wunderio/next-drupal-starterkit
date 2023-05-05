@@ -20,11 +20,13 @@ export function MultiCheckboxFacet({
   const { t } = useTranslation();
   return (
     <fieldset className={clsx(className, "mb-4")}>
-      <legend className="uppercase text-primary-600">{label}</legend>
+      <legend className="mb-5 text-heading-xs font-bold text-steelgray">
+        {label}
+      </legend>
       {showSearch && (
         <div>
           <input
-            className="my-1 w-full border border-finnishwinter p-1"
+            className="mb-1 w-full border border-finnishwinter p-1"
             type="search"
             placeholder={searchPlaceholder || "Search"}
             onChange={(e) => {
@@ -33,7 +35,7 @@ export function MultiCheckboxFacet({
           />
         </div>
       )}
-      <div className="my-2">
+      <div className="mb-2">
         {options.length < 1 && <div>No matching options</div>}
         {options.map((option) => {
           const checked = option.selected;
