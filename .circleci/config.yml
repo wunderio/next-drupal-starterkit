@@ -8,6 +8,55 @@ executors:
     docker:
       - image: wunderio/silta-cicd:circleci-php8.1-node16-composer2-v0.1
     resource_class: small
+commands:
+  npm-install-build:
+    description: "NPM build command."
+    parameters:
+      path:
+        description: "package.json path"
+        type: string
+        default: "."
+      install-command:
+        type: string
+        default: "npm install"
+      build-command:
+        description: "NPM build command."
+        type: string
+        default: "npm run build"
+      cache-version:
+        description: "CircleCI cache key prefix."
+        type: string
+        default: "v1.2"
+      npm-config-platform:
+        description: "Platform flag for npm install"
+        type: string
+        default: "linuxmusl"
+    steps:
+      - restore_cache:
+          keys:
+            - <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
+            - <<parameters.cache-version>>-npm-
+
+      - run:
+          name: Install frontend dependencies
+          environment:
+            npm_config_platform: <<parameters.npm-config-platform>>
+          command: |
+            cd '<<parameters.path>>'
+            <<parameters.install-command>>
+
+      - run:
+          name: Build frontend
+          command: |
+            cd '<<parameters.path>>'
+            <<parameters.build-command>>
+
+      - save_cache:
+          paths:
+            - <<parameters.path>>/node_modules
+            - <<parameters.path>>/.next/cache
+          key: <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
+
 
 workflows:
   commit:
@@ -145,7 +194,8 @@ workflows:
                   sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
 
-            - silta/npm-install-build:
+            # uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+            - npm-install-build:
                 path: next
           image_build_steps:
             - silta/build-docker-image:
@@ -193,7 +243,8 @@ workflows:
                   sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
-            - silta/npm-install-build:
+            # uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+            - npm-install-build:
                 path: next
 
           filters:
