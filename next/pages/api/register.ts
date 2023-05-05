@@ -24,24 +24,25 @@ export default async function handler(
 
   try {
     if (req.method === "POST") {
-      const url = drupal.buildUrl("/user/register");
+      const url = drupal.buildUrl("/user/register?_format=json");
       const body = JSON.parse(req.body);
 
       // Submit to Drupal.
       const result = await drupal.fetch(url.toString(), {
         method: "POST",
         body: JSON.stringify({
-          name: body.name,
-          username: body.username,
-          email: body.email,
+          name: [{ value: body.name }],
+          mail: [{ value: body.mail }],
         }),
         headers: {
           "Content-Type": "application/json",
         },
+        // Make sure we are doing this call as
+        // anonymous user:
+        withAuth: false,
       });
 
       if (result.ok) {
-        console.log("Sign-up success:", result);
         res.status(200).end();
       } else {
         console.error("Sign-up failed:", result);

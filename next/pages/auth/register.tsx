@@ -28,8 +28,7 @@ export default function Register() {
       method: "POST",
       body: JSON.stringify({
         name: data.name,
-        username: data.username,
-        email: data.email,
+        mail: data.email,
       }),
     });
     console.log("Registration success:", response);
@@ -69,19 +68,6 @@ export default function Register() {
             })}
           />
         </div>
-        <div>
-          <label className="mb-1 block text-sm font-bold" htmlFor="username">
-            {t("username")}
-          </label>
-          <Input
-            id="username"
-            autoComplete="username"
-            {...register("username", {
-              required: true,
-            })}
-          />
-        </div>
-
         <div>
           <label className="mb-1 block text-sm font-bold" htmlFor="email">
             {t("email")}
