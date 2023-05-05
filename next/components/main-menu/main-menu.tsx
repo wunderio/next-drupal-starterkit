@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import { useEffectOnce } from "@/lib/hooks/use-effect-once";
@@ -30,8 +29,6 @@ interface MainMenuProps {
 
 export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
   const router = useRouter();
-
-  const { t } = useTranslation();
 
   const [didInit, setDidInit] = useState(false);
 
