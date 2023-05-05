@@ -5,6 +5,12 @@ import { Inter, Overpass } from "next/font/google";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from "next-i18next";
+import React from "react";
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import clsx from "clsx";
 
 import { Layout } from "@/components/layout";
@@ -15,21 +21,27 @@ import {
 import { CommonPageProps } from "@/lib/get-common-page-props";
 
 interface PageProps extends CommonPageProps {
+  dehydratedState: any;
   languageLinks?: LanguageLinks;
   session?: Session;
 }
 
 function App({ Component, pageProps }: AppProps<PageProps>) {
+  const [queryClient] = React.useState(() => new QueryClient());
   const { menus, languageLinks, session, ...restPageProps } = pageProps;
   return (
     <SessionProvider session={session}>
-      <Fonts>
-        <LanguageLinksProvider languageLinks={languageLinks}>
-          <Layout menus={menus}>
-            <Component {...restPageProps} />
-          </Layout>
-        </LanguageLinksProvider>
-      </Fonts>
+      <QueryClientProvider client={queryClient}>
+        <Fonts>
+          <LanguageLinksProvider languageLinks={languageLinks}>
+            <Layout menus={menus}>
+              <Hydrate state={pageProps.dehydratedState}>
+                <Component {...restPageProps} />
+              </Hydrate>
+            </Layout>
+          </LanguageLinksProvider>
+        </Fonts>
+      </QueryClientProvider>
     </SessionProvider>
   );
 }
