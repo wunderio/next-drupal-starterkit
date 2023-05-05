@@ -1,5 +1,3 @@
-import "@elastic/react-search-ui-views/lib/styles/styles.css";
-
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
