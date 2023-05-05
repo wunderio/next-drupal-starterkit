@@ -1,11 +1,6 @@
 import type { GetStaticPropsContext } from "next";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { useRouter } from "next/router";
-import {getCsrfToken, signIn} from "next-auth/react";
 import { useTranslation } from "next-i18next";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-// import { drupal } from "lib/drupal";
 
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 
@@ -27,26 +22,6 @@ export default function Register() {
     handleSubmit,
     formState: { isSubmitSuccessful },
   } = useForm<Inputs>();
-
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  // const onSubmit = async ({ name, username, email }: Inputs) => {
-  //   setIsSubmitting(true);
-
-    // console.log("Sign-up response:", response);
-    // if (response.ok) {
-    //   console.log("Sign-up success:", response.status);
-    // } else {
-    //   console.error("Sign-up failed with status:", response.status);
-    //   setIsSubmitting(false);
-    // }
-    // } catch (error) {
-    //   console.error("Error registering user", error);
-    //   setIsSubmitting(false);
-    //   setErrorMessage(t("register-error"));
-    // }
-  // };
 
   const onSubmit = async (data: Inputs) => {
     const response = await fetch(`/api/register`, {
