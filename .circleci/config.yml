@@ -26,7 +26,7 @@ commands:
       cache-version:
         description: "CircleCI cache key prefix."
         type: string
-        default: "v1.1"
+        default: "v1.2"
       npm-config-platform:
         description: "Platform flag for npm install"
         type: string
