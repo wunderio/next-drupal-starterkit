@@ -29,6 +29,7 @@ php:
 
 # Configure reference data that will be used when creating new environments.
 referenceData:
+  enabled: false
   # The name of the environment from which reference data will be copied.
   referenceEnvironment: 'main'
 
