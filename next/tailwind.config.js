@@ -73,6 +73,7 @@ module.exports = {
       bold: "700",
     },
     lineHeight: {
+      1: "1",
       md: "1.25",
       lg: "1.5",
       xl: "1.75",
