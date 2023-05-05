@@ -8,7 +8,7 @@ referenceData:
 php:
   env:
     WUNDER_NEXT_FRONTEND_URL: https://next4drupal.dev.wdr.io
-    DRUSH_OPTIONS_URI: https://cms.next4drupal.dev.wdr.io
+    # DRUSH_OPTIONS_URI: https://cms.next4drupal.dev.wdr.io
 
 nginx:
   content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self'; frame-src: https://next4drupal.dev.wdr.io; base-uri 'self'; object-src 'self'; connect-src wss: https:"
