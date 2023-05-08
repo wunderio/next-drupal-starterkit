@@ -1,33 +1,31 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-// import { getServerSession } from "next-auth/next";
+import { getServerSession } from "next-auth/next";
 import { drupal } from "lib/drupal";
 
-// import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Because we want to redirect registered users to some
-  // other page than the register one, let's get the session:
-  // const session = await getServerSession(req, res, authOptions);
-
-  // if there is a session, redirect to the frontpage or user dashboard:
-  // if (session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+  // if there is a session, no sense in trying to register, so
+  // redirect to home page.
+  const session = await getServerSession(req, res, authOptions);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 
   try {
     if (req.method === "POST") {
       const url = drupal.buildUrl("/user/register?_format=json");
       const body = JSON.parse(req.body);
 
-      // Submit to Drupal.
+      // Do a call to drupal to register the user:
       const result = await drupal.fetch(url.toString(), {
         method: "POST",
         body: JSON.stringify({
