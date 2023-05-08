@@ -5,7 +5,6 @@ import { useState } from "react";
 
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { MainMenu, MenuToggle } from "@/components/main-menu/main-menu";
-import { RegisterMenu } from "@/components/register-menu";
 import { UserMenu } from "@/components/user-menu";
 import { Menu } from "@/lib/zod/menu";
 import SearchIcon from "@/styles/icons/search.svg";
@@ -25,7 +24,6 @@ export function Header({ menu }: HeaderProps) {
         <div className="flex flex-row items-center justify-end gap-6 sm:gap-8">
           <SearchLink />
           <UserMenu />
-          <RegisterMenu />
           <LanguageSwitcher />
           <MenuToggle isOpen={isMainMenuOpen} setIsOpen={setIsMainMenuOpen} />
         </div>

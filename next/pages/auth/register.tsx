@@ -10,12 +10,10 @@ import { StatusMessage } from "@/wunder-component-library/status-message";
 
 type Inputs = {
   name: string;
-  username: string;
   email: string;
 };
 
 export default function Register() {
-  // const { callbackUrl } = useRouter().query;
   const { t } = useTranslation();
   const {
     register,
@@ -31,10 +29,8 @@ export default function Register() {
         mail: data.email,
       }),
     });
-    console.log("Registration success:", response);
 
     if (!response.ok) {
-      // alert("Error!");
       console.error("Error registering user", response);
     }
   };
@@ -43,9 +39,7 @@ export default function Register() {
   if (isSubmitSuccessful) {
     return (
       <StatusMessage level="success">
-        <p className="mb-4">
-          {t("you are registered, please wait for account activation")}
-        </p>
+        <p className="mb-4">{t("register-success")}</p>
       </StatusMessage>
     );
   }
@@ -58,7 +52,7 @@ export default function Register() {
       >
         <div>
           <label className="mb-1 block text-sm font-bold" htmlFor="name">
-            {t("name")}
+            {t("username")}
           </label>
           <Input
             id="name"
