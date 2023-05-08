@@ -58,7 +58,7 @@ export default function DashboardPage({
               <td className="p-3">
                 <Link
                   href={`/dashboard/webforms/${submission.webform_id[0]["target_id"]}/${submission.uuid[0]["value"]}`}
-                  className="text-primary-500 hover:underline"
+                  className="hyperlink"
                 >
                   {t("see-more")}
                 </Link>
