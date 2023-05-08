@@ -3,7 +3,6 @@ import { ResultViewProps } from "@elastic/react-search-ui-views";
 import { Badge } from "@/wunder-component-library/badge";
 
 export function SearchResult({ result, onClickLink }: ResultViewProps) {
-  console.log(result);
   return (
     <a
       onClick={onClickLink}
@@ -23,4 +22,3 @@ export function SearchResult({ result, onClickLink }: ResultViewProps) {
     </a>
   );
 }
-// className="mr-2 rounded bg-primary-100 px-2.5 py-0.5 text-sm uppercase text-primary-800"

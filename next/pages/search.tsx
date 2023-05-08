@@ -64,7 +64,7 @@ export default function SearchPage() {
                 // Here we specify our own custom
                 // component to render the search bar:
                 inputView={SearchBoxInput}
-                className="py-8"
+                className="my-8 rounded bg-primary-100 sm:my-16 sm:py-16"
               />
               <div className="flex justify-end">
                 {wasSearched && results.length > 0 && (

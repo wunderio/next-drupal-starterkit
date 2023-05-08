@@ -14,7 +14,7 @@ export function SearchBoxInput({
   const { t } = useTranslation();
   const buttonId = useId();
   return (
-    <div className="relative h-14 w-full max-w-xl">
+    <div className="relative mx-auto h-14 w-full max-w-xl bg-primary-200">
       <SearchIcon
         aria-hidden
         className="pointer-events-none absolute left-3 top-3 z-10 h-8 w-8 text-graysuit"
