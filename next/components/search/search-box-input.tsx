@@ -1,29 +1,40 @@
 import { useTranslation } from "next-i18next";
+import { InputHTMLAttributes, useId } from "react";
 import { InputViewProps } from "@elastic/react-search-ui-views";
 
 import SearchIcon from "@/styles/icons/search.svg";
 
-export const SearchBoxInput: React.ComponentType<InputViewProps> = ({
+import { Button } from "@/wunder-component-library/button";
+import { Input } from "@/wunder-component-library/input";
+
+export function SearchBoxInput({
   getInputProps,
   getButtonProps,
-}) => {
+}: InputViewProps) {
   const { t } = useTranslation();
+  const buttonId = useId();
   return (
-    <div className="relative w-full max-w-xl">
-      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-        <SearchIcon aria-hidden className="h-5 w-5 text-scapaflow" />
-      </div>
-      <input
-        {...getInputProps()}
-        className="block w-full rounded-lg border border-primary-100 bg-white p-4 pl-10 text-sm text-steelgray focus:border-primary-500 focus:ring-primary-500"
-        placeholder={t("search-bar-placeholder-text")}
+    <div className="relative mx-auto h-14 w-full max-w-xl bg-primary-200">
+      <SearchIcon
+        aria-hidden
+        className="pointer-events-none absolute left-3 top-3 z-10 h-8 w-8 text-graysuit"
       />
-      <button
-        {...getButtonProps()}
-        className="absolute bottom-2.5 right-2.5 rounded-md bg-primary-600 px-4 py-2 text-sm text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
+      <Input
+        {...getInputProps({
+          placeholder: t("search-bar-placeholder-text"),
+          "aria-labelledby": buttonId,
+          className: "absolute inset-0 pl-12",
+        } satisfies InputHTMLAttributes<HTMLInputElement>)}
+      />
+      <Button
+        {...getButtonProps({
+          id: buttonId,
+          className:
+            "absolute bottom-1.5 right-1.5 top-1.5 ring-offset-4 leading-1 px-2.5",
+        } satisfies InputHTMLAttributes<HTMLButtonElement>)}
       >
         {t("search-button-text")}
-      </button>
+      </Button>
     </div>
   );
-};
+}

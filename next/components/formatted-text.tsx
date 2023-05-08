@@ -49,7 +49,7 @@ const options: HTMLReactParserOptions = {
 
         if (href && isRelative(href)) {
           return (
-            <Link href={href} className="underline">
+            <Link href={href} className="hyperlink underline">
               {domToReact(domNode.children)}
             </Link>
           );
