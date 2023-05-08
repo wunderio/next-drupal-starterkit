@@ -2,10 +2,9 @@ import { ResultViewProps } from "@elastic/react-search-ui-views";
 
 import { Badge } from "@/wunder-component-library/badge";
 
-export function SearchResult({ result, onClickLink }: ResultViewProps) {
+export function SearchResult({ result }: ResultViewProps) {
   return (
     <a
-      onClick={onClickLink}
       key={result.id.raw}
       href={result.path.raw}
       className="my-4 block rounded bg-white p-8"
