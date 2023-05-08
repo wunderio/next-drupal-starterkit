@@ -4,7 +4,7 @@ import { cva } from "cva";
 import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
-  "flex justify-center border-2 rounded transition-colors duration-200 active:enabled:scale-[0.98] disabled:cursor-not-allowed",
+  "flex justify-center items-center border-2 rounded transition-colors duration-200 active:enabled:scale-[0.98] disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
