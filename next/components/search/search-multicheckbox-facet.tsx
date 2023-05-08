@@ -60,7 +60,7 @@ export function MultiCheckboxFacet({
                 />
                 <span className="ml-2 text-sm text-steelgray">
                   {getFilterValueDisplay(option.value)}{" "}
-                  <span className="text-stone">
+                  <span className="text-steelgray">
                     ({option.count.toLocaleString("en")})
                   </span>
                 </span>

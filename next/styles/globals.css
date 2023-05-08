@@ -8,10 +8,10 @@
 
 @layer components {
   .hyperlink {
-    @apply text-primary-600 visited:text-secondary-900 hover:underline;
+    @apply text-primary-600 visited:text-secondary-900 hover:underline flex items-center;
 
     &[href^="https://"]::after {
-      @apply ml-1 mt-0.5 inline-block h-[1em] w-[1em];
+      @apply ml-1 inline-block h-[1em] w-[1em];
       content: url(./icons/external.svg);
     }
   }
