@@ -1,6 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { DrupalNode } from "next-drupal";
-import { useTranslation } from "next-i18next";
 
 import { ContactForm } from "@/components/contact-form";
 import { LatestArticles } from "@/components/latest-articles";
@@ -27,7 +26,6 @@ export default function IndexPage({
   frontpage,
   articleTeasers,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = useTranslation();
   return (
     <>
       <Meta title={frontpage?.title} metatags={frontpage?.metatag} />
