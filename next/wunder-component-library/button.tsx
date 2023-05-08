@@ -10,21 +10,21 @@ export const buttonVariants = cva(
       variant: {
         primary: [
           "bg-primary-600 border-primary-600 text-white",
-          "hover:bg-white hover:text-primary-600",
+          "hover:enabled:bg-white hover:enabled:text-primary-600",
           "active:enabled:bg-white active:enabled:text-primary-600",
           "disabled:border-primary-200 disabled:text-white disabled:bg-primary-200",
         ],
         secondary: [
           "bg-white text-primary-600 border-primary-600",
-          "hover:bg-primary-600 hover:text-white",
+          "hover:enabled:bg-primary-600 hover:enabled:text-white",
           "active:enabled:bg-primary-600 active:enabled:text-white",
           "disabled:border-primary-200 disabled:text-primary-200 disabled:bg-white",
         ],
         tertiary: [
           "bg-transparent text-primary-600 border-transparent",
-          "hover:bg-primary-50 hover:text-primary-600 hover:border-transparent",
+          "hover:enabled:bg-primary-50 hover:enabled:text-primary-600 hover:enabled:border-transparent",
           "active:enabled:bg-primary-50 active:enabled:text-primary-600 active:enabled:border-transparent",
-          "disabled:border-transparent disabled:text-primary-200 disabled:bg-white",
+          "disabled:border-transparent disabled:text-primary-200",
         ],
       },
       size: {
