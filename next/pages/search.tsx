@@ -1,5 +1,3 @@
-import "@elastic/react-search-ui-views/lib/styles/styles.css";
-
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
@@ -29,9 +27,6 @@ import { buildRequest } from "@/lib/search-ui-helpers/buildRequest";
 import { buildState } from "@/lib/search-ui-helpers/buildState";
 import { runRequest } from "@/lib/search-ui-helpers/runRequest";
 
-/**
- * Contains the search provider component.
- */
 export default function SearchPage() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -69,7 +64,7 @@ export default function SearchPage() {
                 // Here we specify our own custom
                 // component to render the search bar:
                 inputView={SearchBoxInput}
-                className="py-8"
+                className="my-8 rounded bg-primary-100 sm:my-16 sm:py-16"
               />
               <div className="flex justify-end">
                 {wasSearched && results.length > 0 && (

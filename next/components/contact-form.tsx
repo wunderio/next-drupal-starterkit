@@ -6,6 +6,7 @@ import { AuthGate } from "@/components/auth-gate";
 
 import { Button } from "@/wunder-component-library/button";
 import { Input } from "@/wunder-component-library/input";
+import { Label } from "@/wunder-component-library/label";
 import { StatusMessage } from "@/wunder-component-library/status-message";
 import { Textarea } from "@/wunder-component-library/textarea";
 
@@ -71,9 +72,7 @@ export function ContactForm() {
         <>
           <p>{t("form-description")}</p>
           <div>
-            <label className="mb-2 block text-sm font-bold" htmlFor="name">
-              {t("form-label-name")}
-            </label>
+            <Label htmlFor="name">{t("form-label-name")}</Label>
             <Input
               type="text"
               id="name"
@@ -83,9 +82,7 @@ export function ContactForm() {
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-bold" htmlFor="email">
-              {t("form-label-email")}
-            </label>
+            <Label htmlFor="email">{t("form-label-email")}</Label>
             <Input
               type="email"
               id="email"
@@ -95,9 +92,7 @@ export function ContactForm() {
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-bold" htmlFor="subject">
-              {t("form-label-subject")}
-            </label>
+            <Label htmlFor="subject">{t("form-label-subject")}</Label>
             <Input
               type="text"
               id="subject"
@@ -107,9 +102,7 @@ export function ContactForm() {
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-bold" htmlFor="message">
-              {t("form-label-message")}
-            </label>
+            <Label htmlFor="message">{t("form-label-message")}</Label>
             <Textarea
               id="message"
               {...register("message", {

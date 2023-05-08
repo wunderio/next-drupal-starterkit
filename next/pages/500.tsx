@@ -17,7 +17,7 @@ export default function NotFoundPage() {
       <HeadingPage>{t("Error")}</HeadingPage>
       <p className="mt-8 text-lg">
         {t("There was an error.")}{" "}
-        <Link href="/" className="text-primary-500 hover:underline">
+        <Link href="/" className="hyperlink underline">
           {t("Go back to the homepage?")}
         </Link>
       </p>

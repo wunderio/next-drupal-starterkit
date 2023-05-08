@@ -40,12 +40,7 @@ interface FooterLinkProps {
 function FooterLink({ href, newTab = false, children }: FooterLinkProps) {
   const [target, rel] = newTab ? ["_blank", "noreferrer"] : [];
   return (
-    <Link
-      href={href}
-      target={target}
-      rel={rel}
-      className="text-primary-500 hover:underline"
-    >
+    <Link href={href} target={target} rel={rel} className="hyperlink">
       {children}
     </Link>
   );
