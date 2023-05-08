@@ -4,7 +4,6 @@ import { useTranslation } from "next-i18next";
 import {
   ErrorBoundary,
   Facet,
-  Paging,
   PagingInfo,
   Results,
   SearchBox,
@@ -17,6 +16,7 @@ import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
 import { SearchBoxInput } from "@/components/search/search-box-input";
 import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-facet";
+import { Pagination } from "@/components/search/search-pagination";
 import { PagingInfoView } from "@/components/search/search-paging-info";
 import { SearchResult } from "@/components/search/search-result";
 import {
@@ -95,7 +95,7 @@ export default function SearchPage() {
                     resultView={SearchResult}
                   />
                   <div className="flex items-center justify-center py-2">
-                    {wasSearched && results.length > 0 && <Paging />}
+                    {wasSearched && results.length > 0 && <Pagination />}
                   </div>
                 </div>
               </div>
