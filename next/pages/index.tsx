@@ -2,7 +2,6 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
 
-import { AuthGate } from "@/components/auth-gate";
 import { ContactForm } from "@/components/contact-form";
 import { LatestArticles } from "@/components/latest-articles";
 import { LayoutProps } from "@/components/layout";
@@ -38,9 +37,7 @@ export default function IndexPage({
         ))}
       </div>
       <Divider className="max-w-4xl" />
-      <AuthGate text={t("login-to-fill-form")}>
-        <ContactForm />
-      </AuthGate>
+      <ContactForm />
       <Divider className="max-w-4xl" />
       <LatestArticles articles={articleTeasers} />
     </>

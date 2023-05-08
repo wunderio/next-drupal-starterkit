@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
+import { AuthGate } from "@/components/auth-gate";
+
 import { Button } from "@/wunder-component-library/button";
 import { Input } from "@/wunder-component-library/input";
 import { StatusMessage } from "@/wunder-component-library/status-message";
@@ -65,56 +67,60 @@ export function ContactForm() {
       <h2 className="text-heading-sm font-bold md:text-heading-md">
         {t("form-title")}
       </h2>
-      <p>{t("form-description")}</p>
-      <div>
-        <label className="mb-2 block text-sm font-bold" htmlFor="name">
-          {t("form-label-name")}
-        </label>
-        <Input
-          type="text"
-          id="name"
-          {...register("name", {
-            required: true,
-          })}
-        />
-      </div>
-      <div>
-        <label className="mb-2 block text-sm font-bold" htmlFor="email">
-          {t("form-label-email")}
-        </label>
-        <Input
-          type="email"
-          id="email"
-          {...register("email", {
-            required: true,
-          })}
-        />
-      </div>
-      <div>
-        <label className="mb-2 block text-sm font-bold" htmlFor="subject">
-          {t("form-label-subject")}
-        </label>
-        <Input
-          type="text"
-          id="subject"
-          {...register("subject", {
-            required: true,
-          })}
-        />
-      </div>
-      <div>
-        <label className="mb-2 block text-sm font-bold" htmlFor="message">
-          {t("form-label-message")}
-        </label>
-        <Textarea
-          id="message"
-          {...register("message", {
-            required: true,
-          })}
-        />
-      </div>
+      <AuthGate text={t("login-to-fill-form")}>
+        <>
+          <p>{t("form-description")}</p>
+          <div>
+            <label className="mb-2 block text-sm font-bold" htmlFor="name">
+              {t("form-label-name")}
+            </label>
+            <Input
+              type="text"
+              id="name"
+              {...register("name", {
+                required: true,
+              })}
+            />
+          </div>
+          <div>
+            <label className="mb-2 block text-sm font-bold" htmlFor="email">
+              {t("form-label-email")}
+            </label>
+            <Input
+              type="email"
+              id="email"
+              {...register("email", {
+                required: true,
+              })}
+            />
+          </div>
+          <div>
+            <label className="mb-2 block text-sm font-bold" htmlFor="subject">
+              {t("form-label-subject")}
+            </label>
+            <Input
+              type="text"
+              id="subject"
+              {...register("subject", {
+                required: true,
+              })}
+            />
+          </div>
+          <div>
+            <label className="mb-2 block text-sm font-bold" htmlFor="message">
+              {t("form-label-message")}
+            </label>
+            <Textarea
+              id="message"
+              {...register("message", {
+                required: true,
+              })}
+            />
+          </div>
 
-      <Button type="submit">{t("form-submit")}</Button>
+          <Button type="submit">{t("form-submit")}</Button>
+        </>
+      </AuthGate>
     </form>
   );
 }
