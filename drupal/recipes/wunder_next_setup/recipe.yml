@@ -18,9 +18,16 @@ config:
   import:
     redirect: '*'
   actions:
+    # Set the frontpage for the site:
     system.site:
       simple_config_update:
         page.front: '/admin/content'
+    # Allow users to create accounts, and require email verification:
+    user.settings:
+      simple_config_update:
+        register: 'visitors'
+        verify_mail: true
+    # Set permission to use register end point for anonymous user:
     user.role.anonymous:
       ensure_exists:
         label: 'Anonymous user'
