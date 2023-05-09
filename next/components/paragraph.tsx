@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 
+import { ParagraphHero } from "@/components/paragraph--hero";
 import { ParagraphImage } from "@/components/paragraph--image";
 import { ParagraphLinks } from "@/components/paragraph--links";
 import { ParagraphText } from "@/components/paragraph--text";
@@ -34,6 +35,9 @@ export function Paragraph({ paragraph }: { paragraph: Paragraph }) {
     }
     case "paragraph--accordion": {
       return <ParagraphAccordion paragraph={paragraph} />;
+    }
+    case "paragraph--hero": {
+      return <ParagraphHero paragraph={paragraph} />;
     }
     default:
       return null;

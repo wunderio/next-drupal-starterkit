@@ -26,6 +26,11 @@ export const ImageShape = z.object({
   }),
 });
 
+export const LinkShape = z.object({
+  title: z.string(),
+  full_url: z.string(),
+});
+
 export const ImageSchema = z.object({
   type: z.literal("paragraph--image"),
   id: z.string(),
@@ -55,12 +60,7 @@ export const VideoSchema = z.object({
 export const LinksSchema = z.object({
   type: z.literal("paragraph--links"),
   id: z.string(),
-  field_links: z.array(
-    z.object({
-      title: z.string(),
-      full_url: z.string(),
-    })
-  ),
+  field_links: z.array(LinkShape),
 });
 
 export const AccordionItemSchema = z.object({
@@ -83,6 +83,24 @@ export const AccordionSchema = z.object({
   field_heading: z.string(),
   field_accordion_items: z.array(AccordionItemSchema),
 });
+export const HeroSchema = z.object({
+  type: z.literal("paragraph--hero"),
+  id: z.string(),
+  field_heading: z.string(),
+  field_formatted_text: z.object({
+    processed: z.string(),
+  }),
+  field_image: z
+    .object({
+      type: z.literal("media--image"),
+      id: z.string(),
+      field_media_image: ImageShape,
+    })
+    .nullable()
+    .optional(),
+  field_primary_link: LinkShape.nullable().optional(),
+  field_secondary_link: LinkShape.nullable().optional(),
+});
 
 export type FormattedText = z.infer<typeof FormattedTextSchema>;
 export type Image = z.infer<typeof ImageSchema>;
@@ -90,6 +108,7 @@ export type Video = z.infer<typeof VideoSchema>;
 export type Links = z.infer<typeof LinksSchema>;
 export type Accordion = z.infer<typeof AccordionSchema>;
 export type AccordionItem = z.infer<typeof AccordionItemSchema>;
+export type Hero = z.infer<typeof HeroSchema>;
 
 export type Paragraph =
   | FormattedText
@@ -97,4 +116,5 @@ export type Paragraph =
   | Video
   | Links
   | Accordion
-  | AccordionItem;
+  | AccordionItem
+  | Hero;
