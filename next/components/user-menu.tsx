@@ -25,14 +25,9 @@ export function UserMenu() {
 
   if (status === "authenticated") {
     return (
-      <nav>
-        <button
-          type="button"
-          className="hover:underline"
-          onClick={toggle}
-          aria-label={t("user-menu")}
-        >
-          <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
+      <div aria-label={t("user-menu")}>
+        <button type="button" className="hover:underline" onClick={toggle}>
+          <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
             {data.user.name}
           </span>
           <AccountIcon className="inline-block h-6 w-6" />
@@ -63,7 +58,7 @@ export function UserMenu() {
             </button>
           </li>
         </ul>
-      </nav>
+      </div>
     );
   }
 

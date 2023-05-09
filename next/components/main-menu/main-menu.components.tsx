@@ -67,7 +67,10 @@ export function MenuToggle({
   const ToggleIcon = isOpen ? CloseIcon : MenuIcon;
   return (
     <button onClick={() => setIsOpen((o) => !o)} aria-label={t("toggle-menu")}>
-      <ToggleIcon className="inline h-6 w-6" />
+      <span className="max-sm:sr-only sm:not-sr-only sm:mr-2 sm:inline">
+        {t("menu")}
+      </span>
+      <ToggleIcon className="inline h-6 w-6" aria-hidden="true" />
     </button>
   );
 }
@@ -111,7 +114,7 @@ export function MenuBack({ onClick }: { onClick: () => void }) {
       className="m-6 inline-flex items-center justify-center pr-2 hover:underline lg:hidden"
       onClick={onClick}
     >
-      <Chevron className="h-6 w-6 rotate-90" />
+      <Chevron className="h-6 w-6 rotate-90" aria-hidden="true" />
       <span className="pl-4">{t("menu-back")}</span>
     </button>
   );
@@ -184,7 +187,7 @@ export function MenuTrigger({
           ? "lg:ring-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600"
           : "lg:aria-expanded:bg-primary-600 lg:aria-expanded:text-white lg:aria-expanded:ring-primary-600"
       )}
-      aria-label={`${t("show-submenu")}${" "}${t(parent)}`}
+      aria-label={`${t("show-submenu", { parent })}`}
     >
       <Chevron className="h-9 w-9 -rotate-90" />
     </NavigationMenu.Trigger>

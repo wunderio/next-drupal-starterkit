@@ -4,11 +4,10 @@ import { Badge } from "@/wunder-component-library/badge";
 
 export function SearchResult({ result, onClickLink }: ResultViewProps) {
   return (
-    <li>
+    <li key={result.id.raw}>
       <a
         onClick={onClickLink}
         rel="noopener noreferrer"
-        key={result.id.raw}
         href={result.path.raw}
         target="_blank"
         className="my-4 block rounded bg-white p-8"

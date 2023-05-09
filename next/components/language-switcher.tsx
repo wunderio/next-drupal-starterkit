@@ -24,17 +24,12 @@ export function LanguageSwitcher() {
   const { t } = useTranslation();
 
   return (
-    <nav>
-      <button
-        type="button"
-        className="hover:underline"
-        onClick={toggle}
-        aria-label={t("language-switcher-button")}
-      >
-        <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
+    <div aria-label={t("language-switcher")}>
+      <button type="button" className="hover:underline" onClick={toggle}>
+        <span className="max-sm:sr-only sm:not-sr-only sm:mr-2 sm:inline">
           {languageLinks[locale].name}
         </span>
-        <LanguageIcon className="inline-block h-6 w-6" />
+        <LanguageIcon className="inline-block h-6 w-6" aria-hidden="true" />
       </button>
       <ul
         ref={ref}
@@ -60,6 +55,6 @@ export function LanguageSwitcher() {
             );
           })}
       </ul>
-    </nav>
+    </div>
   );
 }
