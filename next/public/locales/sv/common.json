@@ -44,7 +44,6 @@
   "statusmessage-error": "Fel",
   "language-switcher": "Språkväxlare",
   "user-menu": "Användarmeny",
-  "search-link": "Sök",
   "user-dashboard": "Användardashboard",
   "user-dashboard-intro-greeting": "Hej {{username}}! Det här är dina tidigare formulärinlämningar:",
   "back-to-dashboard": "Tillbaka till dashboard",

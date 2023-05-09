@@ -52,16 +52,11 @@ function SearchLink() {
   const { locale } = useRouter();
   const { t } = useTranslation();
   return (
-    <Link
-      href="/search"
-      locale={locale}
-      className="hover:underline"
-      aria-label={t("search-link")}
-    >
+    <Link href="/search" locale={locale} className="hover:underline">
       <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
         {t("search")}
       </span>
-      <SearchIcon className="inline-block h-6 w-6" />
+      <SearchIcon className="inline-block h-6 w-6" aria-hidden="true" />
     </Link>
   );
 }

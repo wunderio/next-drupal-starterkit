@@ -44,7 +44,6 @@
   "statusmessage-error": "Error",
   "language-switcher": "Language switcher",
   "user-menu": "User menu",
-  "search-link": "Search",
   "user-dashboard": "Dashboard",
   "user-dashboard-intro-greeting": "Hello {{username}}! These are your past form submissions:",
   "back-to-dashboard": "Back to dashboard",

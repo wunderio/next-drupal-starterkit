@@ -44,7 +44,6 @@
   "statusmessage-error": "Virhe",
   "language-switcher": "Kielen vaihtaja",
   "user-menu": "Käyttäjävalikko",
-  "search-link": "Haku",
   "user-dashboard": "Kojelauta",
   "user-dashboard-intro-greeting": "Hei {{username}}! Nämä ovat aiemmat lomakkeesi lähetykset:",
   "back-to-dashboard": "Takaisin kojelautaan",
