@@ -7,13 +7,14 @@ dependencies:
     - node.type.frontpage
     - paragraphs.paragraphs_type.accordion
     - paragraphs.paragraphs_type.formatted_text
+    - paragraphs.paragraphs_type.hero
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.links
     - paragraphs.paragraphs_type.video
   module:
     - entity_reference_revisions
 _core:
-  default_config_hash: Occxs7N75kJRlZBRlyJ4ab-PtE3wktn0m-Fyy7pjRuE
+  default_config_hash: Nbd02wRMB9SEVTmqxNCZgYkBvxyyUOmjGVdjy6ZczYo
 id: node.frontpage.field_content_elements
 field_name: field_content_elements
 entity_type: node
@@ -28,6 +29,7 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
+      hero: hero
       formatted_text: formatted_text
       image: image
       links: links
@@ -36,21 +38,24 @@ settings:
     negate: 0
     target_bundles_drag_drop:
       accordion:
-        weight: 8
+        weight: -10
         enabled: true
       accordion_item:
-        weight: 7
+        weight: -12
         enabled: false
       formatted_text:
-        weight: 5
+        weight: -14
+        enabled: true
+      hero:
+        weight: -15
         enabled: true
       image:
-        weight: 6
+        weight: -13
         enabled: true
       links:
-        weight: 7
+        weight: -11
         enabled: true
       video:
-        weight: 8
+        weight: -9
         enabled: true
 field_type: entity_reference_revisions
