@@ -2,6 +2,8 @@ import type { GetStaticPropsContext } from "next";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
+import { HeadingPage } from "@/components/heading--page";
+import { Meta } from "@/components/meta";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 
 import { Button } from "@/wunder-component-library/button";
@@ -45,39 +47,44 @@ export default function Register() {
   }
 
   return (
-    <div className="mx-auto max-w-md">
-      <form
-        onSubmit={handleSubmit(onSubmit, onErrors)}
-        className="flex flex-col gap-4"
-      >
-        <div>
-          <label className="mb-1 block text-sm font-bold" htmlFor="name">
-            {t("username")}
-          </label>
-          <Input
-            id="name"
-            autoComplete="name"
-            {...register("name", {
-              required: true,
-            })}
-          />
-        </div>
-        <div>
-          <label className="mb-1 block text-sm font-bold" htmlFor="email">
-            {t("email")}
-          </label>
-          <Input
-            id="email"
-            type="email"
-            autoComplete="email"
-            {...register("email", {
-              required: true,
-            })}
-          />
-        </div>
-        <Button type="submit">{t("register")}</Button>
-      </form>
-    </div>
+    <>
+      <Meta title={t("register")} metatags={[]} />
+
+      <HeadingPage>{t("register")}</HeadingPage>
+      <div className="max-w-md py-4">
+        <form
+          onSubmit={handleSubmit(onSubmit, onErrors)}
+          className="flex flex-col gap-4"
+        >
+          <div>
+            <label className="mb-1 block text-sm font-bold" htmlFor="name">
+              {t("username")}
+            </label>
+            <Input
+              id="name"
+              autoComplete="name"
+              {...register("name", {
+                required: true,
+              })}
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-bold" htmlFor="email">
+              {t("email")}
+            </label>
+            <Input
+              id="email"
+              type="email"
+              autoComplete="email"
+              {...register("email", {
+                required: true,
+              })}
+            />
+          </div>
+          <Button type="submit">{t("register")}</Button>
+        </form>
+      </div>
+    </>
   );
 }
 
