@@ -55,5 +55,9 @@
   "date": "Päivämäära",
   "more-details": "Lisätietoja",
   "see-more": "Näytä lisää",
-  "no-submissions-yet": "Et ole vielä lähettänyt lomakkeita."
+  "no-submissions-yet": "Et ole vielä lähettänyt lomakkeita.",
+  "email": "Sähköposti",
+  "register": "Rekisteröidy",
+  "register-success": "Olet nyt rekisteröitynyt. Tarkista sähköpostistasi vahvistuslinkki, jolla voit asettaa salasanasi.",
+  "log-in-or-register": "Kirjaudu sisään / rekisteröidy",
 }

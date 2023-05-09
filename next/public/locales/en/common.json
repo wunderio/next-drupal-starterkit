@@ -55,5 +55,9 @@
   "date": "Date",
   "more-details": "More details",
   "see-more": "See more",
-  "no-submissions-yet": "You have not yet submitted any forms."
+  "no-submissions-yet": "You have not yet submitted any forms.",
+  "email": "Email",
+  "register": "Create account",
+  "register-success": "You are now registered. Check your email for a confirmation link where you will be able to set your password.",
+  "log-in-or-register": "Log in - Create account"
 }
