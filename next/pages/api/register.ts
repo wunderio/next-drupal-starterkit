@@ -1,25 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth/next";
 import { drupal } from "lib/drupal";
-
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // if there is a session, no sense in trying to register, so
-  // redirect to home page.
-  const session = await getServerSession(req, res, authOptions);
-  if (session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
   try {
     if (req.method === "POST") {
       const url = drupal.buildUrl("/user/register?_format=json");
