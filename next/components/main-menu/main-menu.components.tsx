@@ -81,6 +81,7 @@ export function MenuToggle({
       onClick={() => setIsOpen((o) => !o)}
       className="hover:underline"
       aria-label={t("toggle-menu")}
+      aria-expanded={isOpen ? "true" : "false"}
     >
       <ToggleIcon className="inline h-6 w-6" aria-hidden="true" />
     </button>

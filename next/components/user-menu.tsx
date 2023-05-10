@@ -25,8 +25,14 @@ export function UserMenu() {
 
   if (status === "authenticated") {
     return (
-      <div role="menu" aria-label={t("user-menu")}>
-        <button type="button" className="hover:underline" onClick={toggle}>
+      <div>
+        <span className="sr-only">{t("user-menu")}</span>
+        <button
+          type="button"
+          className="hover:underline"
+          onClick={toggle}
+          aria-expanded={isOpen ? "true" : "false"}
+        >
           <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
             {data.user.name}
           </span>
@@ -63,7 +69,8 @@ export function UserMenu() {
   }
 
   return (
-    <div role="menu" aria-label={t("user-menu")}>
+    <div>
+      <span className="sr-only">{t("user-menu")}</span>
       <button type="button" className="hover:underline" onClick={toggle}>
         <span className="hidden sm:mr-2 sm:inline">
           {t("log-in-or-register")}

@@ -1,8 +1,8 @@
 {
   "homepage-link-sr": "Hemsida",
-  "menu-toggle": "Växla menyn",
   "menu-back": "Tillbaka",
   "menu": "Meny",
+  "menu-toggle": "Visa/dölj meny",
   "show-submenu": "Visa {{parent}} undermeny",
   "latest-articles": "Senaste artiklarna",
   "no-content-found": "Inget innehåll hittades",
@@ -42,11 +42,12 @@
   "statusmessage-success": "Lyckades",
   "statusmessage-warning": "Varning",
   "statusmessage-error": "Fel",
-  "language-switcher": "Språkväxlare",
+  "language-switcher": "Språkmeny, välj språk, aktuellt språk är svenska",
   "user-menu": "Användarmeny",
   "user-dashboard": "Användardashboard",
   "user-dashboard-intro-greeting": "Hej {{username}}! Det här är dina tidigare formulärinlämningar:",
   "back-to-dashboard": "Tillbaka till dashboard",
+  "filter-search": "Filtrera sökning",
   "form-submission-details": "Information om formulärinlämning",
   "form-submission-intro-text": "Dina inskickade data för formuläret {{form}}:",
   "form-field": "Fält",
@@ -59,5 +60,5 @@
   "email": "E-post",
   "register": "Registrera",
   "register-success": "Du är nu registrerad. Kontrollera din e-post för en bekräftelselänk där du kommer att kunna ange ditt lösenord.",
-  "log-in-or-register": "Logga in / registrera dig",
+  "log-in-or-register": "Logga in / registrera dig"
 }
