@@ -24,7 +24,7 @@ export function LanguageSwitcher() {
   const { t } = useTranslation();
 
   return (
-    <div aria-label={t("language-switcher")}>
+    <div role="menu" aria-label={t("language-switcher")}>
       <button type="button" className="hover:underline" onClick={toggle}>
         <span className="max-sm:sr-only sm:not-sr-only sm:mr-2 sm:inline">
           {languageLinks[locale].name}
