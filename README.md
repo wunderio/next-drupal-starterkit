@@ -152,3 +152,28 @@ TypeScript is setup quite loosely by default to minimise friction and make it ac
 ### Wunder component library [WIP]
 
 The `wunder-component-library/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a base for many projects.
+
+
+## Updating Drupal core and modules
+
+Drupal core is managed with [`drupal/core-recommended`](https://github.com/drupal/core-recommended), [`drupal/core-composer-scaffold`](https://github.com/drupal/core-composer-scaffold) and [`drupal/core-dev`](https://github.com/drupal/core-dev). Perform core updates by running following command:
+
+```bash
+lando composer update drupal/core-composer-scaffold drupal/core-recommended drupal/core-dev --with-dependencies
+```
+
+After updating core with composer run also updb and if there are database updates export them with the second command
+```bash
+lando drush updb
+lando drush cex
+```
+
+Update separate modules by running the following command:
+```bash
+lando composer update 'drupal/twig_tweak' -W
+```
+
+And for major version updates:
+```bash
+lando composer require 'drupal/twig_tweak:^3.2' -W
+```

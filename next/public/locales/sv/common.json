@@ -54,5 +54,9 @@
   "date": "Datum",
   "more-details": "Mer detaljer",
   "see-more": "Se mer",
-  "no-submissions-yet": "Du har inte skickat in några formulär än."
+  "no-submissions-yet": "Du har inte skickat in några formulär än.",
+  "email": "E-post",
+  "register": "Registrera",
+  "register-success": "Du är nu registrerad. Kontrollera din e-post för en bekräftelselänk där du kommer att kunna ange ditt lösenord.",
+  "log-in-or-register": "Logga in / registrera dig"
 }
