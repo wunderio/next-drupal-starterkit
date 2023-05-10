@@ -9,7 +9,11 @@ import ArrowIcon from "@/styles/icons/arrow-down.svg";
 export function ParagraphHero({ paragraph }: { paragraph: HeroType }) {
   return (
     <>
-      {paragraph.field_heading && <h1>{paragraph.field_heading}</h1>}
+      {paragraph.field_heading && (
+        <h1 className="text-left text-heading-md font-bold text-steelgray md:text-heading-lg">
+          {paragraph.field_heading}
+        </h1>
+      )}
       <FormattedText
         html={paragraph.field_formatted_text.processed}
         className={clsx(
