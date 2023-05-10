@@ -7,6 +7,8 @@ dependencies:
     - paragraphs.paragraphs_type.hero
   module:
     - link
+_core:
+  default_config_hash: ooJBQRqAkJPHVrw95rhnNb8Qnrvq3lCiN9-h8nlnvaY
 id: paragraph.hero.field_secondary_link
 field_name: field_secondary_link
 entity_type: paragraph
@@ -14,7 +16,7 @@ bundle: hero
 label: 'Secondary link'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
