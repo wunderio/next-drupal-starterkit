@@ -48,8 +48,7 @@ process:
     method: row
     source: '@id'
     message: 'Source paragraph was not found, so this translation was skipped.'
-paragraphs_pages_image:
-  yml:
+
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: image
