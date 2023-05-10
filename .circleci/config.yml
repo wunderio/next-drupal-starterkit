@@ -147,7 +147,7 @@ workflows:
             branches:
               only: /dependabot\/.*/
 
-      # Storybook deployment for master branch only.
+      # Storybook deployment.
       - silta/simple-build-deploy: &build-deploy
           name: Storybook build & deploy
           executor: cicd81
