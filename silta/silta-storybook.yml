@@ -1,0 +1,9 @@
+
+nginx:
+  basicauth:
+    enabled: true
+    credentials:
+      username: silta
+      password: demo
+  noauthips:
+    wunder-vpn: 194.89.156.118/32
