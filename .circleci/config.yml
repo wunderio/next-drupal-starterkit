@@ -207,13 +207,16 @@ workflows:
                   escaped_drupal_public_base_url=$(printf '%s\n' "$drupal_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_next_public_base_url=$(printf '%s\n' "$next_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_drupal_client_secret=$(printf '%s\n' "$drupal_client_secret" | sed -e 's/[\/&]/\\&/g')
+                  escaped_drupal_revalidate_secret=$(printf '%s\n' "$drupal_revalidate_secret" | sed -e 's/[\/&]/\\&/g')
                   escaped_nextauth_secret=$(printf '%s\n' "$nextauth_secret" | sed -e 's/[\/&]/\\&/g')
                   sed -i -e "s/<|next_public_base_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
                   sed -i -e "s/<|drupal_public_base_url|>/$escaped_drupal_public_base_url/" silta/silta-next.yml
                   sed -i -e "s/<|next_image_domain|>/$drupal_domain/" silta/silta-next.yml
                   sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_revalidate_secret|>/$escaped_drupal_revalidate_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
+                  sed -i -e "s/<|next_public_frontend_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
 
             # uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
@@ -261,12 +264,16 @@ workflows:
                   escaped_drupal_public_base_url=$(printf '%s\n' "$drupal_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_next_public_base_url=$(printf '%s\n' "$next_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_drupal_client_secret=$(printf '%s\n' "$drupal_client_secret" | sed -e 's/[\/&]/\\&/g')
+                  escaped_drupal_revalidate_secret=$(printf '%s\n' "$drupal_revalidate_secret" | sed -e 's/[\/&]/\\&/g')
                   escaped_nextauth_secret=$(printf '%s\n' "$nextauth_secret" | sed -e 's/[\/&]/\\&/g')
                   sed -i -e "s/<|next_public_base_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_public_base_url|>/$escaped_drupal_public_base_url/" silta/silta-next.yml
                   sed -i -e "s/<|next_image_domain|>/$drupal_domain/" silta/silta-next.yml
                   sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_revalidate_secret|>/$escaped_drupal_revalidate_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
+                  sed -i -e "s/<|next_public_frontend_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
             # uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
                 path: next
