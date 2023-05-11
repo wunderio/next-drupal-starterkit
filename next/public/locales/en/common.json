@@ -39,5 +39,21 @@
   "statusmessage-info": "Info",
   "statusmessage-success": "Success",
   "statusmessage-warning": "Warning",
-  "statusmessage-error": "Error"
+  "statusmessage-error": "Error",
+  "user-dashboard": "Dashboard",
+  "user-dashboard-intro-greeting": "Hello {{username}}! These are your past form submissions:",
+  "back-to-dashboard": "Back to dashboard",
+  "form-submission-details": "Form submission details",
+  "form-submission-intro-text": "Your submitted data for the {{form}} form:",
+  "form-field": "Field",
+  "form-value": "Value",
+  "form": "Form",
+  "date": "Date",
+  "more-details": "More details",
+  "see-more": "See more",
+  "no-submissions-yet": "You have not yet submitted any forms.",
+  "email": "Email",
+  "register": "Create account",
+  "register-success": "You are now registered. Check your email for a confirmation link where you will be able to set your password.",
+  "log-in-or-register": "Log in - Create account"
 }

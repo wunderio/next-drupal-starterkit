@@ -1,8 +1,10 @@
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/wunder-component-library/button";
 import { Input } from "@/wunder-component-library/input";
+import { Label } from "@/wunder-component-library/label";
 import { StatusMessage } from "@/wunder-component-library/status-message";
 import { Textarea } from "@/wunder-component-library/textarea";
 
@@ -14,6 +16,7 @@ type Inputs = {
 };
 
 export function ContactForm() {
+  const router = useRouter();
   const { t } = useTranslation();
   const {
     register,
@@ -31,6 +34,10 @@ export function ContactForm() {
         message: data.message,
         subject: data.subject,
       }),
+      // This will record the submission with the right language:
+      headers: {
+        "accept-language": router.locale,
+      },
     });
 
     if (!response.ok) {
@@ -61,9 +68,7 @@ export function ContactForm() {
       </h2>
       <p>{t("form-description")}</p>
       <div>
-        <label className="mb-2 block text-sm font-bold" htmlFor="name">
-          {t("form-label-name")}
-        </label>
+        <Label htmlFor="name">{t("form-label-name")}</Label>
         <Input
           type="text"
           id="name"
@@ -73,9 +78,7 @@ export function ContactForm() {
         />
       </div>
       <div>
-        <label className="mb-2 block text-sm font-bold" htmlFor="email">
-          {t("form-label-email")}
-        </label>
+        <Label htmlFor="email">{t("form-label-email")}</Label>
         <Input
           type="email"
           id="email"
@@ -85,9 +88,7 @@ export function ContactForm() {
         />
       </div>
       <div>
-        <label className="mb-2 block text-sm font-bold" htmlFor="subject">
-          {t("form-label-subject")}
-        </label>
+        <Label htmlFor="subject">{t("form-label-subject")}</Label>
         <Input
           type="text"
           id="subject"
@@ -97,9 +98,7 @@ export function ContactForm() {
         />
       </div>
       <div>
-        <label className="mb-2 block text-sm font-bold" htmlFor="message">
-          {t("form-label-message")}
-        </label>
+        <Label htmlFor="message">{t("form-label-message")}</Label>
         <Textarea
           id="message"
           {...register("message", {

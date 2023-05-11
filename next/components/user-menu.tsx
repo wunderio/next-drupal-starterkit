@@ -17,11 +17,11 @@ export function UserMenu() {
   const toggle = () => setIsOpen((o) => !o);
   const close = () => setIsOpen(false);
 
-  const ref = useOnClickOutside<HTMLUListElement>(close);
-
   const loginUrl = `/auth/login?callbackUrl=${encodeURIComponent(
     query.callbackUrl?.toString() || `/${locale}${asPath}`
   )}`;
+
+  const ref = useOnClickOutside<HTMLUListElement>(close);
 
   if (status === "authenticated") {
     return (
@@ -38,9 +38,18 @@ export function UserMenu() {
           )}
         >
           <li>
+            <Link
+              className="block p-2 hover:bg-primary-50"
+              href="/dashboard"
+              onClick={close}
+            >
+              {t("user-dashboard")}
+            </Link>
+          </li>
+          <li>
             <button
               type="button"
-              className="block p-2 hover:bg-primary-50"
+              className="block w-full p-2 text-left hover:bg-primary-50"
               onClick={() => void signOut()}
             >
               {t("log-out")}
@@ -52,16 +61,39 @@ export function UserMenu() {
   }
 
   return (
-    <Link href={loginUrl} className="hover:underline">
-      <span
+    <nav>
+      <button type="button" className="hover:underline" onClick={toggle}>
+        <span className="hidden sm:mr-2 sm:inline">
+          {t("log-in-or-register")}
+        </span>
+        <AccountIcon className="inline-block h-6 w-6" />
+      </button>
+      <ul
+        ref={ref}
         className={clsx(
-          "hidden sm:mr-2 sm:inline",
-          status === "loading" && "opacity-0"
+          "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
+          !isOpen && "hidden"
         )}
       >
-        {t("log-in")}
-      </span>
-      <AccountIcon className="inline-block h-6 w-6" />
-    </Link>
+        <li>
+          <Link
+            className="block p-2 hover:bg-primary-50"
+            href={loginUrl}
+            onClick={close}
+          >
+            {t("log-in")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="block p-2 hover:bg-primary-50"
+            href="/auth/register"
+            onClick={close}
+          >
+            {t("register")}
+          </Link>
+        </li>
+      </ul>
+    </nav>
   );
 }

@@ -11,6 +11,8 @@ export default async function handler(
   // Because we want to allow only registered users to submit
   // to the contact webform, let's get the session:
   const session = await getServerSession(req, res, authOptions);
+  // The locale is passed in this header:
+  const languagePrefix = req.headers["accept-language"];
 
   // if there is no session, return 401:
   if (!session) {
@@ -19,7 +21,7 @@ export default async function handler(
 
   try {
     if (req.method === "POST") {
-      const url = drupal.buildUrl("/webform_rest/submit");
+      const url = drupal.buildUrl(`/${languagePrefix}/webform_rest/submit`);
       const body = JSON.parse(req.body);
 
       // Submit to Drupal.

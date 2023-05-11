@@ -48,7 +48,7 @@ export const StatusMessage = React.forwardRef<
   return (
     <div
       role="alert"
-      className={cn(variants({ level, className }))}
+      className={cn(variants({ level }), className)}
       ref={ref}
       {...props}
     >

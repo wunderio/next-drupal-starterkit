@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
 import { FormattedText } from "@/components/formatted-text";
@@ -12,6 +13,7 @@ interface ArticleProps {
 
 export function Article({ article, ...props }: ArticleProps) {
   const { t } = useTranslation();
+  const router = useRouter();
   return (
     <article {...props}>
       <HeadingPage>{article.title}</HeadingPage>
@@ -24,7 +26,7 @@ export function Article({ article, ...props }: ArticleProps) {
             {t("posted-by", { author: article.uid?.display_name })} -{" "}
           </span>
         )}
-        <span>{formatDate(article.created)}</span>
+        <span>{formatDate(article.created, router.locale)}</span>
       </div>
       {article.field_image && (
         <figure>

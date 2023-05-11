@@ -1,0 +1,19 @@
+uuid: a3c0b743-cd75-4166-8b44-66616e6915a0
+langcode: en
+status: true
+dependencies:
+  module:
+    - serialization
+    - simple_oauth
+    - user
+    - webform_rest
+id: webform_rest_complete_submission
+plugin_id: webform_rest_complete_submission
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - oauth2

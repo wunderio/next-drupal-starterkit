@@ -8,6 +8,55 @@ executors:
     docker:
       - image: wunderio/silta-cicd:circleci-php8.1-node16-composer2-v0.1
     resource_class: small
+commands:
+  npm-install-build:
+    description: "NPM build command."
+    parameters:
+      path:
+        description: "package.json path"
+        type: string
+        default: "."
+      install-command:
+        type: string
+        default: "npm install"
+      build-command:
+        description: "NPM build command."
+        type: string
+        default: "npm run build"
+      cache-version:
+        description: "CircleCI cache key prefix."
+        type: string
+        default: "v1.2"
+      npm-config-platform:
+        description: "Platform flag for npm install"
+        type: string
+        default: "linuxmusl"
+    steps:
+      - restore_cache:
+          keys:
+            - <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
+            - <<parameters.cache-version>>-npm-
+
+      - run:
+          name: Install frontend dependencies
+          environment:
+            npm_config_platform: <<parameters.npm-config-platform>>
+          command: |
+            cd '<<parameters.path>>'
+            <<parameters.install-command>>
+
+      - run:
+          name: Build frontend
+          command: |
+            cd '<<parameters.path>>'
+            <<parameters.build-command>>
+
+      - save_cache:
+          paths:
+            - <<parameters.path>>/node_modules
+            - <<parameters.path>>/.next/cache
+          key: <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
+
 
 workflows:
   commit:
@@ -46,20 +95,18 @@ workflows:
                 name: Set environment variables
                 command: |
                   cp -r ~/project/silta ~/project/drupal/
-                  # Make sure release name is lowercase without special characters.
-                  branchname_lower="${CIRCLE_BRANCH,,}"
-                  release_name="${branchname_lower//[^[:alnum:]]/-}"
-                  release_name=`echo $release_name | sed -e s/-next//`
+                  release_name_next=`silta ci release name --release-suffix next`
+                  
                   # If name is too long, truncate it and append a hash
-                  if [ ${#release_name} -ge 35 ]; then
-                    release_name="$(printf "$release_name" | cut -c 1-34)$(printf "$release_name" | shasum -a 256 | cut -c 1-3 )"
+                  if [ ${#release_name_next} -ge 33 ]; then
+                    release_name_next="$(printf "$release_name_next" | cut -c 1-30)$(printf "$release_name_next" | shasum -a 256 | cut -c 1-3 )"
                   fi
-                  next_domain=${release_name}-next.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
+                  next_domain=${release_name_next}.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
                   sed -i -e "s/<|next_domain|>/$next_domain/" silta/silta.yml
-                  private_key=LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2UUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktjd2dnU2pBZ0VBQW9JQkFRQzZVbkJ5aDJydy9OdDIKdkdFb0hCNTNWTTFCRHJrUXgvUnIrbmVUejh3ZGRja1UvVEhmVmQzSnZxQ3kvK3BsZ1krOEVPMTVpVkdMVjcwRgp1VHl4UUpZNmE0YWhIVXpmUVh1OW90MGZZY2FrbjlUNElhME55MzJCaTBvRERCTXIwTktOV0NvVFI3VjZZaDVPCjZlN3l1VE1WTXIrcFZzZlRjdTY1eWtRL2pLd1MxTktteWx3cUpWRGxyS29xd2Vsc2pxUHk4ZmhRUWREd3FNMWoKZ09pQ1dlc0Zsell3a3dzK1FiQWFaTWpEb3duUit3YjBSZE1DNklyOUVPQnpycWxjeGcwK2o2SldhTDBuV2hqQwp3bnJUSHNLdTQ2SW5yb1FwMUtQRUVLT1B4MHR6OGFweFREcGJYZ1pMTGlSd0NKZTh6M3BNb0M5L2N5UGh0bUNUClFqVG5HdDkvQWdNQkFBRUNnZ0VBQ2dqb0xucm41bjZkaUNMRjVJRlh3di8zYnQzRnhXdlFvYkQrNFVUaWFnZDgKZFM0QTdkV3oyUVgwWENRekRWNE5Nbi9lQ1RaMEJLTm9TSTVHTjVxSkhNTEt4VGZvYURGNzRrRm1VOHNrWVZORApQYnJGY09HTFJtUXhjQXRLT2VTSWZ3K1pUanhoR3Y1OUhZakhidFJ4V3FmWlE3ZFBra0IxblNlUjJDRHRNclYrCk5CdzIzSlBBc285dXFuMUxUY09ZVFVCNW9nanB6MWlWZzRhajVPN0QyZmY4cHlPOWJwMVUvc1RrOC8rVEFSNmIKS0YzRHkyUHRHVjdsT1JNdU4rRTNmRU55T3pBTkpZS2krMlRja2ViT2VIM2hVOW5HdmFTVDNwbTJVbm1aOTZvNQo5bGlRRGRhcFhJalhMMjh4Yy9vdzFOOHN2QUxwL3djT0lYd05vZHhqNFFLQmdRRG16NXE3bjM4aEcrbFV6Zm1OCk5pdGwxdGZ0d2I1cDUvVTdXWmFzMEZUd2RlUGxqMnRlOVZiaUMxVnhKQlduRjFjMEdQb0FKeVJydWR0YlhSTTEKQkJ1Z1g0a0lQZkFWRWwzRUpyNWdYRXlkSzNocSt2TlU0Q1RJeHFwblFmNXNFTG5JSzZ4czc2TnlXV1M2TTl2VwpYTjJnQWVqVHpXSHQ5dnB0dGdLS0MweWhud0tCZ1FET3ArZEMzRE1ERjg5V0IvNlVlRDJZY3piaE5FNGE4QmlXClNMYXIwR20wbmRCVlJ4ZTAwVWNXN3E4Vi9oOVZiVDV4NGZySU0zZmVrNXQrVXhlOG9kdGhxV3FsS0NjOENuNi8KY1JzaVFlWkcvVlJYTnpMb1FIL1VpdWcxRERyREg2RFpjd1o2cEV1OEN6TFZ1bmRkUnpVTnp2dGwyTEF6L1NISgp2aXJPbGMyMklRS0JnUUNEYVJXKzF3dHBqVnVtbGZNTUxCZy9UamY0UFFPdGhvdy84enp2UFZudTRpQVR0ams2CmdsS3FOaXU2VkFJajlRMElNMlE3TEEzM2E0VHhtcWR4MnRuajBDRFQyWGZVZDNWOVZWVzB4VGcxaitkcWVXQ0wKSldhc0RUZzl1L3dnQ05ITm50ZjMyZVJrR1hOWTlHZW92NHpMS2VzbWs5dTZ3WkJKWUlSSGxqRldId0tCZ0ZPSwo4U1RJWEI3OSt5V3VhYTZmeFZiaURPZVIrNWxNUXNST2RQcVVjSWRCM1R6OFZvc1VwNGFQeTF3NnRYUVZpODhDCktoM1JJTDVzTWNvcDBVakNyaXVYRDdQZ3ZhdTZHbTlPVEVmWEdEN09ucy83VXFzdGwvL1dmL1VpRW9kYk8rMXMKWU13bnF5NUQ0TE1paEtyQzVLSEdjVDlGRUVhVUtKcWtOQzM3eFlQQkFvR0FNekxNakZJcXA4TGRkRVBjZ08regpQb1dnZTZpN2dTRDBmdmNDT3pyYm82VmpFVXpiTFdnUU1meTdnbkZOdzVWUC9iODVzak1QenpLZ1pSZHFaRVhUCndnMHJ3Vk5mSnQ2RGxNR21udEo5M0x5bUl5R1JMUUttTDNjcnA4VEdiVUdiMzliS1lkQndOVnJyMzJnVEdrQW8KWnd6a3gyT0hzSEN1T2tSNURkeGVtYnM9Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
-                  public_key=LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF1bEp3Y29kcThQemJkcnhoS0J3ZQpkMVROUVE2NUVNZjBhL3AzazgvTUhYWEpGUDB4MzFYZHliNmdzdi9xWllHUHZCRHRlWWxSaTFlOUJiazhzVUNXCk9tdUdvUjFNMzBGN3ZhTGRIMkhHcEovVStDR3REY3Q5Z1l0S0F3d1RLOURTalZncUUwZTFlbUllVHVudThya3oKRlRLL3FWYkgwM0x1dWNwRVA0eXNFdFRTcHNwY0tpVlE1YXlxS3NIcGJJNmo4dkg0VUVIUThLak5ZNERvZ2xucgpCWmMyTUpNTFBrR3dHbVRJdzZNSjBmc0c5RVhUQXVpSy9SRGdjNjZwWE1ZTlBvK2lWbWk5SjFvWXdzSjYweDdDCnJ1T2lKNjZFS2RTanhCQ2pqOGRMYy9HcWNVdzZXMTRHU3k0a2NBaVh2TTk2VEtBdmYzTWo0YlpnazBJMDV4cmYKZndJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
-                  echo $private_key | base64 -d > oauth/private.key
-                  echo $public_key | base64 -d > oauth/public.key
+                  sed -i -e "s/<|drupal_admin_pwd|>/$DRUPAL_ADMIN_PWD/" silta/silta.yml
+                  openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out keypair.pem
+                  openssl pkey -in keypair.pem -out oauth/private.key
+                  openssl pkey -in keypair.pem -pubout -out oauth/public.key
                   chmod 600 oauth/private.key oauth/public.key
             - silta/drupal-composer-install
             - silta/npm-install-build
@@ -72,7 +119,7 @@ workflows:
                 - /dependabot\/.*/
 
       - silta/drupal-build-deploy:
-          # Extend the build-deploy configuration for the production environment.
+          # Extend the build-deploy configuration for the main environment.
           <<: *build-deploy
           name: Drupal build & deploy main
           silta_config: silta/silta.yml,silta/silta-main.yml
@@ -90,7 +137,7 @@ workflows:
           filters:
             branches:
               only: production
-
+          # Special rules for deploybot branches.
       - silta/drupal-build-deploy:
           <<: *build-deploy
           name: Drupal build dependabot 
@@ -99,6 +146,24 @@ workflows:
           filters:
             branches:
               only: /dependabot\/.*/
+
+      # Storybook deployment.
+      - silta/simple-build-deploy: &build-deploy
+          name: Storybook build & deploy
+          executor: cicd81
+          context: silta_dev
+          silta_config: silta/silta-storybook.yml
+          release-suffix: storybook
+          codebase-build:
+            - silta/npm-install-build:
+                build-command: npm run build-storybook
+                path: next
+          build_folder: next/storybook-static
+          filters:
+            branches:
+              ignore:
+                - production
+                - /dependabot\/.*/
 
       # silta/frontend-build-deploy is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/jobs/%40frontend.yml
       # &build-deploy is a yaml anchor, so we can reference it later
@@ -113,17 +178,20 @@ workflows:
             - run:
                 name: Set environment variables 
                 command: |
-                  # Make sure release name is lowercase without special characters.
-                  branchname_lower="${CIRCLE_BRANCH,,}"
-                  release_name="${branchname_lower//[^[:alnum:]]/-}"
-                  release_name=`echo $release_name | sed -e s/-next//`
+                  release_name=`silta ci release name`
+                  release_name_next=`silta ci release name --release-suffix next`
+
                   # If name is too long, truncate it and append a hash
-                  if [ ${#release_name} -ge 35 ]; then
-                    release_name="$(printf "$release_name" | cut -c 1-34)$(printf "$release_name" | shasum -a 256 | cut -c 1-3 )"
+                  if [ ${#release_name} -ge 33 ]; then
+                    release_name="$(printf "$release_name" | cut -c 1-30)$(printf "$release_name" | shasum -a 256 | cut -c 1-3 )"
+                  fi
+                  # If name is too long, truncate it and append a hash
+                  if [ ${#release_name_next} -ge 33 ]; then
+                    release_name_next="$(printf "$release_name_next" | cut -c 1-30)$(printf "$release_name_next" | shasum -a 256 | cut -c 1-3 )"
                   fi
                   drupal_domain=${release_name}.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
                   drupal_public_base_url=https://${drupal_domain}
-                  next_domain=${release_name}-next.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
+                  next_domain=${release_name_next}.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
                   next_public_base_url=https://${next_domain}
                   drupal_client_secret=drupal_client_secret_not_secure_used_only_locally
                   drupal_client_id=drupal-client-id
@@ -144,7 +212,8 @@ workflows:
                   sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
 
-            - silta/npm-install-build:
+            # uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+            - npm-install-build:
                 path: next
           image_build_steps:
             - silta/build-docker-image:
@@ -161,7 +230,7 @@ workflows:
           requires: [ Drupal build & deploy ]
 
       - silta/frontend-build-deploy:
-          # Extend the build-deploy configuration for the production environment.
+          # Extend the build-deploy configuration for the main environment.
           <<: *frontend-build-deploy
           name: Next build & deploy main
           context: silta_dev
@@ -192,7 +261,8 @@ workflows:
                   sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
-            - silta/npm-install-build:
+            # uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+            - npm-install-build:
                 path: next
 
           filters:
@@ -211,6 +281,7 @@ workflows:
               only: production
           requires: [ Drupal build & deploy production ]
 
+        # Special rules for the dependabot branches.
       - silta/frontend-build-deploy:
           <<: *frontend-build-deploy
           name: Next Build Dependabot
