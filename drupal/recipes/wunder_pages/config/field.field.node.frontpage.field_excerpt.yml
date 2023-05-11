@@ -10,7 +10,7 @@ field_name: field_excerpt
 entity_type: node
 bundle: frontpage
 label: Excerpt
-description: "Add an excerpt for this piece of content. It's also used in the search system to show search results and also for compiling html meta tags."
+description: "Add an excerpt for this piece of content. It's also used in the search system to show search results and also for compiling HTML meta tags."
 required: false
 translatable: true
 default_value: {  }

@@ -19,7 +19,7 @@ field_name: field_image
 entity_type: node
 bundle: page
 label: 'Search/Meta Image'
-description: 'Image used in the search results and for Open Graph html meta tags, so that sharing the content looks good.'
+description: 'Image used in the search results and for Open Graph HTML meta tags, so that sharing the content looks good.'
 required: false
 translatable: true
 default_value: {  }
