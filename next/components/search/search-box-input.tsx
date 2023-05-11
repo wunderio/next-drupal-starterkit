@@ -21,6 +21,7 @@ export function SearchBoxInput({
       />
       <Input
         useAutocomplete={false}
+        searchAsYouType={false}
         getA11yStatusMessage={() => null}
         {...getInputProps({
           placeholder: t("search-bar-placeholder-text"),
