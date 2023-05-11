@@ -6,11 +6,12 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.frontpage.field_content_elements
     - field.field.node.frontpage.field_excerpt
+    - field.field.node.frontpage.field_image
     - node.type.frontpage
   module:
     - user
 _core:
-  default_config_hash: bmT95tKN2jV_pwSFTWhyOHDXQAJykqu8XdyfueAfCfI
+  default_config_hash: gLmDHKWLIH4eOMJnwqOpiPfRL8ys8jU5WaEvWlnpUHQ
 id: node.frontpage.teaser
 targetEntityType: node
 bundle: frontpage
@@ -24,4 +25,5 @@ content:
 hidden:
   field_content_elements: true
   field_excerpt: true
+  field_image: true
   langcode: true
