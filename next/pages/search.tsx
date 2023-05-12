@@ -74,7 +74,7 @@ export default function SearchPage() {
               <div className="flex flex-col md:flex-row">
                 <aside className="mr-2 w-56">
                   {wasSearched && results.length > 0 && (
-                    <div className="py-2">
+                    <div className="py-2" aria-label={t("filter-search")}>
                       <Facet
                         view={MultiCheckboxFacet}
                         field="tags"

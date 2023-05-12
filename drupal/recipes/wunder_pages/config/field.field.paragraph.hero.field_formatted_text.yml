@@ -1,0 +1,23 @@
+uuid: 65a0b8ab-a9be-433f-910a-0edd80dd360f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_formatted_text
+    - paragraphs.paragraphs_type.hero
+  module:
+    - text
+_core:
+  default_config_hash: y0UnilVkjt8qjevGT1Pq_0ZE3t5xleHg_H9kt4hBcX8
+id: paragraph.hero.field_formatted_text
+field_name: field_formatted_text
+entity_type: paragraph
+bundle: hero
+label: 'Formatted text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
