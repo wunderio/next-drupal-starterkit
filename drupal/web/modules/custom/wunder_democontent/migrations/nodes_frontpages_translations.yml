@@ -38,3 +38,4 @@ migration_dependencies:
   required:
     - nodes_frontpages
     - paragraphs_frontpage_formatted_text_translations
+    - paragraphs_frontpage_hero_translations
