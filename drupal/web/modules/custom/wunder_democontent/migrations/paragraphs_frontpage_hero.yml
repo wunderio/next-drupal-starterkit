@@ -1,0 +1,44 @@
+id: paragraphs_frontpage_hero
+label: Frontpage paragraphs hero
+migration_group: demo_content
+source:
+  plugin: csv
+  path: modules/custom/wunder_democontent/sources/frontpages.csv
+  ids: [id]
+  constants:
+    uid: 1
+    status: 1
+process:
+  # We are interested here only in nodes that are not translations:
+  skipped:
+    plugin: skip_on_value
+    method: row
+    not_equals: true
+    value:
+      - 1
+    source: 'Is source'
+  'field_formatted_text/format':
+    plugin: default_value
+    default_value: basic_html
+  'field_formatted_text/value': Paragraph_0_hero_body
+  field_heading: Paragraph_0_hero_title
+  'field_primary_link/title': Paragraph_0_hero_primary_link_title
+  'field_primary_link/uri': Paragraph_0_hero_primary_link_uri
+  'field_secondary_link/title': Paragraph_0_hero_secondary_link_title
+  'field_secondary_link/uri': Paragraph_0_hero_secondary_link_uri
+  'field_image/target_id':
+    plugin: migration_lookup
+    source: id
+    migration: nodes_frontpage_media_images
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: hero
+
+migration_dependencies:
+  required:
+    - nodes_frontpage_media_images
+

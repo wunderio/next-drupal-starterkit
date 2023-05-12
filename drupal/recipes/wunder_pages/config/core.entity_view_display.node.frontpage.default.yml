@@ -5,12 +5,13 @@ dependencies:
   config:
     - field.field.node.frontpage.field_content_elements
     - field.field.node.frontpage.field_excerpt
+    - field.field.node.frontpage.field_image
     - node.type.frontpage
   module:
     - entity_reference_revisions
     - user
 _core:
-  default_config_hash: 3Xdt21KCLrtwe41NAvn9JfAKnU7nnINYPWCrntRAzY4
+  default_config_hash: iQiEDwDbiX74dfrydqxMbIhomdQuAEQW2gj7Nr6jzho
 id: node.frontpage.default
 targetEntityType: node
 bundle: frontpage
@@ -23,19 +24,20 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 101
+    weight: 1
     region: content
   field_excerpt:
     type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 102
+    weight: 2
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
     region: content
 hidden:
+  field_image: true
   langcode: true

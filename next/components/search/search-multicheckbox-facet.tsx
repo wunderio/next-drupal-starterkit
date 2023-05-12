@@ -37,18 +37,13 @@ export function MultiCheckboxFacet({
           />
         </div>
       )}
-      <div className="mb-2">
+      <ul className="mb-2">
         {options.length < 1 && <div>No matching options</div>}
         {options.map((option) => {
           const checked = option.selected;
           const value = option.value as FieldValue;
           return (
-            <label
-              key={`${getFilterValueDisplay(option.value)}`}
-              htmlFor={`example_facet_${label}${getFilterValueDisplay(
-                option.value
-              )}`}
-            >
+            <li key={`${getFilterValueDisplay(option.value)}`}>
               <div className="flex items-center">
                 <Checkbox
                   data-transaction-name={`facet - ${label}`}
@@ -58,17 +53,22 @@ export function MultiCheckboxFacet({
                   checked={checked}
                   onClick={() => (checked ? onRemove(value) : onSelect(value))}
                 />
-                <span className="ml-2 text-sm text-steelgray">
+                <label
+                  className="ml-2 text-sm text-steelgray"
+                  htmlFor={`example_facet_${label}${getFilterValueDisplay(
+                    option.value
+                  )}`}
+                >
                   {getFilterValueDisplay(option.value)}{" "}
-                  <span className="text-stone">
+                  <span className="text-steelgray">
                     ({option.count.toLocaleString("en")})
                   </span>
-                </span>
+                </label>
               </div>
-            </label>
+            </li>
           );
         })}
-      </div>
+      </ul>
       {showMore && (
         <button
           type="button"

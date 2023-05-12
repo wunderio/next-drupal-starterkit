@@ -5,6 +5,7 @@ import { MetatagsSchema } from "@/lib/zod/metatag";
 import {
   AccordionSchema,
   FormattedTextSchema,
+  HeroSchema,
   ImageSchema,
   LinksSchema,
   VideoSchema,
@@ -21,6 +22,7 @@ export const PageSchema = z.object({
       VideoSchema,
       LinksSchema,
       AccordionSchema,
+      HeroSchema,
     ])
   ),
   metatag: MetatagsSchema.optional(),

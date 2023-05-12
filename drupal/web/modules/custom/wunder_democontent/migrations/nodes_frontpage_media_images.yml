@@ -1,0 +1,38 @@
+id: nodes_frontpage_media_images
+label: Frontpages images (media entities)
+migration_group: demo_content
+source:
+  plugin: csv
+  path: modules/custom/wunder_democontent/sources/frontpages.csv
+  ids:
+    - id
+  constants:
+    uid: 1
+    status: 1
+    langcode: en
+process:
+  # Skip if there are no images
+  skipped:
+    plugin: skip_on_empty
+    method: row
+    source: Paragraph_0_hero_image
+    message: Skipped because node has no images
+
+  langcode: constants/langcode
+  uid: constants/uid
+  status: constants/status
+  field_media_image/target_id:
+    plugin: migration_lookup
+    migration: nodes_frontpage_images
+    source: id
+  thumbnail/target_id:
+    plugin: migration_lookup
+    migration: nodes_frontpage_images
+    source: id
+
+destination:
+  plugin: 'entity:media'
+  default_bundle: image
+migration_dependencies:
+  required:
+    - nodes_frontpage_images

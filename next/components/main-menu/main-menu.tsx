@@ -125,7 +125,9 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
               <MenuLink href={item.url} isTopLevel>
                 {item.title}
               </MenuLink>
-              {item.items?.length > 0 && <MenuTrigger isTopLevel />}
+              {item.items?.length > 0 && (
+                <MenuTrigger isTopLevel parent={item.title} />
+              )}
               <MenuContent>
                 <MenuSubmenu
                   value={activeSubmenu}
@@ -143,7 +145,9 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
                     {item.items?.map((subItem) => (
                       <MenuItem key={subItem.id} value={subItem.id}>
                         <MenuLink href={subItem.url}>{subItem.title}</MenuLink>
-                        {subItem.items?.length > 0 && <MenuTrigger />}
+                        {subItem.items?.length > 0 && (
+                          <MenuTrigger parent={subItem.title} />
+                        )}
                         <MenuContent>
                           <MenuSubmenu>
                             <MenuList level={2}>
