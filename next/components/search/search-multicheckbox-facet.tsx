@@ -21,10 +21,10 @@ export function MultiCheckboxFacet({
 }: FacetViewProps) {
   const { t } = useTranslation();
   return (
-    <fieldset className={clsx(className, "mb-4")}>
-      <legend className="mb-5 text-heading-xs font-bold text-steelgray">
+    <section className={clsx(className, "mb-4")}>
+      <div className="mb-5 text-heading-xs font-bold text-steelgray">
         {label}
-      </legend>
+      </div>
       {showSearch && (
         <div>
           <input
@@ -52,18 +52,21 @@ export function MultiCheckboxFacet({
                   )}`}
                   checked={checked}
                   onClick={() => (checked ? onRemove(value) : onSelect(value))}
-                />
-                <label
-                  className="ml-2 text-sm text-steelgray"
-                  htmlFor={`example_facet_${label}${getFilterValueDisplay(
+                  aria-label={`example_facet_${label}${getFilterValueDisplay(
                     option.value
-                  )}`}
+                  )}-title`}
+                />
+                <span
+                  className="ml-2 text-sm text-steelgray"
+                  title={`Filter by ${getFilterValueDisplay(
+                    option.value
+                  )} (${option.count.toLocaleString("en")})`}
                 >
                   {getFilterValueDisplay(option.value)}{" "}
                   <span className="text-steelgray">
                     ({option.count.toLocaleString("en")})
                   </span>
-                </label>
+                </span>
               </div>
             </li>
           );
@@ -79,6 +82,6 @@ export function MultiCheckboxFacet({
           + {t("search-show-more-options")}
         </button>
       )}
-    </fieldset>
+    </section>
   );
 }
