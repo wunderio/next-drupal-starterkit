@@ -53,8 +53,10 @@ function SearchLink() {
   const { t } = useTranslation();
   return (
     <Link href="/search" locale={locale} className="hover:underline">
-      <span className="hidden sm:mr-2 sm:inline">{t("search")}</span>
-      <SearchIcon className="inline-block h-6 w-6" />
+      <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
+        {t("search")}
+      </span>
+      <SearchIcon className="inline-block h-6 w-6" aria-hidden="true" />
     </Link>
   );
 }

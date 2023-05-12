@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
+import { AuthGate } from "@/components/auth-gate";
+
 import { Button } from "@/wunder-component-library/button";
 import { Input } from "@/wunder-component-library/input";
 import { Label } from "@/wunder-component-library/label";
@@ -66,48 +68,52 @@ export function ContactForm() {
       <h2 className="text-heading-sm font-bold md:text-heading-md">
         {t("form-title")}
       </h2>
-      <p>{t("form-description")}</p>
-      <div>
-        <Label htmlFor="name">{t("form-label-name")}</Label>
-        <Input
-          type="text"
-          id="name"
-          {...register("name", {
-            required: true,
-          })}
-        />
-      </div>
-      <div>
-        <Label htmlFor="email">{t("form-label-email")}</Label>
-        <Input
-          type="email"
-          id="email"
-          {...register("email", {
-            required: true,
-          })}
-        />
-      </div>
-      <div>
-        <Label htmlFor="subject">{t("form-label-subject")}</Label>
-        <Input
-          type="text"
-          id="subject"
-          {...register("subject", {
-            required: true,
-          })}
-        />
-      </div>
-      <div>
-        <Label htmlFor="message">{t("form-label-message")}</Label>
-        <Textarea
-          id="message"
-          {...register("message", {
-            required: true,
-          })}
-        />
-      </div>
+      <AuthGate text={t("login-to-fill-form")}>
+        <>
+          <p>{t("form-description")}</p>
+          <div>
+            <Label htmlFor="name">{t("form-label-name")}</Label>
+            <Input
+              type="text"
+              id="name"
+              {...register("name", {
+                required: true,
+              })}
+            />
+          </div>
+          <div>
+            <Label htmlFor="email">{t("form-label-email")}</Label>
+            <Input
+              type="email"
+              id="email"
+              {...register("email", {
+                required: true,
+              })}
+            />
+          </div>
+          <div>
+            <Label htmlFor="subject">{t("form-label-subject")}</Label>
+            <Input
+              type="text"
+              id="subject"
+              {...register("subject", {
+                required: true,
+              })}
+            />
+          </div>
+          <div>
+            <Label htmlFor="message">{t("form-label-message")}</Label>
+            <Textarea
+              id="message"
+              {...register("message", {
+                required: true,
+              })}
+            />
+          </div>
 
-      <Button type="submit">{t("form-submit")}</Button>
+          <Button type="submit">{t("form-submit")}</Button>
+        </>
+      </AuthGate>
     </form>
   );
 }

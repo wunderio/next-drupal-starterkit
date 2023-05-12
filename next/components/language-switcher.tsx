@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 
@@ -20,14 +21,21 @@ export function LanguageSwitcher() {
 
   // Close on click outside
   const ref = useOnClickOutside<HTMLUListElement>(close);
+  const { t } = useTranslation();
 
   return (
-    <nav>
-      <button type="button" className="hover:underline" onClick={toggle}>
-        <span className="hidden sm:mr-2 sm:inline">
+    <div>
+      <span className="sr-only">{t("language-switcher")}</span>
+      <button
+        type="button"
+        className="hover:underline"
+        onClick={toggle}
+        aria-expanded={isOpen ? "true" : "false"}
+      >
+        <span className="max-sm:sr-only sm:not-sr-only sm:mr-2 sm:inline">
           {languageLinks[locale].name}
         </span>
-        <LanguageIcon className="inline-block h-6 w-6" />
+        <LanguageIcon className="inline-block h-6 w-6" aria-hidden="true" />
       </button>
       <ul
         ref={ref}
@@ -53,6 +61,6 @@ export function LanguageSwitcher() {
             );
           })}
       </ul>
-    </nav>
+    </div>
   );
 }

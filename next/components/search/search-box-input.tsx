@@ -20,6 +20,9 @@ export function SearchBoxInput({
         className="pointer-events-none absolute left-3 top-3 z-10 h-8 w-8 text-graysuit"
       />
       <Input
+        useAutocomplete={false}
+        searchAsYouType={false}
+        getA11yStatusMessage={() => null}
         {...getInputProps({
           placeholder: t("search-bar-placeholder-text"),
           "aria-labelledby": buttonId,

@@ -56,6 +56,17 @@ export const MenuRoot = forwardRef<
 });
 MenuRoot.displayName = "MenuRoot";
 
+/**
+ * This is a copy of the component jsx below which we would like to use instead.
+ * When having the menu label, the menu functionality breaks.
+     <button onClick={() => setIsOpen((o) => !o)}>
+      <span className="max-sm:sr-only sm:not-sr-only sm:mr-2 sm:inline">
+        {t("menu")}
+      </span>
+      <ToggleIcon className="inline h-6 w-6" aria-hidden="true" />
+    </button>
+ */
+
 export function MenuToggle({
   isOpen,
   setIsOpen,
@@ -66,8 +77,13 @@ export function MenuToggle({
   const { t } = useTranslation();
   const ToggleIcon = isOpen ? CloseIcon : MenuIcon;
   return (
-    <button onClick={() => setIsOpen((o) => !o)} aria-label={t("toggle-menu")}>
-      <ToggleIcon className="inline h-6 w-6" />
+    <button
+      onClick={() => setIsOpen((o) => !o)}
+      className="hover:underline"
+      aria-label={t("toggle-menu")}
+      aria-expanded={isOpen ? "true" : "false"}
+    >
+      <ToggleIcon className="inline h-6 w-6" aria-hidden="true" />
     </button>
   );
 }
@@ -111,7 +127,7 @@ export function MenuBack({ onClick }: { onClick: () => void }) {
       className="m-6 inline-flex items-center justify-center pr-2 hover:underline lg:hidden"
       onClick={onClick}
     >
-      <Chevron className="h-6 w-6 rotate-90" />
+      <Chevron className="h-6 w-6 rotate-90" aria-hidden="true" />
       <span className="pl-4">{t("menu-back")}</span>
     </button>
   );
@@ -167,7 +183,14 @@ export function MenuLink({
   );
 }
 
-export function MenuTrigger({ isTopLevel }: { isTopLevel?: boolean }) {
+export function MenuTrigger({
+  isTopLevel,
+  parent,
+}: {
+  isTopLevel?: boolean;
+  parent?: string;
+}) {
+  const { t } = useTranslation();
   return (
     <NavigationMenu.Trigger
       {...disableHoverEvents}
@@ -177,6 +200,7 @@ export function MenuTrigger({ isTopLevel }: { isTopLevel?: boolean }) {
           ? "lg:ring-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600"
           : "lg:aria-expanded:bg-primary-600 lg:aria-expanded:text-white lg:aria-expanded:ring-primary-600"
       )}
+      aria-label={`${t("show-submenu", { parent })}`}
     >
       <Chevron className="h-9 w-9 -rotate-90" />
     </NavigationMenu.Trigger>

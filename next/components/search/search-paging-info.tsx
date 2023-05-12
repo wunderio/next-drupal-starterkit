@@ -29,18 +29,14 @@ export function PagingInfoView({
   className,
   end,
   searchTerm,
-  start,
   totalResults,
   ...rest
 }: PagingInfoViewProps & React.HTMLAttributes<HTMLDivElement>) {
   const { t } = useTranslation();
   return (
     <div className={clsx(className, "text-sm")} {...rest}>
-      {t("search-showing")}{" "}
-      <strong>
-        {start} - {end}
-      </strong>{" "}
-      {t("search-out-of")} <strong>{totalResults}</strong>
+      {t("search-showing")} <strong>{end}</strong> {t("search-out-of")}{" "}
+      <strong>{totalResults}</strong>
       {searchTerm && (
         <>
           {" "}
