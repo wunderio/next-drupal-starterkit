@@ -6,12 +6,12 @@ import {
 import type { SearchContextState } from "@elastic/search-ui";
 import clsx from "clsx";
 
-export type PagingInfoContainerContext = Pick<
+type PagingInfoContainerContext = Pick<
   SearchContextState,
   "pagingStart" | "pagingEnd" | "resultSearchTerm" | "totalResults"
 >;
 
-export type PagingInfoViewProps = Rename<
+type PagingInfoViewProps = Rename<
   BaseContainerProps & PagingInfoContainerContext,
   {
     pagingStart: "start";
@@ -19,11 +19,6 @@ export type PagingInfoViewProps = Rename<
     pagingEnd: "end";
   }
 >;
-
-export type PagingInfoContainerProps = BaseContainerProps &
-  PagingInfoContainerContext & {
-    view?: React.ComponentType<PagingInfoViewProps>;
-  };
 
 export function PagingInfoView({
   className,
