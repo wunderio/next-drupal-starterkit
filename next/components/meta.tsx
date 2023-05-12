@@ -5,6 +5,8 @@ import * as React from "react";
 
 import { Metatag } from "@/lib/zod/metatag";
 
+import { env } from "@/env";
+
 interface MetaProps {
   title?: string;
   path?: string;
@@ -32,12 +34,12 @@ export function Meta({ title, metatags }: MetaProps) {
   const data = {
     title: getTag("title")?.content ?? title,
     description: getTag("description")?.content ?? t("meta-site-description"),
-    canonical: `${process.env.NEXT_PUBLIC_FRONTEND_URL}${languagePathFragment}${
+    canonical: `${env.NEXT_PUBLIC_FRONTEND_URL}${languagePathFragment}${
       router.asPath !== "/" ? router.asPath : ""
     }`,
     imageSrc:
       getTag("image_src", "rel")?.href ||
-      `${process.env.NEXT_PUBLIC_FRONTEND_URL}/metatags_default_image.png`,
+      `${env.NEXT_PUBLIC_FRONTEND_URL}/metatags_default_image.png`,
   };
 
   const computedTitle = data.title

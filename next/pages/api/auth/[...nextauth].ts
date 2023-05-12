@@ -3,6 +3,8 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt_decode from "jwt-decode";
 
+import { env } from "@/env";
+
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/login",
@@ -17,14 +19,14 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         const formData = new URLSearchParams();
         formData.append("grant_type", "password");
-        formData.append("client_id", process.env.DRUPAL_CLIENT_ID);
-        formData.append("client_secret", process.env.DRUPAL_CLIENT_SECRET);
+        formData.append("client_id", env.DRUPAL_CLIENT_ID);
+        formData.append("client_secret", env.DRUPAL_CLIENT_SECRET);
         formData.append("username", credentials.username);
         formData.append("password", credentials.password);
 
         // Get access token from Drupal.
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
+          `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
           {
             method: "POST",
             body: formData,
@@ -81,12 +83,12 @@ async function refreshAccessToken(token) {
     const formData = new URLSearchParams();
 
     formData.append("grant_type", "refresh_token");
-    formData.append("client_id", process.env.DRUPAL_CLIENT_ID);
-    formData.append("client_secret", process.env.DRUPAL_CLIENT_SECRET);
+    formData.append("client_id", env.DRUPAL_CLIENT_ID);
+    formData.append("client_secret", env.DRUPAL_CLIENT_SECRET);
     formData.append("refresh_token", token.refreshToken);
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
+      `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
       {
         method: "POST",
         body: formData,

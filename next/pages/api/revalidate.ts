@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+import { env } from "@/env";
+
 export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
@@ -8,7 +10,7 @@ export default async function handler(
   const secret = request.query.secret as string;
 
   // Validate secret.
-  if (secret !== process.env.DRUPAL_REVALIDATE_SECRET) {
+  if (secret !== env.DRUPAL_REVALIDATE_SECRET) {
     return response.status(401).json({ message: "Invalid secret." });
   }
 
