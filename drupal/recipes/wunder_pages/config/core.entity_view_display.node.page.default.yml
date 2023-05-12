@@ -5,12 +5,13 @@ dependencies:
   config:
     - field.field.node.page.field_content_elements
     - field.field.node.page.field_excerpt
+    - field.field.node.page.field_image
     - node.type.page
   module:
     - entity_reference_revisions
     - user
 _core:
-  default_config_hash: XiCGemc-GS3dc4PksH4TSOAhafhuAZrjjwx2CJ63qGY
+  default_config_hash: qxlb1jPfrVIESUefBGl9EDfUz9v5z0lCzQVeLLFlZIc
 id: node.page.default
 targetEntityType: node
 bundle: page
@@ -33,5 +34,6 @@ content:
     weight: 1
     region: content
 hidden:
+  field_image: true
   langcode: true
   links: true
