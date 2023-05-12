@@ -5,10 +5,13 @@ import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import { HeadingPage } from "@/components/heading--page";
+import { Meta } from "@/components/meta";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 
 import { Button } from "@/wunder-component-library/button";
 import { Input } from "@/wunder-component-library/input";
+import { Label } from "@/wunder-component-library/label";
 import { StatusMessage } from "@/wunder-component-library/status-message";
 
 type Inputs = {
@@ -33,45 +36,46 @@ export default function LogIn() {
   };
 
   return (
-    <div className="mx-auto max-w-md">
-      {error && (
-        <StatusMessage level="error" className="mb-8">
-          {t("login-error-check-username-password")}
-        </StatusMessage>
-      )}
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <div>
-          <label className="mb-1 block text-sm font-bold" htmlFor="username">
-            {t("username")}
-          </label>
-          <Input
-            id="username"
-            autoComplete="username"
-            {...register("username", {
-              required: true,
-            })}
-          />
-        </div>
+    <>
+      <Meta title={t("log-in")} metatags={[]} />
 
-        <div>
-          <label className="mb-1 block text-sm font-bold" htmlFor="password">
-            {t("password")}
-          </label>
-          <Input
-            id="password"
-            autoComplete="current-password"
-            type="password"
-            {...register("password", {
-              required: true,
-            })}
-          />
-        </div>
+      <HeadingPage>{t("log-in")}</HeadingPage>
+      <div className="max-w-md py-4">
+        {error && (
+          <StatusMessage level="error" className="mb-8">
+            {t("login-error-check-username-password")}
+          </StatusMessage>
+        )}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <div>
+            <Label htmlFor="username">{t("username")}</Label>
+            <Input
+              id="username"
+              autoComplete="username"
+              {...register("username", {
+                required: true,
+              })}
+            />
+          </div>
 
-        <Button type="submit" disabled={isSubmitting}>
-          {t("log-in")}
-        </Button>
-      </form>
-    </div>
+          <div>
+            <Label htmlFor="password">{t("password")}</Label>
+            <Input
+              id="password"
+              autoComplete="current-password"
+              type="password"
+              {...register("password", {
+                required: true,
+              })}
+            />
+          </div>
+
+          <Button type="submit" disabled={isSubmitting}>
+            {t("log-in")}
+          </Button>
+        </form>
+      </div>
+    </>
   );
 }
 

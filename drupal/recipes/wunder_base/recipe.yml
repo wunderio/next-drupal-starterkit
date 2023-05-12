@@ -32,6 +32,7 @@ install:
   - metatag
   - webform
   - webform_ui
+  - admin_toolbar
 
 config:
   import:

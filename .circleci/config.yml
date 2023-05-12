@@ -8,6 +8,55 @@ executors:
     docker:
       - image: wunderio/silta-cicd:circleci-php8.1-node16-composer2-v0.1
     resource_class: small
+commands:
+  npm-install-build:
+    description: "NPM build command."
+    parameters:
+      path:
+        description: "package.json path"
+        type: string
+        default: "."
+      install-command:
+        type: string
+        default: "npm install"
+      build-command:
+        description: "NPM build command."
+        type: string
+        default: "npm run build"
+      cache-version:
+        description: "CircleCI cache key prefix."
+        type: string
+        default: "v1.2"
+      npm-config-platform:
+        description: "Platform flag for npm install"
+        type: string
+        default: "linuxmusl"
+    steps:
+      - restore_cache:
+          keys:
+            - <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
+            - <<parameters.cache-version>>-npm-
+
+      - run:
+          name: Install frontend dependencies
+          environment:
+            npm_config_platform: <<parameters.npm-config-platform>>
+          command: |
+            cd '<<parameters.path>>'
+            <<parameters.install-command>>
+
+      - run:
+          name: Build frontend
+          command: |
+            cd '<<parameters.path>>'
+            <<parameters.build-command>>
+
+      - save_cache:
+          paths:
+            - <<parameters.path>>/node_modules
+            - <<parameters.path>>/.next/cache
+          key: <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
+
 
 workflows:
   commit:
@@ -54,6 +103,7 @@ workflows:
                   fi
                   next_domain=${release_name_next}.$CIRCLE_PROJECT_REPONAME.$CLUSTER_DOMAIN
                   sed -i -e "s/<|next_domain|>/$next_domain/" silta/silta.yml
+                  sed -i -e "s/<|drupal_admin_pwd|>/$DRUPAL_ADMIN_PWD/" silta/silta.yml
                   openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out keypair.pem
                   openssl pkey -in keypair.pem -out oauth/private.key
                   openssl pkey -in keypair.pem -pubout -out oauth/public.key
@@ -69,7 +119,7 @@ workflows:
                 - /dependabot\/.*/
 
       - silta/drupal-build-deploy:
-          # Extend the build-deploy configuration for the production environment.
+          # Extend the build-deploy configuration for the main environment.
           <<: *build-deploy
           name: Drupal build & deploy main
           silta_config: silta/silta.yml,silta/silta-main.yml
@@ -87,7 +137,7 @@ workflows:
           filters:
             branches:
               only: production
-
+          # Special rules for deploybot branches.
       - silta/drupal-build-deploy:
           <<: *build-deploy
           name: Drupal build dependabot 
@@ -96,6 +146,24 @@ workflows:
           filters:
             branches:
               only: /dependabot\/.*/
+
+      # Storybook deployment.
+      - silta/simple-build-deploy: &build-deploy
+          name: Storybook build & deploy
+          executor: cicd81
+          context: silta_dev
+          silta_config: silta/silta-storybook.yml
+          release-suffix: storybook
+          codebase-build:
+            - silta/npm-install-build:
+                build-command: npm run build-storybook
+                path: next
+          build_folder: next/storybook-static
+          filters:
+            branches:
+              ignore:
+                - production
+                - /dependabot\/.*/
 
       # silta/frontend-build-deploy is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/jobs/%40frontend.yml
       # &build-deploy is a yaml anchor, so we can reference it later
@@ -128,23 +196,30 @@ workflows:
                   drupal_client_secret=drupal_client_secret_not_secure_used_only_locally
                   drupal_client_id=drupal-client-id
                   nextauth_secret=next_auth_secret_not_secure_used_only_locally
+                  drupal_revalidate_secret=revalidate_secret_not_secure_used_only_locally
                   echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=${drupal_public_base_url}" >> "$BASH_ENV"
                   echo "export NEXT_IMAGE_DOMAIN=${drupal_domain}" >> "$BASH_ENV"
                   echo "export DRUPAL_CLIENT_SECRET=${drupal_client_secret}" >> "$BASH_ENV"
                   echo "export DRUPAL_CLIENT_ID=${drupal_client_id}" >> "$BASH_ENV"
                   echo "export NEXTAUTH_SECRET=${nextauth_secret}" >> "$BASH_ENV"
+                  echo "export NEXT_PUBLIC_FRONTEND_URL=${next_public_base_url}" >> "$BASH_ENV"
+                  echo "export DRUPAL_REVALIDATE_SECRET=${drupal_revalidate_secret}" >> "$BASH_ENV"
                   escaped_drupal_public_base_url=$(printf '%s\n' "$drupal_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_next_public_base_url=$(printf '%s\n' "$next_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_drupal_client_secret=$(printf '%s\n' "$drupal_client_secret" | sed -e 's/[\/&]/\\&/g')
+                  escaped_drupal_revalidate_secret=$(printf '%s\n' "$drupal_revalidate_secret" | sed -e 's/[\/&]/\\&/g')
                   escaped_nextauth_secret=$(printf '%s\n' "$nextauth_secret" | sed -e 's/[\/&]/\\&/g')
                   sed -i -e "s/<|next_public_base_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
                   sed -i -e "s/<|drupal_public_base_url|>/$escaped_drupal_public_base_url/" silta/silta-next.yml
                   sed -i -e "s/<|next_image_domain|>/$drupal_domain/" silta/silta-next.yml
                   sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_revalidate_secret|>/$escaped_drupal_revalidate_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
+                  sed -i -e "s/<|next_public_frontend_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
 
-            - silta/npm-install-build:
+            # uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+            - npm-install-build:
                 path: next
           image_build_steps:
             - silta/build-docker-image:
@@ -161,7 +236,7 @@ workflows:
           requires: [ Drupal build & deploy ]
 
       - silta/frontend-build-deploy:
-          # Extend the build-deploy configuration for the production environment.
+          # Extend the build-deploy configuration for the main environment.
           <<: *frontend-build-deploy
           name: Next build & deploy main
           context: silta_dev
@@ -177,22 +252,30 @@ workflows:
                   next_public_base_url=https://${next_domain}
                   drupal_client_secret=drupal_client_secret_not_secure_used_only_locally
                   drupal_client_id=drupal-client-id
+                  drupal_revalidate_secret=revalidate_secret_not_secure_used_only_locally
                   nextauth_secret=next_auth_secret_not_secure_used_only_locally
                   echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=${drupal_public_base_url}" >> "$BASH_ENV"
                   echo "export NEXT_IMAGE_DOMAIN=${drupal_domain}" >> "$BASH_ENV"
                   echo "export DRUPAL_CLIENT_SECRET=${drupal_client_secret}" >> "$BASH_ENV"
                   echo "export DRUPAL_CLIENT_ID=${drupal_client_id}" >> "$BASH_ENV"
                   echo "export NEXTAUTH_SECRET=${nextauth_secret}" >> "$BASH_ENV"
+                  echo "export NEXT_PUBLIC_FRONTEND_URL=${next_public_base_url}" >> "$BASH_ENV"
+                  echo "export DRUPAL_REVALIDATE_SECRET=${drupal_revalidate_secret}" >> "$BASH_ENV"
                   escaped_drupal_public_base_url=$(printf '%s\n' "$drupal_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_next_public_base_url=$(printf '%s\n' "$next_public_base_url" | sed -e 's/[\/&]/\\&/g')
                   escaped_drupal_client_secret=$(printf '%s\n' "$drupal_client_secret" | sed -e 's/[\/&]/\\&/g')
+                  escaped_drupal_revalidate_secret=$(printf '%s\n' "$drupal_revalidate_secret" | sed -e 's/[\/&]/\\&/g')
                   escaped_nextauth_secret=$(printf '%s\n' "$nextauth_secret" | sed -e 's/[\/&]/\\&/g')
                   sed -i -e "s/<|next_public_base_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_public_base_url|>/$escaped_drupal_public_base_url/" silta/silta-next.yml
                   sed -i -e "s/<|next_image_domain|>/$drupal_domain/" silta/silta-next.yml
                   sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_revalidate_secret|>/$escaped_drupal_revalidate_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_secret|>/$escaped_nextauth_secret/" silta/silta-next.yml
                   sed -i -e "s/<|nextauth_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
-            - silta/npm-install-build:
+                  sed -i -e "s/<|next_public_frontend_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
+            # uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+            - npm-install-build:
                 path: next
 
           filters:
@@ -211,6 +294,7 @@ workflows:
               only: production
           requires: [ Drupal build & deploy production ]
 
+        # Special rules for the dependabot branches.
       - silta/frontend-build-deploy:
           <<: *frontend-build-deploy
           name: Next Build Dependabot

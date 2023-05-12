@@ -11,6 +11,8 @@ import parse from "html-react-parser";
 
 import { isRelative } from "@/lib/utils";
 
+import { env } from "@/env";
+
 const isElement = (domNode: DOMNode): domNode is Element =>
   domNode.type === "tag";
 
@@ -33,7 +35,7 @@ const options: HTMLReactParserOptions = {
         if (isRelative(src)) {
           return (
             <Image
-              src={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`}
+              src={`${env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`}
               width={numberWidth}
               height={numberHeight}
               alt={alt}
@@ -49,7 +51,7 @@ const options: HTMLReactParserOptions = {
 
         if (href && isRelative(href)) {
           return (
-            <Link href={href} className="underline">
+            <Link href={href} className="hyperlink underline">
               {domToReact(domNode.children)}
             </Link>
           );

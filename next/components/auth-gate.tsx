@@ -6,9 +6,10 @@ import { StatusMessage } from "@/wunder-component-library/status-message";
 type AuthGateProps = {
   children: React.ReactNode;
   text: string;
+  className?: string;
 };
 
-export function AuthGate({ children, text }: AuthGateProps) {
+export function AuthGate({ children, text, className }: AuthGateProps) {
   const { t } = useTranslation();
   const { status } = useSession();
 
@@ -17,7 +18,11 @@ export function AuthGate({ children, text }: AuthGateProps) {
   }
 
   return (
-    <StatusMessage level="warning" title={t("you-are-not-logged-in")}>
+    <StatusMessage
+      level="warning"
+      title={t("you-are-not-logged-in")}
+      className={className}
+    >
       {text}
     </StatusMessage>
   );

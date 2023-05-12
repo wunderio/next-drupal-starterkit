@@ -25,9 +25,17 @@ export function UserMenu() {
 
   if (status === "authenticated") {
     return (
-      <nav>
-        <button type="button" className="hover:underline" onClick={toggle}>
-          <span className="hidden sm:mr-2 sm:inline">{data.user.name}</span>
+      <div>
+        <span className="sr-only">{t("user-menu")}</span>
+        <button
+          type="button"
+          className="hover:underline"
+          onClick={toggle}
+          aria-expanded={isOpen ? "true" : "false"}
+        >
+          <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
+            {data.user.name}
+          </span>
           <AccountIcon className="inline-block h-6 w-6" />
         </button>
         <ul
@@ -56,21 +64,45 @@ export function UserMenu() {
             </button>
           </li>
         </ul>
-      </nav>
+      </div>
     );
   }
 
   return (
-    <Link href={loginUrl} className="hover:underline">
-      <span
+    <div>
+      <span className="sr-only">{t("user-menu")}</span>
+      <button type="button" className="hover:underline" onClick={toggle}>
+        <span className="hidden sm:mr-2 sm:inline">
+          {t("log-in-or-register")}
+        </span>
+        <AccountIcon className="inline-block h-6 w-6" />
+      </button>
+      <ul
+        ref={ref}
         className={clsx(
-          "hidden sm:mr-2 sm:inline",
-          status === "loading" && "opacity-0"
+          "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
+          !isOpen && "hidden"
         )}
       >
-        {t("log-in")}
-      </span>
-      <AccountIcon className="inline-block h-6 w-6" />
-    </Link>
+        <li>
+          <Link
+            className="block p-2 hover:bg-primary-50"
+            href={loginUrl}
+            onClick={close}
+          >
+            {t("log-in")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="block p-2 hover:bg-primary-50"
+            href="/auth/register"
+            onClick={close}
+          >
+            {t("register")}
+          </Link>
+        </li>
+      </ul>
+    </div>
   );
 }

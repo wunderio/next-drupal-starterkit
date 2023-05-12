@@ -9,6 +9,7 @@ use Drupal\Core\Site\Settings;
 use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
 use Drupal\simple_oauth\Entities\AccessTokenEntity;
 use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_ENTITY_TYPE_load().
@@ -97,4 +98,31 @@ function wunder_next_simple_oauth_private_claims_alter(&$private_claims, AccessT
     'email' => $user->getEmail(),
     'username' => $user->getAccountName(),
   ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for user entities.
+ */
+function wunder_next_user_presave(UserInterface $user) {
+  // At this time, the registration_role module has not yet
+  // been updated for Drupal 10, so we are adding our custom
+  // role by hand here, by implementing this hook.
+  // Do not assign the roles by default.
+  $assign_roles = FALSE;
+
+  // Get the current user id.
+  $current_user_id = \Drupal::currentUser()->id();
+  if ($current_user_id == 0 && PHP_SAPI !== 'cli') {
+    // If the current user id is 0, then this user is
+    // self-registrating, so ask the module to assign
+    // roles, if applicable.
+    $assign_roles = TRUE;
+  }
+
+  if ($user->isNew() && $assign_roles) {
+    // Add the frontend_login role to the user.
+    // This is currently hardcoded, but it should instead
+    // be a setting for the registration_role module.
+    $user->addRole('frontend_login');
+  }
 }

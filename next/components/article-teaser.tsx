@@ -16,7 +16,10 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
   const router = useRouter();
   const date = formatDate(article.created, router.locale);
   return (
-    <div className="relative h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md">
+    <Link
+      href={article.path.alias}
+      className="relative grid h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md"
+    >
       <h3 className="mb-2 line-clamp-2 text-heading-xs font-bold">
         {article.title}
       </h3>
@@ -33,10 +36,6 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
           className="max-w-full object-cover"
         />
       )}
-      <Link
-        href={article.path.alias}
-        className="absolute inset-0 cursor-pointer"
-      />
-    </div>
+    </Link>
   );
 }

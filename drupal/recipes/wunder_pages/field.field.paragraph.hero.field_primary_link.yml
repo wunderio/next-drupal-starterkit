@@ -1,0 +1,23 @@
+uuid: 90802ced-5f8c-4976-9c14-0e8167349d9f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_primary_link
+    - paragraphs.paragraphs_type.hero
+  module:
+    - link
+id: paragraph.hero.field_primary_link
+field_name: field_primary_link
+entity_type: paragraph
+bundle: hero
+label: 'Primary link'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link
