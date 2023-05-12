@@ -42,5 +42,5 @@ export const useNextRouting = (config, basePathUrl) => {
       ...config,
       routingOptions,
     };
-  }, [router.isReady]);
+  }, [router.isReady]); // eslint-disable-line react-hooks/exhaustive-deps
 };
