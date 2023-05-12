@@ -26,6 +26,7 @@ import {
 import { buildRequest } from "@/lib/search-ui-helpers/buildRequest";
 import { buildState } from "@/lib/search-ui-helpers/buildState";
 import { runRequest } from "@/lib/search-ui-helpers/runRequest";
+import { useNextRouting } from "@/lib/search-ui-helpers/useNextRouting";
 
 export default function SearchPage() {
   const { t } = useTranslation();
@@ -43,13 +44,18 @@ export default function SearchPage() {
     },
   };
 
+  // useNextRouting is a custom hook that will integrate with Next Router with Search UI config
+  // config is search-ui configuration.
+  // baseUrl is the path to the search page
+  const combinedConfig = useNextRouting(config, `/${router.locale}/search`);
+
   return (
     <>
       <Meta title={t("search")} metatags={[]} />
 
       <HeadingPage>{t("search")}</HeadingPage>
 
-      <SearchProvider config={config}>
+      <SearchProvider config={combinedConfig}>
         <WithSearch
           mapContextToProps={({ wasSearched, results }) => ({
             wasSearched,
