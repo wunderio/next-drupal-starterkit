@@ -5,6 +5,8 @@ import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
 
 import { Translations } from "@/lib/contexts/language-links-context";
 
+import { env } from "@/env";
+
 export function cn(...inputs: ClassNameValue[]) {
   return twMerge(inputs);
 }
@@ -32,7 +34,7 @@ export function formatDateComplete(input: string, locale: string): string {
 }
 
 export function absoluteUrl(input: string) {
-  return `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${input}`;
+  return `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}${input}`;
 }
 
 /**
