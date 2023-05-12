@@ -37,9 +37,9 @@ export default function IndexPage({
       </div>
       <Divider className="max-w-4xl" />
       <ContactForm />
-        <Divider className="max-w-4xl" />
-        <LatestArticlesListing />
-        <Divider className="max-w-4xl" />
+      <Divider className="max-w-4xl" />
+      <LatestArticlesListing />
+      <Divider className="max-w-4xl" />
       <LatestArticles articles={articleTeasers} />
     </>
   );
