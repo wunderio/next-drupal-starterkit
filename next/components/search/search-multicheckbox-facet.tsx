@@ -5,6 +5,8 @@ import clsx from "clsx";
 
 import { getFilterValueDisplay } from "@/lib/search-ui-helpers/getFilterValueDisplay";
 
+import { Checkbox } from "@/wunder-component-library/checkbox";
+
 export function MultiCheckboxFacet({
   className,
   label,
@@ -43,16 +45,13 @@ export function MultiCheckboxFacet({
           return (
             <li key={`${getFilterValueDisplay(option.value)}`}>
               <div className="flex items-center">
-                <input
+                <Checkbox
                   data-transaction-name={`facet - ${label}`}
                   id={`example_facet_${label}${getFilterValueDisplay(
                     option.value
                   )}`}
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-finnishwinter bg-mischka text-primary-600 focus:ring-primary-500"
                   checked={checked}
-                  onChange={() => (checked ? onRemove(value) : onSelect(value))}
-                  tabIndex={0}
+                  onClick={() => (checked ? onRemove(value) : onSelect(value))}
                 />
                 <label
                   className="ml-2 text-sm text-steelgray"

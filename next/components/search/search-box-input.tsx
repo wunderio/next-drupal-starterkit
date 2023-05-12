@@ -26,7 +26,7 @@ export function SearchBoxInput({
         {...getInputProps({
           placeholder: t("search-bar-placeholder-text"),
           "aria-labelledby": buttonId,
-          className: "absolute inset-0 pl-12",
+          className: "absolute inset-0 h-full pl-12",
         } satisfies InputHTMLAttributes<HTMLInputElement>)}
       />
       <Button
