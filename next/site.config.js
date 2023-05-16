@@ -1,9 +1,9 @@
 const siteConfig = {
-  defaultLocale: "en",
+  defaultLocale: "fi",
   locales: {
     en: {
       name: "English",
-      path: "/",
+      path: "/en",
       langcode: "en",
     },
     fi: {
