@@ -1,0 +1,31 @@
+uuid: 9470389e-adb3-4673-9248-52c1a82fc09f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.listing_articles.field_heading
+    - field.field.paragraph.listing_articles.field_limit
+    - paragraphs.paragraphs_type.listing_articles
+id: paragraph.listing_articles.default
+targetEntityType: paragraph
+bundle: listing_articles
+mode: default
+content:
+  field_heading:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_limit:
+    type: number
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
