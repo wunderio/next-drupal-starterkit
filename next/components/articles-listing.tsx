@@ -5,18 +5,21 @@ import { useQuery } from "@tanstack/react-query";
 import { ArticleTeaser } from "@/components/article-teaser";
 import { ArticleTeaser as ArticleTeaserType } from "@/lib/zod/article-teaser";
 
-export function ArticlesListing() {
+export function ArticlesListing({ listingId }: { listingId: string }) {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data, isLoading } = useQuery(["articles"], async () => {
-    const response = await fetch("/api/articles-listing", {
-      headers: {
-        "accept-language": router.locale,
-      },
-    });
+  const { data, isLoading } = useQuery(
+    [`articles-${router.locale}-${listingId}`],
+    async () => {
+      const response = await fetch("/api/articles-listing", {
+        headers: {
+          "accept-language": router.locale,
+        },
+      });
 
-    return await response.json();
-  });
+      return await response.json();
+    }
+  );
 
   return (
     <>
