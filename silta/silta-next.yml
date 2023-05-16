@@ -17,4 +17,4 @@ services:
       NEXTAUTH_URL: <|nextauth_url|>
 
 nginx:
-  content_security_policy: "upgrade-insecure-requests; default-src 'none'; script-src https: data:; style-src: https:; frame-ancestors 'self' <|rupal_public_base_url|>; base-uri 'self'; object-src 'self'; connect-src wss: https:: form-action: 'self';"
+  content_security_policy: "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src https:; frame-ancestors 'self' <|drupal_public_base_url|>; base-uri 'self'; object-src 'self'; connect-src wss: https:; form-action 'self';"
