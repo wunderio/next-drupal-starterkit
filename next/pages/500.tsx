@@ -2,7 +2,8 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
-import { HeadingPage } from "@/components/heading--page";
+import { Heading } from "@/components/heading";
+import { HeadingLevel } from "@/components/heading-level/heading-level";
 import { Meta } from "@/components/meta";
 import {
   CommonPageProps,
@@ -12,16 +13,16 @@ import {
 export default function NotFoundPage() {
   const { t } = useTranslation();
   return (
-    <>
+    <HeadingLevel.Boundary>
       <Meta title={t("Error")} metatags={[]} />
-      <HeadingPage>{t("Error")}</HeadingPage>
+      <Heading>{t("Error")}</Heading>
       <p className="mt-8 text-lg">
         {t("There was an error.")}{" "}
         <Link href="/" className="hyperlink underline">
           {t("Go back to the homepage?")}
         </Link>
       </p>
-    </>
+    </HeadingLevel.Boundary>
   );
 }
 

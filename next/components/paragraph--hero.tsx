@@ -2,7 +2,7 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import { FormattedText } from "@/components/formatted-text";
-import Heading from "@/components/heading-level/heading";
+import { HeadingHero } from "@/components/heading";
 import { MediaImage } from "@/components/media--image";
 import { Hero as HeroType } from "@/lib/zod/paragraph";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
@@ -17,9 +17,7 @@ export function ParagraphHero({ paragraph }: { paragraph: HeroType }) {
       <div className="mx-auto grid max-w-screen-xl lg:grid-cols-12">
         <div className="mr-auto place-self-center px-8 py-8 lg:col-span-6  lg:py-16">
           {paragraph.field_heading && (
-            <Heading.H className="leading-none mb-4 max-w-2xl text-left text-heading-md font-bold tracking-tight text-primary-600 md:text-heading-lg">
-              {paragraph.field_heading}
-            </Heading.H>
+            <HeadingHero>{paragraph.field_heading}</HeadingHero>
           )}
           <FormattedText
             html={paragraph.field_formatted_text.processed}

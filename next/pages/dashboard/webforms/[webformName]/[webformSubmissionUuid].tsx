@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { useTranslation } from "next-i18next";
 
-import { HeadingPage } from "@/components/heading--page";
+import { HeadingPage } from "@/components/heading";
 import { Meta } from "@/components/meta";
 import { drupal } from "@/lib/drupal";
 import {

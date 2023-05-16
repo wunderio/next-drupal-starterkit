@@ -3,6 +3,8 @@ import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
 import { AuthGate } from "@/components/auth-gate";
+import { Heading } from "@/components/heading";
+import { HeadingLevel } from "@/components/heading-level/heading-level";
 
 import { Button } from "@/wunder-component-library/button";
 import { Input } from "@/wunder-component-library/input";
@@ -65,9 +67,9 @@ export function ContactForm() {
       onSubmit={handleSubmit(onSubmit, onErrors)}
       className="mx-auto mb-4 flex max-w-3xl flex-col gap-5 rounded border border-finnishwinter bg-white p-4 shadow-md transition-all hover:shadow-md"
     >
-      <h2 className="text-heading-sm font-bold md:text-heading-md">
-        {t("form-title")}
-      </h2>
+      <HeadingLevel.Boundary levelOverride="2">
+        <Heading>{t("form-title")}</Heading>
+      </HeadingLevel.Boundary>
       <AuthGate text={t("login-to-fill-form")}>
         <>
           <p>{t("form-description")}</p>

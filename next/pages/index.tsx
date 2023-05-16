@@ -2,6 +2,7 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { DrupalNode } from "next-drupal";
 
 import { ContactForm } from "@/components/contact-form";
+import { HeadingLevel } from "@/components/heading-level/heading-level";
 import { LatestArticles } from "@/components/latest-articles";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
@@ -31,7 +32,9 @@ export default function IndexPage({
       <Meta title={frontpage?.title} metatags={frontpage?.metatag} />
       <div className="grid gap-4">
         {frontpage?.field_content_elements?.map((paragraph) => (
-          <Paragraph paragraph={paragraph} key={paragraph.id} />
+          <HeadingLevel.Boundary key={`Heading.Boundary-${paragraph.id}`}>
+            <Paragraph paragraph={paragraph} key={paragraph.id} />
+          </HeadingLevel.Boundary>
         ))}
       </div>
       <Divider className="max-w-4xl" />

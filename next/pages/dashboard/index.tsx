@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 
-import { HeadingPage } from "@/components/heading--page";
+import { HeadingPage } from "@/components/heading";
 import { Meta } from "@/components/meta";
 import { drupal } from "@/lib/drupal";
 import {

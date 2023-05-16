@@ -12,8 +12,8 @@ import {
 } from "@elastic/react-search-ui";
 import { SearchDriverOptions } from "@elastic/search-ui";
 
-// import { HeadingPage } from "@/components/heading--page";
-import Heading from "@/components/heading-level/heading";
+import { Heading } from "@/components/heading";
+import { HeadingLevel } from "@/components/heading-level/heading-level";
 import { Meta } from "@/components/meta";
 import { SearchBoxInput } from "@/components/search/search-box-input";
 import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-facet";
@@ -51,13 +51,9 @@ export default function SearchPage() {
   const combinedConfig = useNextRouting(config, `/${router.locale}/search`);
 
   return (
-    <>
+    <HeadingLevel.Boundary>
       <Meta title={t("search")} metatags={[]} />
-
-      <Heading.Boundary>
-        <Heading.H>{t("search")}</Heading.H>
-      </Heading.Boundary>
-
+      <Heading>{t("search")}</Heading>
       <SearchProvider config={combinedConfig}>
         <WithSearch
           mapContextToProps={({ wasSearched, results }) => ({
@@ -115,7 +111,7 @@ export default function SearchPage() {
           )}
         </WithSearch>
       </SearchProvider>
-    </>
+    </HeadingLevel.Boundary>
   );
 }
 

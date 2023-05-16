@@ -1,4 +1,4 @@
-import Heading from "@/components/heading-level/heading";
+import { HeadingLevel } from "@/components/heading-level/heading-level";
 import { Paragraph } from "@/components/paragraph";
 import type { Page } from "@/lib/zod/page";
 interface PageProps {
@@ -8,10 +8,10 @@ interface PageProps {
 export function Page({ page }: PageProps) {
   return (
     <div className="grid gap-4">
-      {page.field_content_elements?.map((paragraph, key) => (
-        <Heading.Boundary key={paragraph.id}>
+      {page.field_content_elements?.map((paragraph) => (
+        <HeadingLevel.Boundary key={paragraph.id}>
           <Paragraph key={paragraph.id} paragraph={paragraph} />
-        </Heading.Boundary>
+        </HeadingLevel.Boundary>
       ))}
     </div>
   );

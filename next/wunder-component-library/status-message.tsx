@@ -2,7 +2,7 @@ import { useTranslation } from "next-i18next";
 import React from "react";
 import { cva } from "cva";
 
-import Heading from "@/components/heading-level/heading";
+import { Heading } from "@/components/heading";
 import { cn } from "@/lib/utils";
 import Success from "@/styles/icons/checkmark.svg";
 import Error from "@/styles/icons/error.svg";
@@ -54,9 +54,7 @@ export const StatusMessage = React.forwardRef<
       {...props}
     >
       <Icon className={cn("absolute left-6 top-6 h-6 w-6", color)} />
-      <Heading.H className="mb-2 text-md font-bold">
-        {title ?? t(`statusmessage-${level}`)}
-      </Heading.H>
+      <Heading>{title ?? t(`statusmessage-${level}`)}</Heading>
       {children}
     </div>
   );

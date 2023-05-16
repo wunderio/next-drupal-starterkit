@@ -2,7 +2,7 @@ import type { GetStaticPropsContext } from "next";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
-import { HeadingPage } from "@/components/heading--page";
+import { HeadingPage } from "@/components/heading";
 import { Meta } from "@/components/meta";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 
