@@ -5,13 +5,19 @@ import { useQuery } from "@tanstack/react-query";
 import { ArticleTeaser } from "@/components/article-teaser";
 import { ArticleTeaser as ArticleTeaserType } from "@/lib/zod/article-teaser";
 
-export function ArticlesListing({ listingId }: { listingId: string }) {
+export function ArticlesListing({
+  listingId,
+  limit,
+}: {
+  listingId: string;
+  limit: number;
+}) {
   const { t } = useTranslation();
   const router = useRouter();
   const { data, isLoading } = useQuery(
     [`articles-${router.locale}-${listingId}`],
     async () => {
-      const response = await fetch("/api/articles-listing", {
+      const response = await fetch(`/api/articles-listing?limit=${limit}`, {
         headers: {
           "accept-language": router.locale,
         },
@@ -24,7 +30,7 @@ export function ArticlesListing({ listingId }: { listingId: string }) {
   return (
     <>
       {isLoading && (
-        <div className="grid h-screen place-items-center" role="status">
+        <div className="grid place-items-center" role="status">
           <svg
             aria-hidden="true"
             className="mr-2 h-8 w-8 animate-spin fill-primary-700 text-white"

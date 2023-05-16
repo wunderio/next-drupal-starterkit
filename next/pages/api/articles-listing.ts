@@ -13,6 +13,8 @@ export default async function handler(
   if (req.method === "GET") {
     const languagePrefix =
       req.headers["accept-language"] || siteConfig.defaultLocale;
+
+    const limit = Number(req.query.limit) || 10;
     const articleTeasers = await drupal.getResourceCollection<DrupalNode[]>(
       "node--article",
       {
@@ -22,6 +24,7 @@ export default async function handler(
           "fields[node--article]": "title,path,field_image,uid,created",
           include: "field_image,uid",
           sort: "-created",
+          "page[limit]": limit,
         },
         locale: languagePrefix,
         defaultLocale: siteConfig.defaultLocale,

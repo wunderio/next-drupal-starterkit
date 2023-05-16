@@ -12,7 +12,7 @@ export function ParagraphListingArticles({
       {paragraph.field_heading && (
         <HeadingParagraph>{paragraph.field_heading}</HeadingParagraph>
       )}
-      <ArticlesListing listingId={paragraph.id} />
+      <ArticlesListing listingId={paragraph.id} limit={paragraph.field_limit} />
     </>
   );
 }

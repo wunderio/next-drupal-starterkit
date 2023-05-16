@@ -13,6 +13,7 @@ export const ListingArticlesSchema = z.object({
   type: z.literal("paragraph--listing_articles"),
   id: z.string(),
   field_heading: z.string().nullable(),
+  field_limit: z.number(),
 });
 
 export const ImageShape = z.object({
