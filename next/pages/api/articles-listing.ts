@@ -4,12 +4,15 @@ import { drupal } from "lib/drupal";
 
 import { validateAndCleanupArticleTeaser } from "@/lib/zod/article-teaser";
 
+import siteConfig from "@/site.config";
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const languagePrefix = req.headers["accept-language"] || "en";
+    const languagePrefix =
+      req.headers["accept-language"] || siteConfig.defaultLocale;
     const articleTeasers = await drupal.getResourceCollection<DrupalNode[]>(
       "node--article",
       {
@@ -20,6 +23,8 @@ export default async function handler(
           include: "field_image,uid",
           sort: "-created",
         },
+        locale: languagePrefix,
+        defaultLocale: siteConfig.defaultLocale,
       }
     );
 
