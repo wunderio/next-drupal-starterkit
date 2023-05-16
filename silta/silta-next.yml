@@ -17,4 +17,4 @@ services:
       NEXTAUTH_URL: <|nextauth_url|>
 
 nginx:
-  content_security_policy: "upgrade-insecure-requests; default-src 'none'; script-src 'self' youtube.com https://www.youtube.com; frame-src youtube.com https://www.youtube.com; style-src https: 'unsafe-inline'; img-src 'self' <|drupal_public_base_url|> https://i.ytimg.com; font-src 'self' <|drupal_public_base_url|>; frame-ancestors 'self' <|drupal_public_base_url|>; base-uri 'self'; connect-src 'self'; form-action 'self';"
+  content_security_policy: "upgrade-insecure-requests; default-src 'none'; script-src 'self' youtube.com https://www.youtube.com; frame-src youtube.com https://www.youtube.com; style-src 'self' 'unsafe-inline'; img-src 'self' <|drupal_public_base_url|> https://i.ytimg.com; font-src 'self' <|drupal_public_base_url|>; frame-ancestors 'self' <|drupal_public_base_url|>; base-uri 'self'; connect-src 'self'; form-action 'self'; require-trusted-types-for 'script';"
