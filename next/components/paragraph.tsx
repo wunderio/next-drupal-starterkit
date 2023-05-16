@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { ParagraphHero } from "@/components/paragraph--hero";
 import { ParagraphImage } from "@/components/paragraph--image";
 import { ParagraphLinks } from "@/components/paragraph--links";
+import { ParagraphListingArticles } from "@/components/paragraph--listing-articles";
 import { ParagraphText } from "@/components/paragraph--text";
 import { Paragraph } from "@/lib/zod/paragraph";
 
@@ -38,6 +39,9 @@ export function Paragraph({ paragraph }: { paragraph: Paragraph }) {
     }
     case "paragraph--hero": {
       return <ParagraphHero paragraph={paragraph} />;
+    }
+    case "paragraph--listing_articles": {
+      return <ParagraphListingArticles paragraph={paragraph} />;
     }
     default:
       return null;

@@ -9,6 +9,12 @@ export const FormattedTextSchema = z.object({
   field_heading: z.string().nullable(),
 });
 
+export const ListingArticlesSchema = z.object({
+  type: z.literal("paragraph--listing_articles"),
+  id: z.string(),
+  field_heading: z.string().nullable(),
+});
+
 export const ImageShape = z.object({
   type: z.literal("file--file"),
   id: z.string(),
@@ -109,6 +115,7 @@ export type Links = z.infer<typeof LinksSchema>;
 export type Accordion = z.infer<typeof AccordionSchema>;
 export type AccordionItem = z.infer<typeof AccordionItemSchema>;
 export type Hero = z.infer<typeof HeroSchema>;
+export type ListingArticles = z.infer<typeof ListingArticlesSchema>;
 
 export type Paragraph =
   | FormattedText
@@ -117,4 +124,5 @@ export type Paragraph =
   | Links
   | Accordion
   | AccordionItem
-  | Hero;
+  | Hero
+  | ListingArticles;

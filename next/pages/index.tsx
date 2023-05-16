@@ -3,7 +3,6 @@ import { DrupalNode } from "next-drupal";
 
 import { ContactForm } from "@/components/contact-form";
 import { LatestArticles } from "@/components/latest-articles";
-import { LatestArticlesListing } from "@/components/latest-articles-listing";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
 import { Paragraph } from "@/components/paragraph";
@@ -37,8 +36,6 @@ export default function IndexPage({
       </div>
       <Divider className="max-w-4xl" />
       <ContactForm />
-      <Divider className="max-w-4xl" />
-      <LatestArticlesListing />
       <Divider className="max-w-4xl" />
       <LatestArticles articles={articleTeasers} />
     </>

@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { DrupalNode } from "next-drupal";
 import { drupal } from "lib/drupal";
 
+import { validateAndCleanupArticleTeaser } from "@/lib/zod/article-teaser";
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -21,7 +23,11 @@ export default async function handler(
       }
     );
 
-    res.json(articleTeasers);
+    const validatedArticleTeasers = articleTeasers.map((articleNode) =>
+      validateAndCleanupArticleTeaser(articleNode)
+    );
+
+    res.json(validatedArticleTeasers);
   }
 
   res.end();
