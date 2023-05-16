@@ -35,6 +35,9 @@ export default async function handler(
       validateAndCleanupArticleTeaser(articleNode)
     );
 
+    // Set cache headers: 60 seconds max-age, stale-while-revalidate
+    res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate");
+
     res.json(validatedArticleTeasers);
   }
 
