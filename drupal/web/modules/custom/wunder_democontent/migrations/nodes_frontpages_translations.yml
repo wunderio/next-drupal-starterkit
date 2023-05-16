@@ -39,3 +39,4 @@ migration_dependencies:
     - nodes_frontpages
     - paragraphs_frontpage_formatted_text_translations
     - paragraphs_frontpage_hero_translations
+    - paragraphs_frontpage_listing_articles_translations
