@@ -1,5 +1,6 @@
 import * as AccordionUI from "@radix-ui/react-accordion";
 
+import Heading from "@/components/heading-level/heading";
 import ChevronIcon from "@/styles/icons/chevron-down.svg";
 import ListIcon from "@/styles/icons/list.svg";
 
@@ -14,9 +15,9 @@ interface AccordionProps {
 export function Accordion({ heading, items }: AccordionProps) {
   return (
     <div className="relative h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md">
-      <h2 className="mb-4 text-heading-sm font-bold md:text-heading-md">
+      <Heading.H className="mb-4 text-heading-sm font-bold md:text-heading-md">
         {heading}
-      </h2>
+      </Heading.H>
       <AccordionUI.Root type="single" collapsible className="grid gap-4">
         {items?.map((item) => (
           <AccordionUI.Item key={item.id} value={item.id}>

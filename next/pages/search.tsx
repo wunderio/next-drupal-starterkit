@@ -12,7 +12,8 @@ import {
 } from "@elastic/react-search-ui";
 import { SearchDriverOptions } from "@elastic/search-ui";
 
-import { HeadingPage } from "@/components/heading--page";
+// import { HeadingPage } from "@/components/heading--page";
+import Heading from "@/components/heading-level/heading";
 import { Meta } from "@/components/meta";
 import { SearchBoxInput } from "@/components/search/search-box-input";
 import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-facet";
@@ -53,7 +54,9 @@ export default function SearchPage() {
     <>
       <Meta title={t("search")} metatags={[]} />
 
-      <HeadingPage>{t("search")}</HeadingPage>
+      <Heading.Boundary>
+        <Heading.H>{t("search")}</Heading.H>
+      </Heading.Boundary>
 
       <SearchProvider config={combinedConfig}>
         <WithSearch

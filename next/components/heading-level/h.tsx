@@ -1,3 +1,22 @@
+import { forwardRef } from "react";
+
+import { LevelContext } from "./context";
+
+const H = forwardRef((props, ref) => (
+  <LevelContext.Consumer>
+    {(level) => {
+      const Heading = `h${Math.min(level, 6)}`;
+      return (
+        <Heading className={props && props.className} ref={ref} {...props} />
+      );
+    }}
+  </LevelContext.Consumer>
+));
+
+H.displayName = "Heading.H";
+
+export default H;
+/*
 import React, {
   ElementType,
   forwardRef,
@@ -40,3 +59,66 @@ H.propTypes = {
 };
 
 export default H;
+*/
+/*
+import React, { forwardRef, ReactNode, useContext } from "react";
+import { createContext } from "react";
+import PropTypes from "prop-types";
+
+export const LevelContext = createContext<number>(0);
+
+interface HeadingProps {
+  className?: string;
+}
+
+interface BoundaryProps {
+  levelOverride?: "1" | "2" | "3" | "4" | "5" | "6";
+  children?: ReactNode;
+}
+
+interface HProps extends HeadingProps {
+  children?: ReactNode;
+}
+
+type HeadingComponent = React.ForwardRefExoticComponent<
+  HProps & React.RefAttributes<HTMLElement>
+>;
+
+export const Boundary: React.FC<BoundaryProps> = ({
+  children,
+  levelOverride,
+}) => {
+  const level = useContext(LevelContext);
+  const updatedLevel = levelOverride ? parseInt(levelOverride, 10) : level + 1;
+
+  return (
+    <LevelContext.Provider value={updatedLevel}>
+      {children}
+    </LevelContext.Provider>
+  );
+};
+
+Boundary.displayName = "Heading.Boundary";
+
+Boundary.propTypes = {
+  levelOverride: PropTypes.oneOf(["1", "2", "3", "4", "5", "6"]),
+  children: PropTypes.any,
+};
+
+export const H: HeadingComponent = forwardRef<HTMLElement, HProps>(
+  ({ className, ...props }, ref) => {
+    const level = useContext(LevelContext);
+    const Heading = `h${Math.min(level, 6)}` as keyof JSX.IntrinsicElements;
+    const headingProps: React.HTMLAttributes<HTMLElement> = {
+      className,
+      ...props,
+    };
+
+    return React.createElement(Heading, { ...headingProps, ref });
+  }
+);
+
+H.displayName = "Heading.H";
+
+export default H;
+*/
