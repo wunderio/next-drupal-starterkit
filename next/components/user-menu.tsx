@@ -72,7 +72,7 @@ export function UserMenu() {
     <div>
       <span className="sr-only">{t("user-menu")}</span>
       <button type="button" className="hover:underline" onClick={toggle}>
-        <span className="hidden sm:mr-2 sm:inline">
+        <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
           {t("log-in-or-register")}
         </span>
         <AccountIcon className="inline-block h-6 w-6" />
