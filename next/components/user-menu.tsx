@@ -33,7 +33,7 @@ export function UserMenu() {
           onClick={toggle}
           aria-expanded={isOpen ? "true" : "false"}
         >
-          <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
+          <span className="capitalize max-sm:sr-only sm:not-sr-only sm:mr-2 sm:inline">
             {data.user.name}
           </span>
           <AccountIcon className="inline-block h-6 w-6" />
