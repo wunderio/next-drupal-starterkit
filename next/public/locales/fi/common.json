@@ -20,6 +20,7 @@
   "search-previous": "Edellinen",
   "search-next": "Seuraava",
   "search-go-to-page": "Mene sivulle {{page}}",
+  "filter-by": "Suodata",
   "Page not found": "Sivua ei löydy",
   "The page you are looking for does not exist.": "Hakemaasi sivua ei löydy.",
   "Go back to the homepage?": "Palaa etusivulle?",

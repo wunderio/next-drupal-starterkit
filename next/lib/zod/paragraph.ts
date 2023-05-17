@@ -63,7 +63,7 @@ export const LinksSchema = z.object({
   field_links: z.array(LinkShape),
 });
 
-export const AccordionItemSchema = z.object({
+const AccordionItemSchema = z.object({
   type: z.literal("paragraph--accordion_item"),
   id: z.string(),
   field_heading: z.string(),

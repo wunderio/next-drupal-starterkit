@@ -30,9 +30,9 @@ export function LanguageSwitcher() {
         type="button"
         className="hover:underline"
         onClick={toggle}
-        aria-expanded={isOpen ? "true" : "false"}
+        aria-expanded={isOpen}
       >
-        <span className="max-sm:sr-only sm:not-sr-only sm:mr-2 sm:inline">
+        <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
           {languageLinks[locale].name}
         </span>
         <LanguageIcon className="inline-block h-6 w-6" aria-hidden="true" />

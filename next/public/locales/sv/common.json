@@ -20,6 +20,7 @@
   "search-previous": "Föregående",
   "search-next": "Nästa",
   "search-go-to-page": "Gå till sida {{page}}",
+  "filter-by": "Filtrera efter",
   "Page not found": "Sidan kunde inte hittas",
   "The page you are looking for does not exist.": "Sidan du söker finns inte.",
   "Go back to the homepage?": "Gå tillbaka till hemsidan?",

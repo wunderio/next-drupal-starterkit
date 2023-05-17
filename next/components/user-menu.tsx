@@ -31,9 +31,9 @@ export function UserMenu() {
           type="button"
           className="hover:underline"
           onClick={toggle}
-          aria-expanded={isOpen ? "true" : "false"}
+          aria-expanded={isOpen}
         >
-          <span className="capitalize max-sm:sr-only sm:not-sr-only sm:mr-2 sm:inline">
+          <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
             {data.user.name}
           </span>
           <AccountIcon className="inline-block h-6 w-6" />

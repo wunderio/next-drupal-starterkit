@@ -58,7 +58,7 @@ export function MultiCheckboxFacet({
                 />
                 <span
                   className="ml-2 text-sm text-steelgray"
-                  title={`Filter by ${getFilterValueDisplay(
+                  title={`${t("filter-by")} ${getFilterValueDisplay(
                     option.value
                   )} (${option.count.toLocaleString("en")})`}
                 >
