@@ -1,4 +1,4 @@
-# 🚀 Next.js for Drupal multilingual template by Wunder🥕
+# 🚀 Next.js for Drupal multilingual template by Wunder
 
 This is a starter template created by [Wunder](https://www.wunder.io) for a decoupled website using the open-source [Next.js for Drupal](https://next-drupal.org/) project by [Chapter Three](https://www.chapterthree.com) and contributors.
 
@@ -75,7 +75,7 @@ All Next.js code is in the `next` directory.
 
 For frontend development, prefix npm commands with `lando`, so for example to start the
 local node server in development mode, you can use `lando npm run dev`. All needed environment variables are already
-set for backend and frontend in the Lando file, so you will not need to touch .env files for the frontend.
+set for backend and frontend in the Lando file, so you will not need to touch any .env files for the frontend to get up and running.
 
 Follow these steps to get started, after you have set up the backend:
 
@@ -148,6 +148,15 @@ TypeScript is setup quite loosely by default to minimise friction and make it ac
 
 - `next/lib/get-node-page-json-api-params.ts` - this file creates the parameters that are passed to JSON API when fetching page data.
 - `next/lib/zod/*.ts` - these files contain the Zod schemas that are used to validate and cleanup the data fetched from the backend. Any data that is not accounted for in these schemas will be removed, in order to prevent sending more data than necessary to the client. During development, it can be handy to avoid this behaviour using [zod.passthrough()](https://zod.dev/?id=passthrough) to pass ALL data to the client, and then tighten the schema later to only pass the data that is actually needed.
+
+#### Typesafe environment variables
+
+The environment variables used by the frontend are also checked for type safety. If used correctly, a Zod error will prevent the frontend from building if the environment variables are not set according to the schema defined in `next/env.ts`. To add a new environment variable:
+
+1. Add it to `.lando.yml`, under services > node > overrides > environment.
+2. Add it to `next/env.ts`. Note that it must be added twice there - once under server/client to define its schema, and once under `runtimeEnv` to read the actual value.
+3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
+4. To ensure it also works in CircleCI and Silta, also add it to`.circleci/config.yml` and `silta-next.yml`.
 
 ### Wunder component library [WIP]
 

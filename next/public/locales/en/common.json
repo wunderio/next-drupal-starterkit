@@ -1,7 +1,9 @@
 {
   "homepage-link": "Homepage",
-  "menu-toggle": "Toggle menu",
   "menu-back": "Back",
+  "menu": "Menu",
+  "menu-toggle": "Toggle menu",
+  "show-submenu": "Show submenu for {{parent}}",
   "latest-articles": "Latest articles",
   "no-content-found": "No content found",
   "posted-by": "Author: {{author}}",
@@ -15,11 +17,15 @@
   "search-showing": "Showing",
   "search-out-of": "out of",
   "search-for": "for",
+  "search-previous": "Previous",
+  "search-next": "Next",
+  "search-go-to-page": "Go to page {{page}}",
   "Page not found": "Page not found",
   "The page you are looking for does not exist.": "The page you are looking for does not exist.",
   "Go back to the homepage?": "Go back to the homepage?",
   "meta-site-name": "Next-drupal wunder template",
   "meta-site-description": "Example website demonstrating the use of next-drupal in a multilingual site.",
+  "filter-search": "Filter search",
   "form-description": "This contact form will post to the default Contact webform on the Drupal side.",
   "form-title": "Simple webform example",
   "form-label-name": "Name:",
@@ -40,6 +46,8 @@
   "statusmessage-success": "Success",
   "statusmessage-warning": "Warning",
   "statusmessage-error": "Error",
+  "language-switcher": "Language menu, choose language, current language is English",
+  "user-menu": "User menu",
   "user-dashboard": "Dashboard",
   "user-dashboard-intro-greeting": "Hello {{username}}! These are your past form submissions:",
   "back-to-dashboard": "Back to dashboard",
@@ -55,5 +63,5 @@
   "email": "Email",
   "register": "Create account",
   "register-success": "You are now registered. Check your email for a confirmation link where you will be able to set your password.",
-  "log-in-or-register": "Log in - Create account"
+  "user-menu-account": "Account"
 }

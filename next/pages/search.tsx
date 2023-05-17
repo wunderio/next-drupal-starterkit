@@ -4,7 +4,6 @@ import { useTranslation } from "next-i18next";
 import {
   ErrorBoundary,
   Facet,
-  Paging,
   PagingInfo,
   Results,
   SearchBox,
@@ -17,6 +16,7 @@ import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
 import { SearchBoxInput } from "@/components/search/search-box-input";
 import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-facet";
+import { Pagination } from "@/components/search/search-pagination";
 import { PagingInfoView } from "@/components/search/search-paging-info";
 import { SearchResult } from "@/components/search/search-result";
 import {
@@ -26,6 +26,7 @@ import {
 import { buildRequest } from "@/lib/search-ui-helpers/buildRequest";
 import { buildState } from "@/lib/search-ui-helpers/buildState";
 import { runRequest } from "@/lib/search-ui-helpers/runRequest";
+import { useNextRouting } from "@/lib/search-ui-helpers/useNextRouting";
 
 export default function SearchPage() {
   const { t } = useTranslation();
@@ -43,13 +44,18 @@ export default function SearchPage() {
     },
   };
 
+  // useNextRouting is a custom hook that will integrate with Next Router with Search UI config
+  // config is search-ui configuration.
+  // baseUrl is the path to the search page
+  const combinedConfig = useNextRouting(config, `/${router.locale}/search`);
+
   return (
     <>
       <Meta title={t("search")} metatags={[]} />
 
       <HeadingPage>{t("search")}</HeadingPage>
 
-      <SearchProvider config={config}>
+      <SearchProvider config={combinedConfig}>
         <WithSearch
           mapContextToProps={({ wasSearched, results }) => ({
             wasSearched,
@@ -74,7 +80,7 @@ export default function SearchPage() {
               <div className="flex flex-col md:flex-row">
                 <aside className="mr-2 w-56">
                   {wasSearched && results.length > 0 && (
-                    <div className="py-2">
+                    <div className="py-2" aria-label={t("filter-search")}>
                       <Facet
                         view={MultiCheckboxFacet}
                         field="tags"
@@ -95,7 +101,7 @@ export default function SearchPage() {
                     resultView={SearchResult}
                   />
                   <div className="flex items-center justify-center py-2">
-                    {wasSearched && results.length > 0 && <Paging />}
+                    {wasSearched && results.length > 0 && <Pagination />}
                   </div>
                 </div>
               </div>

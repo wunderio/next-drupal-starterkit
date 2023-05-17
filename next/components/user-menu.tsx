@@ -25,9 +25,17 @@ export function UserMenu() {
 
   if (status === "authenticated") {
     return (
-      <nav>
-        <button type="button" className="hover:underline" onClick={toggle}>
-          <span className="hidden sm:mr-2 sm:inline">{data.user.name}</span>
+      <div>
+        <span className="sr-only">{t("user-menu")}</span>
+        <button
+          type="button"
+          className="hover:underline"
+          onClick={toggle}
+          aria-expanded={isOpen ? "true" : "false"}
+        >
+          <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
+            {data.user.name}
+          </span>
           <AccountIcon className="inline-block h-6 w-6" />
         </button>
         <ul
@@ -56,15 +64,16 @@ export function UserMenu() {
             </button>
           </li>
         </ul>
-      </nav>
+      </div>
     );
   }
 
   return (
-    <nav>
+    <div>
+      <span className="sr-only">{t("user-menu")}</span>
       <button type="button" className="hover:underline" onClick={toggle}>
         <span className="hidden sm:mr-2 sm:inline">
-          {t("log-in-or-register")}
+          {t("user-menu-account")}
         </span>
         <AccountIcon className="inline-block h-6 w-6" />
       </button>
@@ -94,6 +103,6 @@ export function UserMenu() {
           </Link>
         </li>
       </ul>
-    </nav>
+    </div>
   );
 }

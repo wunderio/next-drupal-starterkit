@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: "latest",
     sourceType: "module",
   },
   env: {
@@ -34,7 +34,7 @@ module.exports = {
         browser: true,
         node: true,
       },
-      plugins: ["simple-import-sort"],
+      plugins: ["n", "simple-import-sort"],
       extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -46,6 +46,7 @@ module.exports = {
         "prettier/prettier": "error",
 
         // Relax some TypeScript rules to make them more accessible to beginners.
+        // Remove these if you want to enforce stricter rules.
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
@@ -56,11 +57,26 @@ module.exports = {
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
         "@typescript-eslint/no-misused-promises": [
-          2,
+          "error",
           {
             checksVoidReturn: {
               attributes: false,
             },
+          },
+        ],
+
+        // Instead, `import { env } from "@/env"` to access environment variables.
+        "n/no-process-env": ["error"],
+
+        // Allow unused variables only if they start with `_` or `err`.
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            vars: "all",
+            varsIgnorePattern: "^_",
+            args: "after-used",
+            argsIgnorePattern: "^_|^err",
           },
         ],
 
@@ -82,18 +98,6 @@ module.exports = {
               // Other relative imports. Put same-folder imports and `.` last.
               ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
             ],
-          },
-        ],
-
-        // Allow unused variables that start with an underscore.
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": [
-          "error",
-          {
-            vars: "all",
-            varsIgnorePattern: "^_",
-            args: "after-used",
-            argsIgnorePattern: "^_|^err",
           },
         ],
       },
