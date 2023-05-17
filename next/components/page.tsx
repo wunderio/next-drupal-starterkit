@@ -8,8 +8,11 @@ interface PageProps {
 export function Page({ page }: PageProps) {
   return (
     <div className="grid gap-4">
-      {page.field_content_elements?.map((paragraph) => (
-        <HeadingLevel.Boundary key={paragraph.id}>
+      {page.field_content_elements?.map((paragraph, key: number) => (
+        <HeadingLevel.Boundary
+          levelOverride={key === 0 ? "1" : "2"}
+          key={paragraph.id}
+        >
           <Paragraph key={paragraph.id} paragraph={paragraph} />
         </HeadingLevel.Boundary>
       ))}

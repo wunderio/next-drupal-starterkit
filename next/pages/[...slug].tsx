@@ -2,6 +2,7 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { DrupalNode, DrupalTranslatedPath } from "next-drupal";
 
 import { Article } from "@/components/article";
+import { HeadingLevel } from "@/components/heading-level/heading-level";
 import { Meta } from "@/components/meta";
 import { Page } from "@/components/page";
 import {
@@ -30,11 +31,11 @@ export default function CustomPage({
   if (!resource) return null;
 
   return (
-    <>
+    <HeadingLevel.Boundary>
       <Meta title={resource.title} metatags={resource.metatag} />
       {resource.type === "node--article" && <Article article={resource} />}
       {resource.type === "node--page" && <Page page={resource} />}
-    </>
+    </HeadingLevel.Boundary>
   );
 }
 

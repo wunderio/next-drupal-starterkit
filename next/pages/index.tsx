@@ -31,8 +31,11 @@ export default function IndexPage({
     <>
       <Meta title={frontpage?.title} metatags={frontpage?.metatag} />
       <div className="grid gap-4">
-        {frontpage?.field_content_elements?.map((paragraph) => (
-          <HeadingLevel.Boundary key={`Heading.Boundary-${paragraph.id}`}>
+        {frontpage?.field_content_elements?.map((paragraph, key: number) => (
+          <HeadingLevel.Boundary
+            levelOverride={key === 0 ? "1" : "2"}
+            key={`Heading.Boundary-${paragraph.id}`}
+          >
             <Paragraph paragraph={paragraph} key={paragraph.id} />
           </HeadingLevel.Boundary>
         ))}

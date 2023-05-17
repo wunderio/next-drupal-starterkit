@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 
 type BoundaryProps = {
-  levelOverride?: "1" | "2" | "3" | "4" | "5" | "6";
+  levelOverride?: "1" | "2" | "3" | "4" | "5" | "6" | number;
   children: React.ReactNode;
 };
 
@@ -17,7 +17,11 @@ export const Boundary: React.FC<BoundaryProps> = ({
   levelOverride,
 }) => {
   const level = useContext(LevelContext);
-  const updatedLevel = levelOverride ? parseInt(levelOverride, 10) : level + 1;
+  const updatedLevel = levelOverride
+    ? typeof levelOverride === "number"
+      ? levelOverride
+      : parseInt(levelOverride, 10)
+    : level + 1;
 
   return (
     <LevelContext.Provider value={updatedLevel}>
