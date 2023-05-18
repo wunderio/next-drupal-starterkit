@@ -8,6 +8,7 @@ import {
   HeroSchema,
   ImageSchema,
   LinksSchema,
+  ListingArticlesSchema,
   VideoSchema,
 } from "@/lib/zod/paragraph";
 
@@ -23,6 +24,7 @@ export const PageSchema = z.object({
       LinksSchema,
       AccordionSchema,
       HeroSchema,
+      ListingArticlesSchema,
     ])
   ),
   metatag: MetatagsSchema.optional(),

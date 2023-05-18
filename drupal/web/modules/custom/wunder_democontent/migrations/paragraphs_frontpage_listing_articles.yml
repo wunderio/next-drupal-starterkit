@@ -1,0 +1,29 @@
+id: paragraphs_frontpage_listing_articles
+label: Frontpage paragraphs listing articles
+migration_group: demo_content
+source:
+  plugin: csv
+  path: modules/custom/wunder_democontent/sources/frontpages.csv
+  ids: [id]
+  constants:
+    uid: 1
+    status: 1
+process:
+  # We are interested here only in nodes that are not translations:
+  skipped:
+    plugin: skip_on_value
+    method: row
+    not_equals: true
+    value:
+      - 1
+    source: 'Is source'
+  field_heading: Paragraph_0_listing_articles_title
+  field_limit: Paragraph_0_listing_articles_limit
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: listing_articles
+
