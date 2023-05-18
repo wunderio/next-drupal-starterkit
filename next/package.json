@@ -11,8 +11,8 @@
     "preview": "next build && next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "STORYBOOK=true storybook dev -p 6006",
+    "build-storybook": "STORYBOOK=true storybook build"
   },
   "dependencies": {
     "@elastic/react-search-ui": "^1.19.1",
@@ -20,6 +20,7 @@
     "@elastic/search-ui": "^1.19.1",
     "@radix-ui/react-accordion": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.0.3",
+    "@radix-ui/react-dialog": "^1.0.3",
     "@radix-ui/react-label": "^2.0.1",
     "@radix-ui/react-navigation-menu": "^1.1.2",
     "@t3-oss/env-nextjs": "^0.2.1",
