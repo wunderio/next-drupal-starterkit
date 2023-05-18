@@ -17,7 +17,6 @@ import {
 import { CommonPageProps } from "@/lib/get-common-page-props";
 
 interface PageProps extends CommonPageProps {
-  dehydratedState: any;
   languageLinks?: LanguageLinks;
   session?: Session;
 }
