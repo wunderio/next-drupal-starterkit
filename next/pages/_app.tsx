@@ -6,11 +6,7 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from "next-i18next";
 import React from "react";
-import {
-  Hydrate,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import clsx from "clsx";
 
 import { Layout } from "@/components/layout";
@@ -35,9 +31,7 @@ function App({ Component, pageProps }: AppProps<PageProps>) {
         <Fonts>
           <LanguageLinksProvider languageLinks={languageLinks}>
             <Layout menus={menus}>
-              <Hydrate state={pageProps.dehydratedState}>
-                <Component {...restPageProps} />
-              </Hydrate>
+              <Component {...restPageProps} />
             </Layout>
           </LanguageLinksProvider>
         </Fonts>
