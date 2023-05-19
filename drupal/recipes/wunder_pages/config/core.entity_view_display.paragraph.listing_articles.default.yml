@@ -1,0 +1,31 @@
+uuid: 63c7dd85-f7fc-4dd8-a47b-1adc7246b403
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.listing_articles.field_heading
+    - field.field.paragraph.listing_articles.field_limit
+    - paragraphs.paragraphs_type.listing_articles
+id: paragraph.listing_articles.default
+targetEntityType: paragraph
+bundle: listing_articles
+mode: default
+content:
+  field_heading:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_limit:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

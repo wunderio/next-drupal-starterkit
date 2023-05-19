@@ -10,11 +10,12 @@ dependencies:
     - paragraphs.paragraphs_type.hero
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.links
+    - paragraphs.paragraphs_type.listing_articles
     - paragraphs.paragraphs_type.video
   module:
     - entity_reference_revisions
 _core:
-  default_config_hash: Nbd02wRMB9SEVTmqxNCZgYkBvxyyUOmjGVdjy6ZczYo
+  default_config_hash: HW6DjT5CpCl43wK53GpURCzlA7VqnvQ1iAIdTImFemA
 id: node.frontpage.field_content_elements
 field_name: field_content_elements
 entity_type: node
@@ -35,6 +36,7 @@ settings:
       links: links
       accordion: accordion
       video: video
+      listing_articles: listing_articles
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -54,6 +56,9 @@ settings:
         enabled: true
       links:
         weight: -11
+        enabled: true
+      listing_articles:
+        weight: 9
         enabled: true
       video:
         weight: -9

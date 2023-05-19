@@ -1,0 +1,10 @@
+uuid: 27969c04-2b7c-4b1c-a0b7-2fba36bc01e7
+langcode: en
+status: true
+dependencies: {  }
+id: listing_articles
+label: 'Listing: articles'
+icon_uuid: null
+icon_default: null
+description: 'Renders a listing of articles in the frontend.'
+behavior_plugins: {  }

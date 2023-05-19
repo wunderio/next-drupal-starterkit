@@ -64,5 +64,6 @@
   "email": "E-post",
   "register": "Registrera",
   "register-success": "Du är nu registrerad. Kontrollera din e-post för en bekräftelselänk där du kommer att kunna ange ditt lösenord.",
-  "log-in-or-register": "Logga in / registrera dig"
+  "user-menu-account": "Konto",
+  "loading": "Laddar..."
 }

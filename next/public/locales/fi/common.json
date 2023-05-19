@@ -64,5 +64,6 @@
   "email": "Sähköposti",
   "register": "Rekisteröidy",
   "register-success": "Olet nyt rekisteröitynyt. Tarkista sähköpostistasi vahvistuslinkki, jolla voit asettaa salasanasi.",
-  "log-in-or-register": "Kirjaudu sisään / rekisteröidy"
+  "user-menu-account": "Tilini",
+  "loading": "Ladataan..."
 }

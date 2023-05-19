@@ -1,0 +1,25 @@
+uuid: 3b31175c-3d7d-49f4-b409-2e08ddfcb428
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_limit
+    - paragraphs.paragraphs_type.listing_articles
+id: paragraph.listing_articles.field_limit
+field_name: field_limit
+entity_type: paragraph
+bundle: listing_articles
+label: Limit
+description: 'Choose how many items at most you want to display for the listing.'
+required: true
+translatable: false
+default_value:
+  -
+    value: 5
+default_value_callback: ''
+settings:
+  min: 1
+  max: 100
+  prefix: ''
+  suffix: ''
+field_type: integer

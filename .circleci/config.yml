@@ -210,7 +210,7 @@ workflows:
                   escaped_drupal_revalidate_secret=$(printf '%s\n' "$drupal_revalidate_secret" | sed -e 's/[\/&]/\\&/g')
                   escaped_nextauth_secret=$(printf '%s\n' "$nextauth_secret" | sed -e 's/[\/&]/\\&/g')
                   sed -i -e "s/<|next_public_base_url|>/$escaped_next_public_base_url/" silta/silta-next.yml
-                  sed -i -e "s/<|drupal_public_base_url|>/$escaped_drupal_public_base_url/" silta/silta-next.yml
+                  sed -i -e "s/<|drupal_public_base_url|>/$escaped_drupal_public_base_url/g" silta/silta-next.yml
                   sed -i -e "s/<|next_image_domain|>/$drupal_domain/" silta/silta-next.yml
                   sed -i -e "s/<|drupal_client_secret|>/$escaped_drupal_client_secret/" silta/silta-next.yml
                   sed -i -e "s/<|drupal_revalidate_secret|>/$escaped_drupal_revalidate_secret/" silta/silta-next.yml
