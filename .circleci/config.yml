@@ -170,6 +170,8 @@ workflows:
           name: Drupal build & deploy
           executor: cicd81
           drupal-root: drupal
+          decrypt_files: silta/secrets
+          silta_config: silta/silta.yml,silta/secrets
           pre-release:
             - silta/build-docker-image:
                 dockerfile: silta/elasticsearch.Dockerfile
@@ -194,7 +196,7 @@ workflows:
           # Extend the build-deploy configuration for the main environment.
           <<: *build-deploy
           name: Drupal build & deploy main
-          silta_config: silta/silta.yml,silta/silta-main.yml
+          silta_config: silta/silta.yml,silta/silta-main.yml,silta/secrets
           context: silta_dev
           filters:
             branches:
@@ -204,7 +206,8 @@ workflows:
           # Extend the build-deploy configuration for the production environment.
           <<: *build-deploy
           name: Drupal build & deploy production
-          silta_config: silta/silta.yml,silta/silta-prod.yml
+          decrypt_files: silta/secrets-prod
+          silta_config: silta/silta.yml,silta/silta-prod.yml,silta/secrets
           context: silta_finland
           filters:
             branches:
@@ -244,7 +247,8 @@ workflows:
           name: Next build & deploy
           context: silta_dev
           executor: cicd81
-          silta_config: silta/silta-next.yml
+          decrypt_files: silta/secrets
+          silta_config: silta/silta-next.yml,silta/secrets
           release-suffix: next
           codebase-build:
             - expand-envvars-in-silta-config:
@@ -272,7 +276,7 @@ workflows:
           <<: *frontend-build-deploy
           name: Next build & deploy main
           context: silta_dev
-          silta_config: silta/silta-next.yml,silta/silta-next-main.yml
+          silta_config: silta/silta-next.yml,silta/silta-next-main.yml,silta/secrets
           codebase-build:
             - expand-envvars-in-silta-config:
                 file-name: silta-next.yml
@@ -292,7 +296,8 @@ workflows:
           <<: *frontend-build-deploy
           name: Next build & deploy production
           context: silta_finland
-          silta_config: silta/silta-next.yml,silta/silta-next-prod.yml
+          decrypt_files: silta/secrets-prod
+          silta_config: silta/silta-next.yml,silta/silta-next-prod.yml,silta/secrets-prod
           codebase-build:
             - expand-envvars-in-silta-config:
                 file-name: silta-next.yml
