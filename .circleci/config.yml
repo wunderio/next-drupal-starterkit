@@ -119,7 +119,7 @@ commands:
       - run:
           name: Expand environment variables in Silta config
           command: |
-            envvars_file="./silta/<<parameters.file_name>>"
+            envvars_file="./silta/<<parameters.file-name>>"
             echo "Expanding special environment variables in ${envvars_file}..."
 
             drupal_release_name=`silta ci release name`
