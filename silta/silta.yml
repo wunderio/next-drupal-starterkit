@@ -11,7 +11,7 @@ php:
 
   # This section is used in the template only, it will reinstall the site and apply
   # all standard configuration at each commit. When creating a new project from this template
-  # you have to remove this section.
+  # you can remove this section.
   postupgrade:
     afterCommand: |
       if [[ $CIRCLE_PROJECT_USERNAME == wunderio ]]
