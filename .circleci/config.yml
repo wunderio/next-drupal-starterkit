@@ -58,19 +58,6 @@ commands:
             - <<parameters.path>>/.next/cache
           key: <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
 
-  symlink-silta-config:
-    description: Symlink Silta config
-    parameters:
-      target:
-        default: "drupal"
-        type: string
-    steps:
-      - run:
-          name: Symlink Silta config
-          command: |
-            echo "Symlink Silta config to ~/project/<<parameters.target>>/silta ..."
-            ln -s ~/project/silta ~/project/<<parameters.target>>/silta
-
   # @TODO it would be nice to be able to pass the keypair from env
   generate-openssl-keypair:
     description: Generate OpenSSL keypair
@@ -86,6 +73,41 @@ commands:
             openssl pkey -in keypair.pem -out oauth/private.key
             openssl pkey -in keypair.pem -pubout -out oauth/public.key
             chmod 600 oauth/private.key oauth/public.key
+
+  symlink-silta-config:
+    description: Symlink Silta config
+    parameters:
+      target:
+        default: "drupal"
+        type: string
+    steps:
+      - run:
+          name: Symlink Silta config
+          command: |
+            echo "Symlink Silta config to ~/project/<<parameters.target>>/silta ..."
+            ln -s ~/project/silta ~/project/<<parameters.target>>/silta
+
+  validate-envvars:
+    description: Validate environment variables
+    steps:
+      - run:
+          name: Validate environment variables
+          command: |
+            if [[ $DRUPAL_ADMIN_PWD == *"not_secure_used_only_locally"* ]]
+            || [[ $DRUPAL_CLIENT_SECRET == *"not_secure_used_only_locally"* ]]
+            || [[ $DRUPAL_REVALIDATE_SECRET == *"not_secure_used_only_locally"* ]]
+            || [[ $NEXTAUTH_SECRET == *"not_secure_used_only_locally"* ]]; then
+              echo
+              echo "Example secrets detected in configuration, failing build."
+              echo
+              echo "You must create a custom secrets file and encrypt it."
+              echo "See README.md for instructions."
+              echo
+              exit 1
+            else
+              echo "Validation passed."
+            fi;
+
 
   expand-envvars-in-silta-config:
     description: "Expand environment variables in Silta config file"
@@ -137,7 +159,8 @@ workflows:
                   ln -s ../silta .
                   ln -s ../.dockerignore .
           post-validation:
-            - run: echo "You can add additional validation here!"
+            - validate-envvars
+            # - run: echo "You can add additional validation here!"
 
       - silta/analyze:
           name: analyze
@@ -276,6 +299,10 @@ workflows:
                 file-name: silta-next.yml
             - expand-envvars-in-silta-config:
                 file-name: silta-next-prod.yml
+            # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
+            # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+            - npm-install-build:
+                path: next
           filters:
             branches:
               only: production
