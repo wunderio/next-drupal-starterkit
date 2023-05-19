@@ -14,15 +14,18 @@ php:
   # you have to remove this section.
   postupgrade:
     afterCommand: |
-      drush si minimal --account-pass=${DRUPAL_ADMIN_PWD} -y
-      chmod +x /app/web/core/scripts/drupal
-      cd /app/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
-      drush cr
-      drush wunder_next:setup-user-and-consumer
-      drush en wunder_democontent -y
-      drush eshd -y
-      drush eshs
-      drush mim --group=demo_content --execute-dependencies --skip-progress-bar
+      if [[ $CIRCLE_PROJECT_USERNAME == wunderio ]]
+      && [[ $CIRCLE_PROJECT_REPONAME == next4drupal-project ]]; then
+        drush si minimal --account-pass=${DRUPAL_ADMIN_PWD} -y
+        chmod +x /app/web/core/scripts/drupal
+        cd /app/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
+        drush cr
+        drush wunder_next:setup-user-and-consumer
+        drush en wunder_democontent -y
+        drush eshd -y
+        drush eshs
+        drush mim --group=demo_content --execute-dependencies --skip-progress-bar
+      fi
 
 # Configure reference data that will be used when creating new environments.
 referenceData:
