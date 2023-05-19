@@ -43,31 +43,24 @@ export function MultiCheckboxFacet({
           const checked = option.selected;
           const value = option.value as FieldValue;
           return (
-            <li key={`${getFilterValueDisplay(option.value)}`}>
-              <div className="flex items-center">
-                <Checkbox
-                  data-transaction-name={`facet - ${label}`}
-                  id={`example_facet_${label}${getFilterValueDisplay(
-                    option.value
-                  )}`}
-                  checked={checked}
-                  onClick={() => (checked ? onRemove(value) : onSelect(value))}
-                  aria-label={`example_facet_${label}${getFilterValueDisplay(
-                    option.value
-                  )}-title`}
-                />
-                <span
-                  className="ml-2 text-sm text-steelgray"
-                  title={`${t("filter-by")} ${getFilterValueDisplay(
-                    option.value
-                  )} (${option.count.toLocaleString("en")})`}
-                >
-                  {getFilterValueDisplay(option.value)}{" "}
-                  <span className="text-steelgray">
-                    ({option.count.toLocaleString("en")})
-                  </span>
+            <li
+              key={`${getFilterValueDisplay(option.value)}`}
+              className="flex items-center"
+            >
+              <Checkbox
+                data-transaction-name={`facet - ${label}`}
+                aria-label={`${t("filter-by")} ${getFilterValueDisplay(
+                  option.value
+                )} (${option.count.toLocaleString("en")})`}
+                checked={checked}
+                onClick={() => (checked ? onRemove(value) : onSelect(value))}
+              />
+              <span className="ml-2 text-sm text-steelgray" aria-hidden={true}>
+                {getFilterValueDisplay(option.value)}{" "}
+                <span className="text-steelgray">
+                  ({option.count.toLocaleString("en")})
                 </span>
-              </div>
+              </span>
             </li>
           );
         })}
