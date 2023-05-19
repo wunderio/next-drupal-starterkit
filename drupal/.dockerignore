@@ -1,0 +1,17 @@
+# Ignore file for the Drupal container.
+**/*.md
+**/CHANGELOG*
+**/README*
+**/LICENSE*
+.circleci/*
+phpcs.xml
+**/*.sql
+**/*.gz
+**/*.zip
+vendor/**/Tests
+**/node_modules
+**/.git
+web/.dockerignore
+Dockerfile
+composer.lock
+silta/*
