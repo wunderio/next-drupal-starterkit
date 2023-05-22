@@ -45,7 +45,7 @@ const ModalContent = React.forwardRef<
       <ModalPrimitive.Content
         ref={ref}
         className={cn(
-          "fixed z-50 grid max-h-[95vh] w-[95vw] max-w-xl gap-4 rounded border border-graysuit bg-white px-6 pb-10 pt-12 text-scapaflow shadow-long",
+          "fixed z-50 grid max-h-[95vh] w-[95vw] max-w-xl gap-4 overflow-y-auto rounded border border-graysuit bg-white px-6 pb-10 pt-12 text-scapaflow shadow-long",
           className
         )}
         {...props}
