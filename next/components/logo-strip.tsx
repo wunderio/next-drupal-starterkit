@@ -1,24 +1,28 @@
-import Image from "next/image";
+import { ReactElement } from "react";
+
+import Facebook from "@/styles/icons/facebook.svg";
+import LinkedIn from "@/styles/icons/linkedin.svg";
+import Twitter from "@/styles/icons/twitter.svg";
 
 interface Logo {
-  image: string;
+  image: ReactElement;
   label: string;
   id: string;
 }
 
 const logos: Logo[] = [
   {
-    image: "/styles/icons/facebook.svg",
+    image: <Facebook className="inline-block h-16 w-16 text-primary-600" />,
     label: "Share to Facebook",
     id: "facebook",
   },
   {
-    image: "/styles/icons/linkedin.svg",
+    image: <Twitter className="inline-block h-16 w-16 text-primary-600" />,
     label: "Share to Twitter",
     id: "twitter",
   },
   {
-    image: "/styles/icons/twitter.svg",
+    image: <LinkedIn className="inline-block h-16 w-16 text-primary-600" />,
     label: "Share to LinkedIn",
     id: "linkedIn",
   },
@@ -28,16 +32,10 @@ export function LogoStrip() {
   return (
     <section id="logo-section">
       <span className="sr-only">branding logos</span>
-      <ul className="flex flex-wrap justify-center">
+      <ul className="flex flex-wrap justify-center p-4">
         {logos?.map((logo) => (
-          <li key={logo.id} className="m-4">
-            <Image
-              src={logo.image}
-              width={100}
-              height={100}
-              alt="branding logo"
-              className="inline-block text-primary-600"
-            />
+          <li key={logo.id} className="p-4">
+            {logo.image}
             <span className="sr-only">{logo.label}</span>
           </li>
         ))}
