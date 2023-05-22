@@ -1,52 +1,51 @@
-import { ReactElement } from "react";
+import { useEffect, useState } from "react";
 
 import FacebookIcon from "../styles/icons/facebook.svg";
 import LinkedInIcon from "../styles/icons/linkedin.svg";
 import TwitterIcon from "../styles/icons/twitter.svg";
 
-interface Social {
-  icon: ReactElement;
-  href: string;
-  label: string;
-  id: string;
-}
-
-const url = "feature-nex-72-socialshare-next.next4drupal-project.dev.wdr.io/";
-
-const socials: Social[] = [
-  {
-    icon: <FacebookIcon className="inline-block h-16 w-16 text-primary-600" />,
-    href: `https://www.facebook.com/sharer/sharer.php?u=https%3A//${url}`,
-    label: "Share to Facebook",
-    id: "facebook",
-  },
-  {
-    icon: <TwitterIcon className="inline-block h-16 w-16 text-primary-600" />,
-    href: `https://twitter.com/intent/tweet?text=https%3A//${url}`,
-    label: "Share to Twitter",
-    id: "twitter",
-  },
-  {
-    icon: <LinkedInIcon className="inline-block h-16 w-16 text-primary-600" />,
-    href: `https://www.linkedin.com/shareArticle?mini=true&url=https%3A//${url}`,
-    label: "Share to LinkedIn",
-    id: "linkedIn",
-  },
-];
-
 export function SocialShare() {
+  const [cleanedUrl, setCleanedUrl] = useState<string>("");
+  useEffect(() => {
+    const currentURL = window.location.href;
+    const cleanedUrl: string = currentURL.replace(/^https?:\/\//, "");
+    setCleanedUrl(cleanedUrl);
+  }, []);
+
   return (
     <div>
       <p className="text-center">Share Page</p>
       <ul className="flex flex-wrap justify-center">
-        {socials?.map((social) => (
-          <li key={social.id} className="m-4">
-            <a href={social.href} target="_blank" rel="noopener noreferrer">
-              {social.icon}
-              <span className="sr-only">{social.label}</span>
-            </a>
-          </li>
-        ))}
+        <li className="m-4">
+          <a
+            href={`https://www.facebook.com/sharer/sharer.php?u=https%3A//${cleanedUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FacebookIcon className="inline-block h-16 w-16 text-primary-600" />
+            <span className="sr-only">{`Share to Facebook`}</span>
+          </a>
+        </li>
+        <li className="m-4">
+          <a
+            href={`https://twitter.com/intent/tweet?text=https%3A//${cleanedUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <TwitterIcon className="inline-block h-16 w-16 text-primary-600" />
+            <span className="sr-only">{`Share to Twitter`}</span>
+          </a>
+        </li>
+        <li className="m-4">
+          <a
+            href={`https://www.linkedin.com/shareArticle?mini=true&url=https%3A//${cleanedUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <LinkedInIcon className="inline-block h-16 w-16 text-primary-600" />
+            <span className="sr-only">{`Share to LinkedIn`}</span>
+          </a>
+        </li>
       </ul>
     </div>
   );
