@@ -4,6 +4,7 @@ import { DrupalNode } from "next-drupal";
 import { ContactForm } from "@/components/contact-form";
 import { LatestArticles } from "@/components/latest-articles";
 import { LayoutProps } from "@/components/layout";
+import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
 import { Paragraph } from "@/components/paragraph";
 import { drupal } from "@/lib/drupal";
@@ -38,6 +39,7 @@ export default function IndexPage({
       <ContactForm />
       <Divider className="max-w-4xl" />
       <LatestArticles articles={articleTeasers} />
+      <LogoStrip />
     </>
   );
 }
