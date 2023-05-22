@@ -10,6 +10,11 @@ const BaseMenuItemSchema = z.object({
   title: z.string(),
   url: z.string(),
   langcode: z.string(),
+  options: z.union([
+    // Jsonapi will either have an empty array, or an object with the attributes:
+    z.object({ attributes: z.object({ icon: z.string() }) }),
+    z.tuple([]),
+  ]),
 });
 
 export type MenuItem = z.infer<typeof BaseMenuItemSchema> & {
