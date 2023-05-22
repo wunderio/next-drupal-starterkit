@@ -20,7 +20,7 @@
   "search-previous": "Previous",
   "search-next": "Next",
   "search-go-to-page": "Go to page {{page}}",
-  "filter-by": "Filter by",
+  "filter-by": "Filter by {{label}}",
   "Page not found": "Page not found",
   "The page you are looking for does not exist.": "The page you are looking for does not exist.",
   "Go back to the homepage?": "Go back to the homepage?",
