@@ -11,22 +11,24 @@ interface Social {
   id: string;
 }
 
+const url = "feature-nex-72-socialshare-next.next4drupal-project.dev.wdr.io/";
+
 const socials: Social[] = [
   {
     icon: <FacebookIcon className="inline-block h-16 w-16 text-primary-600" />,
-    href: "https://www.facebook.com/sharer/sharer.php?u=https%3A//frontend.lndo.site/",
+    href: `https://www.facebook.com/sharer/sharer.php?u=https%3A//${url}`,
     label: "Share to Facebook",
     id: "facebook",
   },
   {
     icon: <TwitterIcon className="inline-block h-16 w-16 text-primary-600" />,
-    href: "https://twitter.com/intent/tweet?text=https%3A//frontend.lndo.site/",
+    href: `https://twitter.com/intent/tweet?text=https%3A//${url}`,
     label: "Share to Twitter",
     id: "twitter",
   },
   {
     icon: <LinkedInIcon className="inline-block h-16 w-16 text-primary-600" />,
-    href: "https://www.linkedin.com/shareArticle?mini=true&url=frontend.lndo.site/",
+    href: `https://www.linkedin.com/shareArticle?mini=true&url=https%3A//${url}`,
     label: "Share to LinkedIn",
     id: "linkedIn",
   },
