@@ -5,20 +5,26 @@ import LinkedInIcon from "../styles/icons/linkedin.svg";
 import TwitterIcon from "../styles/icons/twitter.svg";
 
 export function SocialShare() {
-  const [cleanedUrl, setCleanedUrl] = useState<string>("");
-  useEffect(() => {
-    const currentURL = window.location.href;
-    const cleanedUrl: string = currentURL.replace(/^https?:\/\//, "");
-    setCleanedUrl(cleanedUrl);
-  }, []);
+  const [pageUrl, setPageUrl] = useState<string>("");
 
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    setPageUrl(currentUrl);
+  }, [pageUrl]);
+  console.log(
+    `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      pageUrl
+    )}`
+  );
   return (
     <div>
       <p className="text-center">Share Page</p>
       <ul className="flex flex-wrap justify-center">
         <li className="m-4">
           <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=https%3A//${cleanedUrl}`}
+            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+              pageUrl
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -28,7 +34,9 @@ export function SocialShare() {
         </li>
         <li className="m-4">
           <a
-            href={`https://twitter.com/intent/tweet?text=https%3A//${cleanedUrl}`}
+            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+              pageUrl
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -38,7 +46,9 @@ export function SocialShare() {
         </li>
         <li className="m-4">
           <a
-            href={`https://www.linkedin.com/shareArticle?mini=true&url=https%3A//${cleanedUrl}`}
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+              pageUrl
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
           >
