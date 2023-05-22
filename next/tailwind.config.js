@@ -84,6 +84,11 @@ module.exports = {
         ...defaultTheme.borderRadius,
         DEFAULT: "3px",
       },
+      boxShadow: {
+        ...defaultTheme.boxShadow,
+        short: "0px 1px 1px rgba(34, 31, 45, 0.15)",
+        long: "0px 12px 16px rgba(34, 31, 45, 0.15)",
+      },
       opacity: {
         ...defaultTheme.opacity,
         15: "0.15",
