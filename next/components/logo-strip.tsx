@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { ReactElement } from "react";
 
 import Facebook from "@/styles/icons/facebook.svg";
@@ -29,9 +30,10 @@ const logos: Logo[] = [
 ];
 
 export function LogoStrip() {
+  const { t } = useTranslation();
   return (
     <section id="logo-section">
-      <span className="sr-only">branding logos</span>
+      <span className="sr-only">{t("brand-logos")}</span>
       <ul className="flex flex-wrap justify-center p-4">
         {logos?.map((logo) => (
           <li key={logo.id} className="p-4">
