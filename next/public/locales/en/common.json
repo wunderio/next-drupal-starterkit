@@ -64,5 +64,6 @@
   "register": "Create account",
   "register-success": "You are now registered. Check your email for a confirmation link where you will be able to set your password.",
   "user-menu-account": "Account",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "modal-close": "Close"
 }
