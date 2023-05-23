@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 
 import FacebookIcon from "../styles/icons/facebook.svg";
@@ -6,19 +7,15 @@ import TwitterIcon from "../styles/icons/twitter.svg";
 
 export function SocialShare() {
   const [pageUrl, setPageUrl] = useState<string>("");
-
+  const { t } = useTranslation();
   useEffect(() => {
     const currentUrl = window.location.href;
     setPageUrl(currentUrl);
   }, [pageUrl]);
-  console.log(
-    `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-      pageUrl
-    )}`
-  );
+
   return (
     <div>
-      <p className="text-center">Share Page</p>
+      <p className="text-center">{t("share-page")}</p>
       <ul className="flex flex-wrap justify-center">
         <li className="m-4">
           <a
