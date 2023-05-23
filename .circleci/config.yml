@@ -255,6 +255,7 @@ workflows:
             # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
             # but this uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
+                build-command: echo "Skipping build in CI"
                 path: next
             - silta/decrypt-files:
                 files: silta/secrets_frontend
@@ -286,6 +287,7 @@ workflows:
             # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
             # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
+                build-command: echo "Skipping build in CI"
                 path: next
           filters:
             branches:
@@ -306,6 +308,7 @@ workflows:
             # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
             # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
+                build-command: echo "Skipping build in CI"
                 path: next
             - silta/decrypt-files:
                 files: silta/secrets-prod
