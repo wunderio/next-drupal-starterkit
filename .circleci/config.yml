@@ -93,9 +93,9 @@ commands:
       - run:
           name: Validate environment variables
           command: |
-            if [[ $DRUPAL_ADMIN_PWD == *"not_secure_used_only_locally"* ]]
-            || [[ $DRUPAL_CLIENT_SECRET == *"not_secure_used_only_locally"* ]]
-            || [[ $DRUPAL_REVALIDATE_SECRET == *"not_secure_used_only_locally"* ]]
+            if [[ $DRUPAL_ADMIN_PWD == *"not_secure_used_only_locally"* ]] \
+            || [[ $DRUPAL_CLIENT_SECRET == *"not_secure_used_only_locally"* ]] \
+            || [[ $DRUPAL_REVALIDATE_SECRET == *"not_secure_used_only_locally"* ]] \
             || [[ $NEXTAUTH_SECRET == *"not_secure_used_only_locally"* ]]; then
               echo
               echo "Example secrets detected in configuration, failing build."
