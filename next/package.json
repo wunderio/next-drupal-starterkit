@@ -8,7 +8,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "start:silta": "next build && next start",
     "preview": "next build && next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
