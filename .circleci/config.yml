@@ -247,7 +247,6 @@ workflows:
           name: Next build & deploy
           context: silta_dev
           executor: cicd81
-          decrypt_files: silta/secrets
           silta_config: silta/silta-next.yml,silta/secrets
           release-suffix: next
           codebase-build:
@@ -257,6 +256,8 @@ workflows:
             # but this uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
                 path: next
+            - silta/decrypt-files:
+                files: silta/secrets
           image_build_steps:
             - silta/build-docker-image:
                 dockerfile: 'silta/node.Dockerfile'
@@ -296,7 +297,6 @@ workflows:
           <<: *frontend-build-deploy
           name: Next build & deploy production
           context: silta_finland
-          decrypt_files: silta/secrets-prod
           silta_config: silta/silta-next.yml,silta/silta-next-prod.yml,silta/secrets-prod
           codebase-build:
             - expand-envvars-in-silta-config:
@@ -307,6 +307,8 @@ workflows:
             # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
                 path: next
+            - silta/decrypt-files:
+                files: silta/secrets-prod
           filters:
             branches:
               only: production
