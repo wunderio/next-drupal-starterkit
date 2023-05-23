@@ -14,6 +14,7 @@
   "content-type": "Content type",
   "tags": "Tags",
   "share-page": "Share this page",
+  "share-to": "Share to {{location}}",
   "search-show-more-options": "Show more options",
   "search-showing": "Showing",
   "search-out-of": "out of",
