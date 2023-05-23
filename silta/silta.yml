@@ -14,7 +14,7 @@ php:
   # you can remove this section.
   postupgrade:
     afterCommand: |
-      if [[ $CIRCLE_PROJECT_USERNAME == wunderio ]]
+      if [[ $CIRCLE_PROJECT_USERNAME == wunderio ]] \
       && [[ $CIRCLE_PROJECT_REPONAME == next4drupal-project ]]; then
         drush si minimal --account-pass=${DRUPAL_ADMIN_PWD} -y
         chmod +x /app/web/core/scripts/drupal
