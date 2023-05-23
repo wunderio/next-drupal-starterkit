@@ -15,4 +15,7 @@
       content: url(./icons/external.svg);
     }
   }
+  .circle-clip {
+    clip-path: circle();
+  }
 }

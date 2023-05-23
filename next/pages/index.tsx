@@ -2,6 +2,7 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { DrupalNode } from "next-drupal";
 
 import { ContactForm } from "@/components/contact-form";
+import { ContactList } from "@/components/contact-list";
 import { LatestArticles } from "@/components/latest-articles";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
@@ -38,6 +39,7 @@ export default function IndexPage({
       <ContactForm />
       <Divider className="max-w-4xl" />
       <LatestArticles articles={articleTeasers} />
+      <ContactList />
     </>
   );
 }
