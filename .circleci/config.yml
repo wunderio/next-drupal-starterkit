@@ -250,14 +250,14 @@ workflows:
           silta_config: silta/silta-next.yml,silta/secrets_frontend
           release-suffix: next
           codebase-build:
+            - silta/decrypt-files:
+                files: silta/secrets_frontend
             - expand-envvars-in-silta-config:
                 file-name: silta-next.yml
             # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
             # but this uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
                 path: next
-            - silta/decrypt-files:
-                files: silta/secrets_frontend
           image_build_steps:
             - silta/build-docker-image:
                 dockerfile: 'silta/node.Dockerfile'
@@ -299,6 +299,8 @@ workflows:
           context: silta_finland
           silta_config: silta/silta-next.yml,silta/silta-next-prod.yml,silta/secrets-prod
           codebase-build:
+            - silta/decrypt-files:
+                files: silta/secrets-prod
             - expand-envvars-in-silta-config:
                 file-name: silta-next.yml
             - expand-envvars-in-silta-config:
@@ -307,8 +309,6 @@ workflows:
             # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
                 path: next
-            - silta/decrypt-files:
-                files: silta/secrets-prod
           filters:
             branches:
               only: production
