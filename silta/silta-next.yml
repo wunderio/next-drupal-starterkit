@@ -11,7 +11,7 @@ services:
     env:
       NEXT_PUBLIC_DRUPAL_BASE_URL: https://${DRUPAL_RELEASE_NAME}.${PROJECT}.${DOMAIN}
       NEXT_PUBLIC_FRONTEND_URL: https://${NEXT_RELEASE_NAME}.${PROJECT}.${DOMAIN}
-      NEXT_IMAGE_DOMAIN: https://cms.next4drupal.dev.wdr.io
+      NEXT_IMAGE_DOMAIN: ${DRUPAL_RELEASE_NAME}.${PROJECT}.${DOMAIN}
       NEXTAUTH_URL: https://${NEXT_RELEASE_NAME}.${PROJECT}.${DOMAIN}
 
 nginx:
