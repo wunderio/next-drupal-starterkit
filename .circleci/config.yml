@@ -250,6 +250,8 @@ workflows:
           silta_config: silta/silta-next.yml,silta/secrets_frontend
           release-suffix: next
           codebase-build:
+            - symlink-silta-config:
+                target: next
             - silta/decrypt-files:
                 files: silta/secrets_frontend
             - expand-envvars-in-silta-config:
@@ -279,6 +281,8 @@ workflows:
           context: silta_dev
           silta_config: silta/silta-next.yml,silta/silta-next-main.yml,silta/secrets_frontend
           codebase-build:
+            - symlink-silta-config:
+                target: next
             - expand-envvars-in-silta-config:
                 file-name: silta-next.yml
             - expand-envvars-in-silta-config:
@@ -299,6 +303,8 @@ workflows:
           context: silta_finland
           silta_config: silta/silta-next.yml,silta/silta-next-prod.yml,silta/secrets-prod
           codebase-build:
+            - symlink-silta-config:
+                target: next
             - silta/decrypt-files:
                 files: silta/secrets-prod
             - expand-envvars-in-silta-config:
