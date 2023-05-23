@@ -4,7 +4,7 @@ const { i18n } = require("./next-i18next.config");
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: "feature-nex-11-security.dev.wdr.io",
+    domains: ["feature-nex-11-security.dev.wdr.io"],
   },
   i18n,
   async rewrites() {
