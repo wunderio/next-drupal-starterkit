@@ -2,6 +2,12 @@ import { z } from "zod";
 
 import { DrupalMenuLinkContentWithLangcode } from "@/types";
 
+export const MenuItemOptionsSchema = z.object({
+  attributes: z.object({
+    icon: z.string(),
+  }),
+});
+
 const BaseMenuItemSchema = z.object({
   type: z.literal("menu_link_content--menu_link_content"),
   id: z.string().startsWith("menu_link_content"),
@@ -12,14 +18,10 @@ const BaseMenuItemSchema = z.object({
   langcode: z.string(),
   options: z.union([
     // Jsonapi will either have an empty array, or an object with the attributes:
-    z.object({ attributes: z.object({ icon: z.string() }) }),
     z.tuple([]),
+    MenuItemOptionsSchema,
   ]),
 });
-
-export type MenuItem = z.infer<typeof BaseMenuItemSchema> & {
-  items?: MenuItem[];
-};
 
 const MenuItemSchema: z.ZodType<MenuItem> = BaseMenuItemSchema.extend({
   items: z.lazy(() => MenuItemSchema.array()).optional(),
@@ -39,4 +41,8 @@ export function validateAndCleanupMenu(
   }
 }
 
+export type MenuItemOptions = z.infer<typeof MenuItemOptionsSchema>;
+export type MenuItem = z.infer<typeof BaseMenuItemSchema> & {
+  items?: MenuItem[];
+};
 export type Menu = z.infer<typeof MenuSchema>;
