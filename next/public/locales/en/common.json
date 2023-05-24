@@ -20,6 +20,7 @@
   "search-previous": "Previous",
   "search-next": "Next",
   "search-go-to-page": "Go to page {{page}}",
+  "filter-by": "Filter by {{label}}",
   "Page not found": "Page not found",
   "The page you are looking for does not exist.": "The page you are looking for does not exist.",
   "Go back to the homepage?": "Go back to the homepage?",
@@ -64,5 +65,6 @@
   "register": "Create account",
   "register-success": "You are now registered. Check your email for a confirmation link where you will be able to set your password.",
   "user-menu-account": "Account",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "modal-close": "Close"
 }

@@ -20,6 +20,7 @@
   "search-previous": "Föregående",
   "search-next": "Nästa",
   "search-go-to-page": "Gå till sida {{page}}",
+  "filter-by": "Filtrera efter {{label}}",
   "Page not found": "Sidan kunde inte hittas",
   "The page you are looking for does not exist.": "Sidan du söker finns inte.",
   "Go back to the homepage?": "Gå tillbaka till hemsidan?",
@@ -64,5 +65,6 @@
   "register": "Registrera",
   "register-success": "Du är nu registrerad. Kontrollera din e-post för en bekräftelselänk där du kommer att kunna ange ditt lösenord.",
   "user-menu-account": "Konto",
-  "loading": "Laddar..."
+  "loading": "Laddar...",
+  "modal-close": "Stäng"
 }

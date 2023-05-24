@@ -20,6 +20,7 @@
   "search-previous": "Edellinen",
   "search-next": "Seuraava",
   "search-go-to-page": "Mene sivulle {{page}}",
+  "filter-by": "Suodata {{label}}",
   "Page not found": "Sivua ei löydy",
   "The page you are looking for does not exist.": "Hakemaasi sivua ei löydy.",
   "Go back to the homepage?": "Palaa etusivulle?",
@@ -64,5 +65,6 @@
   "register": "Rekisteröidy",
   "register-success": "Olet nyt rekisteröitynyt. Tarkista sähköpostistasi vahvistuslinkki, jolla voit asettaa salasanasi.",
   "user-menu-account": "Tilini",
-  "loading": "Ladataan..."
+  "loading": "Ladataan...",
+  "modal-close": "Sulje"
 }
