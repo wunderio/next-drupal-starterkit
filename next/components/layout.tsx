@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import clsx from "clsx";
 
 import { Footer } from "@/components/footer";
@@ -17,7 +18,9 @@ export interface LayoutProps {
 }
 
 export function Layout({ menus, children }: LayoutProps) {
+  const mainContentRef = useRef<HTMLDivElement>(null);
   const isPreviewVisible = useIsPreviewBannerVisible();
+
   return (
     <>
       <div
@@ -27,7 +30,11 @@ export function Layout({ menus, children }: LayoutProps) {
         )}
       >
         <Header menu={menus.main} />
-        <main className="grow bg-mischka">
+        <main
+          className="grow bg-mischka"
+          id="main-content"
+          ref={mainContentRef}
+        >
           <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
         </main>
         <Footer menu={menus.footer} />
