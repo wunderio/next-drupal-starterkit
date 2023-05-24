@@ -12,7 +12,7 @@ interface Contact {
 
 const contacts: Contact[] = [
   {
-    image: "/john_doe.jpg",
+    image: "/John_Doe.jpg",
     name: "John Doe",
     title: "CFO",
     phoneNumber: "+358445123456",
@@ -20,7 +20,7 @@ const contacts: Contact[] = [
     id: 1,
   },
   {
-    image: "/charlie_doe.jpg",
+    image: "/Charlie_Doe.jpg",
     name: "Charlie Doe",
     title: "CTO",
     phoneNumber: "+358445123458",
@@ -28,7 +28,7 @@ const contacts: Contact[] = [
     id: 3,
   },
   {
-    image: "/jane_doe.jpg",
+    image: "/Jane_Doe.jpg",
     name: "Jane Doe",
     title: "CEO",
     phoneNumber: "+358445123457",
