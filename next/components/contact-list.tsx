@@ -12,27 +12,27 @@ interface Contact {
 
 const contacts: Contact[] = [
   {
-    image: "/john_doe.jpg",
-    name: "John Doe",
+    image: "/john_dean.jpg",
+    name: "John Dean",
     title: "CFO",
     phoneNumber: "+358445123456",
-    email: "john.doe@mail.com",
+    email: "john.dean@mail.com",
     id: 1,
   },
   {
-    image: "/charlie_doe.jpg",
-    name: "Charlie Doe",
+    image: "/charlie_dean.jpg",
+    name: "Charlie Dean",
     title: "CTO",
     phoneNumber: "+358445123458",
-    email: "charlie.doe@mail.com",
+    email: "charlie.dean@mail.com",
     id: 3,
   },
   {
-    image: "/jane_doe.jpg",
-    name: "Jane Doe",
+    image: "/jane_dean.jpg",
+    name: "Jane Dean",
     title: "CEO",
     phoneNumber: "+358445123457",
-    email: "jane.doe@mail.com",
+    email: "jane.dean@mail.com",
     id: 2,
   },
 ];
