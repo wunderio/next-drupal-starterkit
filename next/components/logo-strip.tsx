@@ -54,7 +54,7 @@ const logos: Logo[] = [
 export function LogoStrip() {
   const { t } = useTranslation();
   return (
-    <section id="logo-section">
+    <section>
       <span className="sr-only">{t("brand-logos")}</span>
       <ul className="flex flex-wrap justify-center p-4">
         {logos?.map(({ id, image, label }) => (
