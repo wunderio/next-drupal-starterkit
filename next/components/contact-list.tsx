@@ -16,7 +16,7 @@ const contacts: Contact[] = [
     name: "John Dean",
     title: "CFO",
     phoneNumber: "+358445123456",
-    email: "john.dean@mail.com",
+    email: "john.dean@example.com",
     id: 1,
   },
   {
@@ -24,7 +24,7 @@ const contacts: Contact[] = [
     name: "Charlie Dean",
     title: "CTO",
     phoneNumber: "+358445123458",
-    email: "charlie.dean@mail.com",
+    email: "charlie.dean@example.com",
     id: 3,
   },
   {
@@ -32,7 +32,7 @@ const contacts: Contact[] = [
     name: "Jane Dean",
     title: "CEO",
     phoneNumber: "+358445123457",
-    email: "jane.dean@mail.com",
+    email: "jane.dean@example.com",
     id: 2,
   },
 ];
@@ -40,32 +40,32 @@ const contacts: Contact[] = [
 export function ContactList() {
   const { t } = useTranslation();
   return (
-    <section id="contacts-section" className="pb-8 pt-8">
+    <section className="py-8">
       <h2 className="text-heading-sm font-bold md:text-heading-md">
         {t("contact")}
       </h2>
-      <ul className="flex flex-wrap justify-around pb-4 pt-4">
-        {contacts?.map((contact) => (
-          <li key={contact.id} className="flex flex-col items-center p-4">
+      <ul className="grid auto-rows-max grid-cols-1 justify-items-center gap-4 py-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {contacts?.map(({ id, image, name, title, phoneNumber, email }) => (
+          <li key={id} className="grid justify-items-center p-4">
             <div className="mb-6 flex h-[100px] items-center justify-center overflow-hidden">
               <NextImage
-                src={contact.image}
+                src={image}
                 width={100}
                 height={100}
-                alt={`Portrait of ${contact.name}`}
+                alt={`Portrait of ${name}`}
                 className="circle-clip"
               />
             </div>
-            <p className="font-bold">{contact.name}</p>
-            <p>{contact.title}</p>
-            <p>{contact.phoneNumber}</p>
+            <p className="font-bold">{name}</p>
+            <p>{title}</p>
+            <p>{phoneNumber}</p>
             <a
-              href={`mailto:${contact.email}`}
+              href={`mailto:${email}`}
               target="_blank"
               rel="noreferrer"
               className="hyperlink underline hover:no-underline"
             >
-              {contact.email}
+              {email}
             </a>
           </li>
         ))}
