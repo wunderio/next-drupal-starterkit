@@ -41,7 +41,7 @@ export function SkipToContentLink({
   return (
     <NextLink
       href={href}
-      className="sr-only block text-center font-inter tracking-wide text-primary-600 underline-offset-4 hover:underline focus:not-sr-only"
+      className="sr-only font-inter tracking-wide text-primary-600 underline-offset-4 hover:underline focus:not-sr-only focus:absolute"
       tabIndex={0}
       onKeyDown={handleKeyDown}
       onClick={handleClick}
