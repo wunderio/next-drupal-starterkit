@@ -1,9 +1,11 @@
 import { useTranslation } from "next-i18next";
 import { ReactElement } from "react";
 
-import Facebook from "@/styles/icons/facebook.svg";
-import LinkedIn from "@/styles/icons/linkedin.svg";
-import Twitter from "@/styles/icons/twitter.svg";
+import Finavia from "@/styles/icons/finavia_logo_grey.svg";
+import Fortum from "@/styles/icons/fortum_logo_grey.svg";
+import HUS from "@/styles/icons/hus_logo_grey.svg";
+import Traficom from "@/styles/icons/traficom_logo_eng.svg";
+import Trimble from "@/styles/icons/trimble_grey.svg";
 
 interface Logo {
   image: ReactElement;
@@ -13,19 +15,39 @@ interface Logo {
 
 const logos: Logo[] = [
   {
-    image: <Facebook className="inline-block h-16 w-16 text-primary-600" />,
-    label: "Share to Facebook",
-    id: "facebook",
+    image: (
+      <Finavia className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+    ),
+    label: "Finavia logo",
+    id: "finavia",
   },
   {
-    image: <Twitter className="inline-block h-16 w-16 text-primary-600" />,
-    label: "Share to Twitter",
-    id: "twitter",
+    image: (
+      <Fortum className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+    ),
+    label: "Fortum logo",
+    id: "fortum",
   },
   {
-    image: <LinkedIn className="inline-block h-16 w-16 text-primary-600" />,
-    label: "Share to LinkedIn",
-    id: "linkedIn",
+    image: (
+      <HUS className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+    ),
+    label: "Hus logo",
+    id: "hus",
+  },
+  {
+    image: (
+      <Traficom className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+    ),
+    label: "Traficom logo",
+    id: "traficom",
+  },
+  {
+    image: (
+      <Trimble className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem]" />
+    ),
+    label: "Trimble logo",
+    id: "trimble",
   },
 ];
 
@@ -35,10 +57,13 @@ export function LogoStrip() {
     <section id="logo-section">
       <span className="sr-only">{t("brand-logos")}</span>
       <ul className="flex flex-wrap justify-center p-4">
-        {logos?.map((logo) => (
-          <li key={logo.id} className="p-4">
-            {logo.image}
-            <span className="sr-only">{logo.label}</span>
+        {logos?.map(({ id, image, label }) => (
+          <li
+            key={id}
+            className="box-pack-center mb-4 flex max-w-[50%] items-center justify-center p-4"
+          >
+            {image}
+            <span className="sr-only">{label}</span>
           </li>
         ))}
       </ul>
