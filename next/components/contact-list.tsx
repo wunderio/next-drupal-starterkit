@@ -58,12 +58,19 @@ export function ContactList() {
             </div>
             <p className="font-bold">{name}</p>
             <p>{title}</p>
-            <p>{phoneNumber}</p>
+            <a
+              href={`tel:${phoneNumber}`}
+              target="_blank"
+              rel="noreferrer"
+              className="hyperlink no-underline hover:underline"
+            >
+              {phoneNumber}
+            </a>
             <a
               href={`mailto:${email}`}
               target="_blank"
               rel="noreferrer"
-              className="hyperlink underline hover:no-underline"
+              className="hyperlink no-underline hover:underline"
             >
               {email}
             </a>
