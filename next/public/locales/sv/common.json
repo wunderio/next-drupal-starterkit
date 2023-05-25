@@ -66,5 +66,6 @@
   "register-success": "Du är nu registrerad. Kontrollera din e-post för en bekräftelselänk där du kommer att kunna ange ditt lösenord.",
   "user-menu-account": "Konto",
   "loading": "Laddar...",
-  "modal-close": "Stäng"
+  "modal-close": "Stäng",
+  "image-of": "Bild av {{name}}"
 }

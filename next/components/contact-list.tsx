@@ -52,7 +52,7 @@ export function ContactList() {
                 src={image}
                 width={100}
                 height={100}
-                alt={`Portrait of ${name}`}
+                alt={t("image-of", { name })}
                 className="circle-clip"
               />
             </div>

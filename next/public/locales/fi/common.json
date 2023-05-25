@@ -66,5 +66,6 @@
   "register-success": "Olet nyt rekisteröitynyt. Tarkista sähköpostistasi vahvistuslinkki, jolla voit asettaa salasanasi.",
   "user-menu-account": "Tilini",
   "loading": "Ladataan...",
-  "modal-close": "Sulje"
+  "modal-close": "Sulje",
+  "image-of": "Kuva: {{name}}"
 }
