@@ -90,7 +90,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     path,
     context,
     {
-      params: getNodePageJsonApiParams(type),
+      params: getNodePageJsonApiParams(type).getQueryObject(),
     }
   );
 

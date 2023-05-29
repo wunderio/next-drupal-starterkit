@@ -50,7 +50,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
       "node--frontpage",
       context,
       {
-        params: getNodePageJsonApiParams("node--frontpage"),
+        params: getNodePageJsonApiParams("node--frontpage").getQueryObject(),
       }
     )
   ).at(0);

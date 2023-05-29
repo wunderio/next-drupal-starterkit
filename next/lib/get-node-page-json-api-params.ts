@@ -61,8 +61,9 @@ export function getNodePageJsonApiParams(resourceType: ResourceType) {
       "status",
       "metatag",
       "field_excerpt",
+      "path",
     ]);
   }
 
-  return apiParams.getQueryObject();
+  return apiParams;
 }
