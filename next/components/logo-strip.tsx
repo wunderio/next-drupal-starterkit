@@ -1,11 +1,11 @@
 import { useTranslation } from "next-i18next";
 import { ReactElement } from "react";
 
-import Finavia from "@/styles/icons/finavia_logo_grey.svg";
-import Fortum from "@/styles/icons/fortum_logo_grey.svg";
-import HUS from "@/styles/icons/hus_logo_grey.svg";
-import Traficom from "@/styles/icons/traficom_logo_eng.svg";
-import Trimble from "@/styles/icons/trimble_grey.svg";
+import Drupal from "@/styles/icons/drupal-icon.svg";
+import Lando from "@/styles/icons/lando-logo.svg";
+import NextJS from "@/styles/icons/nextjs-logo.svg";
+import React from "@/styles/icons/react-icon.svg";
+import Tailwind from "@/styles/icons/tailwindcss.svg";
 
 interface Logo {
   image: ReactElement;
@@ -16,38 +16,36 @@ interface Logo {
 const logos: Logo[] = [
   {
     image: (
-      <Finavia className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+      <React className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
     ),
-    label: "Finavia logo",
-    id: "finavia",
+    label: "React logo",
+    id: "react-logo",
   },
   {
     image: (
-      <Fortum className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+      <NextJS className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
     ),
-    label: "Fortum logo",
-    id: "fortum",
+    label: "NextJS logo",
+    id: "nextjs-logo",
   },
   {
     image: (
-      <HUS className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+      <Tailwind className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
     ),
-    label: "Hus logo",
-    id: "hus",
+    label: "Tailwind CSS logo",
+    id: "tailwindcss-logo",
   },
   {
     image: (
-      <Traficom className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+      <Drupal className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
     ),
-    label: "Traficom logo",
-    id: "traficom",
+    label: "Drupal logo",
+    id: "drupal-logo",
   },
   {
-    image: (
-      <Trimble className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem]" />
-    ),
-    label: "Trimble logo",
-    id: "trimble",
+    image: <Lando className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem]" />,
+    label: "Lando logo",
+    id: "lando-logo",
   },
 ];
 
