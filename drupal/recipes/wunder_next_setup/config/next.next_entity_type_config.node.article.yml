@@ -10,4 +10,4 @@ configuration:
 revalidator: path
 revalidator_configuration:
   revalidate_page: true
-  additional_paths: "/\r\n/fi\r\n/en\r\n/sv"
+  additional_paths: "/\r\n/fi\r\n/en\r\n/sv\r\n/articles\r\n/fi/articles\r\n/sv/articles"
