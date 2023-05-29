@@ -33,6 +33,7 @@ install:
   - webform
   - webform_ui
   - admin_toolbar
+  - menu_link_attributes
 
 config:
   import:
