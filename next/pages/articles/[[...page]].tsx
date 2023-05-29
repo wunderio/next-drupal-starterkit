@@ -2,20 +2,20 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { useRef } from "react";
 
+import { ArticleListItem } from "@/components/article-list-item";
 import { HeadingPage } from "@/components/heading--page";
-import { LatestArticles } from "@/components/latest-articles";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
 import { Pagination, PaginationProps } from "@/components/pagination";
 import { getLatestArticlesItems } from "@/lib/get-articles";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import {
-  ArticleTeaser,
+  ArticleTeaser as ArticleTeaserType,
   validateAndCleanupArticleTeaser,
 } from "@/lib/zod/article-teaser";
 
 interface ArticlesPageProps extends LayoutProps {
-  articleTeasers: ArticleTeaser[];
+  articleTeasers: ArticleTeaserType[];
   paginationProps: PaginationProps;
 }
 
@@ -30,7 +30,13 @@ export default function ArticlesPage({
       <Meta title={t("all-articles")} metatags={[]} />
       <div ref={focusRef} tabIndex={-1} />
       <HeadingPage>{t("all-articles")}</HeadingPage>
-      {articleTeasers && <LatestArticles articles={articleTeasers} />}
+      <ul className="mt-4">
+        {articleTeasers?.map((article) => (
+          <li key={article.id}>
+            <ArticleListItem article={article} />
+          </li>
+        ))}
+      </ul>
       <Pagination
         focusRestoreRef={focusRef}
         paginationProps={paginationProps}
@@ -57,7 +63,7 @@ export const getStaticProps: GetStaticProps<ArticlesPageProps> = async (
   // Get the page parameter:
   const page = context.params.page;
   const currentPage = parseInt(Array.isArray(page) ? page[0] : page || "1");
-  const PAGE_SIZE = 2;
+  const PAGE_SIZE = 6;
   const { totalPages, articles } = await getLatestArticlesItems({
     limit: PAGE_SIZE,
     offset: PAGE_SIZE * (currentPage - 1),

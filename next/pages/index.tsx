@@ -64,6 +64,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
       "fields[node--article]": "title,path,field_image,uid,created",
       include: "field_image,uid",
       sort: "-created",
+      "page[limit]": 3,
     },
   });
 

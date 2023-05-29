@@ -14,6 +14,7 @@ export const ArticleBaseSchema = z.object({
   }),
   title: z.string(),
   field_image: ImageShape,
+  field_excerpt: z.string().optional(),
 });
 
 const ArticleSchema = ArticleBaseSchema.extend({
