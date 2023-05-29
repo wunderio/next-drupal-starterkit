@@ -1,20 +1,14 @@
-import {
-  GetStaticPaths,
-  GetStaticPathsResult,
-  GetStaticProps,
-  InferGetStaticPropsType,
-} from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { useTranslation } from "next-i18next";
+import { useRef } from "react";
 
 import { HeadingPage } from "@/components/heading--page";
 import { LatestArticles } from "@/components/latest-articles";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
+import { Pagination, PaginationProps } from "@/components/pagination";
 import { getLatestArticlesItems } from "@/lib/get-articles";
-import {
-  CommonPageProps,
-  getCommonPageProps,
-} from "@/lib/get-common-page-props";
+import { getCommonPageProps } from "@/lib/get-common-page-props";
 import {
   ArticleTeaser,
   validateAndCleanupArticleTeaser,
@@ -22,17 +16,25 @@ import {
 
 interface ArticlesPageProps extends LayoutProps {
   articleTeasers: ArticleTeaser[];
+  paginationProps: PaginationProps;
 }
 
 export default function ArticlesPage({
-  articleTeasers,
+  articleTeasers = [],
+  paginationProps,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
+  const focusRef = useRef<HTMLDivElement>(null);
   return (
     <>
-      <Meta title="Articles" metatags={[]} />
-      <HeadingPage>{t("All articles")}</HeadingPage>
+      <Meta title={t("all-articles")} metatags={[]} />
+      <div ref={focusRef} tabIndex={-1} />
+      <HeadingPage>{t("all-articles")}</HeadingPage>
       {articleTeasers && <LatestArticles articles={articleTeasers} />}
+      <Pagination
+        focusRestoreRef={focusRef}
+        paginationProps={paginationProps}
+      />
     </>
   );
 }
@@ -62,10 +64,19 @@ export const getStaticProps: GetStaticProps<ArticlesPageProps> = async (
     locale: context.locale,
   });
 
-  console.log(totalPages);
+  // Create pagination props.
+  const prevEnabled = currentPage > 1;
+  const nextEnabled = currentPage < totalPages;
 
-  console.log(currentPage);
-  console.log(page);
+  // Create links for prev/next pages.
+  const pageRoot = "/articles";
+  const prevPage = currentPage - 1;
+  const nextPage = currentPage + 1;
+  const prevPageHref =
+    currentPage === 2
+      ? pageRoot
+      : prevEnabled && [pageRoot, prevPage].join("/");
+  const nextPageHref = nextEnabled && [pageRoot, nextPage].join("/");
 
   return {
     props: {
@@ -73,6 +84,14 @@ export const getStaticProps: GetStaticProps<ArticlesPageProps> = async (
       articleTeasers: articles.map((teaser) =>
         validateAndCleanupArticleTeaser(teaser)
       ),
+      paginationProps: {
+        currentPage,
+        totalPages,
+        prevEnabled,
+        nextEnabled,
+        prevPageHref,
+        nextPageHref,
+      },
     },
     revalidate: 60,
   };

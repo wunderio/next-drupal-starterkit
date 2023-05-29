@@ -33,6 +33,7 @@ export const getArticles = async (
       {
         deserialize: false,
         params: {
+          "filter[langcode]": locale,
           ...apiParams.getQueryObject(),
           page: {
             limit,
