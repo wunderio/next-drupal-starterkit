@@ -39,7 +39,9 @@ process:
         - constants/slash
         - '@nodeId'
     - plugin: link_uri
-  'link/options': options
+  'link/options':
+    plugin: wunder_democontent_menu_link_icon_attribute
+    source: Icon
   route:
     - plugin: concat
       source:

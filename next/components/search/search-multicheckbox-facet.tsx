@@ -1,70 +1,52 @@
 import { useTranslation } from "next-i18next";
+import { useId } from "react";
 import { FacetViewProps } from "@elastic/react-search-ui-views";
 import type { FieldValue } from "@elastic/search-ui";
-import clsx from "clsx";
 
 import { getFilterValueDisplay } from "@/lib/search-ui-helpers/getFilterValueDisplay";
 
 import { Checkbox } from "@/wunder-component-library/checkbox";
 
 export function MultiCheckboxFacet({
-  className,
   label,
   onMoreClick,
   onRemove,
   onSelect,
   options,
   showMore,
-  showSearch,
-  onSearch,
-  searchPlaceholder,
 }: FacetViewProps) {
   const { t } = useTranslation();
+  const id = useId();
+
+  if (!options.length) {
+    return null;
+  }
+
   return (
-    <fieldset className={clsx(className, "mb-4")}>
-      <legend className="mb-5 text-heading-xs font-bold text-steelgray">
-        {label}
-      </legend>
-      {showSearch && (
-        <div>
-          <input
-            className="mb-1 w-full border border-finnishwinter p-1"
-            type="search"
-            placeholder={searchPlaceholder || "Search"}
-            onChange={(e) => {
-              onSearch(e.target.value);
-            }}
-          />
-        </div>
-      )}
+    <section className="mb-4">
+      <div className="mb-5 text-heading-xs font-bold text-steelgray">
+        {t("filter-by", { label })}
+      </div>
       <ul className="mb-2">
-        {options.length < 1 && <div>No matching options</div>}
         {options.map((option) => {
           const checked = option.selected;
           const value = option.value as FieldValue;
+          const labelId = `${option.value}-label-${id}`;
+          const checkboxId = `${option.value}-checkbox${id}`;
           return (
-            <li key={`${getFilterValueDisplay(option.value)}`}>
-              <div className="flex items-center">
-                <Checkbox
-                  data-transaction-name={`facet - ${label}`}
-                  id={`example_facet_${label}${getFilterValueDisplay(
-                    option.value
-                  )}`}
-                  checked={checked}
-                  onClick={() => (checked ? onRemove(value) : onSelect(value))}
-                />
-                <label
-                  className="ml-2 text-sm text-steelgray"
-                  htmlFor={`example_facet_${label}${getFilterValueDisplay(
-                    option.value
-                  )}`}
-                >
-                  {getFilterValueDisplay(option.value)}{" "}
-                  <span className="text-steelgray">
-                    ({option.count.toLocaleString("en")})
-                  </span>
-                </label>
-              </div>
+            <li
+              key={`${getFilterValueDisplay(option.value)}`}
+              className="flex items-center text-sm text-steelgray"
+            >
+              <Checkbox
+                aria-labelledby={labelId}
+                checked={checked}
+                onClick={() => (checked ? onRemove(value) : onSelect(value))}
+                id={checkboxId}
+              />
+              <label className="ml-2 text-sm" htmlFor={checkboxId} id={labelId}>
+                {getFilterValueDisplay(option.value)} ({option.count})
+              </label>
             </li>
           );
         })}
@@ -79,6 +61,6 @@ export function MultiCheckboxFacet({
           + {t("search-show-more-options")}
         </button>
       )}
-    </fieldset>
+    </section>
   );
 }

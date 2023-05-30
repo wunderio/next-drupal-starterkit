@@ -1,0 +1,10 @@
+attributes:
+  icon:
+    label: 'Choose an icon for this menu item'
+    description: ''
+    options:
+      facebook: Facebook
+      twitter: Twitter
+      linkedin: Linkedin
+      wunder: Wunder
+    default_value: ''
