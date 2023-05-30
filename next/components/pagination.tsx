@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
+
+import Arrow from "@/styles/icons/arrow-down.svg";
+
+import { Button } from "@/wunder-component-library/button";
 
 export type PaginationProps = {
   currentPage?: number;
@@ -42,6 +47,8 @@ export function Pagination({
     prevPageHref,
     nextPageHref,
   } = paginationProps;
+  const { t } = useTranslation();
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<"forward" | "back" | false>(false);
   const numbers = [currentPage, totalPages].filter((n) => !isNaN(n));
@@ -88,28 +95,32 @@ export function Pagination({
   };
 
   return (
-    <>
+    <div className="flex w-full items-center justify-between">
       <MaybeLink href={prevPageHref}>
-        <button
+        <Button
+          variant="tertiary"
           aria-label="Edellinen"
           disabled={!prevEnabled || !!isLoading}
           onClick={handlePrevClick}
           tabIndex={props["aria-hidden"] ? -1 : undefined}
         >
-          Prev
-        </button>
+          <Arrow className="mr-4 h-6 w-6 rotate-90" aria-hidden />
+          {t("search-previous")}
+        </Button>
       </MaybeLink>
       {numbers.length > 0 && <p>{numbers.join("/")}</p>}
       <MaybeLink href={nextPageHref}>
-        <button
+        <Button
+          variant="tertiary"
           aria-label="Seuraava"
           disabled={!nextEnabled || !!isLoading}
           onClick={handleNextClick}
           tabIndex={props["aria-hidden"] ? -1 : undefined}
         >
-          Next
-        </button>
+          {t("search-next")}
+          <Arrow className="mr-4 h-6 w-6 -rotate-90" aria-hidden />
+        </Button>
       </MaybeLink>
-    </>
+    </div>
   );
 }
