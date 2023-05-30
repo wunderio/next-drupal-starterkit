@@ -1,11 +1,7 @@
-import {
-  deserialize,
-  DrupalNode,
-  getResourceCollection,
-  JsonApiResponse,
-} from "next-drupal";
+import { deserialize, DrupalNode, JsonApiResponse } from "next-drupal";
 import { DrupalJsonApiParams } from "drupal-jsonapi-params";
 
+import { drupal } from "@/lib/drupal";
 import { getNodePageJsonApiParams } from "@/lib/get-node-page-json-api-params";
 
 import siteConfig from "@/site.config";
@@ -13,11 +9,11 @@ import siteConfig from "@/site.config";
 type GetArticlesArgs = {
   limit?: number;
   offset?: number;
-  locale: string;
+  locale?: string;
 };
 
 export const getArticles = async (
-  { limit = 8, offset = 0, locale }: GetArticlesArgs,
+  { limit = 6, offset = 0, locale = siteConfig.defaultLocale }: GetArticlesArgs,
   apiParams: DrupalJsonApiParams
 ): Promise<{
   totalPages: number;
@@ -28,7 +24,7 @@ export const getArticles = async (
   let nodes: DrupalNode[] = [];
   let totalPages = 1;
   try {
-    const result = await getResourceCollection<JsonApiResponse>(
+    const result = await drupal.getResourceCollection<JsonApiResponse>(
       "node--article",
       {
         deserialize: false,
