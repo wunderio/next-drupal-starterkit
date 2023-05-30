@@ -20,6 +20,10 @@ import { Pagination } from "@/components/search/search-pagination";
 import { PagingInfoView } from "@/components/search/search-paging-info";
 import { SearchResult } from "@/components/search/search-result";
 import {
+  createLanguageLinksForNextOnlyPage,
+  LanguageLinks,
+} from "@/lib/contexts/language-links-context";
+import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
@@ -119,9 +123,12 @@ export default function SearchPage() {
 export const getStaticProps: GetStaticProps<CommonPageProps> = async (
   context
 ) => {
+  const languageLinks = createLanguageLinksForNextOnlyPage("/search", context);
+
   return {
     props: {
       ...(await getCommonPageProps(context)),
+      languageLinks,
     },
     revalidate: 60,
   };
