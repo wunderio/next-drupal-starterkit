@@ -12,6 +12,7 @@
   "search-button-text": "Hae",
   "search": "Haku",
   "no-results-found": "Ei tuloksia.",
+  "contact": "Ota yhteyttä",
   "content-type": "Sisältötyyppi",
   "tags": "Tunnisteet",
   "search-show-more-options": "Näytä lisää",
@@ -67,5 +68,6 @@
   "register-success": "Olet nyt rekisteröitynyt. Tarkista sähköpostistasi vahvistuslinkki, jolla voit asettaa salasanasi.",
   "user-menu-account": "Tilini",
   "loading": "Ladataan...",
-  "modal-close": "Sulje"
+  "modal-close": "Sulje",
+  "image-of": "Kuva: {{name}}"
 }

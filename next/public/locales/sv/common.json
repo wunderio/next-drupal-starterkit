@@ -12,6 +12,7 @@
   "search-button-text": "Sök",
   "search": "Sök",
   "no-results-found": "Inga resultat funna.",
+  "contact": "Kontakta Oss",
   "content-type": "Innehållstyp",
   "tags": "Taggar",
   "search-show-more-options": "Visa fler alternativ",
@@ -67,5 +68,6 @@
   "register-success": "Du är nu registrerad. Kontrollera din e-post för en bekräftelselänk där du kommer att kunna ange ditt lösenord.",
   "user-menu-account": "Konto",
   "loading": "Laddar...",
-  "modal-close": "Stäng"
+  "modal-close": "Stäng",
+  "image-of": "Bild av {{name}}"
 }
