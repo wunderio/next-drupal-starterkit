@@ -10,21 +10,15 @@ import { Menu } from "@/lib/zod/menu";
 import SearchIcon from "@/styles/icons/search.svg";
 import WunderIcon from "@/styles/icons/wunder.svg";
 
-import { SkipToContentLink } from "@/wunder-component-library/skip-to-content-link";
-
 interface HeaderProps {
   menu: Menu;
 }
 
 export function Header({ menu }: HeaderProps) {
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
-  const { t } = useTranslation();
 
   return (
     <header className="z-50 flex-shrink-0 border-b border-finnishwinter bg-white text-primary-600 md:sticky md:top-0">
-      <SkipToContentLink href="#main-content">
-        {t("skip-to-main-content")}
-      </SkipToContentLink>
       <nav className="mx-auto flex max-w-6xl flex-row items-center justify-between px-6 py-4">
         <HomeLink />
         <div className="flex flex-row items-center justify-end gap-6 sm:gap-8">
