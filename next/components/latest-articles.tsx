@@ -31,7 +31,7 @@ export function LatestArticles({ articles }: LatestArticlesProps) {
         {!articles?.length && <p className="py-4">{t("no-content-found")}</p>}
         {articles?.length && (
           <LinkButtonWithStyles
-            href="/articles"
+            href="/all-articles"
             className="text-base mr-4 mt-4 inline-flex px-5 py-3"
             variant="primary"
           >

@@ -14,12 +14,12 @@ import {
   validateAndCleanupArticleTeaser,
 } from "@/lib/zod/article-teaser";
 
-interface ArticlesPageProps extends LayoutProps {
+interface AllArticlesPageProps extends LayoutProps {
   articleTeasers: ArticleTeaserType[];
   paginationProps: PaginationProps;
 }
 
-export default function ArticlesPage({
+export default function AllArticlesPage({
   articleTeasers = [],
   paginationProps,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -57,16 +57,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<ArticlesPageProps> = async (
+export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
   context
 ) => {
   // Get the page parameter:
   const page = context.params.page;
   const currentPage = parseInt(Array.isArray(page) ? page[0] : page || "1");
   const PAGE_SIZE = 6;
+
   const { totalPages, articles } = await getLatestArticlesItems({
     limit: PAGE_SIZE,
-    offset: PAGE_SIZE * (currentPage - 1),
+    offset: currentPage ? PAGE_SIZE * (currentPage - 1) : 0,
     locale: context.locale,
   });
 
@@ -75,7 +76,7 @@ export const getStaticProps: GetStaticProps<ArticlesPageProps> = async (
   const nextEnabled = currentPage < totalPages;
 
   // Create links for prev/next pages.
-  const pageRoot = "/articles";
+  const pageRoot = "/all-articles";
   const prevPage = currentPage - 1;
   const nextPage = currentPage + 1;
   const prevPageHref =
