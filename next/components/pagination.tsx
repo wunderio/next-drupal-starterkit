@@ -118,7 +118,7 @@ export function Pagination({
           tabIndex={props["aria-hidden"] ? -1 : undefined}
         >
           {t("search-next")}
-          <Arrow className="mr-4 h-6 w-6 -rotate-90" aria-hidden />
+          <Arrow className="ml-4 h-6 w-6 -rotate-90" aria-hidden />
         </Button>
       </MaybeLink>
     </div>
