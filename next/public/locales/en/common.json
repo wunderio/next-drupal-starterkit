@@ -1,4 +1,5 @@
 {
+  "brand-logos": "Brand logos",
   "homepage-link": "Homepage",
   "menu-back": "Back",
   "menu": "Menu",
@@ -12,6 +13,7 @@
   "search": "Search",
   "no-results-found": "No results found.",
   "content-type": "Content type",
+  "contact": "Contact Us",
   "tags": "Tags",
   "search-show-more-options": "Show more options",
   "search-showing": "Showing",
@@ -66,6 +68,7 @@
   "register-success": "You are now registered. Check your email for a confirmation link where you will be able to set your password.",
   "user-menu-account": "Account",
   "loading": "Loading...",
-  "all-articles": "All articles",
-  "modal-close": "Close"
+  "modal-close": "Close",
+  "image-of": "Image of {{name}}",
+  "all-articles": "All articles"
 }

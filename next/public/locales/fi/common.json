@@ -1,4 +1,5 @@
 {
+  "brand-logos": "Brändilogoja",
   "homepage-link-sr": "Etusivu",
   "menu-back": "Takaisin",
   "menu": "Valikko",
@@ -11,6 +12,7 @@
   "search-button-text": "Hae",
   "search": "Haku",
   "no-results-found": "Ei tuloksia.",
+  "contact": "Ota yhteyttä",
   "content-type": "Sisältötyyppi",
   "tags": "Tunnisteet",
   "search-show-more-options": "Näytä lisää",
@@ -67,5 +69,6 @@
   "user-menu-account": "Tilini",
   "loading": "Ladataan...",
   "all-articles": "Kaikki artikkelit",
-  "modal-close": "Sulje"
+  "modal-close": "Sulje",
+  "image-of": "Kuva: {{name}}"
 }
