@@ -44,7 +44,7 @@ export function ContactList() {
       <h2 className="text-heading-sm font-bold md:text-heading-md">
         {t("contact")}
       </h2>
-      <ul className="grid auto-rows-max grid-cols-1 justify-items-center gap-4 py-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <ul className="grid auto-rows-max grid-cols-1 justify-items-center gap-4 py-4 sm:grid-cols-2 md:grid-cols-3">
         {contacts?.map(({ id, image, name, title, phoneNumber, email }) => (
           <li key={id} className="grid justify-items-center p-4">
             <div className="mb-6 flex h-[100px] items-center justify-center overflow-hidden">
