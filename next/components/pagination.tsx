@@ -99,7 +99,6 @@ export function Pagination({
       <MaybeLink href={prevPageHref}>
         <Button
           variant="tertiary"
-          aria-label="Edellinen"
           disabled={!prevEnabled || !!isLoading}
           onClick={handlePrevClick}
           tabIndex={props["aria-hidden"] ? -1 : undefined}
@@ -112,7 +111,6 @@ export function Pagination({
       <MaybeLink href={nextPageHref}>
         <Button
           variant="tertiary"
-          aria-label="Seuraava"
           disabled={!nextEnabled || !!isLoading}
           onClick={handleNextClick}
           tabIndex={props["aria-hidden"] ? -1 : undefined}
