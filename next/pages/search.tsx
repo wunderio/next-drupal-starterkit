@@ -32,6 +32,10 @@ import { buildState } from "@/lib/search-ui-helpers/buildState";
 import { runRequest } from "@/lib/search-ui-helpers/runRequest";
 import { useNextRouting } from "@/lib/search-ui-helpers/useNextRouting";
 
+interface SearchPageProps extends CommonPageProps {
+  languageLinks: LanguageLinks;
+}
+
 export default function SearchPage() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -120,9 +124,11 @@ export default function SearchPage() {
   );
 }
 
-export const getStaticProps: GetStaticProps<CommonPageProps> = async (
+export const getStaticProps: GetStaticProps<SearchPageProps> = async (
   context
 ) => {
+  // We have to pass the path of the page manually here, it would be better to infer it
+  // automatically, but apparently this is not doable in this context.
   const languageLinks = createLanguageLinksForNextOnlyPage("/search", context);
 
   return {
