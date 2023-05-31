@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import React, { useRef } from "react";
+import React from "react";
 import clsx from "clsx";
 
 import { Footer } from "@/components/footer";
@@ -21,7 +21,6 @@ export interface LayoutProps {
 }
 
 export function Layout({ menus, children }: LayoutProps) {
-  const mainContentRef = useRef<HTMLDivElement>(null);
   const isPreviewVisible = useIsPreviewBannerVisible();
   const { t } = useTranslation();
 
@@ -37,11 +36,7 @@ export function Layout({ menus, children }: LayoutProps) {
           {t("skip-to-main-content")}
         </SkipToContentLink>
         <Header menu={menus.main} />
-        <main
-          className="grow bg-mischka"
-          id="main-content"
-          ref={mainContentRef}
-        >
+        <main className="grow bg-mischka" id="main-content">
           <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
         </main>
         <Footer menu={menus.footer} />
