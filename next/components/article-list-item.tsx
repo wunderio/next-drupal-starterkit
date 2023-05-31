@@ -27,12 +27,13 @@ export function ArticleListItem({ article }: ArticleListItemProps) {
         {author && <>{t("posted-by", { author })} - </>}
         {date}
       </div>
-      <div className="flex gap-4 ">
+      <div className="flex flex-col items-start gap-4 sm:flex-row">
         {article.field_image && (
           <Image
             src={absoluteUrl(article.field_image.uri.url)}
-            width={120}
-            height={100}
+            width={500}
+            height={300}
+            className="w-full sm:w-40"
             alt={article.field_image.resourceIdObjMeta.alt}
           />
         )}
