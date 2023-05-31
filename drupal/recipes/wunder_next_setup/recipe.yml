@@ -11,6 +11,7 @@ install:
   - pathauto
   - wunder_next
   - jsonapi_menu_items
+  - jsonapi_extras
   - redirect
   - require_login
   - webform_rest

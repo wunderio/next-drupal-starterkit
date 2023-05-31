@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
       "node--frontpage",
       context,
       {
-        params: getNodePageJsonApiParams("node--frontpage"),
+        params: getNodePageJsonApiParams("node--frontpage").getQueryObject(),
       }
     )
   ).at(0);
@@ -68,6 +68,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
       "fields[node--article]": "title,path,field_image,uid,created",
       include: "field_image,uid",
       sort: "-created",
+      "page[limit]": 3,
     },
   });
 

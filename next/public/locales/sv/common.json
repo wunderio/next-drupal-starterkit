@@ -69,5 +69,6 @@
   "user-menu-account": "Konto",
   "loading": "Laddar...",
   "modal-close": "Stäng",
-  "image-of": "Bild av {{name}}"
+  "image-of": "Bild av {{name}}",
+  "all-articles": "Alla artiklar"
 }

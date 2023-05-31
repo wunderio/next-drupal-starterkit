@@ -13,7 +13,8 @@ export const ArticleBaseSchema = z.object({
     display_name: z.string(),
   }),
   title: z.string(),
-  field_image: ImageShape,
+  field_image: ImageShape.nullable(),
+  field_excerpt: z.string().optional(),
 });
 
 const ArticleSchema = ArticleBaseSchema.extend({

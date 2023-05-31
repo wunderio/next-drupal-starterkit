@@ -69,5 +69,6 @@
   "user-menu-account": "Account",
   "loading": "Loading...",
   "modal-close": "Close",
-  "image-of": "Image of {{name}}"
+  "image-of": "Image of {{name}}",
+  "all-articles": "All articles"
 }
