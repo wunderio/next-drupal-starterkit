@@ -6,6 +6,7 @@ dependencies:
     - field.storage.node.field_content_elements
     - node.type.frontpage
     - paragraphs.paragraphs_type.accordion
+    - paragraphs.paragraphs_type.file_attachments
     - paragraphs.paragraphs_type.formatted_text
     - paragraphs.paragraphs_type.hero
     - paragraphs.paragraphs_type.image
@@ -15,7 +16,7 @@ dependencies:
   module:
     - entity_reference_revisions
 _core:
-  default_config_hash: HW6DjT5CpCl43wK53GpURCzlA7VqnvQ1iAIdTImFemA
+  default_config_hash: NUxJm4-rhprwI3dS2wd0ydQvOJP36yguA_-Ndy8oaDw
 id: node.frontpage.field_content_elements
 field_name: field_content_elements
 entity_type: node
@@ -37,6 +38,7 @@ settings:
       accordion: accordion
       video: video
       listing_articles: listing_articles
+      file_attachments: file_attachments
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -45,6 +47,9 @@ settings:
       accordion_item:
         weight: -12
         enabled: false
+      file_attachments:
+        weight: 10
+        enabled: true
       formatted_text:
         weight: -14
         enabled: true

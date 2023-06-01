@@ -13,7 +13,7 @@ dependencies:
     - paragraphs
     - path
 _core:
-  default_config_hash: hf8MYQonqWeY66p6OdYJDmvzcb747Skr1GPxfejywNY
+  default_config_hash: 7hRneWxDwhEEa196gok0drp5ivOjXjPl2_rbfNo2D80
 id: node.page.default
 targetEntityType: node
 bundle: page
@@ -36,7 +36,7 @@ content:
       closed_mode: summary
       autocollapse: none
       closed_mode_threshold: 0
-      add_mode: button
+      add_mode: modal
       form_display_mode: default
       default_paragraph_type: _none
       features:
