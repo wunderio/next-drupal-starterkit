@@ -1,3 +1,4 @@
+import { GetStaticPropsContext } from "next";
 import { createContext, useContext } from "react";
 
 import siteConfig from "@/site.config";
@@ -18,6 +19,27 @@ export function createLanguageLinks(
   const languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
   Object.entries(nodeTranslations).forEach(([key, path]) => {
     languageLinks[key].path = path;
+  });
+  return languageLinks;
+}
+
+/**
+ * Generates a language links object for a page that is created in next only.
+ * @param path
+ *   The path of the page.
+ * @param context
+ *   The context.
+ */
+export function createLanguageLinksForNextOnlyPage(
+  path: string,
+  context: GetStaticPropsContext
+): LanguageLinks {
+  const languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
+  context.locales.forEach((locale) => {
+    languageLinks[locale].path =
+      languageLinks[locale].path === "/"
+        ? path
+        : `${languageLinks[locale].path}${path}`;
   });
   return languageLinks;
 }
