@@ -1,3 +1,5 @@
+import { useTranslation } from "next-i18next";
+import React from "react";
 import clsx from "clsx";
 
 import { Footer } from "@/components/footer";
@@ -7,6 +9,8 @@ import {
   useIsPreviewBannerVisible,
 } from "@/components/preview-banner";
 import { Menu } from "@/lib/zod/menu";
+
+import { SkipToContentLink } from "@/wunder-component-library/skip-to-content-link";
 
 export interface LayoutProps {
   menus: {
@@ -18,6 +22,8 @@ export interface LayoutProps {
 
 export function Layout({ menus, children }: LayoutProps) {
   const isPreviewVisible = useIsPreviewBannerVisible();
+  const { t } = useTranslation();
+
   return (
     <>
       <div
@@ -26,8 +32,11 @@ export function Layout({ menus, children }: LayoutProps) {
           isPreviewVisible && "mt-10"
         )}
       >
+        <SkipToContentLink href="#main-content">
+          {t("skip-to-main-content")}
+        </SkipToContentLink>
         <Header menu={menus.main} />
-        <main className="grow bg-mischka">
+        <main className="grow bg-mischka" id="main-content">
           <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
         </main>
         <Footer menu={menus.footer} />

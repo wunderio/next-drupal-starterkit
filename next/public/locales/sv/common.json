@@ -22,6 +22,7 @@
   "search-previous": "Föregående",
   "search-next": "Nästa",
   "search-go-to-page": "Gå till sida {{page}}",
+  "skip-to-main-content": "Hoppa till huvudinnehåll",
   "filter-by": "Filtrera efter {{label}}",
   "Page not found": "Sidan kunde inte hittas",
   "The page you are looking for does not exist.": "Sidan du söker finns inte.",
