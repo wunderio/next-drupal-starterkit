@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import { SocialShare } from "@/components/social-share";
 import type { Menu, MenuItem, MenuItemOptions } from "@/lib/zod/menu";
 import Facebook from "@/styles/icons/facebook.svg";
 import LinkedIn from "@/styles/icons/linkedin.svg";
@@ -33,6 +34,7 @@ export function Footer({ menu }: FooterProps) {
               );
             })}
           </ul>
+          <SocialShare />
           <FooterLink href="https://next-drupal.org" newTab>
             Next.js for Drupal
           </FooterLink>
