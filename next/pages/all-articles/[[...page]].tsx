@@ -7,6 +7,10 @@ import { HeadingPage } from "@/components/heading--page";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
 import { Pagination, PaginationProps } from "@/components/pagination";
+import {
+  createLanguageLinksForNextOnlyPage,
+  LanguageLinks,
+} from "@/lib/contexts/language-links-context";
 import { getLatestArticlesItems } from "@/lib/get-articles";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import {
@@ -17,6 +21,7 @@ import {
 interface AllArticlesPageProps extends LayoutProps {
   articleTeasers: ArticleTeaserType[];
   paginationProps: PaginationProps;
+  languageLinks: LanguageLinks;
 }
 
 export default function AllArticlesPage({
@@ -85,6 +90,11 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
       : prevEnabled && [pageRoot, prevPage].join("/");
   const nextPageHref = nextEnabled && [pageRoot, nextPage].join("/");
 
+  // Create language links for this page.
+  // Note: the links will always point to the first page, because we cannot guarantee that
+  // the other pages will exist in all languages.
+  const languageLinks = createLanguageLinksForNextOnlyPage(pageRoot, context);
+
   return {
     props: {
       ...(await getCommonPageProps(context)),
@@ -99,6 +109,7 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
         prevPageHref,
         nextPageHref,
       },
+      languageLinks,
     },
     revalidate: 60,
   };
