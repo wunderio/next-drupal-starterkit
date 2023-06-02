@@ -1,9 +1,16 @@
+import React from "react";
+
+import { MediaFileAttachments } from "@/components/media--file-attachments";
 import { MediaImage } from "@/components/media--image";
 import { MediaVideo } from "@/components/media--video";
-import { Image, Video } from "@/lib/zod/paragraph";
+import { FileAttachments, Image, Video } from "@/lib/zod/paragraph";
 
 interface MediaProps {
-  media: Image["field_image"] | Video["field_video"];
+  media?:
+    | Image["field_image"]
+    | Video["field_video"]
+    | FileAttachments["field_file_attachments"];
+  priority?: boolean;
 }
 
 export function Media({ media, ...props }: MediaProps) {
@@ -11,6 +18,18 @@ export function Media({ media, ...props }: MediaProps) {
     return null;
   }
 
+  function isFileAttachments(
+    media: MediaProps["media"]
+  ): media is FileAttachments["field_file_attachments"] {
+    return Array.isArray(media) && media[0]?.type === "media--document";
+  }
+
+  // Special case for file attachments:
+  if (isFileAttachments(media)) {
+    return <MediaFileAttachments mediaItems={media} {...props} />;
+  }
+
+  // For other media types:
   switch (media.type) {
     case "media--image":
       return <MediaImage media={media} {...props} />;

@@ -1,3 +1,4 @@
+import { Media } from "@/components/media";
 import { FileAttachments } from "@/lib/zod/paragraph";
 
 export function ParagraphFileAttachments({
@@ -5,5 +6,5 @@ export function ParagraphFileAttachments({
 }: {
   paragraph: FileAttachments;
 }) {
-  return <p>{paragraph.type}</p>;
+  return <Media media={paragraph.field_file_attachments} />;
 }
