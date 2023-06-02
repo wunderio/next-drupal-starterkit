@@ -105,6 +105,7 @@ const AccordionItemSchema = z.object({
       ImageSchema,
       VideoSchema,
       LinksSchema,
+      FileAttachmentsSchema,
     ])
   ),
 });

@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.paragraph.field_content_elements
     - paragraphs.paragraphs_type.accordion_item
+    - paragraphs.paragraphs_type.file_attachments
     - paragraphs.paragraphs_type.formatted_text
     - paragraphs.paragraphs_type.image
     - paragraphs.paragraphs_type.links
@@ -30,6 +31,7 @@ settings:
       formatted_text: formatted_text
       image: image
       links: links
+      file_attachments: file_attachments
       video: video
     negate: 0
     target_bundles_drag_drop:
@@ -39,15 +41,24 @@ settings:
       accordion_item:
         weight: 8
         enabled: false
+      file_attachments:
+        weight: 12
+        enabled: true
       formatted_text:
         weight: 9
         enabled: true
+      hero:
+        weight: 14
+        enabled: false
       image:
         weight: 10
         enabled: true
       links:
         weight: 11
         enabled: true
+      listing_articles:
+        weight: 17
+        enabled: false
       video:
         weight: 12
         enabled: true
