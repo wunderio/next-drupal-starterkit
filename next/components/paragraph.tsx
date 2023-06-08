@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 
+import { ParagraphFileAttachments } from "@/components/paragraph--file-attachments";
 import { ParagraphHero } from "@/components/paragraph--hero";
 import { ParagraphImage } from "@/components/paragraph--image";
 import { ParagraphLinks } from "@/components/paragraph--links";
@@ -42,6 +43,9 @@ export function Paragraph({ paragraph }: { paragraph: Paragraph }) {
     }
     case "paragraph--listing_articles": {
       return <ParagraphListingArticles paragraph={paragraph} />;
+    }
+    case "paragraph--file_attachments": {
+      return <ParagraphFileAttachments paragraph={paragraph} />;
     }
     default:
       return null;

@@ -37,6 +37,11 @@ process:
       migration: paragraphs_pages_links
       source: id
     - plugin: null_as_array
+  paragraph_file_attachments:
+    - plugin: migration_lookup
+      migration: paragraphs_pages_file_attachments
+      source: id
+    - plugin: null_as_array
   paragraph_images:
     - plugin: migration_lookup
       migration: paragraphs_pages_image
@@ -58,6 +63,7 @@ process:
     source:
       - '@paragraph_formatted_text'
       - '@paragraph_links'
+      - '@paragraph_file_attachments'
       - '@paragraph_images'
       - '@paragraph_video'
       - '@paragraph_accordion'
@@ -85,3 +91,4 @@ migration_dependencies:
     - paragraphs_pages_image
     - paragraphs_pages_video
     - paragraphs_pages_accordion
+    - paragraphs_pages_file_attachments

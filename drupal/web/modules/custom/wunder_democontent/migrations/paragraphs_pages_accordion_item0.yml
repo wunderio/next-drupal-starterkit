@@ -38,6 +38,11 @@ process:
       migration: paragraphs_pages_acc_links_0
       source: id
     - plugin: null_as_array
+  paragraph_accordion_item0_attachments:
+    - plugin: migration_lookup
+      migration: paragraphs_pages_acc_attachments_0
+      source: id
+    - plugin: null_as_array
 
   field_content_elements:
     plugin: sub_process
@@ -45,6 +50,7 @@ process:
       - '@paragraph_accordion_item0_formatted_text0'
       - '@paragraph_accordion_item0_video'
       - '@paragraph_accordion_item0_links'
+      - '@paragraph_accordion_item0_attachments'
 
     process:
       target_id:
@@ -71,3 +77,4 @@ migration_dependencies:
     - paragraphs_pages_acc_formatted_text0
     - paragraphs_pages_acc_video0
     - paragraphs_pages_acc_links_0
+    - paragraphs_pages_acc_attachments_0
