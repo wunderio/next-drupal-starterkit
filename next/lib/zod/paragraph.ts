@@ -112,8 +112,8 @@ const AccordionItemSchema = z.object({
 
 export const AccordionSchema = z.object({
   type: z.literal("paragraph--accordion"),
-  id: z.string().nullable(),
-  field_heading: z.string(),
+  id: z.string(),
+  field_heading: z.string().nullable(),
   field_accordion_items: z.array(AccordionItemSchema),
 });
 export const HeroSchema = z.object({
