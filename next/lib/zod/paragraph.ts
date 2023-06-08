@@ -112,7 +112,7 @@ const AccordionItemSchema = z.object({
 
 export const AccordionSchema = z.object({
   type: z.literal("paragraph--accordion"),
-  id: z.string(),
+  id: z.string().nullable(),
   field_heading: z.string(),
   field_accordion_items: z.array(AccordionItemSchema),
 });
