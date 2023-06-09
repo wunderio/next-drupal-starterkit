@@ -20,8 +20,10 @@ export function ArticleListItem({ article }: ArticleListItemProps) {
     <Link
       href={article.path.alias}
       className={classNames(
-        "relative mb-4 grid h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md",
-        article.sticky ? "border-l-4 border-l-primary-600 bg-primary-50" : ""
+        "relative mb-4 grid h-full rounded border  p-4 transition-all hover:shadow-md",
+        article.sticky
+          ? "border-primary-100 bg-primary-50"
+          : "border-finnishwinter bg-white"
       )}
     >
       <h3 className="mb-2 line-clamp-2 text-heading-xs font-bold">
