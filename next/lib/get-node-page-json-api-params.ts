@@ -64,7 +64,6 @@ export function getNodePageJsonApiParams(resourceType: ResourceType) {
       "metatag",
       "field_excerpt",
       "path",
-      "sticky",
     ]);
   }
 

@@ -36,7 +36,7 @@ export const getArticles = async (
             limit,
             offset,
           },
-          sort: "-sticky,-created",
+          sort: "-created",
         },
         locale: locale,
         defaultLocale: siteConfig.defaultLocale,

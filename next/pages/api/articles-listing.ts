@@ -23,7 +23,7 @@ export default async function handler(
           "filter[langcode]": languagePrefix,
           "fields[node--article]": "title,path,field_image,uid,created",
           include: "field_image,uid",
-          sort: "-sticky,-created",
+          sort: "-created",
           "page[limit]": limit,
         },
         locale: languagePrefix,
