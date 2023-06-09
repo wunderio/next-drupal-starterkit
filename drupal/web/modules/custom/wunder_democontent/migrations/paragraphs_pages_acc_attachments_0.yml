@@ -21,6 +21,11 @@ process:
       method: row
       source: Paragraphs_0_file_attachments
       message: Skipped because node has no attachments
+  'field_formatted_text/format':
+    plugin: default_value
+    default_value: basic_html
+  'field_formatted_text/value': Paragraphs_0_file_attachments_text
+  field_heading: Paragraphs_0_file_attachments_heading
   'field_file_attachments/0/target_id':
     plugin: migration_lookup
     source: id

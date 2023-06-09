@@ -26,7 +26,10 @@ export function MediaFileAttachments({
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             />
-            <a href={absoluteUrl(mediaItem.field_media_document.uri.url)}>
+            <a
+              href={absoluteUrl(mediaItem.field_media_document.uri.url)}
+              target="_blank"
+            >
               {mediaItem.field_media_document.filename}{" "}
             </a>
             <span className="text-xs">
