@@ -4,7 +4,13 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.file_attachments.field_file_attachments
+    - field.field.paragraph.file_attachments.field_formatted_text
+    - field.field.paragraph.file_attachments.field_heading
     - paragraphs.paragraphs_type.file_attachments
+  module:
+    - text
+_core:
+  default_config_hash: 1Np5rtIFvHeAiGXcod5rwIZsukdjBrbSV6Ns-qsAH-s
 id: paragraph.file_attachments.default
 targetEntityType: paragraph
 bundle: file_attachments
@@ -18,5 +24,20 @@ content:
       link: false
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_formatted_text:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_heading:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
     region: content
 hidden: {  }

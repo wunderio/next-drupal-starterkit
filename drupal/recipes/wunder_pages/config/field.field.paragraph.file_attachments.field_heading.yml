@@ -1,0 +1,19 @@
+uuid: f605ddd7-a35b-457b-9c14-a2cd2f12ec45
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_heading
+    - paragraphs.paragraphs_type.file_attachments
+id: paragraph.file_attachments.field_heading
+field_name: field_heading
+entity_type: paragraph
+bundle: file_attachments
+label: Heading
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

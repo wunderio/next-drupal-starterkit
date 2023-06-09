@@ -67,6 +67,12 @@ export const ImageSchema = z.object({
 export const FileAttachmentsSchema = z.object({
   type: z.literal("paragraph--file_attachments"),
   id: z.string(),
+  field_formatted_text: z
+    .object({
+      processed: z.string(),
+    })
+    .nullable(),
+  field_heading: z.string().nullable(),
   field_file_attachments: z.array(
     z.object({
       type: z.literal("media--document"),
