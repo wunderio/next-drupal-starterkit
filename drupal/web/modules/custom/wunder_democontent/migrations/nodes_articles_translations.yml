@@ -25,6 +25,7 @@ process:
     plugin: default_value
     default_value: article
   title: Title
+  sticky: Sticky
   status: constants/status
   uid: constants/uid
   langcode: Langcode
