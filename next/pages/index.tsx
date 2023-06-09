@@ -67,7 +67,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
       "filter[langcode]": context.locale,
       "fields[node--article]": "title,path,field_image,uid,created",
       include: "field_image,uid",
-      sort: "-created",
+      sort: "-sticky,-created",
       "page[limit]": 3,
     },
   });
