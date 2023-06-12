@@ -14,7 +14,7 @@ dependencies:
     - path
     - text
 _core:
-  default_config_hash: 7IF6fu-5BSIRFE-X_wubgX-CFnbA75TTsW5_70U9SoE
+  default_config_hash: YtJZF_WAm6iGg5-kg5lwuYu1hUA2nXIKqg0YrBX6FoM
 id: node.article.default
 targetEntityType: node
 bundle: article
@@ -71,9 +71,16 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 11
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
@@ -113,9 +120,8 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 12
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden:
-  promote: true
+hidden: {  }

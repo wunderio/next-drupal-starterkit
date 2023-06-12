@@ -26,6 +26,7 @@ process:
     default_value: article
   title: Title
   sticky: Sticky
+  promote: Promote
   status: constants/status
   uid: constants/uid
   langcode: Langcode

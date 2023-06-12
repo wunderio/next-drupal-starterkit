@@ -26,6 +26,7 @@ process:
   uid: constants/uid
   langcode: Langcode
   sticky: Sticky
+  promote: Promote
   field_excerpt: Excerpt
   'body/format':
     plugin: default_value
