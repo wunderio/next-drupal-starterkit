@@ -14,7 +14,7 @@ dependencies:
     - path
     - text
 _core:
-  default_config_hash: EfJachnGXmnptLSAMh1SbVaysKLtvQdL9us95HKgwb0
+  default_config_hash: YtJZF_WAm6iGg5-kg5lwuYu1hUA2nXIKqg0YrBX6FoM
 id: node.article.default
 targetEntityType: node
 bundle: article
@@ -46,7 +46,7 @@ content:
     third_party_settings: {  }
   field_image:
     type: image_image
-    weight: 2
+    weight: 3
     region: content
     settings:
       progress_indicator: throbber
@@ -64,7 +64,7 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 4
+    weight: 2
     region: content
     settings:
       include_locked: true
@@ -77,21 +77,21 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 10
+    weight: 11
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 3
+    weight: 4
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 11
+    weight: 10
     region: content
     settings:
       display_label: true

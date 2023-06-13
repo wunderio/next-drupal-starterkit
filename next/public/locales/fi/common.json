@@ -5,7 +5,7 @@
   "menu": "Valikko",
   "menu-toggle": "Näytä/piilota valikko",
   "show-submenu": "Näytä {{parent}} alivalikko",
-  "latest-articles": "Viimeisimmät artikkelit",
+  "promoted-articles": "Suositellut artikkelit",
   "no-content-found": "Sisältöä ei löydy",
   "posted-by": "Kirjoittaja: {{author}}",
   "search-bar-placeholder-text": "Hae sisältöä",

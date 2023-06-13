@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import classNames from "classnames";
 
 import { absoluteUrl, formatDate } from "@/lib/utils";
 import { ArticleTeaser } from "@/lib/zod/article-teaser";
@@ -18,7 +19,12 @@ export function ArticleListItem({ article }: ArticleListItemProps) {
   return (
     <Link
       href={article.path.alias}
-      className="relative mb-4 grid h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md"
+      className={classNames(
+        "relative mb-4 grid h-full rounded border  p-4 transition-all hover:shadow-md",
+        article.sticky
+          ? "border-primary-100 bg-primary-50"
+          : "border-finnishwinter bg-white"
+      )}
     >
       <h3 className="mb-2 line-clamp-2 text-heading-xs font-bold">
         {article.title}

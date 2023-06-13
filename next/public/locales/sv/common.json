@@ -5,7 +5,7 @@
   "menu": "Meny",
   "menu-toggle": "Visa/dölj meny",
   "show-submenu": "Visa {{parent}} undermeny",
-  "latest-articles": "Senaste artiklarna",
+  "promoted-articles": "Rekommenderade artiklar",
   "no-content-found": "Inget innehåll hittades",
   "posted-by": "Författare: {{author}}",
   "share-page": "Dela denna sida",

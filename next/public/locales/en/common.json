@@ -5,7 +5,7 @@
   "menu": "Menu",
   "menu-toggle": "Toggle menu",
   "show-submenu": "Show submenu for {{parent}}",
-  "latest-articles": "Latest articles",
+  "promoted-articles": "Promoted articles",
   "no-content-found": "No content found",
   "posted-by": "Author: {{author}}",
   "search-bar-placeholder-text": "Search content",

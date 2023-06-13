@@ -11,14 +11,15 @@ export const LinkButtonWithStyles = withButtonStyles<any>(Link);
 
 interface LatestArticlesProps {
   articles?: ArticleTeaserType[];
+  heading: string;
 }
 
-export function LatestArticles({ articles }: LatestArticlesProps) {
+export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
   const { t } = useTranslation();
   return (
     <>
       <h2 className="text-heading-sm font-bold md:text-heading-md">
-        {t("latest-articles")}
+        {heading}
       </h2>
       <ul className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {articles?.map((article) => (
