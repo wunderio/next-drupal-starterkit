@@ -8,6 +8,6 @@ nginx:
     wunder-vpn: 194.89.156.118/32
   extraConfig: |
     include mime.types;
-        types {
-            application/javascript mjs;
+    types {
+        text/javascript mjs;
     }
