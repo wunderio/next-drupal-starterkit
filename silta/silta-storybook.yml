@@ -9,5 +9,8 @@ nginx:
   extraConfig: |
     include mime.types;
     types {
+        # Base Silta config uses "application/octet-stream" for .mjs.
+        # Browsers will refuse to run any JS files served with such mimetype.
+        # Setting mimetype to "text/javascript" will make it work.
         text/javascript mjs;
     }
