@@ -26,6 +26,11 @@ tooling:
     service: node
     dir: /app/next
 
+  npx:
+    description: "Runs npx commands"
+    service: node
+    dir: /app/next
+
   # This command will stop (kill) any running node operations
   # in the node container in lando. You can use it instead of the
   # usual ctrl-c keyboard combination.
@@ -120,6 +125,7 @@ services:
     ssl: true
     sslExpose: true
     overrides:
+      image: 'cypress/base:16'
       ports:
         - "3000:3000"
         - "6006:6006"
@@ -189,11 +195,6 @@ services:
     type: mailhog
     hogfrom:
       - appserver
-  chrome:
-    type: compose
-    services:
-      image: drupalci/webdriver-chromedriver:production
-      command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
 
 # This section specifies at which urls each service is available. Adjust as necessary
 # for your project.

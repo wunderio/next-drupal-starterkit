@@ -39,7 +39,7 @@ module.exports = {
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:@next/next/recommended",
+        "next",
         "prettier",
       ],
       rules: {
