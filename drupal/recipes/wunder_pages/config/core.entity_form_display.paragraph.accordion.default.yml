@@ -4,12 +4,16 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.accordion.field_accordion_items
+    - field.field.paragraph.accordion.field_formatted_text
     - field.field.paragraph.accordion.field_heading
+    - field.field.paragraph.accordion.field_primary_link
     - paragraphs.paragraphs_type.accordion
   module:
+    - link
     - paragraphs
+    - text
 _core:
-  default_config_hash: 4aGIDajD14VDCw-aLiN51NA6jjewcseNCMiqqQhcdPg
+  default_config_hash: psdlP0eLXfBIBoG1i2w-WCdjtbJ-yFQvwYZb3-KfQHo
 id: paragraph.accordion.default
 targetEntityType: paragraph
 bundle: accordion
@@ -17,7 +21,7 @@ mode: default
 content:
   field_accordion_items:
     type: paragraphs
-    weight: 1
+    weight: 3
     region: content
     settings:
       title: Paragraph
@@ -34,6 +38,14 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
+  field_formatted_text:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_heading:
     type: string_textfield
     weight: 0
@@ -41,6 +53,14 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_primary_link:
+    type: link_default
+    weight: 2
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
 hidden:
   created: true
