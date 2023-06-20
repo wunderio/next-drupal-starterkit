@@ -158,6 +158,23 @@ The environment variables used by the frontend are also checked for type safety.
 3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
 4. To ensure it also works in CircleCI and Silta, also add it to`.circleci/config.yml` and `silta-next.yml`.
 
+### Testing with Cypress
+
+The template includes example tests to be run with Cypress
+
+#### Running tests locally
+
+To run the tests locally, first start the frontend and backend servers with `lando start`, then run `lando npm run cypress:run` to start the Cypress test runner.
+A video of the run will be recorded and it will be available at `next/cypress/videos`.
+
+#### Using the Cypress application
+
+If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work: 
+1. ensure you are using the correct node version
+2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
+3. install cypress globally with `npm install -g cypress`
+4. while on the /next directory, run `npm cypress:open` (notice that there's no `lando` at the beginning of the command).
+
 ### Wunder component library [WIP]
 
 The `wunder-component-library/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects.
