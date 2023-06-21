@@ -4,15 +4,21 @@ import ChevronIcon from "@/styles/icons/chevron-down.svg";
 import ListIcon from "@/styles/icons/list.svg";
 
 interface AccordionProps {
+  heading?: string | React.ReactNode;
   items: Array<{
     id: string;
     heading: string | React.ReactNode;
     content: React.ReactNode;
   }>;
 }
-export function Accordion({ items }: AccordionProps) {
+export function Accordion({ heading, items }: AccordionProps) {
   return (
     <div className="relative h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md">
+      {heading && (
+        <h2 className="mb-4 text-heading-sm font-bold md:text-heading-md">
+          {heading}
+        </h2>
+      )}
       <AccordionUI.Root type="single" collapsible className="grid gap-4">
         {items?.map((item) => (
           <AccordionUI.Item key={item.id} value={item.id}>

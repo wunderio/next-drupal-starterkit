@@ -19,7 +19,7 @@ export function ParagraphAccordion({
       {paragraph.field_heading && (
         <HeadingParagraph>{paragraph.field_heading}</HeadingParagraph>
       )}
-      {paragraph.field_heading && (
+      {paragraph.field_formatted_text && (
         <FormattedText
           html={paragraph.field_formatted_text.processed}
           className={clsx(
