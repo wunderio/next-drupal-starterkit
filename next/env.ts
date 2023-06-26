@@ -15,7 +15,6 @@ export const env = isStorybook
         DRUPAL_CLIENT_SECRET: zod.string(),
         DRUPAL_REVALIDATE_SECRET: zod.string(),
         NEXT_IMAGE_DOMAIN: zod.string(),
-        DRUPAL_RELEASE_NAME: zod.string(),
       },
       client: {
         NEXT_PUBLIC_DRUPAL_BASE_URL: zod.string().url(),
@@ -29,7 +28,6 @@ export const env = isStorybook
         DRUPAL_CLIENT_SECRET: process.env.DRUPAL_CLIENT_SECRET,
         DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
         NEXT_IMAGE_DOMAIN: process.env.NEXT_IMAGE_DOMAIN,
-        DRUPAL_RELEASE_NAME: process.env.DRUPAL_RELEASE_NAME,
         NEXT_PUBLIC_DRUPAL_BASE_URL: process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
         NEXT_PUBLIC_FRONTEND_URL: process.env.NEXT_PUBLIC_FRONTEND_URL,
         /* eslint-enable n/no-process-env */

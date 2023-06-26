@@ -185,3 +185,8 @@ And for major version updates:
 ```bash
 lando composer require 'drupal/twig_tweak:^3.2' -W
 ```
+
+### Things to consider when creating a project from this template
+
+- When setting up this project in Silta, please check the Elasticsearch image(in silta.yml), that it corresponds to the one being generated for your project. 
+- The caching strategy is good to give a proper thought to. We have decided to use Fastly CDN. @TODO write some more info here
