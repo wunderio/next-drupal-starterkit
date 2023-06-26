@@ -1,0 +1,23 @@
+uuid: 02e0375d-38e1-441b-bf6c-bd8372ff0246
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_accordion_layout
+    - paragraphs.paragraphs_type.accordion
+  module:
+    - options
+id: paragraph.accordion.field_accordion_layout
+field_name: field_accordion_layout
+entity_type: paragraph
+bundle: accordion
+label: Layout
+description: 'Select the layout for this accordion paragraph.'
+required: true
+translatable: false
+default_value:
+  -
+    value: onecol
+default_value_callback: ''
+settings: {  }
+field_type: list_string

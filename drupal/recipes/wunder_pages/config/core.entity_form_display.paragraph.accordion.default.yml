@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.accordion.field_accordion_items
+    - field.field.paragraph.accordion.field_accordion_layout
     - field.field.paragraph.accordion.field_formatted_text
     - field.field.paragraph.accordion.field_heading
     - field.field.paragraph.accordion.field_primary_link
@@ -37,6 +38,12 @@ content:
         add_above: add_above
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
+    third_party_settings: {  }
+  field_accordion_layout:
+    type: options_select
+    weight: 4
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_formatted_text:
     type: text_textarea

@@ -120,6 +120,7 @@ export const AccordionSchema = z.object({
   type: z.literal("paragraph--accordion"),
   id: z.string(),
   field_heading: z.string().nullable(),
+  field_accordion_layout: z.enum(["one_column", "two_columns"]),
   field_accordion_items: z.array(AccordionItemSchema),
   field_primary_link: LinkShape.nullable().optional(),
   field_formatted_text: z

@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.accordion.field_accordion_items
+    - field.field.paragraph.accordion.field_accordion_layout
     - field.field.paragraph.accordion.field_formatted_text
     - field.field.paragraph.accordion.field_heading
     - field.field.paragraph.accordion.field_primary_link
@@ -21,7 +22,7 @@ mode: default
 content:
   field_accordion_items:
     type: entity_reference_revisions_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: ''
@@ -30,14 +31,14 @@ content:
     region: content
   field_formatted_text:
     type: text_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 2
     region: content
   field_heading:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -45,7 +46,7 @@ content:
     region: content
   field_primary_link:
     type: link
-    label: above
+    label: hidden
     settings:
       trim_length: 80
       url_only: false
@@ -55,4 +56,5 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
-hidden: {  }
+hidden:
+  field_accordion_layout: true

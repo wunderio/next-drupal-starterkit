@@ -21,6 +21,13 @@ process:
   status: constants/status
   uid: constants/uid
   langcode: Langcode
+  field_accordion_layout: Paragraphs_0_accordion_layout
+  'field_formatted_text/format':
+    plugin: default_value
+    default_value: basic_html
+  'field_formatted_text/value': Paragraphs_0_accordion_text
+  'field_primary_link/title': Paragraphs_0_accordion_link_text
+  'field_primary_link/uri': Paragraphs_0_accordion_link_uri
   pseudo_paragraph_field:
     plugin: migration_lookup
     migration: paragraphs_pages_accordion

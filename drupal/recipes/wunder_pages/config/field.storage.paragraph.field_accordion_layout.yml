@@ -1,0 +1,27 @@
+uuid: 8b15eeb7-feae-418f-a5c1-ef6c4a689f31
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_accordion_layout
+field_name: field_accordion_layout
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: one_column
+      label: 'One column'
+    -
+      value: two_columns
+      label: 'Two columns'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
