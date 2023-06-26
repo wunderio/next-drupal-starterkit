@@ -58,7 +58,11 @@ export function ParagraphHero({ paragraph }: { paragraph: HeroType }) {
           </div>
         </div>
         <div className="hidden lg:col-span-6 lg:mt-0 lg:flex">
-          <MediaImage media={paragraph.field_image} priority />
+          <MediaImage
+            media={paragraph.field_image}
+            alt="site-banner"
+            priority
+          />
         </div>
       </div>
     </section>

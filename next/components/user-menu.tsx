@@ -31,7 +31,7 @@ export function UserMenu() {
           type="button"
           className="hover:underline"
           onClick={toggle}
-          aria-expanded={isOpen ? "true" : "false"}
+          aria-expanded={isOpen}
         >
           <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
             {data.user.name}
@@ -72,8 +72,8 @@ export function UserMenu() {
     <div>
       <span className="sr-only">{t("user-menu")}</span>
       <button type="button" className="hover:underline" onClick={toggle}>
-        <span className="hidden sm:mr-2 sm:inline">
-          {t("user-menu-account")}
+        <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
+          {t("account")}
         </span>
         <AccountIcon className="inline-block h-6 w-6" />
       </button>

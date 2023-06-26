@@ -33,6 +33,19 @@ export const ImageShape = z.object({
   }),
 });
 
+export const DocumentShape = z.object({
+  type: z.literal("file--file"),
+  id: z.string(),
+  filename: z.string(),
+  filemime: z.string(),
+  filesize: z.number(),
+  uri: z
+    .object({
+      url: z.string(),
+    })
+    .nullable(),
+});
+
 export const LinkShape = z.object({
   title: z.string(),
   full_url: z.string(),
@@ -49,6 +62,24 @@ export const ImageSchema = z.object({
     })
     .nullable()
     .optional(),
+});
+
+export const FileAttachmentsSchema = z.object({
+  type: z.literal("paragraph--file_attachments"),
+  id: z.string(),
+  field_formatted_text: z
+    .object({
+      processed: z.string(),
+    })
+    .nullable(),
+  field_heading: z.string().nullable(),
+  field_file_attachments: z.array(
+    z.object({
+      type: z.literal("media--document"),
+      id: z.string(),
+      field_media_document: DocumentShape,
+    })
+  ),
 });
 
 export const VideoSchema = z.object({
@@ -70,7 +101,7 @@ export const LinksSchema = z.object({
   field_links: z.array(LinkShape),
 });
 
-export const AccordionItemSchema = z.object({
+const AccordionItemSchema = z.object({
   type: z.literal("paragraph--accordion_item"),
   id: z.string(),
   field_heading: z.string(),
@@ -80,6 +111,7 @@ export const AccordionItemSchema = z.object({
       ImageSchema,
       VideoSchema,
       LinksSchema,
+      FileAttachmentsSchema,
     ])
   ),
 });
@@ -87,7 +119,7 @@ export const AccordionItemSchema = z.object({
 export const AccordionSchema = z.object({
   type: z.literal("paragraph--accordion"),
   id: z.string(),
-  field_heading: z.string(),
+  field_heading: z.string().nullable(),
   field_accordion_items: z.array(AccordionItemSchema),
 });
 export const HeroSchema = z.object({
@@ -117,6 +149,7 @@ export type Accordion = z.infer<typeof AccordionSchema>;
 export type AccordionItem = z.infer<typeof AccordionItemSchema>;
 export type Hero = z.infer<typeof HeroSchema>;
 export type ListingArticles = z.infer<typeof ListingArticlesSchema>;
+export type FileAttachments = z.infer<typeof FileAttachmentsSchema>;
 
 export type Paragraph =
   | FormattedText
@@ -126,4 +159,5 @@ export type Paragraph =
   | Accordion
   | AccordionItem
   | Hero
-  | ListingArticles;
+  | ListingArticles
+  | FileAttachments;

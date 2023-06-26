@@ -1,0 +1,34 @@
+id: nodes_pages_media_files_attachments
+label: Page files attachments (media entities)
+migration_group: demo_content
+source:
+  plugin: csv
+  path: modules/custom/wunder_democontent/sources/pages.csv
+  ids:
+    - id
+  constants:
+    uid: 1
+    status: 1
+    langcode: en
+process:
+  # Skip if there are no attachments
+  skipped:
+    plugin: skip_on_empty
+    method: row
+    source: Paragraphs_0_file_attachments
+    message: Skipped because node has no attachments
+
+  langcode: constants/langcode
+  uid: constants/uid
+  status: constants/status
+  field_media_document/target_id:
+    plugin: migration_lookup
+    migration: nodes_pages_attachments
+    source: id
+
+destination:
+  plugin: 'entity:media'
+  default_bundle: document
+migration_dependencies:
+  required:
+    - nodes_pages_attachments

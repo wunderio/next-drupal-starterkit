@@ -4,6 +4,7 @@ import { z } from "zod";
 import { MetatagsSchema } from "@/lib/zod/metatag";
 import {
   AccordionSchema,
+  FileAttachmentsSchema,
   FormattedTextSchema,
   HeroSchema,
   ImageSchema,
@@ -25,6 +26,7 @@ export const PageSchema = z.object({
       AccordionSchema,
       HeroSchema,
       ListingArticlesSchema,
+      FileAttachmentsSchema,
     ])
   ),
   metatag: MetatagsSchema.optional(),
@@ -35,7 +37,7 @@ export function validateAndCleanupPage(page: DrupalNode): Page | null {
     return PageSchema.parse(page);
   } catch (error) {
     const { name = "ZodError", issues = [] } = error;
-    console.log(JSON.stringify({ name, issues }, null, 2));
+    console.log(JSON.stringify({ name, issues, page }, null, 2));
     return null;
   }
 }

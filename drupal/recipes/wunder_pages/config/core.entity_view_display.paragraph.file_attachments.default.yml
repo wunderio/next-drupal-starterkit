@@ -1,0 +1,43 @@
+uuid: 6bbd119c-68b1-45cc-9d33-084eca235b27
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.file_attachments.field_file_attachments
+    - field.field.paragraph.file_attachments.field_formatted_text
+    - field.field.paragraph.file_attachments.field_heading
+    - paragraphs.paragraphs_type.file_attachments
+  module:
+    - text
+_core:
+  default_config_hash: 1Np5rtIFvHeAiGXcod5rwIZsukdjBrbSV6Ns-qsAH-s
+id: paragraph.file_attachments.default
+targetEntityType: paragraph
+bundle: file_attachments
+mode: default
+content:
+  field_file_attachments:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_formatted_text:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_heading:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

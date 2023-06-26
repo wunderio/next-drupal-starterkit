@@ -8,12 +8,14 @@ export const ArticleBaseSchema = z.object({
   type: z.literal("node--article"),
   id: z.string(),
   created: z.string(),
+  sticky: z.boolean().optional(),
   uid: z.object({
     id: z.string(),
     display_name: z.string(),
   }),
   title: z.string(),
-  field_image: ImageShape,
+  field_image: ImageShape.nullable(),
+  field_excerpt: z.string().optional(),
 });
 
 const ArticleSchema = ArticleBaseSchema.extend({
@@ -29,7 +31,7 @@ export function validateAndCleanupArticle(article: DrupalNode): Article | null {
     return ArticleSchema.parse(article);
   } catch (error) {
     const { name = "ZodError", issues = [] } = error;
-    console.log(JSON.stringify({ name, issues }, null, 2));
+    console.log(JSON.stringify({ name, issues, article }, null, 2));
     return null;
   }
 }

@@ -1,0 +1,47 @@
+id: nodes_pages_attachments
+label: Page attachments (file entities)
+migration_group: demo_content
+source:
+  plugin: csv
+  path: modules/custom/wunder_democontent/sources/pages.csv
+  ids:
+    - id
+  constants:
+    file_dest_uri: 'public://attachments/pages'
+    file_source_path: 'modules/custom/wunder_democontent/sources/attachments'
+    uid: 1
+    status: 1
+    langcode: en
+process:
+  # Skip if there are no attachments
+  skipped:
+    plugin: skip_on_empty
+    method: row
+    source: Paragraphs_0_file_attachments
+    message: Skipped because node has no attachments
+
+  langcode: constants/langcode
+  uid: constants/uid
+  status: constants/status
+
+  file_source:
+    plugin: concat
+    delimiter: /
+    source:
+      - constants/file_source_path
+      - Paragraphs_0_file_attachments
+  # The destination uses the filename added to our constant:
+  file_dest:
+    plugin: concat
+    delimiter: /
+    source:
+      - constants/file_dest_uri
+      - Paragraphs_0_file_attachments
+  uri:
+    plugin: file_copy
+    source:
+      - '@file_source'
+      - '@file_dest'
+    file_exists: replace
+destination:
+  plugin: entity:file

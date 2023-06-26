@@ -8,6 +8,9 @@ nginx:
     wunder-vpn: 194.89.156.118/32
   extraConfig: |
     include mime.types;
-        types {
-            application/javascript mjs;
+    types {
+        # Base Silta config uses "application/octet-stream" for .mjs.
+        # Browsers will refuse to run any JS files served with such mimetype.
+        # Setting mimetype to "text/javascript" will make it work.
+        text/javascript mjs;
     }

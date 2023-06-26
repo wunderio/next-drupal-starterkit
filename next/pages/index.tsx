@@ -1,9 +1,12 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { DrupalNode } from "next-drupal";
+import { useTranslation } from "next-i18next";
 
+import { ArticleTeasers } from "@/components/article-teasers";
 import { ContactForm } from "@/components/contact-form";
-import { LatestArticles } from "@/components/latest-articles";
+import { ContactList } from "@/components/contact-list";
 import { LayoutProps } from "@/components/layout";
+import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
 import { Paragraph } from "@/components/paragraph";
 import { drupal } from "@/lib/drupal";
@@ -19,13 +22,15 @@ import { Divider } from "@/wunder-component-library/divider";
 
 interface IndexPageProps extends LayoutProps {
   frontpage: Frontpage | null;
-  articleTeasers: ArticleTeaser[];
+  promotedArticleTeasers: ArticleTeaser[];
 }
 
 export default function IndexPage({
   frontpage,
-  articleTeasers,
+  promotedArticleTeasers,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Meta title={frontpage?.title} metatags={frontpage?.metatag} />
@@ -37,7 +42,12 @@ export default function IndexPage({
       <Divider className="max-w-4xl" />
       <ContactForm />
       <Divider className="max-w-4xl" />
-      <LatestArticles articles={articleTeasers} />
+      <ArticleTeasers
+        articles={promotedArticleTeasers}
+        heading={t("promoted-articles")}
+      />
+      <ContactList />
+      <LogoStrip />
     </>
   );
 }
@@ -50,20 +60,22 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
       "node--frontpage",
       context,
       {
-        params: getNodePageJsonApiParams("node--frontpage"),
+        params: getNodePageJsonApiParams("node--frontpage").getQueryObject(),
       }
     )
   ).at(0);
 
-  const articleTeasers = await drupal.getResourceCollectionFromContext<
+  const promotedArticleTeasers = await drupal.getResourceCollectionFromContext<
     DrupalNode[]
   >("node--article", context, {
     params: {
       "filter[status]": 1,
       "filter[langcode]": context.locale,
+      "filter[promote]": 1,
       "fields[node--article]": "title,path,field_image,uid,created",
       include: "field_image,uid",
-      sort: "-created",
+      sort: "-sticky,-created",
+      "page[limit]": 3,
     },
   });
 
@@ -71,7 +83,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
     props: {
       ...(await getCommonPageProps(context)),
       frontpage: frontpage ? validateAndCleanupFrontpage(frontpage) : null,
-      articleTeasers: articleTeasers.map((teaser) =>
+      promotedArticleTeasers: promotedArticleTeasers.map((teaser) =>
         validateAndCleanupArticleTeaser(teaser)
       ),
     },

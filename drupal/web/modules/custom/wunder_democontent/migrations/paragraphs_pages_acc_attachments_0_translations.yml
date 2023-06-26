@@ -1,0 +1,66 @@
+id: paragraphs_pages_acc_attachments_0_translations
+label: Page paragraphs file attachments inside accordion translations
+migration_group: demo_content
+source:
+  plugin: csv
+  path: modules/custom/wunder_democontent/sources/pages.csv
+  ids: [id]
+  constants:
+    uid: 1
+    status: 1
+process:
+  # We are interested here only in nodes that are translations:
+  skipped:
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 0
+      source: 'Is source'
+    - plugin: skip_on_empty
+      method: row
+      source: Paragraphs_0_file_attachments
+      message: Skipped because node has no attachments
+  'field_formatted_text/format':
+    plugin: default_value
+    default_value: basic_html
+  'field_formatted_text/value': Paragraphs_0_file_attachments_text
+  field_heading: Paragraphs_0_file_attachments_heading
+  'field_file_attachments/0/target_id':
+    plugin: migration_lookup
+    source: id
+    migration: nodes_pages_media_files_attachments
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+
+  pseudo_paragraph_field:
+    plugin: migration_lookup
+    migration: paragraphs_pages_acc_attachments_0
+    source: Tnid
+  id:
+    plugin: extract
+    source: '@pseudo_paragraph_field'
+    index:
+      - '0'
+  revision_id:
+    plugin: extract
+    source: '@pseudo_paragraph_field'
+    index:
+      - '1'
+  skip_if_no_source:
+    plugin: skip_on_empty
+    method: row
+    source: '@id'
+    message: 'Source paragraph was not found, so this translation was skipped.'
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: file_attachments
+  translations: true
+
+migration_dependencies:
+  required:
+    - paragraphs_pages_acc_attachments_0
+
+

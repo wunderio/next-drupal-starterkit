@@ -1,0 +1,21 @@
+uuid: 5a107576-77ee-4c49-be74-15f7c2ec4b26
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_formatted_text
+    - paragraphs.paragraphs_type.file_attachments
+  module:
+    - text
+id: paragraph.file_attachments.field_formatted_text
+field_name: field_formatted_text
+entity_type: paragraph
+bundle: file_attachments
+label: 'Formatted text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

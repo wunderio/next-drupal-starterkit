@@ -4,6 +4,7 @@ import { z } from "zod";
 import { MetatagsSchema } from "@/lib/zod/metatag";
 import {
   AccordionSchema,
+  FileAttachmentsSchema,
   FormattedTextSchema,
   HeroSchema,
   ImageSchema,
@@ -25,6 +26,7 @@ export const FrontpageSchema = z.object({
       AccordionSchema,
       HeroSchema,
       ListingArticlesSchema,
+      FileAttachmentsSchema,
     ])
   ),
   metatag: MetatagsSchema.optional(),
@@ -37,7 +39,7 @@ export function validateAndCleanupFrontpage(
     return FrontpageSchema.parse(frontpage);
   } catch (error) {
     const { name = "ZodError", issues = [] } = error;
-    console.log(JSON.stringify({ name, issues }, null, 2));
+    console.log(JSON.stringify({ name, issues, frontpage }, null, 2));
     return null;
   }
 }

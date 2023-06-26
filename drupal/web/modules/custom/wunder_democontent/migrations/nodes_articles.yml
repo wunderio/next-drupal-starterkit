@@ -25,6 +25,8 @@ process:
   status: constants/status
   uid: constants/uid
   langcode: Langcode
+  sticky: Sticky
+  promote: Promote
   field_excerpt: Excerpt
   'body/format':
     plugin: default_value
@@ -39,6 +41,13 @@ process:
   field_tags:
     plugin: entity_generate
     source: Tag
+  created:
+    plugin: format_date
+    source: Date
+    from_format: 'F j, Y H:i:s'
+    to_format: 'U'
+    from_timezone: 'UTC'
+    to_timezone: 'UTC'
 
 destination:
   plugin: entity:node
