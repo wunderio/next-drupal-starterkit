@@ -124,20 +124,48 @@ commands:
 
             drupal_release_name=`silta ci release name`
             next_release_name=`silta ci release name --release-suffix next`
-            project=${CIRCLE_PROJECT_REPONAME}
-            domain=${CLUSTER_DOMAIN}
 
-            echo "Expanding special variable DRUPAL_RELEASE_NAME = ${drupal_release_name} ..."
-            sed -i -e "s/\${DRUPAL_RELEASE_NAME}/${drupal_release_name}/g" ${envvars_file}
+            # If name is too long, truncate it and append a hash
+            if [ ${#drupal_release_name} -ge 33 ]; then
+              drupal_release_name="$(printf "$drupal_release_name" | cut -c 1-30)$(printf "$drupal_release_name" | shasum -a 256 | cut -c 1-3 )"
+            fi
+            if [ ${#next_release_name} -ge 33 ]; then
+              next_release_name="$(printf "$next_release_name" | cut -c 1-30)$(printf "$next_release_name" | shasum -a 256 | cut -c 1-3 )"
+            fi
 
-            echo "Expanding special variable NEXT_RELEASE_NAME = ${next_release_name} ..."
-            sed -i -e "s/\${NEXT_RELEASE_NAME}/${next_release_name}/g" ${envvars_file}
+            project_name=next4drupal
+            
+            drupal_domain=$drupal_release_name.$project_name.$CLUSTER_DOMAIN
+            next_domain=$next_release_name.$project_name.$CLUSTER_DOMAIN
+            drupal_client_id=drupal-client-id
 
-            echo "Expanding special variable PROJECT = ${project} ..."
-            sed -i -e "s/\${PROJECT}/${project}/g" ${envvars_file}
+            echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=https://$drupal_domain" >> "$BASH_ENV"
+            echo "export NEXT_IMAGE_DOMAIN=$drupal_domain" >> "$BASH_ENV"
+            echo "export NEXT_PUBLIC_FRONTEND_URL=https://$next_domain" >> "$BASH_ENV"
+            echo "export NEXTAUTH_URL=https://$next_domain" >> "$BASH_ENV"
+            echo "export DRUPAL_CLIENT_ID=$drupal_client_id" >> "$BASH_ENV"
 
-            echo "Expanding special variable DOMAIN = <redacted> ..."
-            sed -i -e "s/\${DOMAIN}/${domain}/g" ${envvars_file}
+            echo "Expanding special variable PROJECT_NAME = $project_name ..."
+            sed -i -e "s/<|PROJECT_NAME|>/$project_name/g" $envvars_file
+
+            echo "Expanding special variable DRUPAL_DOMAIN = $drupal_domain ..."
+            sed -i -e "s/<|DRUPAL_DOMAIN|>/$drupal_domain/g" $envvars_file
+
+            echo "Expanding special variable NEXT_DOMAIN = $next_domain ..."
+            sed -i -e "s/<|NEXT_DOMAIN|>/$next_domain/g" $envvars_file
+
+            echo "Expanding special variable DRUPAL_CLIENT_ID = $drupal_client_id ..."
+            sed -i -e "s/<|DRUPAL_CLIENT_ID|>/$drupal_client_id/g" $envvars_file
+
+            echo "Expanding secrets DRUPAL_CLIENT_SECRET, DRUPAL_REVALIDATE_SECRET, NEXTAUTH_SECRET & HASHSALT = <redacted> ..."
+            escaped_drupal_revalidate_secret=$(printf '%s\n' "$DRUPAL_REVALIDATE_SECRET" | sed -e 's/[\/&]/\\&/g')
+            escaped_drupal_client_secret=$(printf '%s\n' "$DRUPAL_CLIENT_SECRET" | sed -e 's/[\/&]/\\&/g')
+            escaped_nextauth_secret=$(printf '%s\n' "$NEXTAUTH_SECRET" | sed -e 's/[\/&]/\\&/g')
+            escaped_hashsalt=$(printf '%s\n' "$HASHSALT" | sed -e 's/[\/&]/\\&/g')
+            sed -i -e "s/\${DRUPAL_CLIENT_SECRET}/$escaped_drupal_client_secret/g" $envvars_file
+            sed -i -e "s/\${DRUPAL_REVALIDATE_SECRET}/$escaped_drupal_revalidate_secret/g" $envvars_file
+            sed -i -e "s/\${NEXTAUTH_SECRET}/$escaped_nextauth_secret/g" $envvars_file
+            sed -i -e "s/\${HASHSALT}/$escaped_hashsalt/g" $envvars_file
 
             echo "Expanding special variable DRUPAL_ADMIN_PWD = <redacted> ..."
             echo "WARN: Due to the admin password getting baked in to the image, web login as admin must be kept disabled!"
@@ -170,8 +198,7 @@ workflows:
           name: Drupal build & deploy
           executor: cicd81
           drupal-root: drupal
-          decrypt_files: silta/secrets
-          silta_config: silta/silta.yml,silta/secrets
+          silta_config: silta/silta.yml
           pre-release:
             - silta/build-docker-image:
                 dockerfile: silta/elasticsearch.Dockerfile
@@ -196,8 +223,13 @@ workflows:
           # Extend the build-deploy configuration for the main environment.
           <<: *build-deploy
           name: Drupal build & deploy main
-          silta_config: silta/silta.yml,silta/silta-main.yml,silta/secrets
-          context: silta_dev
+          silta_config: silta/silta.yml,silta/silta-main.yml
+          codebase-build:
+            - symlink-silta-config
+            - expand-envvars-in-silta-config
+            - generate-openssl-keypair
+            - silta/drupal-composer-install
+            - silta/npm-install-build
           filters:
             branches:
               only: main
@@ -206,15 +238,20 @@ workflows:
           # Extend the build-deploy configuration for the production environment.
           <<: *build-deploy
           name: Drupal build & deploy production
-          decrypt_files: silta/secrets-prod
-          silta_config: silta/silta.yml,silta/silta-prod.yml,silta/secrets
+          silta_config: silta/silta.yml,silta/silta-prod.yml
           context: silta_finland
+          codebase-build:
+            - symlink-silta-config
+            - expand-envvars-in-silta-config
+            - generate-openssl-keypair
+            - silta/drupal-composer-install
+            - silta/npm-install-build
           filters:
             branches:
               only: production
 
+      # Special rules for deploybot branches.
       - silta/drupal-build-deploy:
-          # Special rules for deploybot branches.
           <<: *build-deploy
           name: Drupal build dependabot
           context: silta_dev
@@ -247,13 +284,11 @@ workflows:
           name: Next build & deploy
           context: silta_dev
           executor: cicd81
-          silta_config: silta/silta-next.yml,silta/secrets_frontend
+          silta_config: silta/silta-next.yml
           release-suffix: next
           codebase-build:
             - symlink-silta-config:
                 target: next
-            - silta/decrypt-files:
-                files: silta/secrets_frontend
             - expand-envvars-in-silta-config:
                 file-name: silta-next.yml
             # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
@@ -279,14 +314,12 @@ workflows:
           <<: *frontend-build-deploy
           name: Next build & deploy main
           context: silta_dev
-          silta_config: silta/silta-next.yml,silta/silta-next-main.yml,silta/secrets_frontend
+          silta_config: silta/silta-next.yml,silta/silta-next-main.yml
           codebase-build:
             - symlink-silta-config:
                 target: next
             - expand-envvars-in-silta-config:
                 file-name: silta-next.yml
-            - expand-envvars-in-silta-config:
-                file-name: silta-next-main.yml
             # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
             # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
@@ -301,16 +334,12 @@ workflows:
           <<: *frontend-build-deploy
           name: Next build & deploy production
           context: silta_finland
-          silta_config: silta/silta-next.yml,silta/silta-next-prod.yml,silta/secrets-prod
+          silta_config: silta/silta-next.yml,silta/silta-next-prod.yml
           codebase-build:
             - symlink-silta-config:
                 target: next
-            - silta/decrypt-files:
-                files: silta/secrets-prod
             - expand-envvars-in-silta-config:
                 file-name: silta-next.yml
-            - expand-envvars-in-silta-config:
-                file-name: silta-next-prod.yml
             # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
             # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:

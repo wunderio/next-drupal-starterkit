@@ -4,15 +4,21 @@
 # for all possible options.
 #
 #
+projectName: <|PROJECT_NAME|>
+
 services:
   node:
     exposedRoute: '/'
     port: 3000
     env:
-      NEXT_PUBLIC_DRUPAL_BASE_URL: https://${DRUPAL_RELEASE_NAME}.${PROJECT}.${DOMAIN}
-      NEXT_PUBLIC_FRONTEND_URL: https://${NEXT_RELEASE_NAME}.${PROJECT}.${DOMAIN}
-      NEXT_IMAGE_DOMAIN: ${DRUPAL_RELEASE_NAME}.${PROJECT}.${DOMAIN}
-      NEXTAUTH_URL: https://${NEXT_RELEASE_NAME}.${PROJECT}.${DOMAIN}
+      DRUPAL_CLIENT_ID: <|DRUPAL_CLIENT_ID|>
+      DRUPAL_CLIENT_SECRET: ${DRUPAL_CLIENT_SECRET}
+      DRUPAL_REVALIDATE_SECRET: ${DRUPAL_REVALIDATE_SECRET}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXT_PUBLIC_DRUPAL_BASE_URL: https://<|DRUPAL_DOMAIN|>
+      NEXT_PUBLIC_FRONTEND_URL: https://<|NEXT_DOMAIN|>
+      NEXT_IMAGE_DOMAIN: <|DRUPAL_DOMAIN|>
+      NEXTAUTH_URL: https://<|NEXT_DOMAIN|>
 
 nginx:
   content_security_policy: >- # Lines below are joined without line breaks.
@@ -21,9 +27,9 @@ nginx:
     script-src 'self' youtube.com https://www.youtube.com;
     frame-src youtube.com https://www.youtube.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' https://${DRUPAL_RELEASE_NAME}.${PROJECT}.${DOMAIN} https://i.ytimg.com;
-    font-src 'self' https://${DRUPAL_RELEASE_NAME}.${PROJECT}.${DOMAIN};
-    frame-ancestors 'self' https://${DRUPAL_RELEASE_NAME}.${PROJECT}.${DOMAIN};
+    img-src 'self' *.wdr.io https://i.ytimg.com;
+    font-src 'self' *.wdr.io;
+    frame-ancestors 'self' *.wdr.io;
     base-uri 'self';
     connect-src 'self';
     form-action 'self';
