@@ -4,7 +4,7 @@
 # See https://github.com/wunderio/charts/blob/master/drupal/values.yaml
 # for all possible options.
 
-projectName: <|PROJECT_NAME|>
+projectName: next4drupal
 
 php:
   drupalCoreVersion: "10"
