@@ -46,7 +46,7 @@ nginx:
     upgrade-insecure-requests;
     default-src https: data: 'unsafe-inline' 'unsafe-eval';
     frame-ancestors 'self';
-    frame-src: https://${NEXT_RELEASE_NAME}.${PROJECT}.${DOMAIN};
+    frame-src *.wdr.io;
     base-uri 'self';
     object-src 'self';
     connect-src wss: https:
