@@ -188,5 +188,8 @@ lando composer require 'drupal/twig_tweak:^3.2' -W
 
 ### Things to consider when creating a project from this template
 
-- When setting up this project in Silta, please check the Elasticsearch image(in silta.yml), that it corresponds to the one being generated for your project. 
-- The caching strategy is good to give a proper thought to. We have decided to use Fastly CDN. @TODO write some more info here
+- When setting up this project in Silta, please check the Elasticsearch image(in silta.yml), 
+that it corresponds to the one being generated for your project. 
+- The caching strategy is good to give a proper thought to. We have tested this template 
+with Fastly CDN, which makes a good match, and you don't have to worry about invalidations etc. that much. 
+- @TODO write some more info about the caching and CDN, when we have more experience with the setup. 
