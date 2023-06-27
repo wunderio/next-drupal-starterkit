@@ -4,18 +4,20 @@
 # See https://github.com/wunderio/charts/blob/master/drupal/values.yaml
 # for all possible options.
 
+projectName: <|PROJECT_NAME|>
+
 php:
   drupalCoreVersion: "10"
   env:
-    WUNDER_NEXT_FRONTEND_URL: https://<|next_domain|>
-    DRUPAL_REVALIDATE_SECRET: revalidate_secret_not_secure_used_only_locally
-    DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
-    DRUPAL_CLIENT_ID: drupal-client-id
-    DRUPAL_ADMIN_PWD: <|drupal_admin_pwd|>
-  hashsalt: notsosecurehashnotsosecurehashnotsosecurehash
+    DRUPAL_CLIENT_ID: <|DRUPAL_CLIENT_ID|>
+    DRUPAL_CLIENT_SECRET: ${DRUPAL_CLIENT_SECRET}
+    DRUPAL_REVALIDATE_SECRET: ${DRUPAL_REVALIDATE_SECRET}
+    WUNDER_NEXT_FRONTEND_URL: https://<|NEXT_DOMAIN|>
+  hashsalt: ${HASHSALT}
+
   # This section is used in the template only, it will reinstall the site and apply
   # all standard configuration at each commit. When creating a new project from this template
-  # you have to remove this section.
+  # you can remove this section.
   postupgrade:
     afterCommand: |
       drush si minimal --account-pass=${DRUPAL_ADMIN_PWD} -y
@@ -37,7 +39,14 @@ referenceData:
 nginx:
   basicauth:
     enabled: false
-  content_security_policy: "upgrade-insecure-requests; default-src https: data: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self'; frame-src: https://<|next_domain|>; base-uri 'self'; object-src 'self'; connect-src wss: https:"
+  content_security_policy: >-
+    upgrade-insecure-requests;
+    default-src https: data: 'unsafe-inline' 'unsafe-eval';
+    frame-ancestors 'self';
+    frame-src *.wdr.io;
+    base-uri 'self';
+    object-src 'self';
+    connect-src wss: https:
 
 elasticsearch:
   enabled: true
