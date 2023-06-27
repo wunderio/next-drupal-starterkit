@@ -44,7 +44,7 @@ class WunderNextCommands extends DrushCommands {
    */
   public function setupUserAndConsumer(array $options = [
     'secret' => '',
-    'show_secrets' => FALSE
+    'show_secrets' => FALSE,
   ]) {
 
     // For the secret, use the env var if defined, otherwise
@@ -119,11 +119,11 @@ class WunderNextCommands extends DrushCommands {
     if ($show_secrets) {
       $this->output()->writeln("DRUPAL_CLIENT_ID=$client_id");
       $this->output()->writeln("DRUPAL_CLIENT_SECRET=$secret");
-    } else {
+    }
+    else {
       $this->output()->writeln("DRUPAL_CLIENT_ID=**REDACTED**");
       $this->output()->writeln("DRUPAL_CLIENT_SECRET=**REDACTED**");
     }
-
   }
 
 }
