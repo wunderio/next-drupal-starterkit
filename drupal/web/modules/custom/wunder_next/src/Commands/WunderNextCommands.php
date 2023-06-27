@@ -29,15 +29,23 @@ class WunderNextCommands extends DrushCommands {
    *
    * @option secret
    *   The secret to assign to the consumer
-   * @usage wunder_next-commandName --secret=somesecret
+   * @option show_secrets
+   *   Choose if the secrets will be part of the output in plain text.
+   *
+   * @usage wunder_next-commandName --secret=somesecret --show_secrets=TRUE
    *   Use the --secret option to set the secret for the consumer.
    *   If you leave it blank, the env var DRUPAL_CLIENT_SECRET
    *   will be used, if not available a random value will be generated.
+   *   Set the show_secrets to TRUE to have the secrets be part of
+   *   the output in plain text.
    *
    * @command wunder_next:setup-user-and-consumer
    * @aliases wnsuac
    */
-  public function setupUserAndConsumer(array $options = ['secret' => '']) {
+  public function setupUserAndConsumer(array $options = [
+    'secret' => '',
+    'show_secrets' => FALSE
+  ]) {
 
     // For the secret, use the env var if defined, otherwise
     // generate a random value:
@@ -46,6 +54,9 @@ class WunderNextCommands extends DrushCommands {
     // But if a value was provided as parameter to the command,
     // use that instead:
     $secret = $options['secret'] ?: $secret;
+
+    // The option to show the secrets in plain text.
+    $show_secrets = $options['show_secrets'];
 
     // Create a new user with the required role:
     $new_user = [
@@ -103,9 +114,16 @@ class WunderNextCommands extends DrushCommands {
     $client_id = $consumer->getClientId();
 
     // Output instructions to the user:
-    $this->logger()->success(dt('User and consumer created. Add these two lines to the .env file for the Next application:'));
-    $this->output()->writeln("DRUPAL_CLIENT_ID=$client_id");
-    $this->output()->writeln("DRUPAL_CLIENT_SECRET=$secret");
+    $this->logger()->success(dt('User and consumer created. Add these two lines to the .env file for the
+    Next application. Note that the output is hidden by default, check drush command options for showing them. '));
+    if ($show_secrets) {
+      $this->output()->writeln("DRUPAL_CLIENT_ID=$client_id");
+      $this->output()->writeln("DRUPAL_CLIENT_SECRET=$secret");
+    } else {
+      $this->output()->writeln("DRUPAL_CLIENT_ID=**REDACTED**");
+      $this->output()->writeln("DRUPAL_CLIENT_SECRET=**REDACTED**");
+    }
+
   }
 
 }
