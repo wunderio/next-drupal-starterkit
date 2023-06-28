@@ -41,10 +41,7 @@ export function ParagraphAccordionTwoColumns({
                 variant="primary"
               >
                 {paragraph.field_primary_link.title}
-                <ArrowIcon
-                  aria-hidden
-                  className="bg:white ml-3 h-6 w-6 -rotate-90"
-                />
+                <ArrowIcon aria-hidden className="ml-3 h-6 w-6 -rotate-90" />
               </LinkButtonWithStyles>
             </div>
           )}

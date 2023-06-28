@@ -39,7 +39,7 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
             {t("all-articles")}
             <ArrowIcon
               aria-hidden
-              className="bg:white ml-3 h-6 w-6 -rotate-90"
+              className="ml-3 h-6 w-6 -rotate-90"
             />
           </LinkButtonWithStyles>
         )}
