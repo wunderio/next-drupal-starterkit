@@ -139,8 +139,8 @@ commands:
             next_domain=$next_release_name.$project_name.$CLUSTER_DOMAIN
             drupal_client_id=drupal-client-id
 
-            if [ $drupal_release_name == "main" ]; then
-              drupal_domain=cms.$project_name.$CLUSTER_DOMAIN
+            if [ next_domain == "main-next" ]; then
+              next_domain=$project_name.$CLUSTER_DOMAIN
             fi
 
             echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=https://$drupal_domain" >> "$BASH_ENV"

@@ -11,9 +11,7 @@ exposeDomains:
 services:
   node:
     env:
-      NEXT_PUBLIC_DRUPAL_BASE_URL: https://cms.next4drupal.dev.wdr.io
       NEXT_PUBLIC_FRONTEND_URL: https://next4drupal.dev.wdr.io
-      NEXT_IMAGE_DOMAIN: https://cms.next4drupal.dev.wdr.io
       NEXTAUTH_URL: https://next4drupal.dev.wdr.io
 
 nginx:
