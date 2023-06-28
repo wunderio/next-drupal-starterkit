@@ -145,9 +145,6 @@ commands:
             echo "export NEXTAUTH_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export DRUPAL_CLIENT_ID=$drupal_client_id" >> "$BASH_ENV"
 
-            echo "Expanding special variable PROJECT_NAME = $project_name ..."
-            sed -i -e "s/<|PROJECT_NAME|>/$project_name/g" $envvars_file
-
             echo "Expanding special variable DRUPAL_DOMAIN = $drupal_domain ..."
             sed -i -e "s/<|DRUPAL_DOMAIN|>/$drupal_domain/g" $envvars_file
 
