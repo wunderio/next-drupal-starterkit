@@ -8,3 +8,4 @@ referenceData:
 php:
   env:
     WUNDER_NEXT_FRONTEND_URL: https://next4drupal.dev.wdr.io
+    NEXT_IMAGE_DOMAIN: https://cms.next4drupal.dev.wdr.io
