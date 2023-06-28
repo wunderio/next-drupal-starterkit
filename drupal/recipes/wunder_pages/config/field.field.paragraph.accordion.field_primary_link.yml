@@ -1,0 +1,23 @@
+uuid: dd29d2aa-280f-4b35-a271-c00251a8548e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_primary_link
+    - paragraphs.paragraphs_type.accordion
+  module:
+    - link
+id: paragraph.accordion.field_primary_link
+field_name: field_primary_link
+entity_type: paragraph
+bundle: accordion
+label: 'Primary link'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 2
+  link_type: 17
+field_type: link

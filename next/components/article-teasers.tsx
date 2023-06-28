@@ -37,10 +37,7 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
             variant="primary"
           >
             {t("all-articles")}
-            <ArrowIcon
-              aria-hidden
-              className="bg:white ml-3 h-6 w-6 -rotate-90"
-            />
+            <ArrowIcon aria-hidden className="ml-3 h-6 w-6 -rotate-90" />
           </LinkButtonWithStyles>
         )}
       </div>

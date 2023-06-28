@@ -1,0 +1,21 @@
+uuid: db260331-14c4-4f66-b739-89980f109b91
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_formatted_text
+    - paragraphs.paragraphs_type.accordion
+  module:
+    - text
+id: paragraph.accordion.field_formatted_text
+field_name: field_formatted_text
+entity_type: paragraph
+bundle: accordion
+label: 'Formatted text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

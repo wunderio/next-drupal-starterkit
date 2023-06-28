@@ -1,27 +1,20 @@
-import { Paragraph } from "@/components/paragraph";
+import { ParagraphAccordionOneColumn } from "@/components/paragraph--accordion--one-column";
+import { ParagraphAccordionTwoColumns } from "@/components/paragraph--accordion--two-columns";
 import { Accordion as ParagraphAccordion } from "@/lib/zod/paragraph";
-
-import { Accordion } from "@/wunder-component-library/accordion";
-
 export function ParagraphAccordion({
   paragraph,
 }: {
   paragraph: ParagraphAccordion;
 }) {
-  return (
-    <Accordion
-      heading={paragraph.field_heading}
-      items={paragraph.field_accordion_items?.map((item) => ({
-        id: item.id,
-        heading: item.field_heading,
-        content: (
-          <div className="grid gap-4">
-            {item.field_content_elements?.map((paragraph) => (
-              <Paragraph key={paragraph.id} paragraph={paragraph} />
-            ))}
-          </div>
-        ),
-      }))}
-    />
-  );
+  switch (paragraph.field_accordion_layout) {
+    case "one_column": {
+      return <ParagraphAccordionOneColumn paragraph={paragraph} />;
+    }
+    case "two_columns": {
+      return <ParagraphAccordionTwoColumns paragraph={paragraph} />;
+    }
+
+    default:
+      return null;
+  }
 }

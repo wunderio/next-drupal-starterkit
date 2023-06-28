@@ -4,12 +4,17 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.accordion.field_accordion_items
+    - field.field.paragraph.accordion.field_accordion_layout
+    - field.field.paragraph.accordion.field_formatted_text
     - field.field.paragraph.accordion.field_heading
+    - field.field.paragraph.accordion.field_primary_link
     - paragraphs.paragraphs_type.accordion
   module:
     - entity_reference_revisions
+    - link
+    - text
 _core:
-  default_config_hash: 2F7qAofB4OBEpj9Zxu2JAZskLWS6-WYuwIeCbjxKKIY
+  default_config_hash: qmVZyO44gmpIfvU_8n3X4TSlK5q45fHmvDrjtFP-K5E
 id: paragraph.accordion.default
 targetEntityType: paragraph
 bundle: accordion
@@ -17,19 +22,39 @@ mode: default
 content:
   field_accordion_items:
     type: entity_reference_revisions_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
     weight: 1
     region: content
+  field_formatted_text:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
   field_heading:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     weight: 0
     region: content
-hidden: {  }
+  field_primary_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden:
+  field_accordion_layout: true
