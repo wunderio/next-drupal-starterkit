@@ -13,3 +13,5 @@ permissions:
   - 'access user profiles'
   - 'bypass node access'
   - 'issue subrequests'
+  - 'view all revisions'
+  - 'view all media revisions'
