@@ -1,7 +1,6 @@
 import React from "react";
+import clsx from "clsx";
 import { cva } from "cva";
-
-import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
   "flex justify-center items-center border-2 rounded transition-colors duration-200 active:enabled:scale-[0.98] disabled:cursor-not-allowed",
@@ -51,7 +50,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     return (
       <button
-        className={cn(buttonVariants({ variant, size }), className)}
+        className={clsx(buttonVariants({ variant, size }), className)}
         ref={ref}
         {...props}
       >

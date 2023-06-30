@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
+import clsx from "clsx";
 
 import { ArticleTeaser } from "@/components/article-teaser";
 import { ArticleTeaser as ArticleTeaserType } from "@/lib/zod/article-teaser";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
+
 import { buttonVariants } from "@/wunder-component-library/button";
-import clsx from "clsx";
 
 interface LatestArticlesProps {
   articles?: ArticleTeaserType[];

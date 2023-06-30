@@ -1,8 +1,7 @@
 import React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
+import clsx from "clsx";
 import { cva, VariantProps } from "cva";
-
-import { cn } from "@/lib/utils";
 
 const labelVariants = cva(
   "mb-1 block text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -15,7 +14,7 @@ export const Label = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <LabelPrimitive.Root
     ref={ref}
-    className={cn(labelVariants(), className)}
+    className={clsx(labelVariants(), className)}
     {...props}
   />
 ));

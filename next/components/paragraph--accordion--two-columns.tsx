@@ -1,3 +1,4 @@
+import Link from "next/link";
 import clsx from "clsx";
 
 import { FormattedText } from "@/components/formatted-text";
@@ -8,7 +9,6 @@ import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
 import { Accordion } from "@/wunder-component-library/accordion";
 import { buttonVariants } from "@/wunder-component-library/button";
-import Link from "next/link";
 
 export function ParagraphAccordionTwoColumns({
   paragraph,

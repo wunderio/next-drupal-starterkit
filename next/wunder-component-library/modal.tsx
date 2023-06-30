@@ -1,8 +1,8 @@
 import { useTranslation } from "next-i18next";
 import React from "react";
 import * as ModalPrimitive from "@radix-ui/react-dialog";
+import clsx from "clsx";
 
-import { cn } from "@/lib/utils";
 import CloseIcon from "@/styles/icons/close.svg";
 
 const Modal = ModalPrimitive.Root;
@@ -14,7 +14,7 @@ const ModalPortal = ({
   children,
   ...props
 }: ModalPrimitive.DialogPortalProps) => (
-  <ModalPrimitive.Portal className={cn(className)} {...props}>
+  <ModalPrimitive.Portal className={clsx(className)} {...props}>
     <div className="fixed inset-0 z-50 flex items-center justify-center font-overpass">
       {children}
     </div>
@@ -28,7 +28,7 @@ const ModalOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ModalPrimitive.Overlay
     ref={ref}
-    className={cn("fixed inset-0 z-50 backdrop-blur-sm", className)}
+    className={clsx("fixed inset-0 z-50 backdrop-blur-sm", className)}
     {...props}
   />
 ));
@@ -44,7 +44,7 @@ const ModalContent = React.forwardRef<
       <ModalOverlay />
       <ModalPrimitive.Content
         ref={ref}
-        className={cn(
+        className={clsx(
           "fixed z-50 grid max-h-[95vh] w-[95vw] max-w-xl gap-4 overflow-y-auto rounded border border-graysuit bg-white px-6 pb-10 pt-12 text-scapaflow shadow-long",
           className
         )}
@@ -65,7 +65,7 @@ const ModalHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col space-y-4", className)} {...props} />
+  <div className={clsx("flex flex-col space-y-4", className)} {...props} />
 );
 ModalHeader.displayName = "ModalHeader";
 
@@ -75,7 +75,7 @@ const ModalTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ModalPrimitive.Title
     ref={ref}
-    className={cn(
+    className={clsx(
       "leading-none text-2xl font-semibold tracking-tight text-steelgray",
       className
     )}
@@ -90,7 +90,7 @@ const ModalDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ModalPrimitive.Description
     ref={ref}
-    className={cn("text-md text-scapaflow", className)}
+    className={clsx("text-md text-scapaflow", className)}
     {...props}
   />
 ));

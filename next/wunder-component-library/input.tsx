@@ -1,6 +1,5 @@
 import React from "react";
-
-import { cn } from "@/lib/utils";
+import clsx from "clsx";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -8,7 +7,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => {
     return (
       <input
-        className={cn(
+        className={clsx(
           "flex w-full items-center rounded border-2 border-stone bg-white px-2 py-1.5 text-md text-steelgray",
           "placeholder:text-stone",
           "hover:enabled:border-steelgray",

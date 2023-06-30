@@ -1,7 +1,7 @@
 import { useTranslation } from "next-i18next";
 import { Paging } from "@elastic/react-search-ui";
+import clsx from "clsx";
 
-import { cn } from "@/lib/utils";
 import Arrow from "@/styles/icons/arrow-down.svg";
 
 import { Button } from "@/wunder-component-library/button";
@@ -29,7 +29,7 @@ export function Pagination() {
               <li className="inline-block" key={page}>
                 <button
                   onClick={() => onChange(page)}
-                  className={cn(
+                  className={clsx(
                     "h-10 w-10 rounded-full text-primary-600 hover:enabled:underline",
                     current === page && "bg-steelgray text-white"
                   )}
