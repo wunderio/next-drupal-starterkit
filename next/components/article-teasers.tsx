@@ -4,10 +4,8 @@ import { useTranslation } from "next-i18next";
 import { ArticleTeaser } from "@/components/article-teaser";
 import { ArticleTeaser as ArticleTeaserType } from "@/lib/zod/article-teaser";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
-
-import { withButtonStyles } from "@/wunder-component-library/button";
-
-export const LinkButtonWithStyles = withButtonStyles<any>(Link);
+import { buttonVariants } from "@/wunder-component-library/button";
+import clsx from "clsx";
 
 interface LatestArticlesProps {
   articles?: ArticleTeaserType[];
@@ -31,14 +29,16 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
       <div className="flex items-center justify-center">
         {!articles?.length && <p className="py-4">{t("no-content-found")}</p>}
         {articles?.length && (
-          <LinkButtonWithStyles
+          <Link
             href="/all-articles"
-            className="text-base mr-4 mt-4 inline-flex px-5 py-3"
-            variant="primary"
+            className={clsx(
+              buttonVariants({ variant: "primary" }),
+              "text-base mr-4 mt-4 inline-flex px-5 py-3"
+            )}
           >
             {t("all-articles")}
             <ArrowIcon aria-hidden className="ml-3 h-6 w-6 -rotate-90" />
-          </LinkButtonWithStyles>
+          </Link>
         )}
       </div>
     </>

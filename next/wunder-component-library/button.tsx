@@ -61,38 +61,3 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 Button.displayName = "Button";
-
-// This is a higher-order component (HOC) that takes a component and returns a new component with the Wunder component library button styles applied.
-
-interface WithButtonStylesProps {
-  variant?: ButtonProps["variant"];
-  size?: ButtonProps["size"];
-  className?: ButtonProps["className"];
-}
-
-export function withButtonStyles<P extends WithButtonStylesProps>(
-  WrappedComponent: React.ComponentType<P>
-): React.FC<P> {
-  const WithButtonStyles: React.FC<P> = (props) => {
-    const {
-      variant = "primary",
-      size = "sm",
-      className,
-      ...otherProps
-    } = props;
-    const buttonClasses = buttonVariants({ variant, size });
-
-    return (
-      <WrappedComponent
-        className={cn(buttonClasses, className)}
-        {...(otherProps as P)}
-      />
-    );
-  };
-
-  WithButtonStyles.displayName = `withButtonStyles(${
-    WrappedComponent.displayName || WrappedComponent.name || "WrappedComponent"
-  })`;
-
-  return WithButtonStyles;
-}

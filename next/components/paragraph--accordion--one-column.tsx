@@ -3,11 +3,12 @@ import clsx from "clsx";
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingParagraph } from "@/components/heading--paragraph";
 import { Paragraph } from "@/components/paragraph";
-import { LinkButtonWithStyles } from "@/components/paragraph--hero";
 import { Accordion as ParagraphAccordion } from "@/lib/zod/paragraph";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
 import { Accordion } from "@/wunder-component-library/accordion";
+import { buttonVariants } from "@/wunder-component-library/button";
+import Link from "next/link";
 
 export function ParagraphAccordionOneColumn({
   paragraph,
@@ -30,14 +31,16 @@ export function ParagraphAccordionOneColumn({
         />
       )}
       {paragraph.field_primary_link && (
-        <LinkButtonWithStyles
+        <Link
           href={paragraph.field_primary_link.full_url}
-          className="text-base mr-4 inline-flex max-w-sm px-5 py-3"
-          variant="primary"
+          className={clsx(
+            buttonVariants({ variant: "primary" }),
+            "text-base mr-4 inline-flex max-w-sm px-5 py-3"
+          )}
         >
           {paragraph.field_primary_link.title}
           <ArrowIcon aria-hidden className="ml-3 h-6 w-6 -rotate-90" />
-        </LinkButtonWithStyles>
+        </Link>
       )}
 
       <Accordion
