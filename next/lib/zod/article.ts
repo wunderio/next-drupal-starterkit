@@ -15,12 +15,11 @@ export const ArticleBaseSchema = z.object({
   }),
   title: z.string(),
   field_image: ImageShape.nullable(),
-  field_excerpt: z.string().optional(),
+  field_excerpt: z.string().optional().nullable(),
 });
 
 const ArticleSchema = ArticleBaseSchema.extend({
   metatag: MetatagsSchema.optional(),
-  field_excerpt: z.string().optional(),
   body: z.object({
     processed: z.string(),
   }),
