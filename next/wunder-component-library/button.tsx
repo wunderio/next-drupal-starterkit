@@ -3,27 +3,27 @@ import clsx from "clsx";
 import { cva } from "cva";
 
 export const buttonVariants = cva(
-  "flex justify-center items-center border-2 rounded transition-colors duration-200 active:enabled:scale-[0.98] disabled:cursor-not-allowed",
+  "flex justify-center items-center border-2 rounded transition-colors duration-200 active:scale-[0.98] disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
         primary: [
           "bg-primary-600 border-primary-600 text-white",
-          "hover:enabled:bg-white hover:enabled:text-primary-600",
-          "active:enabled:bg-white active:enabled:text-primary-600",
-          "disabled:border-primary-200 disabled:text-white disabled:bg-primary-200",
+          "hover:bg-white hover:text-primary-600",
+          "active:bg-white active:text-primary-600",
+          "disabled:!border-primary-200 disabled:!text-white disabled:!bg-primary-200",
         ],
         secondary: [
           "bg-white text-primary-600 border-primary-600",
-          "hover:enabled:bg-primary-600 hover:enabled:text-white",
-          "active:enabled:bg-primary-600 active:enabled:text-white",
-          "disabled:border-primary-200 disabled:text-primary-200 disabled:bg-white",
+          "hover:bg-primary-600 hover:text-white",
+          "active:bg-primary-600 active:text-white",
+          "disabled:!border-primary-200 disabled:!text-primary-200 disabled:!bg-white",
         ],
         tertiary: [
           "bg-transparent text-primary-600 border-transparent",
-          "hover:enabled:bg-primary-50 hover:enabled:text-primary-600 hover:enabled:border-transparent",
-          "active:enabled:bg-primary-50 active:enabled:text-primary-600 active:enabled:border-transparent",
-          "disabled:border-transparent disabled:text-primary-200",
+          "hover:bg-primary-50 hover:text-primary-600 hover:border-transparent",
+          "active:bg-primary-50 active:text-primary-600 active:border-transparent",
+          "disabled:!border-transparent disabled:!text-primary-200",
         ],
       },
       size: {
