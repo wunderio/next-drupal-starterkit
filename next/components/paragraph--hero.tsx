@@ -6,9 +6,7 @@ import { MediaImage } from "@/components/media--image";
 import { Hero as HeroType } from "@/lib/zod/paragraph";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
-import { withButtonStyles } from "@/wunder-component-library/button";
-
-export const LinkButtonWithStyles = withButtonStyles<any>(Link);
+import { buttonVariants } from "@/wunder-component-library/button";
 
 export function ParagraphHero({ paragraph }: { paragraph: HeroType }) {
   return (
@@ -29,25 +27,29 @@ export function ParagraphHero({ paragraph }: { paragraph: HeroType }) {
           />
           <div className="gap-4 sm:text-left">
             {paragraph.field_primary_link && (
-              <LinkButtonWithStyles
+              <Link
                 href={paragraph.field_primary_link.full_url}
-                className="text-base mr-4 inline-flex px-5 py-3"
-                variant="primary"
+                className={clsx(
+                  buttonVariants({ variant: "primary" }),
+                  "text-base mr-4 inline-flex px-5 py-3"
+                )}
               >
                 {paragraph.field_primary_link.title}
                 <ArrowIcon aria-hidden className="ml-3 h-6 w-6 -rotate-90" />
-              </LinkButtonWithStyles>
+              </Link>
             )}
 
             {paragraph.field_secondary_link && (
-              <LinkButtonWithStyles
+              <Link
                 href={paragraph.field_secondary_link.full_url}
-                className="text-base mt-3 inline-flex px-5 py-3 sm:mt-0"
-                variant="secondary"
+                className={clsx(
+                  buttonVariants({ variant: "secondary" }),
+                  "text-base mt-3 inline-flex px-5 py-3 sm:mt-0"
+                )}
               >
                 {paragraph.field_secondary_link.title}
                 <ArrowIcon aria-hidden className="ml-3 h-6 w-6 -rotate-90" />
-              </LinkButtonWithStyles>
+              </Link>
             )}
           </div>
         </div>

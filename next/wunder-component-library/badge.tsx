@@ -1,7 +1,6 @@
 import * as React from "react";
+import clsx from "clsx";
 import { cva } from "cva";
-
-import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
   "border font-semibold inline rounded text-md transition-colors uppercase tracking-wide cursor-arrow",
@@ -44,7 +43,10 @@ export function Badge({
   ...props
 }: BadgeProps) {
   return (
-    <div className={cn(badgeVariants({ variant, size }), className)} {...props}>
+    <div
+      className={clsx(badgeVariants({ variant, size }), className)}
+      {...props}
+    >
       {children}
     </div>
   );
