@@ -52,7 +52,7 @@ const options: HTMLReactParserOptions = {
         if (href && isRelative(href)) {
           return (
             <Link href={href} className="hyperlink underline">
-              {domToReact(domNode.children)}
+              {domToReact(domNode.children, options)}
             </Link>
           );
         }
@@ -60,7 +60,7 @@ const options: HTMLReactParserOptions = {
       }
 
       case "p": {
-        return <p className="mb-2">{domToReact(domNode.children)}</p>;
+        return <p className="mb-2">{domToReact(domNode.children, options)}</p>;
       }
 
       case "input": {
