@@ -2,9 +2,8 @@
 
 namespace Drupal\Tests\phpunit_example\Unit;
 
-use Drupal\Tests\UnitTestCase;
-
 use Drupal\phpunit_example\AddClass;
+use Drupal\Tests\UnitTestCase;
 
 /**
  * AddClass units tests.
