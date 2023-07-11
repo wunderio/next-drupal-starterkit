@@ -25,7 +25,7 @@ export function ArticlesListing({
       });
 
       return await response.json();
-    }
+    },
   );
 
   return (

@@ -3,7 +3,7 @@ import { drupal } from "lib/drupal";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   try {
     if (req.method === "POST") {

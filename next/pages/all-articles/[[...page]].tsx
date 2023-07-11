@@ -63,7 +63,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
-  context
+  context,
 ) => {
   // Get the page parameter:
   const page = context.params.page;
@@ -99,7 +99,7 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
     props: {
       ...(await getCommonPageProps(context)),
       articleTeasers: articles.map((teaser) =>
-        validateAndCleanupArticleTeaser(teaser)
+        validateAndCleanupArticleTeaser(teaser),
       ),
       paginationProps: {
         currentPage,

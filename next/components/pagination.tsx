@@ -59,7 +59,7 @@ export function Pagination({
       block: "start",
     });
     const focusable = focusRestoreRef?.current.querySelector(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
     if (focusable) {
       (focusable as HTMLElement).focus({ preventScroll: true });

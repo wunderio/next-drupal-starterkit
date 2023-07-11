@@ -12,7 +12,7 @@ const WebformSubmissionSchema = z.object({
 });
 
 export function validateAndCleanupWebformSubmission(
-  submission: WebformSubmissionRaw
+  submission: WebformSubmissionRaw,
 ): WebformSubmission | null {
   try {
     const { title, webform_submission } =

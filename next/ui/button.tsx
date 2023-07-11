@@ -32,7 +32,7 @@ export const buttonVariants = cva(
         lg: "text-lg py-3 px-6",
       },
     },
-  }
+  },
 );
 
 export interface ButtonProps
@@ -46,7 +46,7 @@ export interface ButtonProps
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     { variant = "primary", size = "md", children, className, ...props },
-    ref
+    ref,
   ) => {
     return (
       <button
@@ -57,6 +57,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 Button.displayName = "Button";

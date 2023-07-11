@@ -23,7 +23,7 @@ export function ArticleListItem({ article }: ArticleListItemProps) {
         "relative mb-4 grid h-full rounded border  p-4 transition-all hover:shadow-md",
         article.sticky
           ? "border-primary-100 bg-primary-50"
-          : "border-finnishwinter bg-white"
+          : "border-finnishwinter bg-white",
       )}
     >
       <h3 className="mb-2 line-clamp-2 text-heading-xs font-bold">

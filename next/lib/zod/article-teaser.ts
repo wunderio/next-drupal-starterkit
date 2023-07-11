@@ -10,7 +10,7 @@ export const ArticleTeaserSchema = ArticleBaseSchema.extend({
 });
 
 export function validateAndCleanupArticleTeaser(
-  articleTeaser: DrupalNode
+  articleTeaser: DrupalNode,
 ): ArticleTeaser | null {
   try {
     return ArticleTeaserSchema.parse(articleTeaser);

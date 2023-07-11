@@ -29,7 +29,7 @@ export function Layout({ menus, children }: LayoutProps) {
       <div
         className={clsx(
           "flex min-h-screen flex-col",
-          isPreviewVisible && "mt-10"
+          isPreviewVisible && "mt-10",
         )}
       >
         <SkipToContentLink href="#main-content">

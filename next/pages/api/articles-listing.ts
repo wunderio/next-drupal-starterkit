@@ -8,7 +8,7 @@ import siteConfig from "@/site.config";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method === "GET") {
     const languagePrefix =
@@ -28,11 +28,11 @@ export default async function handler(
         },
         locale: languagePrefix,
         defaultLocale: siteConfig.defaultLocale,
-      }
+      },
     );
 
     const validatedArticleTeasers = articleTeasers.map((articleNode) =>
-      validateAndCleanupArticleTeaser(articleNode)
+      validateAndCleanupArticleTeaser(articleNode),
     );
 
     // Set cache headers: 60 seconds max-age, stale-while-revalidate

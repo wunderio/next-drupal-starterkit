@@ -53,7 +53,7 @@ interface PageProps extends CommonPageProps {
 
 export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   const path: DrupalTranslatedPath = await drupal.translatePathFromContext(
-    context
+    context,
   );
 
   if (!path) {
@@ -91,7 +91,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     context,
     {
       params: getNodePageJsonApiParams(type).getQueryObject(),
-    }
+    },
   );
 
   // At this point, we know the path exists and it points to a resource.
@@ -114,7 +114,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   const nodeTranslations = await getNodeTranslatedVersions(
     resource,
     context,
-    drupal
+    drupal,
   );
   const languageLinks = createLanguageLinks(nodeTranslations);
 

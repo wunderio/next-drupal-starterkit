@@ -22,7 +22,7 @@ export function ParagraphHero({ paragraph }: { paragraph: HeroType }) {
             html={paragraph.field_formatted_text.processed}
             className={clsx(
               "mb-6 max-w-2xl text-left text-md/xl text-primary-600 sm:text-lg md:text-lg lg:mb-8 lg:text-xl",
-              paragraph.field_heading && "mt-4"
+              paragraph.field_heading && "mt-4",
             )}
           />
           <div className="gap-4 sm:text-left">
@@ -31,7 +31,7 @@ export function ParagraphHero({ paragraph }: { paragraph: HeroType }) {
                 href={paragraph.field_primary_link.full_url}
                 className={clsx(
                   buttonVariants({ variant: "primary" }),
-                  "text-base mr-4 inline-flex px-5 py-3"
+                  "text-base mr-4 inline-flex px-5 py-3",
                 )}
               >
                 {paragraph.field_primary_link.title}
@@ -44,7 +44,7 @@ export function ParagraphHero({ paragraph }: { paragraph: HeroType }) {
                 href={paragraph.field_secondary_link.full_url}
                 className={clsx(
                   buttonVariants({ variant: "secondary" }),
-                  "text-base mt-3 inline-flex px-5 py-3 sm:mt-0"
+                  "text-base mt-3 inline-flex px-5 py-3 sm:mt-0",
                 )}
               >
                 {paragraph.field_secondary_link.title}

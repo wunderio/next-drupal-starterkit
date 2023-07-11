@@ -37,7 +37,7 @@ export function absoluteUrl(input: string) {
 export const getNodeTranslatedVersions = async (
   node: DrupalNode,
   context: GetStaticPropsContext,
-  drupal: DrupalClient
+  drupal: DrupalClient,
 ) => {
   const nodeTranslations: Translations = {};
   for (let i = 0; i < context.locales.length; i++) {

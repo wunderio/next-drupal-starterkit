@@ -52,7 +52,7 @@ export default function DashboardPage({
               <td className="p-3">
                 {formatDateComplete(
                   submission.completed[0]["value"],
-                  router.locale
+                  router.locale,
                 )}
               </td>
               <td className="p-3">
@@ -96,7 +96,7 @@ export const getServerSideProps: GetServerSideProps<
   }
 
   const url = drupal.buildUrl(
-    `/${context.locale}/rest/my-webform-submissions?_format=json`
+    `/${context.locale}/rest/my-webform-submissions?_format=json`,
   );
 
   const result = await drupal.fetch(url.toString(), {

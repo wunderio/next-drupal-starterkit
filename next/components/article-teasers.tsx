@@ -34,7 +34,7 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
             href="/all-articles"
             className={clsx(
               buttonVariants({ variant: "primary" }),
-              "text-base mr-4 mt-4 inline-flex px-5 py-3"
+              "text-base mr-4 mt-4 inline-flex px-5 py-3",
             )}
           >
             {t("all-articles")}

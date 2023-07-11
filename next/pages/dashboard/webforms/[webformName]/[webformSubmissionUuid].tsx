@@ -69,7 +69,7 @@ export const getServerSideProps: GetServerSideProps<
   }
 
   const url = drupal.buildUrl(
-    `/${context.locale}/webform_rest/${context.params.webformName}/complete_submission/${context.params.webformSubmissionUuid}`
+    `/${context.locale}/webform_rest/${context.params.webformName}/complete_submission/${context.params.webformSubmissionUuid}`,
   );
 
   const result = await drupal.fetch(url.toString(), {

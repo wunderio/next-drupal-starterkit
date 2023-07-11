@@ -46,7 +46,7 @@ const ModalContent = React.forwardRef<
         ref={ref}
         className={clsx(
           "fixed z-50 grid max-h-[95vh] w-[95vw] max-w-xl gap-4 overflow-y-auto rounded border border-graysuit bg-white px-6 pb-10 pt-12 text-scapaflow shadow-long",
-          className
+          className,
         )}
         {...props}
       >
@@ -77,7 +77,7 @@ const ModalTitle = React.forwardRef<
     ref={ref}
     className={clsx(
       "leading-none text-2xl font-semibold tracking-tight text-steelgray",
-      className
+      className,
     )}
     {...props}
   />

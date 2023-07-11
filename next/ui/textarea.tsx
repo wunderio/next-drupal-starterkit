@@ -13,12 +13,12 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           "hover:enabled:border-steelgray",
           "focus:border-primary-600 active:enabled:border-primary-600",
           "disabled:cursor-not-allowed disabled:border-finnishwinter disabled:bg-finnishwinter disabled:text-finnishwinter",
-          className
+          className,
         )}
         ref={ref}
         {...props}
       />
     );
-  }
+  },
 );
 Textarea.displayName = "Textarea";

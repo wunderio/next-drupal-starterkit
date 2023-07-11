@@ -78,7 +78,7 @@ export const FileAttachmentsSchema = z.object({
       type: z.literal("media--document"),
       id: z.string(),
       field_media_document: DocumentShape,
-    })
+    }),
   ),
 });
 
@@ -112,7 +112,7 @@ const AccordionItemSchema = z.object({
       VideoSchema,
       LinksSchema,
       FileAttachmentsSchema,
-    ])
+    ]),
   ),
 });
 

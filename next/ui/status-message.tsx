@@ -21,7 +21,7 @@ export const variants = cva(
     defaultVariants: {
       level: "info",
     },
-  }
+  },
 );
 
 export interface StatusMessageProps

@@ -30,7 +30,7 @@ const MenuItemSchema: z.ZodType<MenuItem> = BaseMenuItemSchema.extend({
 const MenuSchema = z.array(MenuItemSchema);
 
 export function validateAndCleanupMenu(
-  menu: DrupalMenuLinkContentWithLangcode[]
+  menu: DrupalMenuLinkContentWithLangcode[],
 ): Menu | null {
   try {
     return MenuSchema.parse(menu);

@@ -25,7 +25,7 @@ const badgeVariants = cva(
         lg: "px-3 py-2 text-lg",
       },
     },
-  }
+  },
 );
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {

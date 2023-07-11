@@ -45,7 +45,7 @@ const WebformSubmissionsListItemSchema = z.object({
 });
 
 export function validateAndCleanupWebformSubmissionList(
-  submissions: WebformSubmissionsListItem[]
+  submissions: WebformSubmissionsListItem[],
 ): WebformSubmissionsListItem[] | null {
   try {
     return submissions.map((s) => WebformSubmissionsListItemSchema.parse(s));
@@ -66,7 +66,7 @@ export type WebformSubmissionsListEmpty = {
 };
 
 export function isWebformSubmissionsListEmpty(
-  submissionsView: WebformSubmissionsListEmpty | WebformSubmissionsListItem[]
+  submissionsView: WebformSubmissionsListEmpty | WebformSubmissionsListItem[],
 ): submissionsView is WebformSubmissionsListEmpty {
   return "content" in submissionsView && submissionsView.content === "[]";
 }

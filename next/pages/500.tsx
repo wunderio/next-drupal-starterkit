@@ -26,7 +26,7 @@ export default function NotFoundPage() {
 }
 
 export const getStaticProps: GetStaticProps<CommonPageProps> = async (
-  context
+  context,
 ) => {
   return {
     props: {

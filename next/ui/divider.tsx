@@ -9,12 +9,12 @@ export const Divider = React.forwardRef<HTMLHRElement, DividerProps>(
       <hr
         className={clsx(
           "mx-auto my-12 border-t border-finnishwinter",
-          className
+          className,
         )}
         ref={ref}
         {...props}
       />
     );
-  }
+  },
 );
 Divider.displayName = "Divider";

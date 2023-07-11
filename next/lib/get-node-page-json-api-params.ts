@@ -7,7 +7,7 @@ export type ResourceType = "node--frontpage" | "node--page" | "node--article";
 export function getNodePageJsonApiParams(resourceType: ResourceType) {
   const apiParams = new DrupalJsonApiParams().addFilter(
     "field_site.meta.drupal_internal__target_id",
-    env.DRUPAL_SITE_ID
+    env.DRUPAL_SITE_ID,
   );
   // The page content type has paragraphs, stored in the "field_content_elements" field:
   if (resourceType === "node--page") {

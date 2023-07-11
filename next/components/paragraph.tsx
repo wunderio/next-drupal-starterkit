@@ -10,11 +10,11 @@ import { Paragraph } from "@/lib/zod/paragraph";
 
 // Use dynamic imports to defer loading a component until after initial page load: https://nextjs.org/docs/advanced-features/dynamic-import
 const ParagraphVideo = dynamic(() =>
-  import("./paragraph--video").then((mod) => mod.ParagraphVideo)
+  import("./paragraph--video").then((mod) => mod.ParagraphVideo),
 );
 
 const ParagraphAccordion = dynamic(() =>
-  import("./paragraph--accordion").then((mod) => mod.ParagraphAccordion)
+  import("./paragraph--accordion").then((mod) => mod.ParagraphAccordion),
 );
 
 export function Paragraph({ paragraph }: { paragraph: Paragraph }) {

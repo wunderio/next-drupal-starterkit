@@ -31,7 +31,7 @@ export function Pagination() {
                   onClick={() => onChange(page)}
                   className={clsx(
                     "h-10 w-10 rounded-full text-primary-600 hover:enabled:underline",
-                    current === page && "bg-steelgray text-white"
+                    current === page && "bg-steelgray text-white",
                   )}
                   aria-label={t("search-go-to-page", { page })}
                   aria-current={current === page ? "page" : undefined}
