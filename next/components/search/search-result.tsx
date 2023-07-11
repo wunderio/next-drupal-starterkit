@@ -1,6 +1,6 @@
 import { ResultViewProps } from "@elastic/react-search-ui-views";
 
-import { Badge } from "@/wunder-component-library/badge";
+import { Badge } from "@/ui/badge";
 
 export function SearchResult({ result }: ResultViewProps) {
   return (

@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 
 import { AuthGate } from "@/components/auth-gate";
 
-import { Button } from "@/wunder-component-library/button";
-import { Input } from "@/wunder-component-library/input";
-import { Label } from "@/wunder-component-library/label";
-import { StatusMessage } from "@/wunder-component-library/status-message";
-import { Textarea } from "@/wunder-component-library/textarea";
+import { Button } from "@/ui/button";
+import { Input } from "@/ui/input";
+import { Label } from "@/ui/label";
+import { StatusMessage } from "@/ui/status-message";
+import { Textarea } from "@/ui/textarea";
 
 type Inputs = {
   name: string;

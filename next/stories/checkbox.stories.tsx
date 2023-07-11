@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Checkbox } from "@/wunder-component-library/checkbox";
+import { Checkbox } from "@/ui/checkbox";
 
 const meta: Meta<typeof Checkbox> = {
   title: "Library/Checkbox",

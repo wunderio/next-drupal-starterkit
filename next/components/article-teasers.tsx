@@ -6,7 +6,7 @@ import { ArticleTeaser } from "@/components/article-teaser";
 import { ArticleTeaser as ArticleTeaserType } from "@/lib/zod/article-teaser";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
-import { buttonVariants } from "@/wunder-component-library/button";
+import { buttonVariants } from "@/ui/button";
 
 interface LatestArticlesProps {
   articles?: ArticleTeaserType[];

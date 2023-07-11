@@ -7,8 +7,8 @@ import { Paragraph } from "@/components/paragraph";
 import { Accordion as ParagraphAccordion } from "@/lib/zod/paragraph";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
-import { Accordion } from "@/wunder-component-library/accordion";
-import { buttonVariants } from "@/wunder-component-library/button";
+import { Accordion } from "@/ui/accordion";
+import { buttonVariants } from "@/ui/button";
 
 export function ParagraphAccordionOneColumn({
   paragraph,

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import WarningIcon from "@/styles/icons/warning.svg";
 
-import { Button } from "@/wunder-component-library/button";
+import { Button } from "@/ui/button";
 
 const meta: Meta<typeof Button> = {
   title: "Library/Button",

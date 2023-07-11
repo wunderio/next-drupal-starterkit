@@ -6,7 +6,7 @@ import { MediaImage } from "@/components/media--image";
 import { Hero as HeroType } from "@/lib/zod/paragraph";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
-import { buttonVariants } from "@/wunder-component-library/button";
+import { buttonVariants } from "@/ui/button";
 
 export function ParagraphHero({ paragraph }: { paragraph: HeroType }) {
   return (

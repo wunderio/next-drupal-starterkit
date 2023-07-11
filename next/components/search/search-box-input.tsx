@@ -4,8 +4,8 @@ import { InputViewProps } from "@elastic/react-search-ui-views";
 
 import SearchIcon from "@/styles/icons/search.svg";
 
-import { Button } from "@/wunder-component-library/button";
-import { Input } from "@/wunder-component-library/input";
+import { Button } from "@/ui/button";
+import { Input } from "@/ui/input";
 
 export function SearchBoxInput({
   getInputProps,

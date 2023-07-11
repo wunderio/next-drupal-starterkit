@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Divider as DividerComponent } from "@/wunder-component-library/divider";
+import { Divider as DividerComponent } from "@/ui/divider";
 
 const meta: Meta<typeof DividerComponent> = {
   title: "Library/Divider",

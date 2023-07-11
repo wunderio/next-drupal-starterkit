@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 
-import { StatusMessage } from "@/wunder-component-library/status-message";
+import { StatusMessage } from "@/ui/status-message";
 
 type AuthGateProps = {
   children: React.ReactNode;

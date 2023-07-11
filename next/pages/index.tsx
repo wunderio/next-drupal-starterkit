@@ -18,7 +18,7 @@ import {
 } from "@/lib/zod/article-teaser";
 import { Frontpage, validateAndCleanupFrontpage } from "@/lib/zod/frontpage";
 
-import { Divider } from "@/wunder-component-library/divider";
+import { Divider } from "@/ui/divider";
 
 interface IndexPageProps extends LayoutProps {
   frontpage: Frontpage | null;

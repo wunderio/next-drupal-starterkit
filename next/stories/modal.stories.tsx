@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "@/wunder-component-library/button";
+import { Button } from "@/ui/button";
 import {
   Modal,
   ModalContent,
@@ -8,7 +8,7 @@ import {
   ModalHeader,
   ModalTitle,
   ModalTrigger,
-} from "@/wunder-component-library/modal";
+} from "@/ui/modal";
 
 const meta: Meta<typeof Modal> = {
   title: "Library/Modal",

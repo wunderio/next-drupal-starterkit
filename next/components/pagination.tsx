@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import Arrow from "@/styles/icons/arrow-down.svg";
 
-import { Button } from "@/wunder-component-library/button";
+import { Button } from "@/ui/button";
 
 export type PaginationProps = {
   currentPage?: number;

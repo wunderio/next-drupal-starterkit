@@ -10,7 +10,7 @@ import {
 } from "@/components/preview-banner";
 import { Menu } from "@/lib/zod/menu";
 
-import { SkipToContentLink } from "@/wunder-component-library/skip-to-content-link";
+import { SkipToContentLink } from "@/ui/skip-to-content-link";
 
 export interface LayoutProps {
   menus: {

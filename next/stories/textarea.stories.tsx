@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Textarea } from "@/wunder-component-library/textarea";
+import { Textarea } from "@/ui/textarea";
 
 const meta: Meta<typeof Textarea> = {
   title: "Library/Textarea",

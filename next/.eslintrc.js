@@ -91,8 +91,8 @@ module.exports = {
               ["^next", "^@next", "^react", "^@?\\w"],
               // Internal paths - change these to match your project structure defined in tsconfig.json.
               ["^@/(components|lib|pages|styles|types)(/.*|$)"],
-              // Component library imports.
-              ["^@wunder-component-library(/.*|$)"],
+              // UI library imports.
+              ["^@ui(/.*|$)"],
               // Parent imports. Put `..` last.
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
               // Other relative imports. Put same-folder imports and `.` last.

@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import Arrow from "@/styles/icons/arrow-down.svg";
 
-import { Button } from "@/wunder-component-library/button";
+import { Button } from "@/ui/button";
 
 /**
  * Pagination component. To be used within the context of @elastic/react-search-ui.

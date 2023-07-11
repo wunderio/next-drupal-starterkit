@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Input } from "@/wunder-component-library/input";
-import { Label } from "@/wunder-component-library/label";
+import { Input } from "@/ui/input";
+import { Label } from "@/ui/label";
 
 const meta: Meta<typeof Input> = {
   title: "Library/Input",
