@@ -1,6 +1,5 @@
 import YouTube from "react-youtube";
 
-import { getYouTubeId } from "@/lib/utils";
 import { Video } from "@/lib/zod/paragraph";
 
 interface MediaVideoProps {
@@ -25,4 +24,13 @@ export function MediaVideo({ media }: MediaVideoProps) {
       opts={options}
     />
   );
+}
+
+/**
+ * Gets a youtube id from a youtube url
+ * Taken from https://gist.github.com/takien/4077195
+ */
+function getYouTubeId(url: string) {
+  const arr = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+  return undefined !== arr[2] ? arr[2].split(/[^\w-]/i)[0] : arr[0];
 }
