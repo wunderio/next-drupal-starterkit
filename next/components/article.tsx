@@ -4,7 +4,8 @@ import { useTranslation } from "next-i18next";
 
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingPage } from "@/components/heading--page";
-import { absoluteUrl, formatDate } from "@/lib/utils";
+import { absoluteUrl } from "@/lib/drupal/absolute-url";
+import { formatDate } from "@/lib/utils";
 import { Article } from "@/lib/zod/article";
 
 interface ArticleProps {

@@ -8,14 +8,14 @@ import {
   createLanguageLinks,
   LanguageLinks,
 } from "@/lib/contexts/language-links-context";
-import { drupal } from "@/lib/drupal";
+import { drupal } from "@/lib/drupal/drupal-client";
+import { getNodePageJsonApiParams } from "@/lib/drupal/get-node-page-json-api-params";
+import { ResourceType } from "@/lib/drupal/get-node-page-json-api-params";
+import { getNodeTranslatedVersions } from "@/lib/drupal/get-node-translated-versions";
 import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
-import { getNodePageJsonApiParams } from "@/lib/get-node-page-json-api-params";
-import { ResourceType } from "@/lib/get-node-page-json-api-params";
-import { getNodeTranslatedVersions } from "@/lib/utils";
 import {
   Article as ArticleType,
   validateAndCleanupArticle,

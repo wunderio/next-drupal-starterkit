@@ -1,6 +1,6 @@
 import { GetStaticPropsContext } from "next";
 
-import { drupal } from "@/lib/drupal";
+import { drupal } from "@/lib/drupal/drupal-client";
 import { validateAndCleanupMenu } from "@/lib/zod/menu";
 import { DrupalMenuLinkContentWithLangcode } from "@/types";
 

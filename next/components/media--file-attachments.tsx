@@ -1,4 +1,4 @@
-import { absoluteUrl } from "@/lib/utils";
+import { absoluteUrl } from "@/lib/drupal/absolute-url";
 import { FileAttachments } from "@/lib/zod/paragraph";
 import ListIcon from "@/styles/icons/list.svg";
 

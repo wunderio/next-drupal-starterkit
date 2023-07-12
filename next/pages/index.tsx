@@ -9,9 +9,9 @@ import { LayoutProps } from "@/components/layout";
 import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
 import { Paragraph } from "@/components/paragraph";
-import { drupal } from "@/lib/drupal";
+import { drupal } from "@/lib/drupal/drupal-client";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
-import { getNodePageJsonApiParams } from "@/lib/get-node-page-json-api-params";
+import { getNodePageJsonApiParams } from "@/lib/drupal/get-node-page-json-api-params";
 import {
   ArticleTeaser,
   validateAndCleanupArticleTeaser,
