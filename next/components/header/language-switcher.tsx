@@ -20,11 +20,11 @@ export function LanguageSwitcher() {
   useEffect(close, [locale]);
 
   // Close on click outside
-  const ref = useOnClickOutside<HTMLUListElement>(close);
+  const ref = useOnClickOutside<HTMLDivElement>(close);
   const { t } = useTranslation();
 
   return (
-    <div>
+    <div ref={ref}>
       <span className="sr-only">{t("language-switcher")}</span>
       <button
         type="button"
@@ -38,7 +38,6 @@ export function LanguageSwitcher() {
         <LanguageIcon className="inline-block h-6 w-6" aria-hidden="true" />
       </button>
       <ul
-        ref={ref}
         className={clsx(
           "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
           !isOpen && "hidden",
