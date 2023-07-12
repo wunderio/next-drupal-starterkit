@@ -5,7 +5,7 @@ import { Inter, Overpass } from "next/font/google";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from "next-i18next";
-import React from "react";
+import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import clsx from "clsx";
 
@@ -22,7 +22,7 @@ interface PageProps extends CommonPageProps {
 }
 
 function App({ Component, pageProps }: AppProps<PageProps>) {
-  const [queryClient] = React.useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient());
   const { menus, languageLinks, session, ...restPageProps } = pageProps;
   return (
     <SessionProvider session={session}>
