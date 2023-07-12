@@ -65,26 +65,3 @@ export function getYouTubeId(url: string) {
   const arr = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
   return undefined !== arr[2] ? arr[2].split(/[^\w-]/i)[0] : arr[0];
 }
-
-export function formatFileSizeInBytes(x) {
-  const units = [
-    "bytes",
-    "KiB",
-    "MiB",
-    "GiB",
-    "TiB",
-    "PiB",
-    "EiB",
-    "ZiB",
-    "YiB",
-  ];
-
-  let l = 0,
-    n = parseInt(x, 10) || 0;
-
-  while (n >= 1024 && ++l) {
-    n = n / 1024;
-  }
-
-  return n.toFixed(n < 10 && l > 0 ? 1 : 0) + " " + units[l];
-}
