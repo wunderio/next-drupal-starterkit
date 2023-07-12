@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 
-import { Badge } from "@/wunder-component-library/badge";
+import { Badge } from "@/ui/badge";
 
 const meta: Meta<typeof Badge> = {
   title: "Library/Badge",

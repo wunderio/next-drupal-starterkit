@@ -5,7 +5,7 @@ import type { FieldValue } from "@elastic/search-ui";
 
 import { getFilterValueDisplay } from "@/lib/search-ui-helpers/getFilterValueDisplay";
 
-import { Checkbox } from "@/wunder-component-library/checkbox";
+import { Checkbox } from "@/ui/checkbox";
 
 export function MultiCheckboxFacet({
   label,

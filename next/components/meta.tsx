@@ -23,7 +23,7 @@ export function Meta({ title, metatags }: MetaProps) {
       const result = metatags?.find((tag) => tag.attributes[key] === str);
       return result?.attributes;
     },
-    [metatags]
+    [metatags],
   );
 
   // We want to determine if we need to add the language path

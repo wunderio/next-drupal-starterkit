@@ -25,7 +25,7 @@ export function MenuContainer({
       className={clsx(
         css.mainMenu,
         "relative mx-auto max-w-6xl font-inter tracking-wide",
-        !isOpen && "hidden"
+        !isOpen && "hidden",
       )}
     >
       {children}
@@ -49,7 +49,7 @@ export const MenuRoot = forwardRef<
         "absolute inset-0 z-40 overflow-y-auto overflow-x-hidden border-finnishwinter lg:bottom-auto lg:min-h-[75vh]",
         isOpen && "border-t bg-white lg:border",
         isOpen &&
-          "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r"
+          "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r",
       )}
     />
   );
@@ -96,7 +96,7 @@ export function MenuList({ children, level }) {
         level === 0 &&
           "z-10 h-full lg:left-0 lg:z-auto lg:border-primary-600 lg:bg-primary-600",
         level === 1 && "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto",
-        level === 2 && "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto"
+        level === 2 && "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto",
       )}
     >
       {children}
@@ -146,7 +146,7 @@ export function MenuItem({
     <NavigationMenu.Item
       className={clsx(
         "flex items-stretch border-b border-finnishwinter bg-white font-bold tracking-widest text-primary-600 underline-offset-4 lg:border-b-0",
-        isTopLevel && "lg:bg-primary-600 lg:text-mischka"
+        isTopLevel && "lg:bg-primary-600 lg:text-mischka",
       )}
       value={value}
     >
@@ -175,7 +175,7 @@ export function MenuLink({
       className={clsx(
         !isTitle &&
           "aria-current:underline block h-full grow p-6 hover:underline data-[active]:underline",
-        isTopLevel && "lg:ring-white"
+        isTopLevel && "lg:ring-white",
       )}
     >
       <NextLink href={href}>{children}</NextLink>
@@ -198,7 +198,7 @@ export function MenuTrigger({
         "flex w-20 shrink-0 items-center justify-center ring-inset ring-primary-700 hover:ring-2 lg:border-none",
         isTopLevel
           ? "lg:ring-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600"
-          : "lg:aria-expanded:bg-primary-600 lg:aria-expanded:text-white lg:aria-expanded:ring-primary-600"
+          : "lg:aria-expanded:bg-primary-600 lg:aria-expanded:text-white lg:aria-expanded:ring-primary-600",
       )}
       aria-label={`${t("show-submenu", { parent })}`}
     >

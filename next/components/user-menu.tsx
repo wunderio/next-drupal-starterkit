@@ -18,7 +18,7 @@ export function UserMenu() {
   const close = () => setIsOpen(false);
 
   const loginUrl = `/auth/login?callbackUrl=${encodeURIComponent(
-    query.callbackUrl?.toString() || `/${locale}${asPath}`
+    query.callbackUrl?.toString() || `/${locale}${asPath}`,
   )}`;
 
   const ref = useOnClickOutside<HTMLUListElement>(close);
@@ -42,7 +42,7 @@ export function UserMenu() {
           ref={ref}
           className={clsx(
             "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
-            !isOpen && "hidden"
+            !isOpen && "hidden",
           )}
         >
           <li>
@@ -81,7 +81,7 @@ export function UserMenu() {
         ref={ref}
         className={clsx(
           "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
-          !isOpen && "hidden"
+          !isOpen && "hidden",
         )}
       >
         <li>

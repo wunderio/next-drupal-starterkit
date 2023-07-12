@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import Arrow from "@/styles/icons/arrow-down.svg";
 
-import { Button } from "@/wunder-component-library/button";
+import { Button } from "@/ui/button";
 
 export type PaginationProps = {
   currentPage?: number;
@@ -59,7 +59,7 @@ export function Pagination({
       block: "start",
     });
     const focusable = focusRestoreRef?.current.querySelector(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
     if (focusable) {
       (focusable as HTMLElement).focus({ preventScroll: true });

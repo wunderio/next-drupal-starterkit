@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Accordion } from "@/wunder-component-library/accordion";
+import { Accordion } from "@/ui/accordion";
 
 const meta: Meta<typeof Accordion> = {
   title: "Library/Accordion",

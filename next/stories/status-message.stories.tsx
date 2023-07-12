@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "@/wunder-component-library/button";
-import { StatusMessage } from "@/wunder-component-library/status-message";
+import { Button } from "@/ui/button";
+import { StatusMessage } from "@/ui/status-message";
 
 const meta: Meta<typeof StatusMessage> = {
   title: "Library/StatusMessage",

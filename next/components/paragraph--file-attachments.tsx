@@ -19,7 +19,7 @@ export function ParagraphFileAttachments({
           html={paragraph.field_formatted_text.processed}
           className={clsx(
             "text-left text-md/xl text-scapaflow sm:text-lg",
-            paragraph.field_heading && "mt-4"
+            paragraph.field_heading && "mt-4",
           )}
         />
       )}

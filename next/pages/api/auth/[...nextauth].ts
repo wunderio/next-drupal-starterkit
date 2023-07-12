@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
             },
-          }
+          },
         );
 
         if (!response.ok) {
@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
       }
 
       // If token has not expired, return it,
-      if (Date.now() < token.accessTokenExpires) {
+      if (Date.now() < Number(token.accessTokenExpires)) {
         return token;
       }
 
@@ -65,7 +65,7 @@ export const authOptions: NextAuthOptions = {
       if (token?.accessToken) {
         session.accessToken = token.accessToken;
         const decoded = jwt_decode<{ email: string; username: string }>(
-          token.accessToken as string
+          token.accessToken as string,
         );
         session.user.email = decoded.email;
         session.user.name = decoded.username;
@@ -95,7 +95,7 @@ async function refreshAccessToken(token) {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
+      },
     );
 
     const data = await response.json();

@@ -7,8 +7,8 @@ import { Paragraph } from "@/components/paragraph";
 import { Accordion as ParagraphAccordion } from "@/lib/zod/paragraph";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
-import { Accordion } from "@/wunder-component-library/accordion";
-import { buttonVariants } from "@/wunder-component-library/button";
+import { Accordion } from "@/ui/accordion";
+import { buttonVariants } from "@/ui/button";
 
 export function ParagraphAccordionTwoColumns({
   paragraph,
@@ -29,7 +29,7 @@ export function ParagraphAccordionTwoColumns({
                 html={paragraph.field_formatted_text.processed}
                 className={clsx(
                   "text-left text-md/xl text-scapaflow sm:text-lg",
-                  paragraph.field_heading && "mt-4"
+                  paragraph.field_heading && "mt-4",
                 )}
               />
             </div>
@@ -40,7 +40,7 @@ export function ParagraphAccordionTwoColumns({
                 href={paragraph.field_primary_link.full_url}
                 className={clsx(
                   buttonVariants({ variant: "primary" }),
-                  "text-base mr-4 inline-flex max-w-sm px-5 py-3"
+                  "text-base mr-4 inline-flex max-w-sm px-5 py-3",
                 )}
               >
                 {paragraph.field_primary_link.title}

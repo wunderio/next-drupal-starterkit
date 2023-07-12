@@ -41,7 +41,7 @@ export function LanguageSwitcher() {
         ref={ref}
         className={clsx(
           "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
-          !isOpen && "hidden"
+          !isOpen && "hidden",
         )}
       >
         {locales

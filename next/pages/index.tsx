@@ -18,7 +18,7 @@ import {
 } from "@/lib/zod/article-teaser";
 import { Frontpage, validateAndCleanupFrontpage } from "@/lib/zod/frontpage";
 
-import { Divider } from "@/wunder-component-library/divider";
+import { Divider } from "@/ui/divider";
 
 interface IndexPageProps extends LayoutProps {
   frontpage: Frontpage | null;
@@ -53,7 +53,7 @@ export default function IndexPage({
 }
 
 export const getStaticProps: GetStaticProps<IndexPageProps> = async (
-  context
+  context,
 ) => {
   const frontpage = (
     await drupal.getResourceCollectionFromContext<DrupalNode[]>(
@@ -61,7 +61,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
       context,
       {
         params: getNodePageJsonApiParams("node--frontpage").getQueryObject(),
-      }
+      },
     )
   ).at(0);
 
@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
       ...(await getCommonPageProps(context)),
       frontpage: frontpage ? validateAndCleanupFrontpage(frontpage) : null,
       promotedArticleTeasers: promotedArticleTeasers.map((teaser) =>
-        validateAndCleanupArticleTeaser(teaser)
+        validateAndCleanupArticleTeaser(teaser),
       ),
     },
     revalidate: 60,

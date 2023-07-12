@@ -51,7 +51,7 @@ export function validateAndCleanupPage(page: DrupalNode): Page | null {
           case false:
             console.log(
               `Error validating page paragraph ${paragraph.type}: `,
-              JSON.stringify(result.error, null, 2)
+              JSON.stringify(result.error, null, 2),
             );
             return null;
         }

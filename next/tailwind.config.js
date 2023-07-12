@@ -2,9 +2,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import("tailwindcss").Config} */
 module.exports = {
-  content: [
-    "./{components,lib,pages,stories,styles,wunder-component-library}/**/*",
-  ],
+  content: ["./{components,lib,pages,stories,styles,ui}/**/*"],
   theme: {
     colors: {
       transparent: "transparent",

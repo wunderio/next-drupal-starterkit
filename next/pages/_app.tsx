@@ -55,7 +55,7 @@ function Fonts({ children }: { children: React.ReactNode }) {
     <div
       className={clsx(
         fontVariables, // Add font variables so they can be used in CSS
-        "font-overpass" // Set default font
+        "font-overpass", // Set default font
       )}
     >
       {children}

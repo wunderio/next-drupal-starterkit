@@ -19,7 +19,7 @@ export function Media({ media, ...props }: MediaProps) {
   }
 
   function isFileAttachments(
-    media: MediaProps["media"]
+    media: MediaProps["media"],
   ): media is FileAttachments["field_file_attachments"] {
     return Array.isArray(media) && media[0]?.type === "media--document";
   }

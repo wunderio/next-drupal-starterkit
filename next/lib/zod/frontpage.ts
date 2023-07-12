@@ -33,7 +33,7 @@ export const FrontpageSchema = z.object({
 });
 
 export function validateAndCleanupFrontpage(
-  frontpage: DrupalNode
+  frontpage: DrupalNode,
 ): Frontpage | null {
   try {
     // Validate the top level fields first.
@@ -53,7 +53,7 @@ export function validateAndCleanupFrontpage(
           case false:
             console.log(
               `Error validating frontpage paragraph ${paragraph.type}: `,
-              JSON.stringify(result.error, null, 2)
+              JSON.stringify(result.error, null, 2),
             );
             return null;
         }

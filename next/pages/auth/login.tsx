@@ -9,10 +9,10 @@ import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 
-import { Button } from "@/wunder-component-library/button";
-import { Input } from "@/wunder-component-library/input";
-import { Label } from "@/wunder-component-library/label";
-import { StatusMessage } from "@/wunder-component-library/status-message";
+import { Button } from "@/ui/button";
+import { Input } from "@/ui/input";
+import { Label } from "@/ui/label";
+import { StatusMessage } from "@/ui/status-message";
 
 type Inputs = {
   username: string;

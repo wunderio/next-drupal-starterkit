@@ -117,7 +117,7 @@ export default function SearchPage() {
 }
 
 export const getStaticProps: GetStaticProps<CommonPageProps> = async (
-  context
+  context,
 ) => {
   return {
     props: {

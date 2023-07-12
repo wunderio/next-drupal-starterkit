@@ -14,7 +14,7 @@ type GetArticlesArgs = {
 
 export const getArticles = async (
   { limit = 6, offset = 0, locale = siteConfig.defaultLocale }: GetArticlesArgs,
-  apiParams: DrupalJsonApiParams
+  apiParams: DrupalJsonApiParams,
 ): Promise<{
   totalPages: number;
   nodes: DrupalNode[];
@@ -40,7 +40,7 @@ export const getArticles = async (
         },
         locale: locale,
         defaultLocale: siteConfig.defaultLocale,
-      }
+      },
     );
     if (result.data) {
       nodes = deserialize(result) as DrupalNode[];
@@ -57,7 +57,7 @@ export const getArticles = async (
 };
 
 export const getLatestArticlesItems = async (
-  args: GetArticlesArgs
+  args: GetArticlesArgs,
 ): Promise<{
   totalPages: number;
   articles: DrupalNode[];

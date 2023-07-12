@@ -33,7 +33,7 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
   const [didInit, setDidInit] = useState(false);
 
   const [activeMenu, _setActiveMenu] = useState<MenuItemType["id"] | null>(
-    null
+    null,
   );
   const setActiveMenu = (id: MenuItemType["id"] | null) => {
     // Reset submenu when menu changes
@@ -42,7 +42,7 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
   };
 
   const [activeSubmenu, setActiveSubmenu] = useState<MenuItemType["id"] | null>(
-    null
+    null,
   );
 
   // Close when Escape key is pressed
@@ -73,16 +73,18 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
       setActiveSubmenu(null);
     } else {
       // Set active menu and submenu when menu opens
-      const didSetMenuAndSubmenu = menu.some((item) =>
-        item.items?.some((subItem) =>
-          subItem.items?.some((subSubItem) => {
-            if (isMenuItemActive(router, subSubItem.url)) {
-              setActiveMenu(item.id);
-              setActiveSubmenu(subItem.id);
-              return true;
-            }
-          })
-        )
+      const didSetMenuAndSubmenu = menu.some(
+        (item) =>
+          item.items?.some(
+            (subItem) =>
+              subItem.items?.some((subSubItem) => {
+                if (isMenuItemActive(router, subSubItem.url)) {
+                  setActiveMenu(item.id);
+                  setActiveSubmenu(subItem.id);
+                  return true;
+                }
+              }),
+          ),
       );
 
       // Active menu and submenu found, done
@@ -92,14 +94,15 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
       }
 
       // User is not on a page matching a submenu item, so try to find a matching top-level menu item
-      menu.some((item) =>
-        item.items?.some((subItem) => {
-          if (isMenuItemActive(router, subItem.url)) {
-            setActiveMenu(item.id);
-            setActiveSubmenu(null);
-            return true;
-          }
-        })
+      menu.some(
+        (item) =>
+          item.items?.some((subItem) => {
+            if (isMenuItemActive(router, subItem.url)) {
+              setActiveMenu(item.id);
+              setActiveSubmenu(null);
+              return true;
+            }
+          }),
       );
 
       setDidInit(true);

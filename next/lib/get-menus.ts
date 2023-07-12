@@ -13,8 +13,8 @@ export async function getMenus({
       drupal.getMenu<DrupalMenuLinkContentWithLangcode>(menu, {
         locale,
         defaultLocale,
-      })
-    )
+      }),
+    ),
   );
 
   return {

@@ -20,7 +20,7 @@ export const Checkbox = React.forwardRef<
       css.checkbox,
       "peer h-5 w-5 shrink-0 rounded border border-scapaflow",
       "disabled:cursor-not-allowed disabled:border-graysuit",
-      className
+      className,
     )}
     {...props}
   >

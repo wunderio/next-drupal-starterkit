@@ -4,7 +4,7 @@ import { env } from "@/env";
 
 export default async function handler(
   request: NextApiRequest,
-  response: NextApiResponse
+  response: NextApiResponse,
 ) {
   const slug = request.query.slug as string;
   const secret = request.query.secret as string;

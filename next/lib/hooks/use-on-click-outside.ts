@@ -5,7 +5,7 @@ import { useEventListener } from "./use-event-listener";
 type Handler = (event: MouseEvent) => void;
 
 export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
-  handler: Handler
+  handler: Handler,
 ) {
   const ref = useRef<T>(null);
 

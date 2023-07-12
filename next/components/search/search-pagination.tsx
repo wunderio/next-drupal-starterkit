@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import Arrow from "@/styles/icons/arrow-down.svg";
 
-import { Button } from "@/wunder-component-library/button";
+import { Button } from "@/ui/button";
 
 /**
  * Pagination component. To be used within the context of @elastic/react-search-ui.
@@ -31,7 +31,7 @@ export function Pagination() {
                   onClick={() => onChange(page)}
                   className={clsx(
                     "h-10 w-10 rounded-full text-primary-600 hover:enabled:underline",
-                    current === page && "bg-steelgray text-white"
+                    current === page && "bg-steelgray text-white",
                   )}
                   aria-label={t("search-go-to-page", { page })}
                   aria-current={current === page ? "page" : undefined}
