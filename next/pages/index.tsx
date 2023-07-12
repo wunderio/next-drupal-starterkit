@@ -10,8 +10,8 @@ import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
 import { Paragraph } from "@/components/paragraph";
 import { drupal } from "@/lib/drupal/drupal-client";
-import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { getNodePageJsonApiParams } from "@/lib/drupal/get-node-page-json-api-params";
+import { getCommonPageProps } from "@/lib/get-common-page-props";
 import {
   ArticleTeaser,
   validateAndCleanupArticleTeaser,
