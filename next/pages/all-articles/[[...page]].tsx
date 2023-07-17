@@ -11,7 +11,7 @@ import {
   createLanguageLinksForNextOnlyPage,
   LanguageLinks,
 } from "@/lib/contexts/language-links-context";
-import { getLatestArticlesItems } from "@/lib/get-articles";
+import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import {
   ArticleTeaser as ArticleTeaserType,

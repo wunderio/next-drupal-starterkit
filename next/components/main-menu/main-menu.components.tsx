@@ -56,17 +56,6 @@ export const MenuRoot = forwardRef<
 });
 MenuRoot.displayName = "MenuRoot";
 
-/**
- * This is a copy of the component jsx below which we would like to use instead.
- * When having the menu label, the menu functionality breaks.
-     <button onClick={() => setIsOpen((o) => !o)}>
-      <span className="max-sm:sr-only sm:not-sr-only sm:mr-2 sm:inline">
-        {t("menu")}
-      </span>
-      <ToggleIcon className="inline h-6 w-6" aria-hidden="true" />
-    </button>
- */
-
 export function MenuToggle({
   isOpen,
   setIsOpen,

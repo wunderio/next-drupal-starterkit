@@ -21,11 +21,11 @@ export function UserMenu() {
     query.callbackUrl?.toString() || `/${locale}${asPath}`,
   )}`;
 
-  const ref = useOnClickOutside<HTMLUListElement>(close);
+  const ref = useOnClickOutside<HTMLDivElement>(close);
 
   if (status === "authenticated") {
     return (
-      <div>
+      <div ref={ref}>
         <span className="sr-only">{t("user-menu")}</span>
         <button
           type="button"
@@ -39,7 +39,6 @@ export function UserMenu() {
           <AccountIcon className="inline-block h-6 w-6" />
         </button>
         <ul
-          ref={ref}
           className={clsx(
             "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
             !isOpen && "hidden",
@@ -69,7 +68,7 @@ export function UserMenu() {
   }
 
   return (
-    <div>
+    <div ref={ref}>
       <span className="sr-only">{t("user-menu")}</span>
       <button type="button" className="hover:underline" onClick={toggle}>
         <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
@@ -78,7 +77,6 @@ export function UserMenu() {
         <AccountIcon className="inline-block h-6 w-6" />
       </button>
       <ul
-        ref={ref}
         className={clsx(
           "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
           !isOpen && "hidden",

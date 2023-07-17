@@ -68,6 +68,19 @@ module.exports = {
         // Instead, `import { env } from "@/env"` to access environment variables.
         "n/no-process-env": ["error"],
 
+        "no-restricted-imports": [
+          "error",
+          {
+            paths: [
+              // Restrict i18n imports to ensure SSR compatibility.
+              {
+                name: "react-i18next",
+                message: 'Import from "next-i18next" instead.',
+              },
+            ],
+          },
+        ],
+
         // Allow unused variables only if they start with `_` or `err`.
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": [

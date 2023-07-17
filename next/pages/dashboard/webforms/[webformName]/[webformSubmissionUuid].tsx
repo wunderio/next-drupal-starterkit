@@ -5,7 +5,7 @@ import { useTranslation } from "next-i18next";
 
 import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
-import { drupal } from "@/lib/drupal";
+import { drupal } from "@/lib/drupal/drupal-client";
 import {
   CommonPageProps,
   getCommonPageProps,

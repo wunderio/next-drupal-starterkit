@@ -1,6 +1,6 @@
 import NextImage, { ImageProps } from "next/image";
 
-import { absoluteUrl } from "@/lib/utils";
+import { absoluteUrl } from "@/lib/drupal/absolute-url";
 import { Image } from "@/lib/zod/paragraph";
 
 interface MediaImageProps extends Partial<ImageProps> {

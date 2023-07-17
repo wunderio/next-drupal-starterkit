@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { NextSeo } from "next-seo";
 import * as React from "react";
+import { useCallback } from "react";
 
 import { Metatag } from "@/lib/zod/metatag";
 
@@ -18,7 +19,7 @@ export function Meta({ title, metatags }: MetaProps) {
 
   const { t } = useTranslation();
 
-  const getTag = React.useCallback(
+  const getTag = useCallback(
     (str: string, key: keyof Metatag["attributes"] = "name") => {
       const result = metatags?.find((tag) => tag.attributes[key] === str);
       return result?.attributes;

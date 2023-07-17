@@ -2,8 +2,8 @@ import { useTranslation } from "next-i18next";
 import React from "react";
 import clsx from "clsx";
 
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { Footer } from "@/components/footer/footer";
+import { Header } from "@/components/header/header";
 import {
   PreviewBanner,
   useIsPreviewBannerVisible,

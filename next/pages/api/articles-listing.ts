@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { DrupalNode } from "next-drupal";
-import { drupal } from "lib/drupal";
 
+import { drupal } from "@/lib/drupal/drupal-client";
 import { validateAndCleanupArticleTeaser } from "@/lib/zod/article-teaser";
 
 import siteConfig from "@/site.config";

@@ -3,12 +3,13 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 
-import { LanguageSwitcher } from "@/components/language-switcher";
 import { MainMenu, MenuToggle } from "@/components/main-menu/main-menu";
-import { UserMenu } from "@/components/user-menu";
 import { Menu } from "@/lib/zod/menu";
 import SearchIcon from "@/styles/icons/search.svg";
 import WunderIcon from "@/styles/icons/wunder.svg";
+
+import { LanguageSwitcher } from "./language-switcher";
+import { UserMenu } from "./user-menu";
 
 interface HeaderProps {
   menu: Menu;

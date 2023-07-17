@@ -1,8 +1,8 @@
 import { deserialize, DrupalNode, JsonApiResponse } from "next-drupal";
 import { DrupalJsonApiParams } from "drupal-jsonapi-params";
 
-import { drupal } from "@/lib/drupal";
-import { getNodePageJsonApiParams } from "@/lib/get-node-page-json-api-params";
+import { drupal } from "@/lib/drupal/drupal-client";
+import { getNodePageJsonApiParams } from "@/lib/drupal/get-node-page-json-api-params";
 
 import siteConfig from "@/site.config";
 

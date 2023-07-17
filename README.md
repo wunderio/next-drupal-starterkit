@@ -158,9 +158,9 @@ The environment variables used by the frontend are also checked for type safety.
 3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
 4. To ensure it also works in CircleCI and Silta, also add it to`.circleci/config.yml` and `silta-next.yml`.
 
-### Wunder component library [WIP]
+### UI library
 
-The `wunder-component-library/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects.
+The `ui/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects. The components are meant to be used as a starting point, and should be modified, added and removed as required to fit the needs of the project.
 
 ## Updating Drupal core and modules
 
@@ -188,8 +188,8 @@ lando composer require 'drupal/twig_tweak:^3.2' -W
 
 ### Things to consider when creating a project from this template
 
-- When setting up this project in Silta, please check the Elasticsearch image(in silta.yml), 
-that it corresponds to the one being generated for your project. 
-- The caching strategy is good to give a proper thought to. We have tested this template 
-with Fastly CDN, which makes a good match, and you don't have to worry about invalidations etc. that much. 
-- @TODO write some more info about the caching and CDN, when we have more experience with the setup. 
+- When setting up this project in Silta, please check the Elasticsearch image(in silta.yml),
+that it corresponds to the one being generated for your project.
+- The caching strategy is good to give a proper thought to. We have tested this template
+with Fastly CDN, which makes a good match, and you don't have to worry about invalidations etc. that much.
+- @TODO write some more info about the caching and CDN, when we have more experience with the setup.

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
-import { drupal } from "lib/drupal";
 
+import { drupal } from "@/lib/drupal/drupal-client";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(

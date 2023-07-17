@@ -1,7 +1,7 @@
 import { GetStaticPropsContext } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { getMenus } from "@/lib/get-menus";
+import { getMenus } from "@/lib/drupal/get-menus";
 
 export type CommonPageProps = Awaited<ReturnType<typeof getCommonPageProps>>;
 
