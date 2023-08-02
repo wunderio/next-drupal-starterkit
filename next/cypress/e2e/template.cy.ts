@@ -63,3 +63,5 @@ describe("Basic Layout Test", () => {
     cy.get("footer").should("be.visible").should("exist");
   });
 });
+
+export {};
