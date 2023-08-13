@@ -10,10 +10,7 @@ source:
 process:
   name: name
   mail: mail
-  pass:
-    plugin: callback
-    callable: md5
-    source: password
+  pass: password
   status: constants/status
   roles:
     plugin: explode
@@ -22,4 +19,3 @@ process:
 
 destination:
   plugin: entity:user
-  md5_passwords: true

@@ -3,7 +3,7 @@ langcode: en
 status: false
 dependencies: {  }
 _core:
-  default_config_hash: 92bXZdyYJ5xqukdfmGRr_CYcwm1vfuS8b8aJ7X_G7E0
+  default_config_hash: An43A4r21VtlloBrdPNbqhOaxeHKblzV-ITLf-3T5qg
 id: taxonomy_term
 label: 'Taxonomy term'
 tags:

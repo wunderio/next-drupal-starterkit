@@ -1,0 +1,5 @@
+entity_type_groups: {  }
+tag_trim_method: beforeValue
+tag_trim_maxlength: {  }
+tag_scroll_max_height: ''
+use_maxlength: true

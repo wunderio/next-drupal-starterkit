@@ -2,6 +2,7 @@
 
 namespace Drupal\wunder_search\Plugin\ElasticsearchIndex;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\elasticsearch_helper\Elasticsearch\Index\FieldDefinition;
 use Drupal\elasticsearch_helper\Elasticsearch\Index\MappingDefinition;
@@ -10,7 +11,6 @@ use Drupal\elasticsearch_helper\Event\ElasticsearchOperations;
 use Drupal\elasticsearch_helper\Plugin\ElasticsearchIndexBase;
 use Elasticsearch\Client;
 use Psr\Log\LoggerInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Serializer\Serializer;
 

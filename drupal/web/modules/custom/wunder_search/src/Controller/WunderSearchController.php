@@ -5,8 +5,8 @@ namespace Drupal\wunder_search\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Elasticsearch\Client;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Returns responses for Wunder search routes.
