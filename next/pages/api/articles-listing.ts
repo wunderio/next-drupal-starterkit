@@ -31,9 +31,12 @@ export default async function handler(
       },
     );
 
-    const validatedArticleTeasers = articleTeasers.map((articleNode) =>
-      validateAndCleanupArticleTeaser(articleNode),
-    );
+    const validatedArticleTeasers = articleTeasers
+      .map((articleNode) => validateAndCleanupArticleTeaser(articleNode))
+      // If any article teaser is invalid, it will be replaced by null in the array, so we need to filter it out:
+      .filter((teaser) => {
+        return teaser !== null;
+      });
 
     // Set cache headers: 60 seconds max-age, stale-while-revalidate
     res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate");
