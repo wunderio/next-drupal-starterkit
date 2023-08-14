@@ -35,6 +35,7 @@
         "drupal/redirect": "^1.8",
         "drupal/require_login": "^3.0",
         "drupal/restui": "^1.21",
+        "drupal/simple_sitemap": "^4.1",
         "drupal/simplei": "^2.0@beta",
         "drupal/webform": "^6.2@beta",
         "drupal/webform_rest": "^4.0",
