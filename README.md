@@ -158,6 +158,10 @@ The environment variables used by the frontend are also checked for type safety.
 3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
 4. To ensure it also works in CircleCI and Silta, also add it to`.circleci/config.yml` and `silta-next.yml`.
 
+#### XML sitemap
+
+The Drupal backend is responsible for generating the xml sitemap with the `simple_sitemap` module and exporting it to a file using a custom module. The frontend then reads this file and serves it at `/sitemap.xml` via proxying.
+
 ### UI library
 
 The `ui/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects. The components are meant to be used as a starting point, and should be modified, added and removed as required to fit the needs of the project.
