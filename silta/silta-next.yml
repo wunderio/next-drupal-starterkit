@@ -21,6 +21,21 @@ services:
       NEXTAUTH_URL: https://<|NEXT_DOMAIN|>
 
 nginx:
+  extra_conditions: |
+    # Pass through sitemap.xml requests to Drupal.
+    location = /sitemap.xml {
+      proxy_pass https://<|DRUPAL_DOMAIN|>/sites/default/files/sitemap.xml;
+      proxy_http_version 1.1;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-NginX-Proxy true;
+      proxy_ssl_session_reuse off;
+      proxy_redirect off;
+      proxy_pass_request_headers on;
+      proxy_pass_request_body on;
+      add_header Cache-Control "max-age=0";
+      access_log off;
+    }
   content_security_policy: >- # Lines below are joined without line breaks.
     upgrade-insecure-requests;
     default-src 'none';
