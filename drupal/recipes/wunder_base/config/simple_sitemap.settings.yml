@@ -1,0 +1,20 @@
+_core:
+  default_config_hash: MUpaAk1hn-0Ph4OFw3DD_6gUF9KbGwxja9Y0qmampzo
+max_links: 2000
+cron_generate: true
+cron_generate_interval: 0
+generate_duration: 10000
+entities_per_queue_item: 50
+remove_duplicates: true
+skip_untranslated: true
+xsl: false
+base_url: ''
+default_variant: default
+custom_links_include_images: false
+disable_language_hreflang: false
+hide_branding: false
+excluded_languages: {  }
+enabled_entity_types:
+  - node
+  - taxonomy_term
+  - menu_link_content

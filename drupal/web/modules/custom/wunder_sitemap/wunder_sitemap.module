@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Contains wunder_sitemap.module.
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function wunder_sitemap_cron() {
+  /** @var \Drupal\wunder_sitemap\SitemapExporter $sitemap_exporter */
+  $sitemap_exporter = \Drupal::service("wunder_sitemap.exporter");
+  $sitemap_exporter->exportSitemapToFile('default', 'public://sitemap.xml');
+}

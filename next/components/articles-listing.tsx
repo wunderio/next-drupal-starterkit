@@ -18,11 +18,14 @@ export function ArticlesListing({
   const { data, isLoading } = useQuery(
     [`articles-${router.locale}-${listingId}`],
     async () => {
-      const response = await fetch(`/api/articles-listing?limit=${limit}`, {
-        headers: {
-          "accept-language": router.locale,
+      const response = await fetch(
+        `/api/articles-listing/${router.locale}?limit=${limit}`,
+        {
+          headers: {
+            "accept-language": router.locale,
+          },
         },
-      });
+      );
 
       return await response.json();
     },

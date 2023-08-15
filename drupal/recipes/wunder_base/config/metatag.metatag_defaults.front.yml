@@ -3,7 +3,7 @@ langcode: en
 status: false
 dependencies: {  }
 _core:
-  default_config_hash: 1noCXlegCr5HFehQRF1ViXy1jhU1jZ_sNN99a8Sj5jo
+  default_config_hash: xWFX2NtQrFSkLvpXLuOIHPJmLKASiuNhTfy5NMaBnfU
 id: front
 label: 'Front page'
 tags:

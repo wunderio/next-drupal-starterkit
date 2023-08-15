@@ -1,0 +1,7 @@
+services:
+  logger.channel.wunder_sitemap:
+    parent: logger.channel_base
+    arguments: ['wunder_sitemap']
+  wunder_sitemap.exporter:
+    class: Drupal\wunder_sitemap\SitemapExporter
+    arguments: ['@logger.channel.wunder_sitemap', '@simple_sitemap.generator', '@file_system']

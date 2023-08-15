@@ -7,14 +7,14 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Entity\EntityTypeRepositoryInterface;
+use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\Render\Renderer;
 use Drupal\Core\Session\AccountSwitcherInterface;
 use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\Core\Theme\ThemeInitializationInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
-use Drupal\wunder_search\IndexerUserSession;
 use Drupal\serialization\Normalizer\ContentEntityNormalizer;
-use Drupal\Core\Field\EntityReferenceFieldItemList;
+use Drupal\wunder_search\IndexerUserSession;
 
 /**
  * Normalizes / denormalizes Drupal nodes into an array structure good for ES.
