@@ -164,11 +164,17 @@ The Drupal backend is responsible for generating the xml sitemap with the `simpl
 
 ### Testing with Cypress
 
-The template includes example tests to be run with Cypress
+The template includes example tests to be run with Cypress. The Lando setup includes a headless browser and Cypress, so you can run the tests locally without the need to install anything else, but it won't be able to use the visual Cypress application. See below for more details.
 
-#### Running tests locally
+#### Running tests locally inside Lando on the command line
 
-To run the tests locally, first start the frontend and backend servers with `lando start`, then navigate to `next4drupal-project/next`, open another terminal and run `lando npm run start` to start the Cypress test runner.
+To run the Cypress tests inside Lando: then navigate to `next4drupal-project/next`, open another terminal and run `lando npm run cypress run` to start the Cypress test runner.
+
+1. make sure the backend is running
+2. run `lando npm run build` to build the frontend
+3. run `lando npm run start` to start serving the frontend
+4. open another terminal and run `lando npm run cypress:run` to start the Cypress test runner
+
 A video of the run will be recorded and it will be available at `next/cypress/videos`.
 
 #### Using the Cypress application
@@ -177,7 +183,9 @@ If you want to run the visual Cypress application, you will need to run cypress 
 1. ensure you are using the correct node version
 2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
 3. install cypress globally with `npm install -g cypress`
-4. while on the /next directory, run `cypress open` (notice that there's no `lando` at the beginning of the command).
+4. while in the `/next` directory, run `npm run cypress:open` (notice that there's no `lando` at the beginning of the command).
+
+You can then run your tests inside the application.
 
 ### UI library
 
