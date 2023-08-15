@@ -51,6 +51,9 @@ $settings['wunder_next.settings']['revalidate_secret'] = $_ENV['DRUPAL_REVALIDAT
 $settings['wunder_next.settings']['client_secret'] = $_ENV['DRUPAL_CLIENT_SECRET'];
 $settings['wunder_next.settings']['client_id'] = $_ENV['DRUPAL_CLIENT_ID'];
 
+// Use the frontend site URL to create links in the xml sitemap:
+$config['simple_sitemap.settings']['base_url'] = $_ENV['WUNDER_NEXT_FRONTEND_URL'];
+
 // Environment-specific settings.
 $env = $_ENV['ENVIRONMENT_NAME'];
 switch ($env) {
