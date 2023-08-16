@@ -168,18 +168,19 @@ The template includes example tests to be run with Cypress. The Lando setup incl
 
 #### Running tests locally inside Lando on the command line
 
-To run the Cypress tests inside Lando: then navigate to `next4drupal-project/next`, open another terminal and run `lando npm run cypress run` to start the Cypress test runner.
+To run the Cypress tests inside Lando: 
 
 1. make sure the backend is running
 2. run `lando npm run build` to build the frontend
 3. run `lando npm run start` to start serving the frontend
 4. open another terminal and run `lando npm run cypress:run` to start the Cypress test runner
 
-A video of the run will be recorded and it will be available at `next/cypress/videos`.
+A video of the run will be recorded, and it will be available at `next/cypress/videos`.
 
 #### Using the Cypress application
 
 If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work: 
+
 1. ensure you are using the correct node version
 2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
 3. install cypress globally with `npm install -g cypress`
@@ -217,8 +218,5 @@ lando composer require 'drupal/twig_tweak:^3.2' -W
 
 ### Things to consider when creating a project from this template
 
-- When setting up this project in Silta, please check the Elasticsearch image(in silta.yml),
-that it corresponds to the one being generated for your project.
-- The caching strategy is good to give a proper thought to. We have tested this template
-with Fastly CDN, which makes a good match, and you don't have to worry about invalidations etc. that much.
-- @TODO write some more info about the caching and CDN, when we have more experience with the setup.
+- When setting up this project in Silta, please check that the Elasticsearch image (in silta.yml) corresponds to the one being generated for your project.
+- You should think about additional caching for the frontend. We have tested this template with Fastly CDN.
