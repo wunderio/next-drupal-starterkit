@@ -4,7 +4,7 @@ orbs:
   silta: silta/silta@0.1
 
 executors:
-  cicd81:
+  cicd82:
     docker:
       - image: wunderio/silta-cicd:circleci-php8.2-node18-composer2-v0.2.2
     resource_class: small
@@ -177,7 +177,7 @@ workflows:
     jobs:
       - silta/drupal-validate:
           name: validate
-          executor: cicd81
+          executor: cicd82
           drupal-root: "drupal"
           web-root: "web"
           pre-validation:
@@ -197,7 +197,7 @@ workflows:
 
       - silta/drupal-build-deploy: &build-deploy
           name: Drupal build & deploy
-          executor: cicd81
+          executor: cicd82
           drupal-root: drupal
           silta_config: silta/silta.yml
           pre-release:
@@ -264,7 +264,7 @@ workflows:
       # Storybook deployment.
       - silta/simple-build-deploy: &build-deploy
           name: Storybook build & deploy
-          executor: cicd81
+          executor: cicd82
           context: silta_dev
           silta_config: silta/silta-storybook.yml
           release-suffix: storybook
@@ -284,7 +284,7 @@ workflows:
       - silta/frontend-build-deploy: &frontend-build-deploy
           name: Next build & deploy
           context: silta_dev
-          executor: cicd81
+          executor: cicd82
           silta_config: silta/silta-next.yml
           release-suffix: next
           codebase-build:
