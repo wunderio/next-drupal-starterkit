@@ -181,12 +181,12 @@ A video of the run will be recorded, and it will be available at `next/cypress/v
 
 If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work: 
 
-1. ensure you are using the correct node version
+1. ensure you are using the correct node version, matching what we use inside Lando (see the `.lando.yml` file for details)
 2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
-3. install cypress globally with `npm install -g cypress`
+3. check which version of Cypress is specified in `next/package.json` and install the same version on your host computer globally with `npm install -g cypress@<version>`
 4. while in the `/next` directory, run `npm run cypress:open` (notice that there's no `lando` at the beginning of the command).
 
-You can then run your tests inside the application.
+You can then run your tests inside the Cypress application.
 
 ### UI library
 
