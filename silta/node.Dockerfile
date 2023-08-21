@@ -1,4 +1,4 @@
-FROM wunderio/silta-node:v0.1
+FROM wunderio/silta-node:18-alpine-v3.17
 
 COPY . /app
 

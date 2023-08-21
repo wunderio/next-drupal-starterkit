@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "storybook": "STORYBOOK=true storybook dev -p 6006",
-    "build-storybook": "STORYBOOK=true storybook build"
+    "build-storybook": "STORYBOOK=true storybook build",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@elastic/react-search-ui": "^1.20.2",
@@ -61,8 +63,9 @@
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "autoprefixer": "^10.4.14",
-    "eslint": "^8.44.0",
-    "eslint-config-next": "^13.4.9",
+    "cypress": "^12.17.3",
+    "eslint": "^8.46.0",
+    "eslint-config-next": "~13.3.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-prettier": "^5.0.0",

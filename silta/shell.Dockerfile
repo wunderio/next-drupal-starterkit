@@ -1,4 +1,4 @@
 # Dockerfile for the Shell container.
-FROM wunderio/silta-php-shell:php8.1-v0.1
+FROM wunderio/silta-php-shell:php8.2-v1.0.0
 
 COPY --chown=www-data:www-data . /app

@@ -39,3 +39,5 @@ lerna-debug.log*
 
 # storybook
 /storybook-static
+/cypress/screenshots/
+/cypress/videos/

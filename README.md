@@ -162,6 +162,32 @@ The environment variables used by the frontend are also checked for type safety.
 
 The Drupal backend is responsible for generating the xml sitemap with the `simple_sitemap` module and exporting it to a file using a custom module. The frontend then reads this file and serves it at `/sitemap.xml` via proxying.
 
+### Testing with Cypress
+
+The template includes example tests to be run with Cypress. The Lando setup includes a headless browser and Cypress, so you can run the tests locally without the need to install anything else, but it won't be able to use the visual Cypress application. See below for more details.
+
+#### Running tests locally inside Lando on the command line
+
+To run the Cypress tests inside Lando: 
+
+1. make sure the backend is running
+2. run `lando npm run build` to build the frontend
+3. run `lando npm run start` to start serving the frontend
+4. open another terminal and run `lando npm run cypress:run` to start the Cypress test runner
+
+A video of the run will be recorded, and it will be available at `next/cypress/videos`.
+
+#### Using the Cypress application
+
+If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work: 
+
+1. ensure you are using the correct node version, matching what we use inside Lando (see the `.lando.yml` file for details)
+2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
+3. check which version of Cypress is specified in `next/package.json` and install the same version on your host computer globally with `npm install -g cypress@<version>`
+4. while in the `/next` directory, run `npm run cypress:open` (notice that there's no `lando` at the beginning of the command).
+
+You can then run your tests inside the Cypress application.
+
 ### UI library
 
 The `ui/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects. The components are meant to be used as a starting point, and should be modified, added and removed as required to fit the needs of the project.
@@ -192,8 +218,5 @@ lando composer require 'drupal/twig_tweak:^3.2' -W
 
 ### Things to consider when creating a project from this template
 
-- When setting up this project in Silta, please check the Elasticsearch image(in silta.yml),
-that it corresponds to the one being generated for your project.
-- The caching strategy is good to give a proper thought to. We have tested this template
-with Fastly CDN, which makes a good match, and you don't have to worry about invalidations etc. that much.
-- @TODO write some more info about the caching and CDN, when we have more experience with the setup.
+- When setting up this project in Silta, please check that the Elasticsearch image (in silta.yml) corresponds to the one being generated for your project.
+- You should think about additional caching for the frontend. We have tested this template with Fastly CDN.
