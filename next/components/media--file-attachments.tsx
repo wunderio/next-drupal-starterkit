@@ -54,20 +54,25 @@ export function MediaFileAttachments({
     <>
       <ul {...props} className="list-inside space-y-2">
         {mediaItems.map((mediaItem) => (
-          <li key={mediaItem.id} className="gap-1 w-full hover:text-primary-600">
+          <li
+            key={mediaItem.id}
+            className="gap-1 w-full hover:text-primary-600"
+          >
             <a
               href={absoluteUrl(mediaItem.field_media_document.uri.url)}
               target="_blank"
               className="flex items-center"
             >
-            {getIcon(getFileType(mediaItem.field_media_document.uri.url))}
-            <span className="text-xs mr-2">{mediaItem.field_media_document.filename}</span>
-            <span className="text-xs mr-2">
-              {formatFileSizeInBytes(mediaItem.field_media_document.filesize)}
-            </span>
-            <span className="text-xs">
-              ({mediaItem.field_media_document.filemime})
-            </span>
+              {getIcon(getFileType(mediaItem.field_media_document.uri.url))}
+              <span className="text-xs mr-2">
+                {mediaItem.field_media_document.filename}
+              </span>
+              <span className="text-xs mr-2">
+                {formatFileSizeInBytes(mediaItem.field_media_document.filesize)}
+              </span>
+              <span className="text-xs">
+                ({mediaItem.field_media_document.filemime})
+              </span>
             </a>
           </li>
         ))}
