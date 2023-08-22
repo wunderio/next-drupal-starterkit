@@ -47,7 +47,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
-        console.log(user);
         token.accessToken = user.access_token;
         token.accessTokenExpires = Date.now() + user.expires_in * 1000;
         token.refreshToken = user.refresh_token;
