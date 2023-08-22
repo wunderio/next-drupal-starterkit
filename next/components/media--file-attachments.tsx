@@ -1,6 +1,7 @@
+import { useTranslation } from "next-i18next";
+
 import { absoluteUrl } from "@/lib/drupal/absolute-url";
 import { formatFileSizeInBytes, getFileType } from "@/lib/utils";
-import { useTranslation } from "next-i18next";
 import { FileAttachments } from "@/lib/zod/paragraph";
 import ListIcon from "@/styles/icons/list.svg";
 import PdfIcon from "@/styles/icons/pdf.svg";
@@ -50,14 +51,18 @@ export function MediaFileAttachments({
   mediaItems,
   ...props
 }: MediaFileAttachmentsProps) {
+  const { t } = useTranslation();
   if (mediaItems.length === 0) {
     return null;
   }
-  const { t } = useTranslation();
 
   return (
     <>
-      <ul {...props} className="list-inside space-y-2" aria-label={t("downloadable-files")}>
+      <ul
+        {...props}
+        className="list-inside space-y-2"
+        aria-label={t("downloadable-files")}
+      >
         {mediaItems.map((mediaItem) => (
           <li
             key={mediaItem.id}
