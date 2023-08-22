@@ -73,5 +73,7 @@
   "loading": "Loading...",
   "modal-close": "Close",
   "image-of": "Image of {{name}}",
-  "all-articles": "All articles"
+  "all-articles": "All articles",
+  "downloadable-files": "List of downloadable files",
+  "download": "Download"
 }

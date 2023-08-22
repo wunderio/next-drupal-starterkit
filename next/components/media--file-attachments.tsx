@@ -1,5 +1,6 @@
 import { absoluteUrl } from "@/lib/drupal/absolute-url";
 import { formatFileSizeInBytes, getFileType } from "@/lib/utils";
+import { useTranslation } from "next-i18next";
 import { FileAttachments } from "@/lib/zod/paragraph";
 import ListIcon from "@/styles/icons/list.svg";
 import PdfIcon from "@/styles/icons/pdf.svg";
@@ -17,6 +18,7 @@ const getIcon = (fileType: string) => {
           className="mr-1.5 h-4 w-4 flex-shrink-0"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
+          aria-hidden
         />
       );
     case "docx":
@@ -28,6 +30,7 @@ const getIcon = (fileType: string) => {
           className="mr-1.5 h-4 w-4 flex-shrink-0"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
+          aria-hidden
         />
       );
     default:
@@ -37,6 +40,7 @@ const getIcon = (fileType: string) => {
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
           viewBox="0 0 20 20"
+          aria-hidden
         />
       );
   }
@@ -49,10 +53,11 @@ export function MediaFileAttachments({
   if (mediaItems.length === 0) {
     return null;
   }
+  const { t } = useTranslation();
 
   return (
     <>
-      <ul {...props} className="list-inside space-y-2">
+      <ul {...props} className="list-inside space-y-2" aria-label={t("downloadable-files")}>
         {mediaItems.map((mediaItem) => (
           <li
             key={mediaItem.id}
@@ -60,10 +65,11 @@ export function MediaFileAttachments({
           >
             <a
               href={absoluteUrl(mediaItem.field_media_document.uri.url)}
-              target="_blank"
               className="flex items-center"
+              download
             >
               {getIcon(getFileType(mediaItem.field_media_document.uri.url))}
+              <span className="sr-only">{t("download")}</span>
               <span className="text-xs mr-2">
                 {mediaItem.field_media_document.filename}
               </span>

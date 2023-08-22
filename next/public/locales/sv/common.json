@@ -73,5 +73,7 @@
   "loading": "Laddar...",
   "modal-close": "Stäng",
   "image-of": "Bild av {{name}}",
-  "all-articles": "Alla artiklar"
+  "all-articles": "Alla artiklar",
+  "downloadable-files": "Lista över nedladdningsbara filer",
+  "download": "Ladda ner"
 }
