@@ -19,7 +19,7 @@ const Search = async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   res.statusCode = response.status;
-  res.send(await response.json());
+  res.send(response.body);
 };
 
 export default Search;
