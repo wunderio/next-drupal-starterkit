@@ -23,7 +23,7 @@ commands:
       build-command:
         description: "NPM build command."
         type: string
-        default: "npm run build"
+        default: "npm run build --no-experimental-fetch"
       cache-version:
         description: "CircleCI cache key prefix."
         type: string
