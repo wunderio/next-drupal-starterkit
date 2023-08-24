@@ -73,5 +73,7 @@
   "loading": "Ladataan...",
   "all-articles": "Kaikki artikkelit",
   "modal-close": "Sulje",
-  "image-of": "Kuva: {{name}}"
+  "image-of": "Kuva: {{name}}",
+  "downloadable-files": "Ladattavien tiedostojen luettelo",
+  "download": "Lataa"
 }
