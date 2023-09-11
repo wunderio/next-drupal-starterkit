@@ -32,7 +32,7 @@
         "drupal/monolog": "^3.0@beta",
         "drupal/next": "^1.6",
         "drupal/paragraphs": "^1.16",
-        "drupal/redirect": "^1.8",
+        "drupal/redirect": "^1.9",
         "drupal/require_login": "^3.0",
         "drupal/restui": "^1.21",
         "drupal/simple_sitemap": "^4.1",
