@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1b1783034ea86fd6e67cccd9418a45c",
+    "content-hash": "3960d0c90923bad76ba8e5788d114a32",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2781,6 +2781,70 @@
             "homepage": "https://www.drupal.org/project/redirect",
             "support": {
                 "source": "https://git.drupalcode.org/project/redirect"
+            }
+        },
+        {
+            "name": "drupal/registration_role",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/registration_role.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/registration_role-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "3d3b9d1068e80a47e14e0e1d64498bf1e0d3075c"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1689039865",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "karthikeyan-manivasagam",
+                    "homepage": "https://www.drupal.org/user/1494424"
+                },
+                {
+                    "name": "melon",
+                    "homepage": "https://www.drupal.org/user/32875"
+                },
+                {
+                    "name": "mlncn",
+                    "homepage": "https://www.drupal.org/user/64383"
+                },
+                {
+                    "name": "pfournier",
+                    "homepage": "https://www.drupal.org/user/160468"
+                },
+                {
+                    "name": "pignaz",
+                    "homepage": "https://www.drupal.org/user/471908"
+                },
+                {
+                    "name": "yogen.prasad",
+                    "homepage": "https://www.drupal.org/user/2115328"
+                }
+            ],
+            "description": "Automatically assign a role to all new users who register.",
+            "homepage": "https://www.drupal.org/project/registration_role",
+            "support": {
+                "source": "https://git.drupalcode.org/project/registration_role"
             }
         },
         {
