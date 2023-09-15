@@ -5,7 +5,7 @@ import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { HeadingPage } from "@/components/heading--page";
+import { ErrorRequired } from "@/components/error-required";
 import { Meta } from "@/components/meta";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 
@@ -22,7 +22,11 @@ type Inputs = {
 export default function LogIn() {
   const { callbackUrl, error } = useRouter().query;
   const { t } = useTranslation();
-  const { register, handleSubmit } = useForm<Inputs>();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<Inputs>();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit = async ({ username, password }: Inputs) => {
@@ -38,36 +42,47 @@ export default function LogIn() {
   return (
     <>
       <Meta title={t("log-in")} metatags={[]} />
-
-      <HeadingPage>{t("log-in")}</HeadingPage>
-      <div className="max-w-md py-4">
+      <div className="max-w-md pb-16 pt-8 font-work">
         {error && (
           <StatusMessage level="error" className="mb-8">
             {t("login-error-check-username-password")}
           </StatusMessage>
         )}
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex w-full max-w-2xl flex-col"
+        >
+          <div className="mb-6">
             <Label htmlFor="username">{t("username")}</Label>
             <Input
               id="username"
               autoComplete="username"
+              aria-invalid={errors.username ? "true" : "false"}
               {...register("username", {
                 required: true,
               })}
+              className="inset-0 h-12 w-full rounded border border-neu-200 p-2 text-body-sm text-neu-400 ring-offset-4 focus:ring-4"
             />
+            {errors.username && errors.username.type === "required" && (
+              <ErrorRequired fieldTranslatedLabelKey={"username"} />
+            )}
           </div>
 
-          <div>
+          <div className="mb-6">
             <Label htmlFor="password">{t("password")}</Label>
             <Input
               id="password"
               autoComplete="current-password"
               type="password"
+              aria-invalid={errors.password ? "true" : "false"}
               {...register("password", {
                 required: true,
               })}
+              className="inset-0 h-12 w-full rounded border border-neu-200 p-2 text-body-sm text-neu-400 ring-offset-4 focus:ring-4"
             />
+            {errors.password && errors.password.type === "required" && (
+              <ErrorRequired fieldTranslatedLabelKey={"password"} />
+            )}
           </div>
 
           <Button type="submit" disabled={isSubmitting}>
