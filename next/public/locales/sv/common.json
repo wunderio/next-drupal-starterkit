@@ -75,5 +75,6 @@
   "image-of": "Bild av {{name}}",
   "all-articles": "Alla artiklar",
   "downloadable-files": "Lista över nedladdningsbara filer",
-  "download": "Ladda ner"
+  "download": "Ladda ner",
+  "field-is-required": "{{field}} är obligatoriskt."
 }

@@ -75,5 +75,6 @@
   "modal-close": "Sulje",
   "image-of": "Kuva: {{name}}",
   "downloadable-files": "Ladattavien tiedostojen luettelo",
-  "download": "Lataa"
+  "download": "Lataa",
+  "field-is-required": "'{{field}}' kenttä on pakollinen"
 }

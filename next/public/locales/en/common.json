@@ -75,5 +75,6 @@
   "image-of": "Image of {{name}}",
   "all-articles": "All articles",
   "downloadable-files": "List of downloadable files",
-  "download": "Download"
+  "download": "Download",
+  "field-is-required": "The {{field}} field is required."
 }
