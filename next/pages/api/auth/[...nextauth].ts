@@ -13,7 +13,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Drupal",
       credentials: {
-        username: { label: "Email", type: "text", placeholder: "email" },
+        username: { label: "Username", type: "text", placeholder: "Username" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
