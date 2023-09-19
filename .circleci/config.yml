@@ -200,6 +200,9 @@ workflows:
           context: analyze
           sources: drupal/web
 
+      - cypress/run:
+          name: Cypress tests
+
       - silta/drupal-build-deploy: &build-deploy
           name: Drupal build & deploy
           executor: cicd82
@@ -224,6 +227,7 @@ workflows:
                 - main
                 - production
                 - /dependabot\/.*/
+          requires: [ Cypress tests ]
 
       - silta/drupal-build-deploy:
           # Extend the build-deploy configuration for the main environment.
@@ -283,6 +287,7 @@ workflows:
               ignore:
                 - production
                 - /dependabot\/.*/
+          requires: [ Cypress tests ]
 
       # silta/frontend-build-deploy is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/jobs/%40frontend.yml
       # &frontend-build-deploy is a yaml anchor, so we can reference it later
