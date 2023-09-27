@@ -1,4 +1,5 @@
 import type { GetStaticPropsContext } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useTranslation } from "next-i18next";
@@ -9,6 +10,7 @@ import { ErrorRequired } from "@/components/error-required";
 import { Meta } from "@/components/meta";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 
+import { env } from "@/env";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
@@ -28,6 +30,11 @@ export default function LogIn() {
     handleSubmit,
   } = useForm<Inputs>();
 
+  const router = useRouter();
+  const isPasswordUpdated = Boolean(router.query.passwordJustUpdated) || false;
+  const isPasswordRequested =
+    Boolean(router.query.newPasswordRequested) || false;
+  const enteredEmail = router.query.enteredEmail || "";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit = async ({ username, password }: Inputs) => {
     setIsSubmitting(true);
@@ -39,10 +46,23 @@ export default function LogIn() {
     setIsSubmitting(false);
   };
 
+  const resetPasswordBackendUrl =
+    env.NEXT_PUBLIC_DRUPAL_BASE_URL + "/" + router.locale + "/user/password";
+
   return (
     <>
       <Meta title={t("log-in")} metatags={[]} />
       <div className="max-w-md pb-16 pt-8 font-work">
+        {isPasswordUpdated && (
+          <StatusMessage level="success" className="mb-8">
+            {t("password-updated-login-below")}
+          </StatusMessage>
+        )}
+        {isPasswordRequested && (
+          <StatusMessage level="info" className="mb-8">
+            {t("password-reset-check-your-email", { email: enteredEmail })}
+          </StatusMessage>
+        )}
         {error && (
           <StatusMessage level="error" className="mb-8">
             {t("login-error-check-username-password")}
@@ -89,6 +109,9 @@ export default function LogIn() {
             {t("log-in")}
           </Button>
         </form>
+        <Link className="inline-block mt-2" href={resetPasswordBackendUrl}>
+          {t("reset-your-password")}
+        </Link>
       </div>
     </>
   );

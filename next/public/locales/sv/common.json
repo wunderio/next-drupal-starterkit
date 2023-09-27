@@ -76,5 +76,8 @@
   "all-articles": "Alla artiklar",
   "downloadable-files": "Lista över nedladdningsbara filer",
   "download": "Ladda ner",
+  "password-updated-login-below": "Ditt lösenord har uppdaterats. Du kan logga in med formuläret nedan.",
+  "password-reset-check-your-email": "Om {{email}} var associerad med ett faktiskt konto, kontrollera din e-post efter en länk för att återställa ditt lösenord.",
+  "reset-your-password": "Återställ ditt lösenord",
   "field-is-required": "{{field}} är obligatoriskt."
 }
