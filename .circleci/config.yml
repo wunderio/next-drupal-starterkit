@@ -284,6 +284,7 @@ jobs:
       - run:
           name: "Run drush commands"
           command: |
+            cd drupal
             drush st
 
 #      - cypress/install:
