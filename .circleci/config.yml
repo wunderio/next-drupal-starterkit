@@ -231,8 +231,7 @@ commands:
             - run:
                 command: |
                   cd '<<parameters.path>>'
-                  composer install -n --prefer-dist --ignore-platform-reqs
-                  --optimize-autoloader
+                  composer install -n --prefer-dist --ignore-platform-reqs --optimize-autoloader
                 name: composer install
       - unless:
           condition: <<parameters.install-dev-dependencies>>
@@ -245,8 +244,7 @@ commands:
             - run:
                 command: |
                   cd '<<parameters.path>>'
-                  composer install -n --prefer-dist --ignore-platform-reqs --no-dev
-                  --optimize-autoloader
+                  composer install -n --prefer-dist --ignore-platform-reqs --no-dev --optimize-autoloader
                 name: composer install
       - save_cache:
           key: >-
