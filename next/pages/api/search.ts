@@ -12,14 +12,26 @@ const Search = async (req: NextApiRequest, res: NextApiResponse) => {
   // Create the url to call in drupal:
   const ProxyUrl = `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/${languagePrefix}/wunder_search/proxy`;
 
-  const response = await fetch(ProxyUrl, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(req.body),
-  });
+  try {
+    const result = await fetch(ProxyUrl, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(req.body),
+    });
 
-  res.statusCode = response.status;
-  res.send(await response.json());
+    if (!result.ok) {
+      res.status(result.status).json({ error: result.statusText });
+      const message = `Error performing search: ${result.status}: ${result.statusText}`;
+      throw new Error(message);
+    }
+
+    res.statusCode = result.status;
+    res.send(await result.json());
+  } catch (error) {
+    console.error("Fetch error:", JSON.stringify(error.message, null, 2));
+    // Respond with an appropriate error status code or message
+    res.status(500).json({ error: error.message });
+  }
 };
 
 export default Search;
