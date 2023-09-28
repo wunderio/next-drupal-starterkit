@@ -28,7 +28,7 @@ executors:
       - *php-composer-node-browsers
       - *mariadb
       - *elastic
-    resource_class: small
+    resource_class: medium
 
 commands:
   npm-install-build:
