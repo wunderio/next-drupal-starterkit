@@ -184,12 +184,10 @@ jobs:
       node-version: '18.18'
     steps:
       - cypress/install:
-          name: "Install app modules and Cypress dependencies"
           install-command: npm install
           post-install:  npm run build
           working-directory: ~/project/next
       - cypress/run-tests:
-          name: "Run Cypress tests"
           start-command: npm run start
           working-directory: ~/project/next
 
