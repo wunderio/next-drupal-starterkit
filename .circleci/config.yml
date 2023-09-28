@@ -183,13 +183,15 @@ jobs:
       name: cypress/default
       node-version: '18.18'
     steps:
-      - cypress/install
-      - cypress/run-tests
-# Keep previously defined config to re-use later.
-#        name: Cypress tests
-#        install-command: 'npm install && npm run build'
-#        start-command: 'npm run start'
-#        working-directory: ~/project/next
+      - cypress/install:
+          name: "Install app modules and Cypress dependencies"
+          install-command: npm install
+          post-install:  npm run build
+          working-directory: ~/project/next
+      - cypress/run-tests:
+          name: "Run Cypress tests"
+          start-command: npm run start
+          working-directory: ~/project/next
 
 workflows:
   commit:
