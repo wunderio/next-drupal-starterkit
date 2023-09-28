@@ -1,0 +1,12 @@
+scheme: http
+hosts:
+  -
+    host: localhost
+    port: '9200'
+authentication:
+  method: ''
+  configuration: {  }
+ssl:
+  certificate: ''
+  skip_verification: false
+defer_indexing: false
