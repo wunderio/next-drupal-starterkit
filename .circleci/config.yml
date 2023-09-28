@@ -200,20 +200,66 @@ commands:
             echo "Expanding special variable DRUPAL_ADMIN_PWD = <redacted> ..."
             echo "WARN: Due to the admin password getting baked in to the image, web login as admin must be kept disabled!"
             sed -i -e "s/\${DRUPAL_ADMIN_PWD}/$DRUPAL_ADMIN_PWD/g" ${envvars_file}
-  build-drupal:
-    description: "Build Drupal for test env."
+  # This command is override of https://circleci.com/developer/orbs/orb/silta/silta#commands-drupal-composer-install
+  drupal-composer-install-in-path:
+    description: PHP composer install command.
+    parameters:
+      cache-version:
+        default: v2
+        description: CircleCI cache key prefix.
+        type: string
+      install-dev-dependencies:
+        default: false
+        description: Install development packages.
+        type: boolean
+      path:
+        description: "composer.json path"
+        type: string
+        default: "."
     steps:
-      - run:
-          name: "Switch to /drupal directory"
-          command: |
-            cd drupal
-            ls -la
-      - silta/drupal-composer-install:
-          install-dev-dependencies: true
-      - run:
-          name: "List directory contents"
-          command: |
-            ls -la
+      - when:
+          condition: <<parameters.install-dev-dependencies>>
+          steps:
+            - restore_cache:
+                keys:
+                  - >-
+                    <<parameters.cache-version>>-dependencies-{{ checksum
+                    "<<parameters.path>>/composer.lock" }}-<<parameters.install-dev-dependencies>>
+                  - >-
+                    <<parameters.cache-version>>-dependencies-{{ checksum
+                    "<<parameters.path>>/composer.lock" }}
+            - run:
+                command: >
+                  cd '<<parameters.path>>'
+                  composer install -n --prefer-dist --ignore-platform-reqs
+                  --optimize-autoloader
+                name: composer install
+      - unless:
+          condition: <<parameters.install-dev-dependencies>>
+          steps:
+            - restore_cache:
+                keys:
+                  - >-
+                    <<parameters.cache-version>>-dependencies-{{ checksum
+                    "<<parameters.path>>/composer.lock" }}-<<parameters.install-dev-dependencies>>
+            - run:
+                command: >
+                  cd '<<parameters.path>>'
+                  composer install -n --prefer-dist --ignore-platform-reqs --no-dev
+                  --optimize-autoloader
+                name: composer install
+      - save_cache:
+          key: >-
+            <<parameters.cache-version>>-dependencies-{{ checksum "<<parameters.path>>/composer.lock"
+            }}-<<parameters.install-dev-dependencies>>
+          paths:
+            - <<parameters.path>>/vendor
+            - <<parameters.path>>/web/core
+            - <<parameters.path>>/web/modules/contrib
+            - <<parameters.path>>/web/themes/contrib
+            - <<parameters.path>>/web/profiles/contrib
+            - <<parameters.path>>/web/libraries
+            - <<parameters.path>>/web/_ping.php
 jobs:
   run-cypress-tests:
     executor: custom_cypress
@@ -221,7 +267,9 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - build-drupal
+      - drupal-composer-install-in-path:
+          install-dev-dependencies: true
+          path: drupal
 
 
 #      - cypress/install:
