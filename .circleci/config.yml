@@ -8,10 +8,26 @@ orbs:
   # to lock the version and prevent unexpected CI changes
   cypress: cypress-io/cypress@3.1.4
 
+# Define image anchors for custom Cypress executor
+images:
+  # PHP 8.2, composer 2, node-lts, browsers
+  - &php-composer-node-browsers
+    image: cimg/php:8.2-browsers
+  - &mariadb
+    image: cimg/mariadb:10.3
+  - &elastic
+    image: elasticsearch:8.10.2
+
 executors:
   cicd82:
     docker:
       - image: wunderio/silta-cicd:circleci-php8.2-node18-composer2-v1
+    resource_class: small
+  custom_cypress:
+    docker:
+      - *php-composer-node-browsers
+      - *mariadb
+      - *elastic
     resource_class: small
 
 commands:
@@ -179,13 +195,11 @@ commands:
 
 jobs:
   run-cypress-tests:
-    executor:
-      name: cypress/default
-      node-version: '18.18'
+    executor: custom_cypress
     steps:
       - cypress/install:
           install-command: npm install
-#          post-install:  npm run build
+          # post-install:  npm run build
           working-directory: ~/project/next
       - cypress/run-tests:
           start-command: npm run start
