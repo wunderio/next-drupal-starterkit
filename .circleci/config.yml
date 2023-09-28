@@ -185,7 +185,7 @@ jobs:
     steps:
       - cypress/install:
           install-command: npm install
-          post-install:  npm run build
+#          post-install:  npm run build
           working-directory: ~/project/next
       - cypress/run-tests:
           start-command: npm run start
