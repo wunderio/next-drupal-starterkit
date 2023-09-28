@@ -17,6 +17,14 @@ images:
     image: cimg/mariadb:10.3
   - &elastic
     image: elasticsearch:8.10.2
+    environment:
+      - discovery.type=single-node
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+      - xpack.security.enabled=false
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
 
 executors:
   cicd82:
