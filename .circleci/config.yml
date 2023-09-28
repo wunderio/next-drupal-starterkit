@@ -177,6 +177,20 @@ commands:
             echo "WARN: Due to the admin password getting baked in to the image, web login as admin must be kept disabled!"
             sed -i -e "s/\${DRUPAL_ADMIN_PWD}/$DRUPAL_ADMIN_PWD/g" ${envvars_file}
 
+jobs:
+  run-cypress-tests:
+    executor:
+      name: cypress/default
+      node-version: '18.18'
+    steps:
+      - cypress/install
+      - cypress/run-tests
+# Keep previously defined config to re-use later.
+#        name: Cypress tests
+#        install-command: 'npm install && npm run build'
+#        start-command: 'npm run start'
+#        working-directory: ~/project/next
+
 workflows:
   commit:
     jobs:
@@ -200,13 +214,8 @@ workflows:
           context: analyze
           sources: drupal/web
 
-      - cypress/run:
-          name: Cypress tests
-          executor:
-            node-version: '18'
-          install-command: 'npm install && npm run build'
-          start-command: 'npm run start'
-          working-directory: ~/project/next
+      - run-cypress-tests:
+          name: "Cypress tests"
 
       - silta/drupal-build-deploy: &build-deploy
           name: Drupal build & deploy
