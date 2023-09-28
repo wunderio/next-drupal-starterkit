@@ -198,6 +198,7 @@ jobs:
     executor: custom_cypress
     steps:
       - cypress/install:
+          cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "~/project/next/package.json" }}
           install-command: npm install
           # post-install:  npm run build
           working-directory: ~/project/next
