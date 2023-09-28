@@ -202,6 +202,11 @@ workflows:
 
       - cypress/run:
           name: Cypress tests
+          executor:
+            node-version: '18'
+          install-command: 'npm install && npm run build'
+          start-command: 'npm run start'
+          working-directory: ~/project/next
 
       - silta/drupal-build-deploy: &build-deploy
           name: Drupal build & deploy
