@@ -13,8 +13,20 @@ images:
   # PHP 8.2, composer 2, node-lts, browsers
   - &php-composer-node-browsers
     image: cimg/php:8.2-browsers
+    environment:
+      DB_NAME_DRUPAL: drupal
+      DB_USER_DRUPAL: root
+      DB_PASS_DRUPAL: badpassword
+      DB_HOST_DRUPAL: '127.0.0.1'
+      DRUPAL_ENV: 'circleci'
+      WKV_SITE_ENV: 'circleci'
+      HASH_SALT: 'circleci'
   - &mariadb
     image: cimg/mariadb:10.3
+    environment:
+      MYSQL_DATABASE: drupal
+      MYSQL_ROOT_PASSWORD: badpassword
+      MYSQL_ROOT_HOST: "%"
   - &elastic
     image: elasticsearch:8.10.2
     environment:
@@ -268,7 +280,10 @@ jobs:
       - drupal-composer-install-in-path:
           install-dev-dependencies: true
           path: drupal
-
+      - run:
+          name: "Run drush commands"
+          command: |
+            drush st
 
 #      - cypress/install:
 #          cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "~/project/next/package.json" }}
