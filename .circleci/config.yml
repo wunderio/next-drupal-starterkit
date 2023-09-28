@@ -204,7 +204,14 @@ commands:
 jobs:
   run-cypress-tests:
     executor: custom_cypress
+    working_directory: ~/project/drupal
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v2-composer-dependencies-{{ .Environment.CIRCLE_SHA1 }}
+      - silta/drupal-composer-install:
+          install-dev-dependencies: true
       - cypress/install:
           cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "~/project/next/package.json" }}
           install-command: npm install
