@@ -229,7 +229,7 @@ commands:
                     <<parameters.cache-version>>-dependencies-{{ checksum
                     "<<parameters.path>>/composer.lock" }}
             - run:
-                command: >
+                command: |
                   cd '<<parameters.path>>'
                   composer install -n --prefer-dist --ignore-platform-reqs
                   --optimize-autoloader
@@ -243,7 +243,7 @@ commands:
                     <<parameters.cache-version>>-dependencies-{{ checksum
                     "<<parameters.path>>/composer.lock" }}-<<parameters.install-dev-dependencies>>
             - run:
-                command: >
+                command: |
                   cd '<<parameters.path>>'
                   composer install -n --prefer-dist --ignore-platform-reqs --no-dev
                   --optimize-autoloader
