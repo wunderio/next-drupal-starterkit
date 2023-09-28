@@ -75,5 +75,9 @@
   "modal-close": "Sulje",
   "image-of": "Kuva: {{name}}",
   "downloadable-files": "Ladattavien tiedostojen luettelo",
-  "download": "Lataa"
+  "download": "Lataa",
+  "password-reset-check-your-email": "Jos {{email}} oli liitetty oikeaan tiliin, tarkista sähköpostistasi linkki salasanan vaihtamiseen.",
+  "password-updated-login-below": "Salasanasi on päivitetty. Voit kirjautua sisään alla olevalla lomakkeella.",
+  "reset-your-password": "Nollaa salasanasi",
+  "field-is-required": "'{{field}}' kenttä on pakollinen"
 }

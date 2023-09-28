@@ -1,13 +1,15 @@
 import type { GetStaticPropsContext } from "next";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { useForm } from "react-hook-form";
 
-import { HeadingPage } from "@/components/heading--page";
+import { ErrorRequired } from "@/components/error-required";
 import { Meta } from "@/components/meta";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
+import { Label } from "@/ui/label";
 import { StatusMessage } from "@/ui/status-message";
 
 type Inputs = {
@@ -20,23 +22,38 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful },
+    setError,
+    clearErrors,
   } = useForm<Inputs>();
 
+  const router = useRouter();
   const onSubmit = async (data: Inputs) => {
+    clearErrors("root.serverError");
     const response = await fetch(`/api/register`, {
       method: "POST",
       body: JSON.stringify({
-        name: data.name,
         mail: data.email,
+        name: data.name,
       }),
+      // Send the current language as header:
+      headers: {
+        "accept-language": router.locale || "fi",
+      },
     });
-
     if (!response.ok) {
-      console.error("Error registering user", response);
+      const body = await response.json();
+      console.error(
+        "Error registering user",
+        response.status,
+        JSON.stringify(body),
+      );
+      setError("root.serverError", {
+        type: String(response.status),
+        message: body.error,
+      });
     }
   };
-  const onErrors = (errors) => console.error(errors);
 
   if (isSubmitSuccessful) {
     return (
@@ -45,33 +62,25 @@ export default function Register() {
       </StatusMessage>
     );
   }
-
   return (
     <>
       <Meta title={t("register")} metatags={[]} />
+      <div className="max-w-md pb-16 pt-8 font-work">
+        {errors.root && errors.root.serverError && (
+          <StatusMessage level="error">
+            <p className="mb-4">
+              Server error. Message: {errors.root.serverError.message}, Status:{" "}
+              {errors.root.serverError.type}
+            </p>
+          </StatusMessage>
+        )}
 
-      <HeadingPage>{t("register")}</HeadingPage>
-      <div className="max-w-md py-4">
         <form
-          onSubmit={handleSubmit(onSubmit, onErrors)}
-          className="flex flex-col gap-4"
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex w-full max-w-2xl flex-col gap-4"
         >
-          <div>
-            <label className="mb-1 block text-sm font-bold" htmlFor="name">
-              {t("username")}
-            </label>
-            <Input
-              id="name"
-              autoComplete="name"
-              {...register("name", {
-                required: true,
-              })}
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-bold" htmlFor="email">
-              {t("email")}
-            </label>
+          <div className="mb-6">
+            <Label htmlFor="email">{t("email")}</Label>
             <Input
               id="email"
               type="email"
@@ -79,7 +88,28 @@ export default function Register() {
               {...register("email", {
                 required: true,
               })}
+              aria-invalid={errors.email ? "true" : "false"}
+              className="inset-0 h-12 w-full rounded border border-neu-200 p-2 text-body-sm text-neu-400 ring-offset-4 focus:ring-4"
             />
+            {errors.email && errors.email.type === "required" && (
+              <ErrorRequired fieldTranslatedLabelKey={"email"} />
+            )}
+          </div>
+          <div className="mb-6">
+            <Label htmlFor="name">{t("username")}</Label>
+            <Input
+              id="name"
+              type="text"
+              autoComplete="name"
+              aria-invalid={errors.name ? "true" : "false"}
+              {...register("name", {
+                required: true,
+              })}
+              className="inset-0 h-12 w-full rounded border border-neu-200 p-2 text-body-sm text-neu-400 ring-offset-4 focus:ring-4"
+            />
+            {errors.name && errors.name.type === "required" && (
+              <ErrorRequired fieldTranslatedLabelKey={"name"} />
+            )}
           </div>
           <Button type="submit">{t("register")}</Button>
         </form>

@@ -35,3 +35,12 @@ config:
         label: 'Anonymous user'
       grantPermissions:
         - 'restful post user_registration'
+    # Set email messages for user registration:
+    user.mail:
+      simple_config_update:
+        register_no_approval_required:
+          subject: 'Account details for [user:display-name] at [site:name]'
+          body: "[user:display-name],\r\n\r\nThank you for registering at [site:name]. You may now log in by clicking this link or copying and pasting it into your browser:\r\n\r\n[user:one-time-login-url]\r\n\r\nThis link can only be used once to log in and will lead you to a page where you can set your password.\r\n\r\nAfter setting your password, you will be able to log in at [wunder_next:frontend-url] in the future using:\r\n\r\nusername: [user:name]\r\npassword: Your password\r\n\r\n--  [site:name] team"
+        register_admin_created:
+          subject: 'An administrator created an account for you at [site:name]'
+          body: "[user:display-name],\r\n\r\nA site administrator at [site:name] has created an account for you. You may now log in by clicking this link or copying and pasting it into your browser:\r\n\r\n[user:one-time-login-url]\r\n\r\nThis link can only be used once to log in and will lead you to a page where you can set your password.\r\n\r\nAfter setting your password, you will be able to log in at [wunder_next:frontend-url] in the future using:\r\n\r\nusername: [user:name]\r\npassword: Your password\r\n\r\n--  [site:name] team"

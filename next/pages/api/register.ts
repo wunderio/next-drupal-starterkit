@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { drupal } from "@/lib/drupal/drupal-client";
 
+import siteConfig from "@/site.config";
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -11,12 +13,20 @@ export default async function handler(
       const url = drupal.buildUrl("/user/register?_format=json");
       const body = JSON.parse(req.body);
 
+      // The locale is passed in this header:
+      const localeHeader = req.headers["accept-language"];
+
       // Do a call to drupal to register the user:
       const result = await drupal.fetch(url.toString(), {
         method: "POST",
         body: JSON.stringify({
           name: [{ value: body.name }],
           mail: [{ value: body.mail }],
+          preferred_langcode: [
+            {
+              value: localeHeader || siteConfig.defaultLocale,
+            },
+          ],
         }),
         headers: {
           "Content-Type": "application/json",
@@ -26,16 +36,17 @@ export default async function handler(
         withAuth: false,
       });
 
-      if (result.ok) {
-        res.status(200).end();
-      } else {
-        console.error("Sign-up failed:", result);
-        res.status(result.status).end();
-        throw new Error();
+      if (!result.ok) {
+        res.status(result.status).json({ error: result.statusText });
+        const message = `Error registering user: ${result.status}: ${result.statusText}`;
+        throw new Error(message);
       }
+      //The operation was successful:
+      res.status(200).json({ success: true });
     }
   } catch (error) {
-    console.error("Sign-up POST failed:", error);
-    return res.status(400).json(error.message);
+    console.error("Fetch error:", JSON.stringify(error.message, null, 2));
+    // Respond with an appropriate error status code or message
+    res.status(500).json({ error: error.message });
   }
 }

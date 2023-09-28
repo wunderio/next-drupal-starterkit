@@ -6,7 +6,10 @@
  */
 
 use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
 use Drupal\simple_oauth\Entities\AccessTokenEntity;
 use Drupal\user\Entity\User;
 
@@ -97,4 +100,80 @@ function wunder_next_simple_oauth_private_claims_alter(&$private_claims, AccessT
     'email' => $user->getEmail(),
     'username' => $user->getAccountName(),
   ];
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function wunder_next_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $account = Drupal::currentUser();
+  if ($account->hasRole('frontend_login')) {
+    // Do not allow the user to change the email address.
+    $form["account"]["mail"]["#access"] = FALSE;
+    // Add textual explanation:
+    $form["#prefix"] = t("Welcome, set your password below:");
+    foreach (array_keys($form['actions']) as $action) {
+      if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+        $form['actions'][$action]['#submit'][] = 'wunder_next_form_user_edited_form_submit';
+      }
+    }
+  }
+}
+
+/**
+ * Additional form submit function for the user form.
+ *
+ * This function will redirect the user to the frontend login page after they
+ * have updated their password.
+ */
+function wunder_next_form_user_edited_form_submit(array $form, FormStateInterface $form_state) {
+  // We don't want the user to keep being logged into Drupal after this
+  // operation goes through, because they will be taken to the frontend anyway:
+  user_logout();
+  $settings = Settings::get('wunder_next.settings');
+  $current_language = Drupal::languageManager()->getCurrentLanguage()->getId();
+  // We will pass two query parameters to the login page in the frontend:
+  $query = [
+    // This parameter is then picked up in the frontend to show
+    // a confirmation message:
+    'passwordJustUpdated' => 'true',
+    // This parameter will redirect the user to their dashboard after login:
+    'callbackUrl' => '/' . $current_language . '/dashboard',
+  ];
+  $frontend_login_url = Url::fromUri($settings['frontend_url'] . '/' . $current_language . '/auth/login', ['query' => $query]);
+  // Redirect to the frontend login url:
+  $response = new TrustedRedirectResponse($frontend_login_url->toString());
+  $form_state->setResponse($response);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function wunder_next_form_user_pass_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // We add our own submit function that will redirect the user to
+  // the frontend after they asked for a new password:
+  $form['#submit'][] = 'wunder_next_form_user_reset_password_form_submit';
+}
+
+/**
+ * Additional form submit function for the user reset password form.
+ *
+ * This function will redirect the user to the frontend login page after they
+ * have requested a new password.
+ */
+function wunder_next_form_user_reset_password_form_submit(array $form, FormStateInterface $form_state) {
+  $settings = Settings::get('wunder_next.settings');
+  $current_language = Drupal::languageManager()->getCurrentLanguage()->getId();
+  // We will pass two query parameters to the login page in the frontend:
+  $query = [
+    // This parameter is then picked up in the frontend to show
+    // a confirmation message:
+    'newPasswordRequested' => 'true',
+    // Add the requested email, so we can display it in the frontend:
+    'enteredEmail' => $form_state->getValue('name'),
+  ];
+  $frontend_login_url = Url::fromUri($settings['frontend_url'] . '/' . $current_language . '/auth/login', ['query' => $query]);
+  // Redirect to the frontend login url:
+  $response = new TrustedRedirectResponse($frontend_login_url->toString());
+  $form_state->setResponse($response);
 }

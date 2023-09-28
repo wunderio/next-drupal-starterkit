@@ -3,8 +3,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt_decode from "jwt-decode";
 
-import { drupal } from "@/lib/drupal/drupal-client";
-
 import { env } from "@/env";
 
 export const authOptions: NextAuthOptions = {
@@ -26,15 +24,17 @@ export const authOptions: NextAuthOptions = {
         formData.append("username", credentials.username);
         formData.append("password", credentials.password);
 
-        const url = drupal.buildUrl("/oauth/token");
         // Get access token from Drupal.
-        const response = await drupal.fetch(url.toString(), {
-          method: "POST",
-          body: formData,
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+        const response = await fetch(
+          `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
+          {
+            method: "POST",
+            body: formData,
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
           },
-        });
+        );
 
         if (!response.ok) {
           return null;
@@ -45,15 +45,22 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    jwt: async function ({ token, user, account, trigger }) {
       if (account && user) {
         token.accessToken = user.access_token;
         token.accessTokenExpires = Date.now() + user.expires_in * 1000;
         token.refreshToken = user.refresh_token;
       }
 
+      // If the client is asking for a refresh of the session,
+      // refresh the access token to get fresh info.
+      if (trigger === "update") {
+        return refreshAccessToken(token);
+      }
+
       // If token has not expired, return it,
-      if (Date.now() < Number(token.accessTokenExpires)) {
+      // @ts-ignore
+      if (Date.now() < token.accessTokenExpires) {
         return token;
       }
 
@@ -87,15 +94,16 @@ async function refreshAccessToken(token) {
     formData.append("client_secret", env.DRUPAL_CLIENT_SECRET);
     formData.append("refresh_token", token.refreshToken);
 
-    const url = drupal.buildUrl("/oauth/token");
-
-    const response = await drupal.fetch(url.toString(), {
-      method: "POST",
-      body: formData,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+    const response = await fetch(
+      `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
+      {
+        method: "POST",
+        body: formData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       },
-    });
+    );
 
     const data = await response.json();
 
