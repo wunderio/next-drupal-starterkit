@@ -1,10 +1,10 @@
 exposeDomains:
   main-cms:
-    hostname: main.next4drupal.dev.wdr.io
+    hostname: main.next-drupal-starterkit.dev.wdr.io
 
 referenceData:
   updateAfterDeployment: false
 
 php:
   env:
-    WUNDER_NEXT_FRONTEND_URL: https://next4drupal.dev.wdr.io
+    WUNDER_NEXT_FRONTEND_URL: https://next-drupal-starterkit.dev.wdr.io

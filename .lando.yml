@@ -2,7 +2,7 @@
 # environment, managed by Lando (https://lando.dev/)
 # This setup covers both the backend (by using the drupal recipe),
 # and the frontend, by adding a node service.
-name: next4drupal-project
+name: next-drupal-starterkit
 recipe: drupal10
 
 config:
@@ -112,7 +112,7 @@ services:
         DB_USER_DRUPAL: drupal10
         DB_PASS_DRUPAL: drupal10
         DB_HOST_DRUPAL: database
-        DRUSH_OPTIONS_URI: https://next4drupal-project.lndo.site
+        DRUSH_OPTIONS_URI: https://next-drupal-starterkit.lndo.site
         # Support debugging with XDEBUG 3.
         XDEBUG_MODE:
         PHP_IDE_CONFIG: serverName=appserver
@@ -139,8 +139,8 @@ services:
         DRUPAL_REVALIDATE_SECRET: revalidate_secret_not_secure_used_only_locally
         DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
         DRUPAL_CLIENT_ID: drupal-client-id
-        NEXT_PUBLIC_DRUPAL_BASE_URL: https://next4drupal-project.lndo.site
-        NEXT_IMAGE_DOMAIN: next4drupal-project.lndo.site
+        NEXT_PUBLIC_DRUPAL_BASE_URL: https://next-drupal-starterkit.lndo.site
+        NEXT_IMAGE_DOMAIN: next-drupal-starterkit.lndo.site
         NEXT_PUBLIC_FRONTEND_URL: https://frontend.lndo.site
         # Environment variables for next_auth:
         NEXTAUTH_SECRET: nextauth_secret_not_secure_used_only_locally

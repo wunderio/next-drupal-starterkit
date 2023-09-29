@@ -1,6 +1,6 @@
-name: 'Wunder next4rupal template demo content'
+name: 'Wunder next-drupal-starterkit template demo content'
 type: module
-description: 'Module containing migrations to populate a website with content matching the next4drupal wunder template.'
+description: 'Module containing migrations to populate a website with content matching the next-drupal-starterkit template.'
 core_version_requirement: ^9 || ^10
 dependencies:
   - migrate:migrate

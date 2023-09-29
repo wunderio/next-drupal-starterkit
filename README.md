@@ -2,7 +2,7 @@
 
 This is a starter template created by [Wunder](https://www.wunder.io) for a decoupled website using the open-source [Next.js for Drupal](https://next-drupal.org/) project by [Chapter Three](https://www.chapterthree.com) and contributors.
 
-## 🪂 Check out the running demo at https://next4drupal.dev.wdr.io !
+## 🪂 Check out the running demo at https://next-drupal-starterkit.dev.wdr.io !
 
 The aims of this template are:
 

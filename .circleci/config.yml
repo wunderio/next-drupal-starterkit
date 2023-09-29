@@ -133,7 +133,7 @@ commands:
               next_release_name="$(printf "$next_release_name" | cut -c 1-30)$(printf "$next_release_name" | shasum -a 256 | cut -c 1-3 )"
             fi
 
-            project_name=next4drupal
+            project_name=next-drupal-starterkit
             
             drupal_domain=$drupal_release_name.$project_name.$CLUSTER_DOMAIN
             next_domain=$next_release_name.$project_name.$CLUSTER_DOMAIN

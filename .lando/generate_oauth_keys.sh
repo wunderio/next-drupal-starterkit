@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Helper script to generate oath keys as part of the next4drupal setup.
+# Helper script to generate oath keys as part of the next drupal starterkit setup.
 #
 # Usage:
 # lando generate-oauth-keys

@@ -4,7 +4,7 @@
 # for all possible options.
 #
 #
-projectName: next4drupal
+projectName: next-drupal-starterkit
 
 services:
   node:

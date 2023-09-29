@@ -4,7 +4,7 @@
 # See https://github.com/wunderio/charts/blob/master/drupal/values.yaml
 # for all possible options.
 
-projectName: next4drupal
+projectName: next-drupal-starterkit
 
 php:
   drupalCoreVersion: "10"
@@ -50,7 +50,7 @@ nginx:
 
 elasticsearch:
   enabled: true
-  image: europe-north1-docker.pkg.dev/silta-dev/images/next4drupal-project-elasticsearch
+  image: europe-north1-docker.pkg.dev/silta-dev/images/next-drupal-starterkit-elasticsearch
   imageTag: 'with-icu-analysis'
   imagePullPolicy: Always
   esConfig:

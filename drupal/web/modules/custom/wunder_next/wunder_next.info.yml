@@ -1,6 +1,6 @@
 name: wunder_next
 type: module
-description: Provides additional functionality to use and setup next4drupal
+description: Provides additional functionality to use and setup next-drupal-starterkit
 package: Custom
 core_version_requirement: ^9 || ^10
 dependencies:
