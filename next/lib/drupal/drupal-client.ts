@@ -8,4 +8,5 @@ export const drupal = new DrupalClient(env.NEXT_PUBLIC_DRUPAL_BASE_URL, {
     clientId: env.DRUPAL_CLIENT_ID,
     clientSecret: env.DRUPAL_CLIENT_SECRET,
   },
+  debug: true,
 });
