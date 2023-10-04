@@ -58,7 +58,7 @@ export const ImageSchema = z.object({
     .object({
       type: z.literal("media--image"),
       id: z.string(),
-      field_media_image: ImageShape,
+      field_media_image: ImageShape.nullable(),
     })
     .nullable()
     .optional(),
@@ -129,6 +129,7 @@ export const AccordionSchema = z.object({
     })
     .nullable(),
 });
+
 export const HeroSchema = z.object({
   type: z.literal("paragraph--hero"),
   id: z.string(),
@@ -140,7 +141,7 @@ export const HeroSchema = z.object({
     .object({
       type: z.literal("media--image"),
       id: z.string(),
-      field_media_image: ImageShape,
+      field_media_image: ImageShape.nullable(),
     })
     .nullable()
     .optional(),
