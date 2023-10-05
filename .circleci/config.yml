@@ -301,8 +301,8 @@ jobs:
           command: |
             cd drupal
             drush si minimal --account-pass=${DRUPAL_ADMIN_PWD} -y
-            chmod +x /app/web/core/scripts/drupal
-            cd /app/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
+            chmod +x web/core/scripts/drupal
+            cd web && core/scripts/drupal recipe ../recipes/wunder_next_setup
             drush cr
             drush wunder_next:setup-user-and-consumer
             drush en wunder_democontent -y
