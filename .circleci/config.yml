@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  silta: silta/silta@0.1
+  silta: silta/silta@1
 
 executors:
   cicd82:
