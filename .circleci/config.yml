@@ -22,6 +22,11 @@ images:
       DRUPAL_ENV: 'circleci'
       WKV_SITE_ENV: 'circleci'
       HASH_SALT: 'circleci'
+      DRUPAL_ADMIN_PWD: drupal_admin_password_not_secure
+      DRUPAL_CLIENT_ID: drupal-client-id
+      DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure
+      DRUPAL_REVALIDATE_SECRET: revalidate_secret_not_secure
+      NEXTAUTH_SECRET: next_auth_secret_not_secure
   - &mariadb
     image: cimg/mariadb:10.3
     environment:
@@ -293,8 +298,15 @@ jobs:
           name: "Run drush commands"
           command: |
             cd drupal
-            drush st
-
+            drush si minimal --account-pass=${DRUPAL_ADMIN_PWD} -y
+            chmod +x /app/web/core/scripts/drupal
+            cd /app/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
+            drush cr
+            drush wunder_next:setup-user-and-consumer
+            drush en wunder_democontent -y
+            drush eshd -y
+            drush eshs
+            drush mim --group=demo_content --execute-dependencies --skip-progress-bar
 #      - cypress/install:
 #          cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "~/project/next/package.json" }}
 #          install-command: npm install
