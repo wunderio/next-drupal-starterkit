@@ -284,10 +284,11 @@ jobs:
       - run:
           name: Generate OpenSSL keypair
           command: |
+            cd drupal
             openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out keypair.pem
-            openssl pkey -in keypair.pem -out private.key
-            openssl pkey -in keypair.pem -pubout -out public.key
-            chmod 600 private.key public.key
+            openssl pkey -in keypair.pem -out oauth/private.key
+            openssl pkey -in keypair.pem -pubout -out oauth/public.key
+            chmod 600 oauth/private.key oauth/public.key
       - run:
           name: "Run drush commands"
           command: |
