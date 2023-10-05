@@ -10,11 +10,10 @@ const Modal = ModalPrimitive.Root;
 const ModalTrigger = ModalPrimitive.Trigger;
 
 const ModalPortal = ({
-  className,
   children,
   ...props
 }: ModalPrimitive.DialogPortalProps) => (
-  <ModalPrimitive.Portal className={clsx(className)} {...props}>
+  <ModalPrimitive.Portal {...props}>
     <div className="fixed inset-0 z-50 flex items-center justify-center font-overpass">
       {children}
     </div>

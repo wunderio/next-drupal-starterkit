@@ -52,9 +52,8 @@ interface PageProps extends CommonPageProps {
 }
 
 export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
-  const path: DrupalTranslatedPath = await drupal.translatePathFromContext(
-    context,
-  );
+  const path: DrupalTranslatedPath =
+    await drupal.translatePathFromContext(context);
 
   if (!path) {
     return {
