@@ -6,7 +6,7 @@ orbs:
 executors:
   cicd82:
     docker:
-      - image: wunderio/silta-cicd:circleci-php8.2-node18-composer2-v0.2.2
+      - image: wunderio/silta-cicd:circleci-php8.2-node18-composer2-v1
     resource_class: small
 
 commands:
@@ -134,7 +134,7 @@ commands:
             fi
 
             project_name=next-drupal-starterkit
-            
+
             drupal_domain=$drupal_release_name.$project_name.$CLUSTER_DOMAIN
             next_domain=$next_release_name.$project_name.$CLUSTER_DOMAIN
             drupal_client_id=drupal-client-id
@@ -298,9 +298,9 @@ workflows:
                 path: next
           image_build_steps:
             - silta/build-docker-image:
-                dockerfile: 'silta/node.Dockerfile'
-                path: './next'
-                identifier: 'node'
+                dockerfile: "silta/node.Dockerfile"
+                path: "./next"
+                identifier: "node"
                 docker-hash-prefix: v1
           filters:
             branches:
@@ -308,7 +308,7 @@ workflows:
                 - main
                 - production
                 - /dependabot\/.*/
-          requires: [ Drupal build & deploy ]
+          requires: [Drupal build & deploy]
 
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the main environment.
@@ -328,7 +328,7 @@ workflows:
           filters:
             branches:
               only: main
-          requires: [ Drupal build & deploy main ]
+          requires: [Drupal build & deploy main]
 
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the production environment.
@@ -348,7 +348,7 @@ workflows:
           filters:
             branches:
               only: production
-          requires: [ Drupal build & deploy production ]
+          requires: [Drupal build & deploy production]
 
       # Special rules for the dependabot branches.
       - silta/frontend-build-deploy:
