@@ -27,7 +27,7 @@ images:
       DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure
       DRUPAL_REVALIDATE_SECRET: revalidate_secret_not_secure
       NEXTAUTH_SECRET: next_auth_secret_not_secure
-      WUNDER_NEXT_FRONTEND_URL: https://localhost:3000
+      WUNDER_NEXT_FRONTEND_URL: 'https://localhost:3000'
       HASH_SALT: notsosecurehashnotsosecurehashnotsosecurehash
       ENVIRONMENT_NAME: circleci_tests
   - &mariadb
