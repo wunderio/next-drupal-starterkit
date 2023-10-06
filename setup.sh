@@ -16,11 +16,6 @@ commands=(
   "lando drush en wunder_democontent -y"
   "lando drush mim --group=demo_content --execute-dependencies"
   "(lando npm-stop&)"
-  "echo '🚀 All Done!'"
-  "echo '↪️ Use this link to log into the backend as user 1:'"
-  "lando drush uli"
-  "echo '🏎️ Starting the frontend site in production mode...'"
-  "echo '⚠️ Note: the site will be available at https://frontend.lndo.site/ in addition to the usual localhost:3000'"
 )
 
 last_successful_command=0
@@ -57,10 +52,7 @@ done
 run_commands() {
   for ((i = $last_successful_command; i < ${#commands[@]}; ++i)); do
     command="${commands[$i]}"
-    ## No need to announce echo commands:
-    if ! grep -q "echo" <<< "$command"; then
-      echo "➡️ Running command: $command"
-    fi
+    echo "➡️ Running command: $command"
     last_successful_command=$i
     echo $last_successful_command > $status_file
     if eval "$command"; then
@@ -71,9 +63,13 @@ run_commands() {
     fi
   done
 
-  # All commands were successful, remove the status file and start the frontend site.
+  # All commands were successful. Remove the status file, show messages to the user, and start the frontend site.
   rm -f "$status_file"
-  echo "💯 All commands completed successfully."
+  echo '🚀 All Done!'
+  echo '↪️ Use this link to log into the backend as user 1:'
+  lando drush uli
+  echo '🏎️ Starting the frontend site in production mode...'
+  echo '⚠️ Note: the site will be available at https://frontend.lndo.site/ in addition to the usual localhost:3000'
   lando npm run start
 }
 
