@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# List of commands to run
+# List of commands to run:
 commands=(
   "lando rebuild -y"
   "lando composer install"
@@ -15,7 +15,12 @@ commands=(
   "(lando npm run start&)"
   "lando drush en wunder_democontent -y"
   "lando drush mim --group=demo_content --execute-dependencies"
+  "(lando npm-stop&)"
+  "echo '🚀 All Done!'"
+  "echo '↪️ Use this link to log into the backend as user 1:'"
   "lando drush uli"
+  "echo '🏎️ Starting the frontend site in production mode...'"
+  "echo '⚠️ Note: the site will be available at https://frontend.lndo.site/ in addition to the usual localhost:3000'"
 )
 
 last_successful_command=0
@@ -52,20 +57,24 @@ done
 run_commands() {
   for ((i = $last_successful_command; i < ${#commands[@]}; ++i)); do
     command="${commands[$i]}"
-    echo "Running command: $command"
+    ## No need to announce echo commands:
+    if ! grep -q "echo" <<< "$command"; then
+      echo "➡️ Running command: $command"
+    fi
     last_successful_command=$i
     echo $last_successful_command > $status_file
     if eval "$command"; then
-      echo "Command successful"
+      echo "✔ Command successful."
     else
-      echo "Command failed"
+      echo "❌ Command $command failed."
       exit 1
     fi
   done
 
-  # All commands were successful, remove the status file
+  # All commands were successful, remove the status file and start the frontend site.
   rm -f "$status_file"
-  echo "All commands completed successfully"
+  echo "💯 All commands completed successfully."
+  lando npm run start
 }
 
 # Check if the clean run option is set
