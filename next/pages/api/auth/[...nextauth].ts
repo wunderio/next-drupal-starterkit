@@ -9,6 +9,13 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/login",
   },
+  // We set the maxAge of the session to the same value as the token expiration
+  // with the idea that the user will be logged out automatically when the token
+  // is no longer valid.
+  // The token expiration is set to 5 days in Drupal.
+  session: {
+    maxAge: 5 * 24 * 60 * 60, // 5 days
+  },
   providers: [
     CredentialsProvider({
       name: "Drupal",

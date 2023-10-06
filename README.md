@@ -22,9 +22,11 @@ This example is meant to be used together with the [Silta](https://wunderio.gith
 Local development is handled by [Lando](https://lando.dev/). Both frontend and backend are covered by the Lando setup, so that is the only real requirement. The frontend site can be run in either dev or prod mode,
 and it will be proxied by Lando. The default URL for the frontend is [https://frontend.lndo.site](https://frontend.lndo.site), but it can be changed by editing the `.lando.yml` file.
 
+> Check the `version` property in the `.lando.yml` file to see which version of Lando is currently supported.
+
 ### ⚠️⚠️ NOTE: Use npm inside Lando!
 
-Instead of running npm operations in your host machine, _this template assumes you use npm inside Lando_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend (these are defined in the `.lando.yml` file in the root of the project).
+Instead of running npm operations in your host machine, _this template requires you to use npm inside Lando_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend (these are defined in the `.lando.yml` file in the root of the project).
 
 **Just prefix all npm operations with `lando`.**
 
@@ -32,25 +34,22 @@ So instead of `npm install`, run `lando npm install`, instead of `npm run dev` r
 
 #### Stopping a running npm operation running inside the Lando node container
 
-If you have closed the terminal window where you were running `lando npm`, or if the server was started with the "Quick one command setup" (see below), and you want to stop the running npm operation, you can use the specially created `lando npm-stop` command.
+If you have closed the terminal window where you were running the server with `lando npm start` or `lando npm run dev`, and you want to stop the running npm operation, you can use the specially created `lando npm-stop` command that will log into the node container and kill all node processes there.
 
 ## 🤸 Getting started
 
-Follow this guide to get the backend and frontend up and running. You can either do it all in one go, or step by step.
+Follow this guide to get the backend and frontend up and running. You can either do it all in one go, or step by step to understand better what's going on.
 
-### 🏎️ Quick one command setup
+### 🏎️ Option 1: Quick one command setup
 
-If you are just testing for example for a pull request, and you want to get up and running quickly, you can issue this big command, go get a cup of coffee and come back to a working backend and frontend setup:
+To get up and running quickly you can issue this big command, go get a cup of coffee and come back to a working backend and frontend setup:
 
-> NOTE: this will reinstall the site from scratch. Export your database if you have started working with the template, and you have something valuable in it. :)
+> NOTE: this will install the site from scratch every time. Export your database if you have started working with the template, and you have something valuable in it. :)
 
 ```bash
-lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si minimal -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=demo_content --execute-dependencies && lando drush uli
+lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si minimal -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=demo_content --execute-dependencies && (lando npm-stop&) && echo '🚀 All Done!' && echo 'Use this link to log into the backend as user 1:' && lando drush uli && echo '🏎️ Starting the frontend site in production mode...' && echo '⚠️ Note: the site will be available at https://frontend.lndo.site/ in addition to the usual localhost:3000' && lando npm run start
 ```
-
-You can then visit the site at https://frontend.lndo.site/.
-
-## 🪜 Step-by-step setup
+## 🪜 Option 2: Step-by-step setup
 
 ### Backend Drupal setup
 
@@ -62,8 +61,8 @@ You will need to have a recent installation of [Lando](https://lando.dev/) runni
 Follow these steps to get started:
 
 1. `lando start` (this will create the environment, and run `composer install` for you.)
-2. Generate oauth keys using the command `lando generate-oauth-keys`. The keys will be created in the `drupal/oauth` directory.
-3. Install Drupal as usual. Use the minimal installation profile. You can do it via the UI or using this command: `lando drush si minimal`.
+2. Generate the needed oauth keys using the command `lando generate-oauth-keys`. The keys will be created in the `drupal/oauth` directory.
+3. Install Drupal as usual. You will have to **use the minimal installation profile**. You can do it via the UI or using this command: `lando drush si minimal`.
 4. Run the `lando install-recipe wunder_next_setup` command to set up all necessary modules, content types and configuration.
 5. Run `lando drush eshs` to set up elasticsearch indexes.
 6. Execute the command: `lando drush wunder_next:setup-user-and-consumer`
@@ -77,11 +76,11 @@ For frontend development, prefix npm commands with `lando`, so for example to st
 local node server in development mode, you can use `lando npm run dev`. All needed environment variables are already
 set for backend and frontend in the Lando file, so you will not need to touch any .env files for the frontend to get up and running.
 
-Follow these steps to get started, after you have set up the backend:
+Follow these steps to get started, **after you have set up the backend**:
 
 1. Run `lando npm install`
 2. Run `lando npm run dev`
-3. If you want to populate the backend site with the provided example content, you can now run: `lando drush en wunder_democontent && lando drush mim --group=demo_content --execute-dependencies`, otherwise you can log into the backend with `lando drush uli` and create some content.
+3. If you want to populate the backend site with the provided example content, you can now run (in another terminal window): `lando drush en wunder_democontent && lando drush mim --group=demo_content --execute-dependencies`, otherwise you can log into the backend with `lando drush uli` and create some content.
 4. Visit `https://frontend.lndo.site` and you should see your content displayed by the frontend.
 5. When viewing a piece of content inside Drupal, you should be able to preview it in the frontend, including unpublished content and revisions.
 6. The template includes automatic setup of [On demand revalidation](https://next-drupal.org/learn/on-demand-revalidation), so saving a piece of content will automatically revalidate the corresponding path in Next.js.
