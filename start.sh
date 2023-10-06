@@ -22,6 +22,32 @@ last_successful_command=0
 
 status_file=".last_successful_command"
 
+# Parse command-line arguments
+clean_run=false
+
+# Function to display the script's usage
+show_help() {
+  echo "Usage: $0 [-c] [-h]"
+  echo "  -c    Clean run (ignore status file if it exists)"
+  echo "  -h    Display this help message"
+  exit 1
+}
+
+while getopts "ch" opt; do
+  case $opt in
+    c)
+      clean_run=true
+      ;;
+    h)
+      show_help
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
 # Run the commands
 run_commands() {
   for ((i = $last_successful_command; i < ${#commands[@]}; ++i)); do
@@ -41,6 +67,11 @@ run_commands() {
   rm -f "$status_file"
   echo "All commands completed successfully"
 }
+
+# Check if the clean run option is set
+if [ "$clean_run" = true ]; then
+  rm -f "$status_file"
+fi
 
 # Check if there's a status file indicating the last successful command
 if [ -f "$status_file" ]; then
