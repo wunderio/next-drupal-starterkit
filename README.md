@@ -40,9 +40,23 @@ Follow this guide to get the backend and frontend up and running. You can either
 
 ### 🏎️ Quick one command setup
 
-If you are just testing for example for a pull request, and you want to get up and running quickly, you can issue this big command, go get a cup of coffee and come back to a working backend and frontend setup:
+If you are just testing for example for a pull request, and you want to get up and running quickly, you can issue this script, go get a cup of coffee and come back to a working backend and frontend setup:
 
 > NOTE: this will reinstall the site from scratch. Export your database if you have started working with the template, and you have something valuable in it. :)
+
+```
+./start.sh
+```
+
+The script will record the status and if some of the commands fail the consecutive runs will start where the last run failed instead of starting from the beginning.
+
+You can also use the `-c` option to do a clean run which will run all the commands from the beginning
+
+```
+./start.sh -c
+```
+
+or if you just want to run all the commands manually you can use the following command
 
 ```bash
 lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si minimal -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=demo_content --execute-dependencies && lando drush uli
