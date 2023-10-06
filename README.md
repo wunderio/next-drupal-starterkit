@@ -42,25 +42,22 @@ Follow this guide to get the backend and frontend up and running. You can either
 
 ### 🏎️ Option 1: Quick one command setup
 
-> NOTE: this will install the site from scratch every time. Export your database if you have started working with the template, and you have something valuable in it. :)
-
-To get up and running quickly you can issue this big command, go get a cup of coffee and come back to a working backend and frontend setup:
+All you need to do is run the setup script like this:
 
 ```bash
 ./setup.sh
 ```
 
-If some step of the setup fails, you can run the script again with the `-c` option and it will start where the last run failed instead of starting from the beginning:
+The script will execute a series of commands in sequence. If an error occurs, you can run the script again, and it will pick up where it left off.
+
+If the script has failed on some step, and instead of continuing you want to start from scratch, you can run the script with the `-c` flag:
 
 ```bash
 ./setup.sh -c
 ```
 
+> NOTE: the script will install the site from scratch. Export your database if you have started working with the template, and you have something valuable in it. :)
 
-
-```bash
-lando rebuild -y && lando composer install && lando generate-oauth-keys && lando drush si minimal -y && lando install-recipe wunder_next_setup && lando drush wunder_next:setup-user-and-consumer && lando drush eshd -y && lando drush eshs && lando npm i && lando npm run build && (lando npm run start&) && lando drush en wunder_democontent -y && lando drush mim --group=demo_content --execute-dependencies && (lando npm-stop&) && echo '🚀 All Done!' && echo 'Use this link to log into the backend as user 1:' && lando drush uli && echo '🏎️ Starting the frontend site in production mode...' && echo '⚠️ Note: the site will be available at https://frontend.lndo.site/ in addition to the usual localhost:3000' && lando npm run start
-```
 ## 🪜 Option 2: Step-by-step setup
 
 ### Backend Drupal setup
