@@ -15,7 +15,7 @@ commands=(
   "(lando npm run start&)"
   "lando drush en wunder_democontent -y"
   "lando drush mim --group=demo_content --execute-dependencies"
-  "(lando npm-stop&)"
+  "lando npm-stop || true"
 )
 
 last_successful_command=0
