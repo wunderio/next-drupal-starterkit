@@ -30,7 +30,7 @@ Instead of running npm operations in your host machine, _this template requires 
 
 **Just prefix all npm operations with `lando`.**
 
-So instead of `npm install`, run `lando npm install`, instead of `npm run dev` run `lando npm dev`, etc.
+So instead of `npm install`, run `lando npm install`, instead of `npm run dev` run `lando npm run dev`, etc.
 
 #### Stopping a running npm operation running inside the Lando node container
 
