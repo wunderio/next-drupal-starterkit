@@ -310,6 +310,8 @@ jobs:
           name: "Debug Elasticsearch"
           command: |
             curl -XGET "http://localhost:9200/_cluster/health" -H 'Content-Type: application/json'
+            printenv SILTA_CLUSTER
+            printenv ELASTICSEARCH_HOST
 #            drush en wunder_democontent -y
 #            drush eshd -y
 #            drush eshs
