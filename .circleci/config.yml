@@ -305,9 +305,14 @@ jobs:
             cd web && core/scripts/drupal recipe ../recipes/wunder_next_setup
             drush cr
             drush wunder_next:setup-user-and-consumer
-            drush en wunder_democontent -y
-            drush eshd -y
-            drush eshs
+            drush cget elasticsearch_helper.settings
+      - run:
+          name: "Debug Elasticsearch"
+          command: |
+            curl -XGET "http://localhost:9200/_cluster/health" -H 'Content-Type: application/json'
+#            drush en wunder_democontent -y
+#            drush eshd -y
+#            drush eshs
 #            drush mim --group=demo_content --execute-dependencies --skip-progress-bar
 #      - cypress/install:
 #          cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "~/project/next/package.json" }}
