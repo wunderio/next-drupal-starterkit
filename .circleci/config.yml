@@ -343,170 +343,170 @@ workflows:
 
       - run-cypress-tests:
           name: "Cypress tests"
-
-      - silta/drupal-build-deploy: &build-deploy
-          name: Drupal build & deploy
-          executor: cicd82
-          drupal-root: drupal
-          silta_config: silta/silta.yml
-          pre-release:
-            - silta/build-docker-image:
-                dockerfile: silta/elasticsearch.Dockerfile
-                tag: with-icu-analysis
-                identifier: elasticsearch
-                expose_image: false
-          codebase-build:
-            - symlink-silta-config
-            - expand-envvars-in-silta-config
-            - generate-openssl-keypair
-            - silta/drupal-composer-install
-            - silta/npm-install-build
-          context: silta_dev
-          filters:
-            branches:
-              ignore:
-                - main
-                - production
-                - /dependabot\/.*/
-          requires: [ Cypress tests ]
-
-      - silta/drupal-build-deploy:
-          # Extend the build-deploy configuration for the main environment.
-          <<: *build-deploy
-          name: Drupal build & deploy main
-          silta_config: silta/silta.yml,silta/silta-main.yml
-          codebase-build:
-            - symlink-silta-config
-            - expand-envvars-in-silta-config
-            - generate-openssl-keypair
-            - silta/drupal-composer-install
-            - silta/npm-install-build
-          filters:
-            branches:
-              only: main
-
-      - silta/drupal-build-deploy:
-          # Extend the build-deploy configuration for the production environment.
-          <<: *build-deploy
-          name: Drupal build & deploy production
-          silta_config: silta/silta.yml,silta/silta-prod.yml
-          context: silta_finland
-          codebase-build:
-            - symlink-silta-config
-            - expand-envvars-in-silta-config
-            - generate-openssl-keypair
-            - silta/drupal-composer-install
-            - silta/npm-install-build
-          filters:
-            branches:
-              only: production
-
-      # Special rules for deploybot branches.
-      - silta/drupal-build-deploy:
-          <<: *build-deploy
-          name: Drupal build dependabot
-          context: silta_dev
-          skip-deployment: true
-          filters:
-            branches:
-              only: /dependabot\/.*/
-
-      # Storybook deployment.
-      - silta/simple-build-deploy: &build-deploy
-          name: Storybook build & deploy
-          executor: cicd82
-          context: silta_dev
-          silta_config: silta/silta-storybook.yml
-          release-suffix: storybook
-          codebase-build:
-            - silta/npm-install-build:
-                build-command: npm run build-storybook
-                path: next
-          build_folder: next/storybook-static
-          filters:
-            branches:
-              ignore:
-                - production
-                - /dependabot\/.*/
-          requires: [ Cypress tests ]
-
-      # silta/frontend-build-deploy is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/jobs/%40frontend.yml
-      # &frontend-build-deploy is a yaml anchor, so we can reference it later
-      - silta/frontend-build-deploy: &frontend-build-deploy
-          name: Next build & deploy
-          context: silta_dev
-          executor: cicd82
-          silta_config: silta/silta-next.yml
-          release-suffix: next
-          codebase-build:
-            - symlink-silta-config:
-                target: next
-            - expand-envvars-in-silta-config:
-                file-name: silta-next.yml
-            # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
-            # but this uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
-            - npm-install-build:
-                path: next
-          image_build_steps:
-            - silta/build-docker-image:
-                dockerfile: "silta/node.Dockerfile"
-                path: "./next"
-                identifier: "node"
-                docker-hash-prefix: v1
-          filters:
-            branches:
-              ignore:
-                - main
-                - production
-                - /dependabot\/.*/
-          requires: [Drupal build & deploy]
-
-      - silta/frontend-build-deploy:
-          # Extend the build-deploy configuration for the main environment.
-          <<: *frontend-build-deploy
-          name: Next build & deploy main
-          context: silta_dev
-          silta_config: silta/silta-next.yml,silta/silta-next-main.yml
-          codebase-build:
-            - symlink-silta-config:
-                target: next
-            - expand-envvars-in-silta-config:
-                file-name: silta-next.yml
-            # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
-            # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
-            - npm-install-build:
-                path: next
-          filters:
-            branches:
-              only: main
-          requires: [Drupal build & deploy main]
-
-      - silta/frontend-build-deploy:
-          # Extend the build-deploy configuration for the production environment.
-          <<: *frontend-build-deploy
-          name: Next build & deploy production
-          context: silta_finland
-          silta_config: silta/silta-next.yml,silta/silta-next-prod.yml
-          codebase-build:
-            - symlink-silta-config:
-                target: next
-            - expand-envvars-in-silta-config:
-                file-name: silta-next.yml
-            # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
-            # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
-            - npm-install-build:
-                path: next
-          filters:
-            branches:
-              only: production
-          requires: [Drupal build & deploy production]
-
-      # Special rules for the dependabot branches.
-      - silta/frontend-build-deploy:
-          <<: *frontend-build-deploy
-          name: Next Build Dependabot
-          context: silta_dev
-          skip-deployment: true
-          filters:
-            branches:
-              only: /dependabot\/.*/
+#
+#      - silta/drupal-build-deploy: &build-deploy
+#          name: Drupal build & deploy
+#          executor: cicd82
+#          drupal-root: drupal
+#          silta_config: silta/silta.yml
+#          pre-release:
+#            - silta/build-docker-image:
+#                dockerfile: silta/elasticsearch.Dockerfile
+#                tag: with-icu-analysis
+#                identifier: elasticsearch
+#                expose_image: false
+#          codebase-build:
+#            - symlink-silta-config
+#            - expand-envvars-in-silta-config
+#            - generate-openssl-keypair
+#            - silta/drupal-composer-install
+#            - silta/npm-install-build
+#          context: silta_dev
+#          filters:
+#            branches:
+#              ignore:
+#                - main
+#                - production
+#                - /dependabot\/.*/
+#          requires: [ Cypress tests ]
+#
+#      - silta/drupal-build-deploy:
+#          # Extend the build-deploy configuration for the main environment.
+#          <<: *build-deploy
+#          name: Drupal build & deploy main
+#          silta_config: silta/silta.yml,silta/silta-main.yml
+#          codebase-build:
+#            - symlink-silta-config
+#            - expand-envvars-in-silta-config
+#            - generate-openssl-keypair
+#            - silta/drupal-composer-install
+#            - silta/npm-install-build
+#          filters:
+#            branches:
+#              only: main
+#
+#      - silta/drupal-build-deploy:
+#          # Extend the build-deploy configuration for the production environment.
+#          <<: *build-deploy
+#          name: Drupal build & deploy production
+#          silta_config: silta/silta.yml,silta/silta-prod.yml
+#          context: silta_finland
+#          codebase-build:
+#            - symlink-silta-config
+#            - expand-envvars-in-silta-config
+#            - generate-openssl-keypair
+#            - silta/drupal-composer-install
+#            - silta/npm-install-build
+#          filters:
+#            branches:
+#              only: production
+#
+#      # Special rules for deploybot branches.
+#      - silta/drupal-build-deploy:
+#          <<: *build-deploy
+#          name: Drupal build dependabot
+#          context: silta_dev
+#          skip-deployment: true
+#          filters:
+#            branches:
+#              only: /dependabot\/.*/
+#
+#      # Storybook deployment.
+#      - silta/simple-build-deploy: &build-deploy
+#          name: Storybook build & deploy
+#          executor: cicd82
+#          context: silta_dev
+#          silta_config: silta/silta-storybook.yml
+#          release-suffix: storybook
+#          codebase-build:
+#            - silta/npm-install-build:
+#                build-command: npm run build-storybook
+#                path: next
+#          build_folder: next/storybook-static
+#          filters:
+#            branches:
+#              ignore:
+#                - production
+#                - /dependabot\/.*/
+#          requires: [ Cypress tests ]
+#
+#      # silta/frontend-build-deploy is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/jobs/%40frontend.yml
+#      # &frontend-build-deploy is a yaml anchor, so we can reference it later
+#      - silta/frontend-build-deploy: &frontend-build-deploy
+#          name: Next build & deploy
+#          context: silta_dev
+#          executor: cicd82
+#          silta_config: silta/silta-next.yml
+#          release-suffix: next
+#          codebase-build:
+#            - symlink-silta-config:
+#                target: next
+#            - expand-envvars-in-silta-config:
+#                file-name: silta-next.yml
+#            # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
+#            # but this uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+#            - npm-install-build:
+#                path: next
+#          image_build_steps:
+#            - silta/build-docker-image:
+#                dockerfile: "silta/node.Dockerfile"
+#                path: "./next"
+#                identifier: "node"
+#                docker-hash-prefix: v1
+#          filters:
+#            branches:
+#              ignore:
+#                - main
+#                - production
+#                - /dependabot\/.*/
+#          requires: [Drupal build & deploy]
+#
+#      - silta/frontend-build-deploy:
+#          # Extend the build-deploy configuration for the main environment.
+#          <<: *frontend-build-deploy
+#          name: Next build & deploy main
+#          context: silta_dev
+#          silta_config: silta/silta-next.yml,silta/silta-next-main.yml
+#          codebase-build:
+#            - symlink-silta-config:
+#                target: next
+#            - expand-envvars-in-silta-config:
+#                file-name: silta-next.yml
+#            # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
+#            # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+#            - npm-install-build:
+#                path: next
+#          filters:
+#            branches:
+#              only: main
+#          requires: [Drupal build & deploy main]
+#
+#      - silta/frontend-build-deploy:
+#          # Extend the build-deploy configuration for the production environment.
+#          <<: *frontend-build-deploy
+#          name: Next build & deploy production
+#          context: silta_finland
+#          silta_config: silta/silta-next.yml,silta/silta-next-prod.yml
+#          codebase-build:
+#            - symlink-silta-config:
+#                target: next
+#            - expand-envvars-in-silta-config:
+#                file-name: silta-next.yml
+#            # silta/npm-install-build command is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/commands/@npm.yml
+#            # but uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
+#            - npm-install-build:
+#                path: next
+#          filters:
+#            branches:
+#              only: production
+#          requires: [Drupal build & deploy production]
+#
+#      # Special rules for the dependabot branches.
+#      - silta/frontend-build-deploy:
+#          <<: *frontend-build-deploy
+#          name: Next Build Dependabot
+#          context: silta_dev
+#          skip-deployment: true
+#          filters:
+#            branches:
+#              only: /dependabot\/.*/
