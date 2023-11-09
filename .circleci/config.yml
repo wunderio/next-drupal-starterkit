@@ -308,7 +308,7 @@ jobs:
             drush en wunder_democontent -y
             drush eshd -y
             drush eshs
-            drush mim --group=demo_content --execute-dependencies --skip-progress-bar
+#            drush mim --group=demo_content --execute-dependencies --skip-progress-bar
 #      - cypress/install:
 #          cypress-cache-key: cypress-cache-{{ arch }}-{{ checksum "~/project/next/package.json" }}
 #          install-command: npm install
