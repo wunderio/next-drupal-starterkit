@@ -4,5 +4,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
+  },
+  // Tailwind intellisense also in strings
+  "editor.quickSuggestions": {
+    "strings": true
   }
 }
