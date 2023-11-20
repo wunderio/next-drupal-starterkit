@@ -1,11 +1,11 @@
-*.Dockerfile    text eol=lf
 .dockerignore   text eol=lf
 .eslintignore   text eol=lf
-.example        text eol=lf
 .gitattributes  text eol=lf
 .gitignore      text eol=lf
 .htaccess       text eol=lf
 .prettierrc     text eol=lf
+*.Dockerfile    text eol=lf
+*.example       text eol=lf
 *.css       text eol=lf
 *.inc       text eol=lf
 *.ini       text eol=lf
