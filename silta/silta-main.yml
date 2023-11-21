@@ -1,7 +1,3 @@
-exposeDomains:
-  main-cms:
-    hostname: main.next-drupal-starterkit.dev.wdr.io
-
 referenceData:
   updateAfterDeployment: false
 
