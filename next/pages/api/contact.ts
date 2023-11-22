@@ -37,7 +37,7 @@ export default async function handler(
         headers: {
           "Content-Type": "application/json",
           // Pass the token to authenticate the request:
-          Authorization: `Bearer ${session.accessToken}`,
+          Authorization: `Bearer ${session.accessToken}`, // eslint-disable-line @typescript-eslint/no-base-to-string
         },
       });
 
