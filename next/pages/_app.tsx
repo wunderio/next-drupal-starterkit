@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from "next-i18next";
 import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { Layout } from "@/components/layout";
 import {
@@ -33,6 +34,7 @@ function App({ Component, pageProps }: AppProps<PageProps>) {
             </Layout>
           </LanguageLinksProvider>
         </Fonts>
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </SessionProvider>
   );
