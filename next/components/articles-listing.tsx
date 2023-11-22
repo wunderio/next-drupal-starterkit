@@ -15,9 +15,10 @@ export function ArticlesListing({
 }) {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data, isLoading } = useQuery(
-    [`articles-${router.locale}-${listingId}`],
-    async () => {
+
+  const { data, isLoading } = useQuery({
+    queryKey: [`articles-${router.locale}-${listingId}`],
+    queryFn: async () => {
       const response = await fetch(
         `/api/articles-listing/${router.locale}?limit=${limit}`,
         {
@@ -29,7 +30,7 @@ export function ArticlesListing({
 
       return await response.json();
     },
-  );
+  });
 
   return (
     <>

@@ -31,8 +31,8 @@ export function MultiCheckboxFacet({
         {options.map((option) => {
           const checked = option.selected;
           const value = option.value as FieldValue;
-          const labelId = `${option.value}-label-${id}`;
-          const checkboxId = `${option.value}-checkbox${id}`;
+          const labelId = `${option.value}-label-${id}`; // eslint-disable-line @typescript-eslint/no-base-to-string
+          const checkboxId = `${option.value}-checkbox${id}`; // eslint-disable-line @typescript-eslint/no-base-to-string
           return (
             <li
               key={`${getFilterValueDisplay(option.value)}`}

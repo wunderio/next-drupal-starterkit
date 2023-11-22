@@ -121,8 +121,8 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     type === "node--article"
       ? validateAndCleanupArticle(resource)
       : type === "node--page"
-      ? validateAndCleanupPage(resource)
-      : null;
+        ? validateAndCleanupPage(resource)
+        : null;
 
   return {
     props: {

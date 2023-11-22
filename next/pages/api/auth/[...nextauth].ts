@@ -1,7 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 import { env } from "@/env";
 
@@ -78,7 +78,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token?.accessToken) {
         session.accessToken = token.accessToken;
-        const decoded = jwt_decode<{ email: string; username: string }>(
+        const decoded = jwtDecode<{ email: string; username: string }>(
           token.accessToken as string,
         );
         session.user.email = decoded.email;
