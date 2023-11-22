@@ -14,7 +14,7 @@ import { isRelative } from "@/lib/utils";
 import { env } from "@/env";
 
 const isElement = (domNode: DOMNode): domNode is Element =>
-  domNode.type === "tag";
+  domNode instanceof Element;
 
 const options: HTMLReactParserOptions = {
   /*
@@ -52,7 +52,7 @@ const options: HTMLReactParserOptions = {
         if (href && isRelative(href)) {
           return (
             <Link href={href} className="hyperlink underline">
-              {domToReact(domNode.children, options)}
+              {domToReact(domNode.children as DOMNode[], options)}
             </Link>
           );
         }
@@ -60,7 +60,11 @@ const options: HTMLReactParserOptions = {
       }
 
       case "p": {
-        return <p className="mb-2">{domToReact(domNode.children, options)}</p>;
+        return (
+          <p className="mb-2">
+            {domToReact(domNode.children as DOMNode[], options)}
+          </p>
+        );
       }
 
       case "input": {
