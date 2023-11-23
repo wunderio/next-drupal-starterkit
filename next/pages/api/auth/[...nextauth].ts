@@ -52,7 +52,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    jwt: async function ({ token, user, account, trigger }) {
+    async jwt({ token, user, account, trigger }) {
       if (account && user) {
         token.accessToken = user.access_token;
         token.accessTokenExpires = Date.now() + user.expires_in * 1000;
