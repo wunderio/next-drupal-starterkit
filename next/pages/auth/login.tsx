@@ -74,6 +74,11 @@ export default function LogIn() {
             {t("password-reset-check-your-email", { email: enteredEmail })}
           </StatusMessage>
         )}
+        {logout && (
+          <StatusMessage level="info" className="mb-8">
+            {t("your-session-has-expired")}
+          </StatusMessage>
+        )}
         {error && (
           <StatusMessage level="error" className="mb-8">
             {t("login-error-check-username-password")}

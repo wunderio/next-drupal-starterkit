@@ -79,5 +79,6 @@
   "password-updated-login-below": "Ditt lösenord har uppdaterats. Du kan logga in med formuläret nedan.",
   "password-reset-check-your-email": "Om {{email}} var associerad med ett faktiskt konto, kontrollera din e-post efter en länk för att återställa ditt lösenord.",
   "reset-your-password": "Återställ ditt lösenord",
+  "your-session-has-expired": "Din session har gått ut. Logga in igen för att fortsätta.",
   "field-is-required": "{{field}} är obligatoriskt."
 }
