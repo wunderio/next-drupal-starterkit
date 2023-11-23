@@ -84,19 +84,22 @@ export const getServerSideProps: GetServerSideProps<
     submissions: WebformSubmissionsListItem[];
   }
 > = async (context) => {
+  const { locale, resolvedUrl } = context;
   const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session) {
     return {
       redirect: {
-        destination: "/",
+        destination: `/${locale}/auth/login?callbackUrl=${encodeURIComponent(
+          resolvedUrl,
+        )}`,
         permanent: false,
       },
     };
   }
 
   const url = drupal.buildUrl(
-    `/${context.locale}/rest/my-webform-submissions?_format=json`,
+    `/${locale}/rest/my-webform-submissions?_format=json`,
   );
 
   const result = await drupal.fetch(url.toString(), {

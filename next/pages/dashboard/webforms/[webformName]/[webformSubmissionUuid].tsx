@@ -57,19 +57,22 @@ export const getServerSideProps: GetServerSideProps<
     submission: WebformSubmission;
   }
 > = async (context) => {
+  const { locale, params, resolvedUrl } = context;
   const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session) {
     return {
       redirect: {
-        destination: "/",
+        destination: `/${locale}/auth/login?callbackUrl=${encodeURIComponent(
+          resolvedUrl,
+        )}`,
         permanent: false,
       },
     };
   }
 
   const url = drupal.buildUrl(
-    `/${context.locale}/webform_rest/${context.params.webformName}/complete_submission/${context.params.webformSubmissionUuid}`,
+    `/${locale}/webform_rest/${params.webformName}/complete_submission/${params.webformSubmissionUuid}`,
   );
 
   const result = await drupal.fetch(url.toString(), {
