@@ -90,7 +90,7 @@ export const getServerSideProps: GetServerSideProps<
   if (!session) {
     return {
       redirect: {
-        destination: `/${locale}/auth/login?callbackUrl=${encodeURIComponent(
+        destination: `/${locale}/auth/login?logout=true&callbackUrl=${encodeURIComponent(
           resolvedUrl,
         )}`,
         permanent: false,

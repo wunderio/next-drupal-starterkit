@@ -1,7 +1,7 @@
 import type { GetStaticPropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { ErrorRequired } from "@/components/error-required";
 import { Meta } from "@/components/meta";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
+import { useEffectOnce } from "@/lib/hooks/use-effect-once";
 
 import { env } from "@/env";
 import { Button } from "@/ui/button";
@@ -30,6 +31,7 @@ export default function LogIn() {
       enteredEmail = "",
       newPasswordRequested = false,
       passwordJustUpdated = false,
+      logout = false,
     },
   } = useRouter();
   const { t } = useTranslation();
@@ -53,6 +55,10 @@ export default function LogIn() {
   };
 
   const resetPasswordBackendUrl = `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/${locale}/user/password`;
+
+  useEffectOnce(() => {
+    if (logout) void signOut();
+  });
 
   return (
     <>
