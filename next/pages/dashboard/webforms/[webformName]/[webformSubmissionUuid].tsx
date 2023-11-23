@@ -5,6 +5,7 @@ import { useTranslation } from "next-i18next";
 
 import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
+import { redirectExpiredSessionToLoginPage } from "@/lib/auth/redirect-expired-login";
 import { drupal } from "@/lib/drupal/drupal-client";
 import {
   CommonPageProps,
@@ -61,14 +62,7 @@ export const getServerSideProps: GetServerSideProps<
   const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session) {
-    return {
-      redirect: {
-        destination: `/${locale}/auth/login?logout=true&callbackUrl=${encodeURIComponent(
-          resolvedUrl,
-        )}`,
-        permanent: false,
-      },
-    };
+    return redirectExpiredSessionToLoginPage(locale, resolvedUrl);
   }
 
   const url = drupal.buildUrl(
