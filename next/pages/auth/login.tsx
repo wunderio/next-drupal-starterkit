@@ -46,7 +46,8 @@ export default function LogIn() {
     await signIn("credentials", {
       username,
       password,
-      callbackUrl: typeof callbackUrl === "string" ? callbackUrl : "/",
+      callbackUrl:
+        typeof callbackUrl === "string" ? callbackUrl : `/${locale}}`,
     });
     setIsSubmitting(false);
   };
