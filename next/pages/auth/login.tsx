@@ -22,19 +22,24 @@ type Inputs = {
 };
 
 export default function LogIn() {
-  const { callbackUrl, error } = useRouter().query;
+  const {
+    locale,
+    query: {
+      callbackUrl = "",
+      error = "",
+      enteredEmail = "",
+      newPasswordRequested = false,
+      passwordJustUpdated = false,
+    },
+  } = useRouter();
   const { t } = useTranslation();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<Inputs>();
 
-  const router = useRouter();
-  const isPasswordUpdated = Boolean(router.query.passwordJustUpdated) || false;
-  const isPasswordRequested =
-    Boolean(router.query.newPasswordRequested) || false;
-  const enteredEmail = router.query.enteredEmail || "";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const onSubmit = async ({ username, password }: Inputs) => {
     setIsSubmitting(true);
@@ -46,19 +51,18 @@ export default function LogIn() {
     setIsSubmitting(false);
   };
 
-  const resetPasswordBackendUrl =
-    env.NEXT_PUBLIC_DRUPAL_BASE_URL + "/" + router.locale + "/user/password";
+  const resetPasswordBackendUrl = `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/${locale}/user/password`;
 
   return (
     <>
       <Meta title={t("log-in")} metatags={[]} />
       <div className="max-w-md pb-16 pt-8 font-work">
-        {isPasswordUpdated && (
+        {passwordJustUpdated && (
           <StatusMessage level="success" className="mb-8">
             {t("password-updated-login-below")}
           </StatusMessage>
         )}
-        {isPasswordRequested && (
+        {newPasswordRequested && (
           <StatusMessage level="info" className="mb-8">
             {t("password-reset-check-your-email", { email: enteredEmail })}
           </StatusMessage>
