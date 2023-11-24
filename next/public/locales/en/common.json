@@ -79,5 +79,6 @@
   "password-updated-login-below": "Your password has been updated. Please log in below.",
   "password-reset-check-your-email": "If {{email}} was associated with a actual account, check your email for a link to reset your password.",
   "reset-your-password": "Reset your password",
+  "your-session-has-expired": "Your session has expired. Please log in again to continue.",
   "field-is-required": "The {{field}} field is required."
 }

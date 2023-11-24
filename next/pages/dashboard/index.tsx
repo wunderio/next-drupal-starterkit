@@ -7,6 +7,7 @@ import { useTranslation } from "next-i18next";
 
 import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
+import { redirectExpiredSessionToLoginPage } from "@/lib/auth/redirect-expired-login";
 import { drupal } from "@/lib/drupal/drupal-client";
 import {
   CommonPageProps,
@@ -84,19 +85,15 @@ export const getServerSideProps: GetServerSideProps<
     submissions: WebformSubmissionsListItem[];
   }
 > = async (context) => {
+  const { locale, resolvedUrl } = context;
   const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
+    return redirectExpiredSessionToLoginPage(locale, resolvedUrl);
   }
 
   const url = drupal.buildUrl(
-    `/${context.locale}/rest/my-webform-submissions?_format=json`,
+    `/${locale}/rest/my-webform-submissions?_format=json`,
   );
 
   const result = await drupal.fetch(url.toString(), {
