@@ -3,9 +3,13 @@ import { z } from "zod";
 import { DrupalMenuLinkContentWithLangcode } from "@/types";
 
 export const MenuItemOptionsSchema = z.object({
-  attributes: z.object({
-    icon: z.string(),
-  }),
+  external: z.boolean().optional(),
+  attributes: z
+    .object({
+      icon: z.string(),
+    })
+    .nullable()
+    .optional(),
 });
 
 const BaseMenuItemSchema = z.object({
