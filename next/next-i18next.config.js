@@ -1,4 +1,4 @@
-const config = require("./site.config");
+const config = require("./src/site.config");
 
 module.exports = {
   i18n: {
