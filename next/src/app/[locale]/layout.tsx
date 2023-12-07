@@ -1,3 +1,5 @@
+import "@/styles/globals.css";
+
 import { notFound } from "next/navigation";
 
 export const metadata = {
