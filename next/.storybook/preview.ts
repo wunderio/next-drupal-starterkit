@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import { Preview } from "@storybook/react";
-import i18n from "./i18next";
 
 const preview: Preview = {
   parameters: {
@@ -14,7 +13,6 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
-    i18n,
   },
   globals: {
     locale: "en",
