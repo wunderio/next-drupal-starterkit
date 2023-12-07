@@ -13,12 +13,12 @@ export default function NotFoundPage() {
   const { t } = useTranslation();
   return (
     <>
-      <Meta title={t("Page not found")} metatags={[]} />
-      <HeadingPage>{t("Page not found")}</HeadingPage>
+      <Meta title={t("page-not-found")} metatags={[]} />
+      <HeadingPage>{t("page-not-found")}</HeadingPage>
       <p className="mt-8 text-lg">
-        {t("The page you are looking for does not exist.")}{" "}
+        {t("page-does-not-exist")}{" "}
         <Link href="/" className="hyperlink underline">
-          {t("Go back to the homepage?")}
+          {t("go-back-to-homepage")}
         </Link>
       </p>
     </>

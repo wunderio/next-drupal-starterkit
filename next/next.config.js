@@ -1,4 +1,4 @@
-const { i18n } = require("./next-i18next.config");
+const withNextIntl = require("next-intl/plugin")();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -6,7 +6,6 @@ const nextConfig = {
   images: {
     domains: [process.env.NEXT_IMAGE_DOMAIN],
   },
-  i18n,
   async rewrites() {
     return {
       beforeFiles: [
@@ -27,4 +26,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

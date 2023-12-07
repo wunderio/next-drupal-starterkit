@@ -18,7 +18,7 @@ export default function NotFoundPage() {
       <p className="mt-8 text-lg">
         {t("There was an error.")}{" "}
         <Link href="/" className="hyperlink underline">
-          {t("Go back to the homepage?")}
+          {t("go-back-to-homepage")}
         </Link>
       </p>
     </>
