@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import React from "react";
 import clsx from "clsx";
 import { cva } from "cva";
@@ -36,7 +36,7 @@ export const StatusMessage = React.forwardRef<
   HTMLDivElement,
   StatusMessageProps
 >(({ level = "info", title, className, children, ...props }, ref) => {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const [Icon, color] = {
     info: [Warning, "text-info"],

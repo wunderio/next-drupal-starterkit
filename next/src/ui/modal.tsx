@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import React from "react";
 import * as ModalPrimitive from "@radix-ui/react-dialog";
 import clsx from "clsx";
@@ -37,7 +37,7 @@ const ModalContent = React.forwardRef<
   React.ElementRef<typeof ModalPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof ModalPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <ModalPortal>
       <ModalOverlay />
