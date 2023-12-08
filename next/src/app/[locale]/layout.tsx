@@ -1,8 +1,10 @@
 import "@/styles/globals.css";
 
 import { notFound } from "next/navigation";
+import { NextIntlClientProvider, useMessages } from "next-intl";
 
 import { Footer } from "@/components/footer/footer";
+import { Header } from "@/components/header/header";
 
 import { i18nConfig } from "@/i18n";
 
@@ -19,19 +21,23 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, params: { locale } }: LayoutProps) {
+  const messages = useMessages();
+
   // Validate that the incoming `locale` parameter is valid
   if (!i18nConfig.locales.includes(locale)) notFound();
 
   return (
     <html lang={locale}>
       <body>
-        <div className="flex min-h-screen flex-col">
-          {/* <Header menu={menus.main} /> */}
-          <main className="grow bg-mischka" id="main-content">
-            <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
-          </main>
-          <Footer locale={locale} />
-        </div>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="grow bg-mischka" id="main-content">
+              <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
+            </main>
+            <Footer locale={locale} />
+          </div>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
