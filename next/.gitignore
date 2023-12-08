@@ -41,3 +41,8 @@ lerna-debug.log*
 /storybook-static
 /cypress/screenshots/
 /cypress/videos/
+
+# sitemap and robots.txt
+/public/robots.txt
+/public/sitemap.xml
+/public/sitemap-*.xml

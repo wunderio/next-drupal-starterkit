@@ -7,16 +7,16 @@ const nextConfig = {
     domains: [process.env.NEXT_IMAGE_DOMAIN],
   },
   i18n,
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: "/sitemap.xml",
-          destination: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/sites/default/files/sitemap.xml`,
-        },
-      ],
-    };
-  },
+  // async rewrites() {
+  //   return {
+  //     beforeFiles: [
+  //       {
+  //         source: "/sitemap.xml",
+  //         destination: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/sites/default/files/sitemap.xml`,
+  //       },
+  //     ],
+  //   };
+  // },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
