@@ -5,6 +5,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 
 import { Footer } from "@/components/footer/footer";
 import { Header } from "@/components/header/header";
+import { LanguageLinksProvider } from "@/lib/contexts/language-links-context";
 
 import { i18nConfig } from "@/i18n";
 
@@ -30,13 +31,15 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="grow bg-mischka" id="main-content">
-              <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
-            </main>
-            <Footer locale={locale} />
-          </div>
+          <LanguageLinksProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="grow bg-mischka" id="main-content">
+                <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
+              </main>
+              <Footer locale={locale} />
+            </div>
+          </LanguageLinksProvider>
         </NextIntlClientProvider>
       </body>
     </html>

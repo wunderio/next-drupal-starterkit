@@ -1,18 +1,19 @@
 "use client";
 
-// import Link from "next/link";
-import { useRouter } from "next/router";
-import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 
-// import { useLanguageLinks } from "@/lib/contexts/language-links-context";
+import { useLanguageLinks } from "@/lib/contexts/language-links-context";
 import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import LanguageIcon from "@/styles/icons/language.svg";
 
+import { i18nConfig } from "@/i18n";
+
 export function LanguageSwitcher() {
-  // const languageLinks = useLanguageLinks();
-  const { locale /* locales */ } = useRouter();
+  const locale = useLocale();
+  const languageLinks = useLanguageLinks();
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen((o) => !o);
@@ -35,8 +36,7 @@ export function LanguageSwitcher() {
         aria-expanded={isOpen}
       >
         <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
-          {/* {languageLinks[locale].name} */}
-          Lang
+          {languageLinks[locale].name}
         </span>
         <LanguageIcon className="inline-block h-6 w-6" aria-hidden="true" />
       </button>
@@ -46,7 +46,7 @@ export function LanguageSwitcher() {
           !isOpen && "hidden",
         )}
       >
-        {/* {locales
+        {i18nConfig.locales
           .filter((l) => l !== locale)
           .map((l) => {
             const { name, path } = languageLinks[l];
@@ -61,7 +61,7 @@ export function LanguageSwitcher() {
                 </Link>
               </li>
             );
-          })} */}
+          })}
       </ul>
     </div>
   );

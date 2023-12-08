@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
+import { LanguageSwitcher } from "@/components/header/language-switcher";
 import { MainMenu, MenuToggle } from "@/components/main-menu/main-menu";
 import { Menu } from "@/lib/zod/menu";
 import SearchIcon from "@/styles/icons/search.svg";
@@ -34,7 +35,7 @@ export function ClientHeader({ menu }: ClientHeaderProps) {
             <SearchIcon className="inline-block h-6 w-6" aria-hidden={true} />
           </Link>
           {/* <UserMenu /> */}
-          {/* <LanguageSwitcher /> */}
+          <LanguageSwitcher />
           <MenuToggle isOpen={isMainMenuOpen} setIsOpen={setIsMainMenuOpen} />
         </div>
       </nav>
