@@ -1,0 +1,8 @@
+/* Overwrite @radix-ui/react-navigation-menu's inline style on list parent */
+.mainMenu [data-orientation="horizontal"] > :only-child {
+  position: initial !important;
+}
+
+.mainMenu :focus-visible {
+  @apply ring-inset ring-offset-0;
+}
