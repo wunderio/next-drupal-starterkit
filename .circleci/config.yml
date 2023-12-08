@@ -262,22 +262,22 @@ workflows:
               only: /dependabot\/.*/
 
       # Storybook deployment.
-      - silta/simple-build-deploy: &build-deploy
-          name: Storybook build & deploy
-          executor: cicd82
-          context: silta_dev
-          silta_config: silta/silta-storybook.yml
-          release-suffix: storybook
-          codebase-build:
-            - silta/npm-install-build:
-                build-command: npm run build-storybook
-                path: next
-          build_folder: next/storybook-static
-          filters:
-            branches:
-              ignore:
-                - production
-                - /dependabot\/.*/
+      # - silta/simple-build-deploy: &build-deploy
+      #     name: Storybook build & deploy
+      #     executor: cicd82
+      #     context: silta_dev
+      #     silta_config: silta/silta-storybook.yml
+      #     release-suffix: storybook
+      #     codebase-build:
+      #       - silta/npm-install-build:
+      #           build-command: npm run build-storybook
+      #           path: next
+      #     build_folder: next/storybook-static
+      #     filters:
+      #       branches:
+      #         ignore:
+      #           - production
+      #           - /dependabot\/.*/
 
       # silta/frontend-build-deploy is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/jobs/%40frontend.yml
       # &frontend-build-deploy is a yaml anchor, so we can reference it later
