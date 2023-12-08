@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-import type { Menu, MenuItem } from "@/lib/zod/menu";
+import { drupal } from "@/lib/drupal/drupal-client";
+import type { MenuItem } from "@/lib/zod/menu";
 import Facebook from "@/styles/icons/facebook.svg";
 import LinkedIn from "@/styles/icons/linkedin.svg";
 import Twitter from "@/styles/icons/twitter.svg";
@@ -10,15 +11,18 @@ import WunderCarrot from "@/styles/icons/wunder-carrot.svg";
 import { SocialShare } from "./social-share";
 
 interface FooterProps {
-  menu: Menu;
   locale: string;
 }
 
-export function Footer({ menu, locale }: FooterProps) {
-  const t = useTranslations();
+export async function Footer({ locale }: FooterProps) {
+  const t = await getTranslations();
 
-  // Only show the menu items that match the current locale:
+  const { tree: menu } = await drupal.getMenu<MenuItem>("footer", {
+    locale,
+    defaultLocale: "en",
+  });
   const filteredItems = menu.filter((link) => link.langcode == locale);
+
   return (
     <footer className="border-t border-finnishwinter">
       <div className="mx-auto max-w-6xl px-6">

@@ -3,8 +3,6 @@ import "@/styles/globals.css";
 import { notFound } from "next/navigation";
 
 import { Footer } from "@/components/footer/footer";
-import { drupal } from "@/lib/drupal/drupal-client";
-import { MenuItem } from "@/lib/zod/menu";
 
 export const metadata = {
   title: "Next.js",
@@ -21,19 +19,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default async function Layout({
-  children,
-  params: { locale },
-}: LayoutProps) {
-  const [{ tree: main }, { tree: footer }] = await Promise.all(
-    ["main", "footer"].map((menu) =>
-      drupal.getMenu<MenuItem>(menu, {
-        locale,
-        defaultLocale: "en",
-      }),
-    ),
-  );
-
+export default function Layout({ children, params: { locale } }: LayoutProps) {
   // Validate that the incoming `locale` parameter is valid
   if (!locales.includes(locale)) notFound();
 
@@ -41,10 +27,11 @@ export default async function Layout({
     <html lang={locale}>
       <body>
         <div className="flex min-h-screen flex-col">
+          {/* <Header menu={menus.main} /> */}
           <main className="grow bg-mischka" id="main-content">
             <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
           </main>
-          <Footer menu={footer} locale={locale} />
+          <Footer locale={locale} />
         </div>
       </body>
     </html>
