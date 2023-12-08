@@ -10,6 +10,8 @@ import WunderCarrot from "@/styles/icons/wunder-carrot.svg";
 
 import { SocialShare } from "./social-share";
 
+import { i18nConfig } from "@/i18n";
+
 interface FooterProps {
   locale: string;
 }
@@ -19,7 +21,7 @@ export async function Footer({ locale }: FooterProps) {
 
   const { tree: menu } = await drupal.getMenu<MenuItem>("footer", {
     locale,
-    defaultLocale: "en",
+    defaultLocale: i18nConfig.defaultLocale,
   });
   const filteredItems = menu.filter((link) => link.langcode == locale);
 
