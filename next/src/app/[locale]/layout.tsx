@@ -6,6 +6,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Footer } from "@/components/footer/footer";
 import { Header } from "@/components/header/header";
 import { LanguageLinksProvider } from "@/lib/contexts/language-links-context";
+import { inter, overpass } from "@/styles/fonts";
 
 import { i18nConfig } from "@/i18n";
 
@@ -28,7 +29,10 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
   if (!i18nConfig.locales.includes(locale)) notFound();
 
   return (
-    <html lang={locale}>
+    <html
+      lang={locale}
+      className={`${inter.variable} ${overpass.variable} font-overpass antialiased`}
+    >
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <LanguageLinksProvider>
