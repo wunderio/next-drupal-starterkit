@@ -9,8 +9,8 @@ module.exports = {
     "/fi/404",
     "/sv/404",
     "/sv/500",
-    "auth/login",
-    "auth/register",
-    "dashboard",
+    "/auth/login",
+    "/auth/register",
+    "/dashboard",
   ],
 };
