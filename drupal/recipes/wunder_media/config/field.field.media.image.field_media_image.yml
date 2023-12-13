@@ -6,17 +6,10 @@ dependencies:
     - field.storage.media.field_media_image
     - media.type.image
   module:
-    - content_translation
     - image
   enforced:
     module:
       - media
-third_party_settings:
-  content_translation:
-    translation_sync:
-      alt: alt
-      title: title
-      file: '0'
 _core:
   default_config_hash: HGRX21ciyn7K-q8KMxsKHQvIB4SHT-A3bqzmNDnGKyc
 id: media.image.field_media_image
