@@ -7,7 +7,7 @@ dependencies:
   module:
     - ckeditor5
 _core:
-  default_config_hash: lZlUTSJqWaN3iU0I0fhvQVgqf4ps9fxPPC-g_9aWIRc
+  default_config_hash: FDAuwq_V_tyB_RL8utnPAjK7j9kMuiKeruaSOu7KAeA
 format: basic_html
 editor: ckeditor5
 settings:
@@ -60,7 +60,7 @@ image_upload:
   status: true
   scheme: public
   directory: inline-images
-  max_size: ''
+  max_size: '5 MB'
   max_dimensions:
-    width: 0
-    height: 0
+    width: 2500
+    height: 2500
