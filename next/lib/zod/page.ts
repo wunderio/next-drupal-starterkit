@@ -56,7 +56,7 @@ export function validateAndCleanupPage(page: DrupalNode): Page | null {
             return null;
         }
       })
-      .filter(Boolean);
+      .filter((paragraph: any): boolean => paragraph != null);
 
     return {
       ...topLevelPageData,

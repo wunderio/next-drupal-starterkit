@@ -58,7 +58,7 @@ export function validateAndCleanupFrontpage(
             return null;
         }
       })
-      .filter(Boolean);
+      .filter((paragraph: any): boolean => paragraph != null);
 
     return {
       ...topLevelFrontpageData,
