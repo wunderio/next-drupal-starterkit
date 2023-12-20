@@ -111,3 +111,13 @@ if (getenv("SILTA_CLUSTER") && getenv('ELASTICSEARCH_HOST')) {
 if (isset($_ENV['SILTA_CLUSTER']) && file_exists($app_root . '/' . $site_path . '/settings.silta.php')) {
   include $app_root . '/' . $site_path . '/settings.silta.php';
 }
+
+// Set init commands for the database connection.
+// This needs to be here because in Silta the include clause just above this
+// will override the $databases variable.
+$databases['default']['default']['init_commands'] = [
+  'isolation_level' => 'SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED',
+  // Workaround for JSONAPI / Entity Query API performance regression
+  // See https://www.drupal.org/project/drupal/issues/3022864
+  'optimizer_search_depth' => 'SET SESSION optimizer_search_depth = 0',
+];
