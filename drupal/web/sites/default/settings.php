@@ -6,6 +6,7 @@
  */
 
 // Database settings, overridden per environment.
+// Also, check the override at the end of the file for the init_commands.
 $databases = [];
 $databases['default']['default'] = [
   'database' => $_ENV['DB_NAME_DRUPAL'],
@@ -16,9 +17,6 @@ $databases['default']['default'] = [
   'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
-  'init_commands' => [
-    'isolation_level' => 'SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED',
-  ],
 ];
 
 // Salt for one-time login links, cancel links, form tokens, etc.
