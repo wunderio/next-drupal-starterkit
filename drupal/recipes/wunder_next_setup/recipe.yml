@@ -1,4 +1,3 @@
-# An example recipe that shows the creation of a user role.
 name: 'Wunder next setup'
 description: "Enable needed modules to use next-drupal and add pathauto setup"
 type: 'Setup'
@@ -16,9 +15,18 @@ install:
   - require_login
   - webform_rest
   - registration_role
+  - graphql
+  - graphql_compose
+  - graphql_compose_edges
+  - graphql_compose_menus
+  - graphql_compose_metatags
+  - graphql_compose_routes
+  - next_graphql
+  - typed_data
 config:
   import:
     redirect: '*'
+    graphql_compose:  '*'
   actions:
     # Set the frontpage for the site:
     system.site:
@@ -35,6 +43,7 @@ config:
         label: 'Anonymous user'
       grantPermissions:
         - 'restful post user_registration'
+        - 'execute graphql_compose_server arbitrary graphql requests'
     # Set email messages for user registration:
     user.mail:
       simple_config_update:
