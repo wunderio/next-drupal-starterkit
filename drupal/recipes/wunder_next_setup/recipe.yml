@@ -21,6 +21,7 @@ install:
   - graphql_compose_menus
   - graphql_compose_metatags
   - graphql_compose_routes
+  - graphql_compose_users
   - next_graphql
   - typed_data
 config:

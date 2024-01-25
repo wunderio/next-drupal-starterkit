@@ -59,6 +59,9 @@ entity_config:
       enabled: true
     video:
       enabled: true
+  user:
+    user:
+      enabled: true
 field_config:
   media:
     audio:
