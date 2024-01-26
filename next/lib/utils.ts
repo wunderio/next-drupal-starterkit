@@ -20,6 +20,15 @@ export function formatDateComplete(input: string, locale: string): string {
   });
 }
 
+export function formatDateTimestamp(input: number, locale: string): string {
+  const date = new Date(input * 1000);
+  return date.toLocaleDateString(locale, {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 export function isRelative(url: string) {
   return !new RegExp("^(?:[a-z]+:)?//", "i").test(url);
 }

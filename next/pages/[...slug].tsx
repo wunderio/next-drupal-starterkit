@@ -1,109 +1,173 @@
+import type { PreviewData } from "next";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import { DrupalNode, DrupalTranslatedPath } from "next-drupal";
 
-import { Article } from "@/components/article";
 import { Meta } from "@/components/meta";
-import { Page } from "@/components/page";
+import { Node } from "@/components/node";
 import {
   createLanguageLinks,
   LanguageLinks,
 } from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal/drupal-client";
-import { getNodePageJsonApiParams } from "@/lib/drupal/get-node-page-json-api-params";
-import { ResourceType } from "@/lib/drupal/get-node-page-json-api-params";
 import { getNodeTranslatedVersions } from "@/lib/drupal/get-node-translated-versions";
 import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
+import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import {
-  Article as ArticleType,
-  validateAndCleanupArticle,
-} from "@/lib/zod/article";
-import { Page as PageType, validateAndCleanupPage } from "@/lib/zod/page";
-
-const RESOURCE_TYPES = ["node--article", "node--page"];
+  GET_ENTITY_AT_DRUPAL_PATH,
+  GET_STATIC_PATHS,
+} from "@/lib/graphql/queries";
+import {
+  extractEntityFromRouteQueryResult,
+  extractRedirectFromRouteQueryResult,
+} from "@/lib/graphql/utils";
+import { TypedRouteEntity } from "@/types/graphql";
 
 export default function CustomPage({
-  resource,
+  node,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  if (!resource) return null;
+  if (!node) {
+    return null;
+  }
 
   return (
     <>
-      <Meta title={resource.title} metatags={resource.metatag} />
-      {resource.type === "node--article" && <Article article={resource} />}
-      {resource.type === "node--page" && <Page page={resource} />}
+      <Meta
+        title={node.title}
+        metatags={node.metatag as FragmentMetaTagFragment[]}
+      />
+      <Node node={node} />
     </>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
-  const paths = await drupal.getStaticPathsFromContext(RESOURCE_TYPES, context);
+  // We want to generate static paths for all locales:
+  const locales = context.locales || [];
+
+  const staticPaths: ReturnType<typeof drupal.buildStaticPathsParamsFromPaths> =
+    [];
+
+  for (const locale of locales) {
+    // Get the defined paths via graphql for the current locale:
+    const data = await drupal.doGraphQlRequest(GET_STATIC_PATHS, {
+      // We will query for the latest 50 items of each content type:
+      number: 50,
+      langcode: locale,
+    });
+
+    // Get all paths from the response:
+    const pathArray = [
+      ...(data?.nodePages?.nodes || []),
+      ...(data?.nodeArticles?.nodes || []),
+    ].map(({ path }) => path);
+
+    // Build static paths for the current locale.
+    const localePaths = drupal.buildStaticPathsParamsFromPaths(pathArray, {
+      locale,
+    });
+
+    // Add the paths to the static paths array:
+    staticPaths.push(...localePaths);
+  }
+
   return {
-    paths: paths,
+    paths: staticPaths,
     fallback: "blocking",
   };
 };
 
 interface PageProps extends CommonPageProps {
-  resource: PageType | ArticleType;
+  node: TypedRouteEntity;
   languageLinks: LanguageLinks;
 }
 
 export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
-  const path: DrupalTranslatedPath =
-    await drupal.translatePathFromContext(context);
+  // Get the path from the context:
+  const path = Array.isArray(context.params.slug)
+    ? `/${context.params.slug?.join("/")}`
+    : context.params.slug;
 
-  if (!path) {
+  const variables = {
+    path: path,
+    langcode: context.locale,
+  };
+
+  // Are we in Next.js preview mode?
+  const isPreview = context.preview || false;
+
+  // Get the page data with Graphql:
+  const data = await drupal.doGraphQlRequest(
+    GET_ENTITY_AT_DRUPAL_PATH,
+    variables,
+    // We want to use authentication only if this is a preview request:
+    isPreview ? true : false,
+  );
+
+  // If the data contains a RedirectResponse, we redirect to the path:
+  const redirect = extractRedirectFromRouteQueryResult(data);
+
+  if (redirect) {
+    return {
+      redirect: {
+        destination: redirect.url,
+        permanent: false,
+      },
+    };
+  }
+
+  // Get the entity from the response:
+  let nodeEntity = extractEntityFromRouteQueryResult(data);
+  // If there's no node, return 404:
+  if (!nodeEntity) {
     return {
       notFound: true,
     };
   }
 
-  if (path.redirect?.length) {
-    const [redirect] = path.redirect;
-    return {
-      redirect: {
-        destination: redirect.to,
-        permanent: false,
-      },
-    };
+  // When in preview, we could be requesting a specific revision.
+  // In this case, the previewData will contain the resourceVersion property,
+  // we can use that in combination with the node id to fetch the correct revision
+  // This means that we will need to do a second request to Drupal.
+  const { previewData } = context as {
+    previewData: PreviewData & { resourceVersion?: string };
+  };
+  if (
+    isPreview &&
+    previewData &&
+    typeof previewData === "object" &&
+    previewData.resourceVersion &&
+    // If the resourceVersion is "rel:latest-version", we don't need to fetch the revision:
+    previewData.resourceVersion !== "rel:latest-version"
+  ) {
+    // Get the node id from the entity we already have:
+    const nodeId = nodeEntity.id;
+    // the revision will be in the format "id:[id]":
+    const revisionId = previewData.resourceVersion.split(":").slice(1);
+    // To fetch the entity at a specific revision, we need to call a specific path:
+    const revisionPath = `/node/${nodeId}/revisions/${revisionId}/view`;
+
+    // Get the node at the specific data with Graphql:
+    const revisionRoutedata = await drupal.doGraphQlRequest(
+      GET_ENTITY_AT_DRUPAL_PATH,
+      { path: revisionPath, langcode: context.locale },
+      // We need to do an authenticated request to get the revision:
+      true,
+    );
+
+    // Instead of the entity at the current revision, we want now to
+    // display the entity at the requested revision:
+    nodeEntity = extractEntityFromRouteQueryResult(revisionRoutedata);
+    if (!nodeEntity) {
+      return {
+        notFound: true,
+      };
+    }
   }
 
-  const type = path.jsonapi.resourceName as ResourceType;
-
-  // If we are looking at the path of a frontpage node,
-  // redirect the user to the homepage for that language:
-
-  if (type === "node--frontpage") {
-    return {
-      redirect: {
-        destination: "/" + context.locale,
-        permanent: false,
-      },
-    };
-  }
-
-  const resource = await drupal.getResourceFromContext<DrupalNode>(
-    path,
-    context,
-    {
-      params: getNodePageJsonApiParams(type).getQueryObject(),
-    },
-  );
-
-  // At this point, we know the path exists and it points to a resource.
-  // If we receive an error, it means something went wrong on Drupal.
-  // We throw an error to tell revalidation to skip this for now.
-  // Revalidation can try again on next request.
-  if (!resource) {
-    throw new Error(`Failed to fetch resource: ${path.jsonapi.individual}`);
-  }
-
-  // If we're not in preview mode and the resource is not published,
-  // Return page not found.
-  if (!context.preview && resource?.status === false) {
+  // Unless we are in preview, return 404 if the node is set to unpublished:
+  if (!isPreview && nodeEntity.status !== true) {
     return {
       notFound: true,
     };
@@ -111,23 +175,16 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
 
   // Add information about possible other language versions of this node.
   const nodeTranslations = await getNodeTranslatedVersions(
-    resource,
+    nodeEntity,
     context,
     drupal,
   );
   const languageLinks = createLanguageLinks(nodeTranslations);
 
-  const validatedResource =
-    type === "node--article"
-      ? validateAndCleanupArticle(resource)
-      : type === "node--page"
-        ? validateAndCleanupPage(resource)
-        : null;
-
   return {
     props: {
       ...(await getCommonPageProps(context)),
-      resource: validatedResource,
+      node: nodeEntity,
       languageLinks,
     },
     revalidate: 60,

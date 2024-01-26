@@ -1,14 +1,10 @@
 import { Paragraph } from "@/components/paragraph";
-import type { Page } from "@/lib/zod/page";
+import { PageType, ParagraphType } from "@/types/graphql";
 
-interface PageProps {
-  page: Page;
-}
-
-export function Page({ page }: PageProps) {
+export function NodePage({ page }: { page: PageType }) {
   return (
     <div className="grid gap-4">
-      {page.field_content_elements?.map((paragraph) => (
+      {page.contentElements?.map((paragraph: ParagraphType) => (
         <Paragraph key={paragraph.id} paragraph={paragraph} />
       ))}
     </div>

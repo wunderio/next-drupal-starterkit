@@ -1,26 +1,55 @@
 import { GetStaticPropsContext } from "next";
-import { DrupalClient, DrupalNode } from "next-drupal";
 
 import { Translations } from "@/lib/contexts/language-links-context";
+import { GET_NODE_PATH_BY_ID_AND_LANGCODE } from "@/lib/graphql/queries";
+import { TypedRouteEntity } from "@/types/graphql";
+
+import { GraphQlDrupalClient } from "./graphql-drupal-client";
 
 /**
  * Given a node, it will return the node translations for it.
  */
 export const getNodeTranslatedVersions = async (
-  node: DrupalNode,
-  context: GetStaticPropsContext,
-  drupal: DrupalClient,
+  node: NonNullable<TypedRouteEntity>,
+  { locales, defaultLocale }: GetStaticPropsContext,
+  drupal: GraphQlDrupalClient,
 ) => {
-  const nodeTranslations: Translations = {};
-  for (let i = 0; i < context.locales.length; i++) {
-    const lang = context.locales[i];
-    const translated = await drupal.getResource(node.type, node.id, {
-      locale: lang,
-      defaultLocale: context.defaultLocale,
-      withAuth: true,
-    });
-    // Only consider a translation if there is actually a translated node:
-    nodeTranslations[translated.langcode] = translated.path.alias;
+  if (!node) {
+    return {};
   }
+
+  // Add the node itself to the translations:
+  const nodeTranslations: Translations = {
+    [node.langcode.id]: node.path,
+  };
+
+  if (Array.isArray(locales) && defaultLocale) {
+    for (let i = 0; i < locales.length; i++) {
+      // We already have the info for the current locale:
+      if (locales[i] == node.langcode.id) {
+        continue;
+      }
+
+      const variables = {
+        id: node.id,
+        langcode: locales[i],
+      };
+
+      const translatedNodeResult = await drupal.doGraphQlRequest(
+        GET_NODE_PATH_BY_ID_AND_LANGCODE,
+        variables,
+      );
+
+      if (
+        translatedNodeResult.node?.status &&
+        translatedNodeResult.node?.langcode.id &&
+        translatedNodeResult.node?.path
+      ) {
+        nodeTranslations[translatedNodeResult.node.langcode.id] =
+          translatedNodeResult.node.path;
+      }
+    }
+  }
+
   return nodeTranslations;
 };
