@@ -2,19 +2,23 @@ import clsx from "clsx";
 
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingParagraph } from "@/components/heading--paragraph";
-import { FormattedText as FormattedTextType } from "@/lib/zod/paragraph";
+import type { FragmentParagraphFormattedTextFragment } from "@/lib/gql/graphql";
 
-export function ParagraphText({ paragraph }: { paragraph: FormattedTextType }) {
+export function ParagraphText({
+  paragraph,
+}: {
+  paragraph: FragmentParagraphFormattedTextFragment;
+}) {
   return (
     <>
-      {paragraph.field_heading && (
-        <HeadingParagraph>{paragraph.field_heading}</HeadingParagraph>
+      {paragraph.formattedTextHeading && (
+        <HeadingParagraph>{paragraph.formattedTextHeading}</HeadingParagraph>
       )}
       <FormattedText
-        html={paragraph.field_formatted_text.processed}
+        html={paragraph.formattedTextText.processed}
         className={clsx(
           "text-left text-md/xl text-scapaflow sm:text-lg",
-          paragraph.field_heading && "mt-4",
+          paragraph.formattedTextHeading && "mt-4",
         )}
       />
     </>

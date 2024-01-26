@@ -35,11 +35,7 @@ export const GET_ENTITY_AT_DRUPAL_PATH = graphql(`
                 id
                 __typename
               }
-              ...FragmentParagraphFormattedText
-              ...FragmentParagraphImage
-              ...FragmentParagraphLink
-              ...FragmentParagraphVideo
-              ...FragmentParagraphHero
+              ...FragmentParagraphUnion
             }
           }
           ... on NodePage {
@@ -48,11 +44,7 @@ export const GET_ENTITY_AT_DRUPAL_PATH = graphql(`
                 id
                 __typename
               }
-              ...FragmentParagraphFormattedText
-              ...FragmentParagraphImage
-              ...FragmentParagraphLink
-              ...FragmentParagraphVideo
-              ...FragmentParagraphHero
+              ...FragmentParagraphUnion
             }
           }
           ... on NodeArticle {

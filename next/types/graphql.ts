@@ -22,17 +22,11 @@ export type Frontpage = Extract<
 export type PageType = Extract<TypedRouteEntity, { __typename: "NodePage" }>;
 
 /**
- * From TypedRouteEntity, create a type for BlogPost data
+ * From TypedRouteEntity, create a type for Article data
  */
 export type ArticleType = Extract<
   TypedRouteEntity,
   { __typename: "NodeArticle" }
 >;
-
-/**
- * Union of all possible paragraphs
- * ...or at least, those that can exist on contentElements - is that the same thing?
- */
-export type ParagraphType = PageType["contentElements"][number];
 
 export type MenuType = GetMenuQuery["menu"];

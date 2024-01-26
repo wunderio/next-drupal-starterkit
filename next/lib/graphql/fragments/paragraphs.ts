@@ -1,9 +1,25 @@
 import { graphql } from "@/lib/gql";
 
+export const FRAGMENT_PARAGRAPH_UNION = graphql(`
+  fragment FragmentParagraphUnion on ParagraphUnion {
+    __typename
+    ...FragmentParagraphFormattedText
+    ...FragmentParagraphLink
+    ...FragmentParagraphImage
+    ...FragmentParagraphVideo
+    ...FragmentParagraphFileAttachments
+    ...FragmentParagraphHero
+  }
+`);
+
 export const FRAGMENT_PARAGRAPH_FORMATTED_TEXT = graphql(`
   fragment FragmentParagraphFormattedText on ParagraphFormattedText {
     __typename
     id
+    # These fields are aliased here because they conflict with other instances
+    # of the same field in other paragraph types where they have different
+    # mandatory settings.
+    formattedTextHeading: heading
     formattedTextText: formattedText {
       ...FragmentText
     }
@@ -40,6 +56,20 @@ export const FRAGMENT_PARAGRAPH_VIDEO = graphql(`
   }
 `);
 
+export const FRAGMENT_PARAGRAPH_FILE_ATTACHMENTS = graphql(`
+  fragment FragmentParagraphFileAttachments on ParagraphFileAttachment {
+    __typename
+    id
+    fileAttachmentsParagraphHeading: heading
+    fileAttachmentsParagraphFormattedText: formattedText {
+      ...FragmentText
+    }
+    fileAttachments {
+      ...FragmentMediaUnion
+    }
+  }
+`);
+
 export const FRAGMENT_PARAGRAPH_HERO = graphql(`
   fragment FragmentParagraphHero on ParagraphHero {
     __typename
@@ -56,6 +86,6 @@ export const FRAGMENT_PARAGRAPH_HERO = graphql(`
     secondaryLink {
       ...FragmentLink
     }
-    heading
+    paragraphHeroHeading: heading
   }
 `);

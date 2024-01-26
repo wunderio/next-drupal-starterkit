@@ -1,41 +1,26 @@
 import React from "react";
 
-import { MediaFileAttachments } from "@/components/media/media--file-attachments";
+import { MediaDocument } from "@/components/media/media--document";
 import { MediaImage } from "@/components/media/media--image";
 import { MediaVideo } from "@/components/media/media--video";
-import { FileAttachments, Image, Video } from "@/lib/zod/paragraph";
+import { FragmentMediaUnionFragment } from "@/lib/gql/graphql";
 
-interface MediaProps {
-  media?:
-    | Image["field_image"]
-    | Video["field_video"]
-    | FileAttachments["field_file_attachments"];
-  priority?: boolean;
-}
-
-export function Media({ media, ...props }: MediaProps) {
+export function Media({ media }: { media: FragmentMediaUnionFragment }) {
   if (!media) {
     return null;
   }
-
-  function isFileAttachments(
-    media: MediaProps["media"],
-  ): media is FileAttachments["field_file_attachments"] {
-    return Array.isArray(media) && media[0]?.type === "media--document";
-  }
-
-  // Special case for file attachments:
-  if (isFileAttachments(media)) {
-    return <MediaFileAttachments mediaItems={media} {...props} />;
-  }
-
-  // For other media types:
-  switch (media.type) {
-    case "media--image":
-      return <MediaImage media={media} {...props} />;
-    case "media--remote_video":
-      return <MediaVideo media={media} {...props} />;
-    default:
+  switch (media.__typename) {
+    case "MediaImage":
+      return <MediaImage media={media} />;
+    case "MediaRemoteVideo":
+      return <MediaVideo media={media} />;
+    case "MediaDocument":
+      return <MediaDocument media={media} />;
+    default: {
+      console.log(
+        `components/media/index.tsx: GraphQL media type not yet implemented: ${media.__typename}`,
+      );
       return null;
+    }
   }
 }
