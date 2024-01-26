@@ -1,11 +1,11 @@
 import dynamic from "next/dynamic";
 
-import { ParagraphFileAttachments } from "@/components/paragraph--file-attachments";
-import { ParagraphHero } from "@/components/paragraph--hero";
-import { ParagraphImage } from "@/components/paragraph--image";
-import { ParagraphLinks } from "@/components/paragraph--links";
-import { ParagraphListingArticles } from "@/components/paragraph--listing-articles";
-import { ParagraphText } from "@/components/paragraph--text";
+import { ParagraphFileAttachments } from "@/components/paragraph/paragraph--file-attachments";
+import { ParagraphHero } from "@/components/paragraph/paragraph--hero";
+import { ParagraphImage } from "@/components/paragraph/paragraph--image";
+import { ParagraphLinks } from "@/components/paragraph/paragraph--links";
+import { ParagraphListingArticles } from "@/components/paragraph/paragraph--listing-articles";
+import { ParagraphText } from "@/components/paragraph/paragraph--text";
 import { Paragraph } from "@/lib/zod/paragraph";
 
 // Use dynamic imports to defer loading a component until after initial page load: https://nextjs.org/docs/advanced-features/dynamic-import

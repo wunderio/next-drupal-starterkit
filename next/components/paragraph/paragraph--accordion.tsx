@@ -1,5 +1,5 @@
-import { ParagraphAccordionOneColumn } from "@/components/paragraph--accordion--one-column";
-import { ParagraphAccordionTwoColumns } from "@/components/paragraph--accordion--two-columns";
+import { ParagraphAccordionOneColumn } from "@/components/paragraph/paragraph--accordion--one-column";
+import { ParagraphAccordionTwoColumns } from "@/components/paragraph/paragraph--accordion--two-columns";
 import { Accordion as ParagraphAccordion } from "@/lib/zod/paragraph";
 export function ParagraphAccordion({
   paragraph,

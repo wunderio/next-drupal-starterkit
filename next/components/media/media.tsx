@@ -1,8 +1,8 @@
 import React from "react";
 
-import { MediaFileAttachments } from "@/components/media--file-attachments";
-import { MediaImage } from "@/components/media--image";
-import { MediaVideo } from "@/components/media--video";
+import { MediaFileAttachments } from "@/components/media/media--file-attachments";
+import { MediaImage } from "@/components/media/media--image";
+import { MediaVideo } from "@/components/media/media--video";
 import { FileAttachments, Image, Video } from "@/lib/zod/paragraph";
 
 interface MediaProps {

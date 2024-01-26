@@ -2,7 +2,7 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import { FormattedText } from "@/components/formatted-text";
-import { MediaImage } from "@/components/media--image";
+import { MediaImage } from "@/components/media/media--image";
 import { Hero as HeroType } from "@/lib/zod/paragraph";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 

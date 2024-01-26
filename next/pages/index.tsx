@@ -8,7 +8,7 @@ import { ContactList } from "@/components/contact-list";
 import { LayoutProps } from "@/components/layout";
 import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
-import { Paragraph } from "@/components/paragraph";
+import { Paragraph } from "@/components/paragraph/paragraph";
 import { drupal } from "@/lib/drupal/drupal-client";
 import { getNodePageJsonApiParams } from "@/lib/drupal/get-node-page-json-api-params";
 import { getCommonPageProps } from "@/lib/get-common-page-props";

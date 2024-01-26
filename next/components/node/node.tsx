@@ -1,7 +1,6 @@
+import { NodeArticle } from "@/components/node/node--article";
+import { NodePage } from "@/components/node/node--page";
 import { TypedRouteEntity } from "@/types/graphql";
-
-import { NodeArticle } from "./node--article";
-import { NodePage } from "./node--page";
 
 export function Node({ node }: { node: TypedRouteEntity }) {
   if (!node) return null;

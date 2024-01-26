@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingParagraph } from "@/components/heading--paragraph";
-import { Paragraph } from "@/components/paragraph";
+import { Paragraph } from "@/components/paragraph/paragraph";
 import { Accordion as ParagraphAccordion } from "@/lib/zod/paragraph";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
