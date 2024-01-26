@@ -1,4 +1,4 @@
-import { Media } from "@/components/media/media";
+import { Media } from "@/components/media";
 import { Image } from "@/lib/zod/paragraph";
 
 export function ParagraphImage({ paragraph }: { paragraph: Image }) {

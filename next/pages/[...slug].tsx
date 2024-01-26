@@ -2,7 +2,7 @@ import type { PreviewData } from "next";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 
 import { Meta } from "@/components/meta";
-import { Node } from "@/components/node/node";
+import { Node } from "@/components/node";
 import {
   createLanguageLinks,
   LanguageLinks,

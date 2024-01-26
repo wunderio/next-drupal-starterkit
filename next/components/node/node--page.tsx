@@ -1,4 +1,4 @@
-import { Paragraph } from "@/components/paragraph/paragraph";
+import { Paragraph } from "@/components/paragraph";
 import { PageType, ParagraphType } from "@/types/graphql";
 
 export function NodePage({ page }: { page: PageType }) {

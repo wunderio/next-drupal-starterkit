@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingParagraph } from "@/components/heading--paragraph";
-import { Media } from "@/components/media/media";
+import { Media } from "@/components/media";
 import { FileAttachments } from "@/lib/zod/paragraph";
 export function ParagraphFileAttachments({
   paragraph,
