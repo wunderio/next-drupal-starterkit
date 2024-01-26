@@ -1,6 +1,10 @@
 import { Media } from "@/components/media";
-import { Image } from "@/lib/zod/paragraph";
+import type { FragmentParagraphImageFragment } from "@/lib/gql/graphql";
 
-export function ParagraphImage({ paragraph }: { paragraph: Image }) {
-  return <Media media={paragraph.field_image} priority={true} />;
+export function ParagraphImage({
+  paragraph,
+}: {
+  paragraph: FragmentParagraphImageFragment;
+}) {
+  return <Media media={paragraph.image} />;
 }

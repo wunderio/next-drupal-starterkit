@@ -11,7 +11,7 @@ export type TypedRouteEntity = ReturnType<
 /**
  * From TypedRouteEntity, create a type for Frontpage data
  */
-export type Frontpage = Extract<
+export type FrontpageType = Extract<
   TypedRouteEntity,
   { __typename: "NodeFrontpage" }
 >;

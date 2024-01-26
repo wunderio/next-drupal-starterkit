@@ -1,33 +1,22 @@
-import NextImage, { ImageProps } from "next/image";
+import NextImage from "next/image";
 
-import { absoluteUrl } from "@/lib/drupal/absolute-url";
-import { Image } from "@/lib/zod/paragraph";
+import { FragmentMediaImageFragment } from "@/lib/gql/graphql";
 
-interface MediaImageProps extends Partial<ImageProps> {
-  media: Image["field_image"];
-}
-
-export function MediaImage({
-  media,
-  width,
-  height,
-  ...props
-}: MediaImageProps) {
-  const image = media?.field_media_image;
-
-  if (!image) {
+export function MediaImage({ media }: { media: FragmentMediaImageFragment }) {
+  if (!media) {
     return null;
   }
 
+  const { url, width, height, alt, title } = media.mediaImage;
+
   return (
     <NextImage
-      src={absoluteUrl(image.uri.url)}
-      width={width || image.resourceIdObjMeta.width}
-      height={height || image.resourceIdObjMeta.height}
-      alt={image.resourceIdObjMeta.alt || "Image"}
-      title={image.resourceIdObjMeta.title}
+      src={url}
+      width={width}
+      height={height}
+      alt={alt || "Image"}
+      title={title || ""}
       className="h-auto max-w-full object-cover"
-      {...props}
     />
   );
 }

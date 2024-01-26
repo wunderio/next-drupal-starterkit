@@ -10,59 +10,7 @@ export const GET_ENTITY_AT_DRUPAL_PATH = graphql(`
       ... on RouteInternal {
         __typename
         entity {
-          ... on NodeInterface {
-            __typename
-            id
-            title
-            status
-            path
-            langcode {
-              id
-            }
-            created {
-              timestamp
-            }
-            changed {
-              timestamp
-            }
-            metatag {
-              ...FragmentMetaTag
-            }
-          }
-          ... on NodeFrontpage {
-            contentElements {
-              ... on ParagraphInterface {
-                id
-                __typename
-              }
-              ...FragmentParagraphUnion
-            }
-          }
-          ... on NodePage {
-            contentElements {
-              ... on ParagraphInterface {
-                id
-                __typename
-              }
-              ...FragmentParagraphUnion
-            }
-          }
-          ... on NodeArticle {
-            excerpt
-            sticky
-            body {
-              ...FragmentTextSummary
-            }
-            image {
-              ...FragmentImage
-            }
-            author {
-              __typename
-              ... on User {
-                ...FragmentUser
-              }
-            }
-          }
+          ...FragmentNodeUnion
         }
       }
       ... on RouteRedirect {

@@ -8,20 +8,22 @@ import { ContactList } from "@/components/contact-list";
 import { LayoutProps } from "@/components/layout";
 import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
-import { Paragraph } from "@/components/paragraph/paragraph";
+import { NodeFrontPage } from "@/components/node/node--frontpage";
 import { drupal } from "@/lib/drupal/drupal-client";
-import { getNodePageJsonApiParams } from "@/lib/drupal/get-node-page-json-api-params";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
+import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
+import { GET_ENTITY_AT_DRUPAL_PATH } from "@/lib/graphql/queries";
+import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 import {
   ArticleTeaser,
   validateAndCleanupArticleTeaser,
 } from "@/lib/zod/article-teaser";
-import { Frontpage, validateAndCleanupFrontpage } from "@/lib/zod/frontpage";
+import type { FrontpageType } from "@/types/graphql";
 
 import { Divider } from "@/ui/divider";
 
-interface IndexPageProps extends LayoutProps {
-  frontpage: Frontpage | null;
+interface HomepageProps extends LayoutProps {
+  frontpage: FrontpageType | null;
   promotedArticleTeasers: ArticleTeaser[];
 }
 
@@ -33,12 +35,11 @@ export default function IndexPage({
 
   return (
     <>
-      <Meta title={frontpage?.title} metatags={frontpage?.metatag} />
-      <div className="grid gap-4">
-        {frontpage?.field_content_elements?.map((paragraph) => (
-          <Paragraph paragraph={paragraph} key={paragraph.id} />
-        ))}
-      </div>
+      <Meta
+        title={frontpage?.title}
+        metatags={frontpage?.metatag as FragmentMetaTagFragment[]}
+      />
+      <NodeFrontPage page={frontpage} />
       <Divider className="max-w-4xl" />
       <ContactForm />
       <Divider className="max-w-4xl" />
@@ -52,18 +53,34 @@ export default function IndexPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IndexPageProps> = async (
+export const getStaticProps: GetStaticProps<HomepageProps> = async (
   context,
 ) => {
-  const frontpage = (
-    await drupal.getResourceCollectionFromContext<DrupalNode[]>(
-      "node--frontpage",
-      context,
-      {
-        params: getNodePageJsonApiParams("node--frontpage").getQueryObject(),
-      },
-    )
-  ).at(0);
+  const variables = {
+    // This works because it matches the pathauto pattern for the Frontpage content type defined in Drupal:
+    path: `frontpage-${context.locale}`,
+    langcode: context.locale,
+  };
+
+  const data = await drupal.doGraphQlRequest(
+    GET_ENTITY_AT_DRUPAL_PATH,
+    variables,
+  );
+
+  const frontpage = extractEntityFromRouteQueryResult(data);
+
+  if (!frontpage || !(frontpage.__typename === "NodeFrontpage")) {
+    return {
+      notFound: true,
+    };
+  }
+
+  // Unless we are in preview, return 404 if the node is set to unpublished:
+  if (!context.preview && frontpage.status !== true) {
+    return {
+      notFound: true,
+    };
+  }
 
   const promotedArticleTeasers = await drupal.getResourceCollectionFromContext<
     DrupalNode[]
@@ -82,7 +99,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async (
   return {
     props: {
       ...(await getCommonPageProps(context)),
-      frontpage: frontpage ? validateAndCleanupFrontpage(frontpage) : null,
+      frontpage,
       promotedArticleTeasers: promotedArticleTeasers.map((teaser) =>
         validateAndCleanupArticleTeaser(teaser),
       ),
