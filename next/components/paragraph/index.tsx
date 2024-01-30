@@ -1,5 +1,6 @@
 // import dynamic from "next/dynamic";
 
+import { ParagraphAccordion } from "@/components/paragraph/paragraph--accordion";
 import { ParagraphFileAttachments } from "@/components/paragraph/paragraph--file-attachments";
 // import { ParagraphHero } from "@/components/paragraph/paragraph--hero";
 import { ParagraphImage } from "@/components/paragraph/paragraph--image";
@@ -36,6 +37,9 @@ export function Paragraph({
     }
     case "ParagraphImage": {
       return <ParagraphImage paragraph={paragraph} />;
+    }
+    case "ParagraphAccordion": {
+      return <ParagraphAccordion paragraph={paragraph} />;
     }
     default: {
       console.log(

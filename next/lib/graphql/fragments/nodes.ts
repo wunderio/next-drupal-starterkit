@@ -47,7 +47,19 @@ export const FRAGMENT_NODE_ARTICLE = graphql(`
 export const FRAGMENT_NODE_FRONTPAGE = graphql(`
   fragment FragmentNodeFrontpage on NodeFrontpage {
     contentElements {
-      ...FragmentParagraphUnion
+      ... on ParagraphInterface {
+        __typename
+        id
+        # Here we include only the paragraph types that can actually be used in the field
+        # contentElements for this node type:
+        ...FragmentParagraphFormattedText
+        ...FragmentParagraphLink
+        ...FragmentParagraphImage
+        ...FragmentParagraphVideo
+        ...FragmentParagraphFileAttachments
+        ...FragmentParagraphHero
+        ...FragmentParagraphAccordion
+      }
     }
   }
 `);
@@ -55,7 +67,19 @@ export const FRAGMENT_NODE_FRONTPAGE = graphql(`
 export const FRAGMENT_NODE_PAGE = graphql(`
   fragment FragmentNodePage on NodePage {
     contentElements {
-      ...FragmentParagraphUnion
+      ... on ParagraphInterface {
+        __typename
+        id
+        # Here we include only the paragraph types that can actually be used in the field
+        # contentElements for this node type:
+        ...FragmentParagraphFormattedText
+        ...FragmentParagraphLink
+        ...FragmentParagraphImage
+        ...FragmentParagraphVideo
+        ...FragmentParagraphFileAttachments
+        ...FragmentParagraphHero
+        ...FragmentParagraphAccordion
+      }
     }
   }
 `);

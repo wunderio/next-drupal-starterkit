@@ -1,6 +1,10 @@
 import { graphql } from "@/lib/gql";
 
 export const FRAGMENT_MEDIA_UNION = graphql(`
+  # This fragment needs to reference ALL the other defined media fragments in this file.
+  # This fragment can be used in queries where a media entity type field is present.
+  # Graphql-codegen will then generate a type with all possible variations of media
+  # that we need to typecast media in the frontend.
   fragment FragmentMediaUnion on MediaInterface {
     __typename
     id

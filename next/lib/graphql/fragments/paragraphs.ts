@@ -1,6 +1,11 @@
 import { graphql } from "@/lib/gql";
 
 export const FRAGMENT_PARAGRAPH_UNION = graphql(`
+  # This fragment needs to reference ALL the other defined paragraph fragments in this file.
+  # Graphql-codegen will then generate a type with all possible variations of paragraphs
+  # that we need to typecast paragraphs in the frontend.
+  # You should not use this fragment in queries, but instead add the specific fragments for
+  # the paragraph types that are supported by each paragraph field.
   fragment FragmentParagraphUnion on ParagraphInterface {
     __typename
     id
@@ -10,6 +15,8 @@ export const FRAGMENT_PARAGRAPH_UNION = graphql(`
     ...FragmentParagraphVideo
     ...FragmentParagraphFileAttachments
     ...FragmentParagraphHero
+    ...FragmentParagraphAccordion
+    ...FragmentParagraphAccordionItem
   }
 `);
 
@@ -76,5 +83,51 @@ export const FRAGMENT_PARAGRAPH_HERO = graphql(`
       ...FragmentLink
     }
     paragraphHeroHeading: heading
+  }
+`);
+
+export const FRAGMENT_PARAGRAPH_ACCORDION = graphql(`
+  fragment FragmentParagraphAccordion on ParagraphAccordion {
+    heading
+    accordionLayout
+    primaryLink {
+      ...FragmentLink
+    }
+    accordionFormattedText: formattedText {
+      ...FragmentText
+    }
+    accordionItems {
+      ... on ParagraphInterface {
+        __typename
+        id
+        # We include here only the paragraph types that can actually
+        # be used as accordion items.
+        ...FragmentParagraphAccordionItem
+      }
+    }
+  }
+`);
+
+export const FRAGMENT_PARAGRAPH_ACCORDION_ITEM = graphql(`
+  fragment FragmentParagraphAccordionItem on ParagraphAccordionItem {
+    __typename
+    id
+    accordionItemHeading: heading
+    accordionItemFormattedText: formattedText {
+      ...FragmentText
+    }
+    contentElements {
+      ... on ParagraphInterface {
+        __typename
+        id
+        # We include here only the paragraphs that can be added inside
+        # an accordion item.
+        ...FragmentParagraphFormattedText
+        ...FragmentParagraphImage
+        ...FragmentParagraphLink
+        ...FragmentParagraphFileAttachments
+        ...FragmentParagraphVideo
+      }
+    }
   }
 `);
