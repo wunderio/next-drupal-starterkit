@@ -1,13 +1,13 @@
 import YouTube from "react-youtube";
 
-import { Video } from "@/lib/zod/paragraph";
+import type { FragmentMediaRemoteVideoFragment } from "@/lib/gql/graphql";
 
-interface MediaVideoProps {
-  media: Video["field_video"];
-}
-
-export function MediaVideo({ media }: MediaVideoProps) {
-  if (!media?.field_media_oembed_video) {
+export function MediaVideo({
+  media,
+}: {
+  media: FragmentMediaRemoteVideoFragment;
+}) {
+  if (!media) {
     return null;
   }
 
@@ -16,7 +16,7 @@ export function MediaVideo({ media }: MediaVideoProps) {
     height: "100%",
   };
 
-  const videoId = getYouTubeId(media.field_media_oembed_video);
+  const videoId = getYouTubeId(media.mediaOembedVideo);
   return (
     <YouTube
       className="aspect-h-9 aspect-w-16"

@@ -1,6 +1,10 @@
-// import { Media } from "@/components/media";
-// import { Video } from "@/lib/zod/paragraph";
+import { Media } from "@/components/media";
+import type { FragmentParagraphVideoFragment } from "@/lib/gql/graphql";
 
-// export function ParagraphVideo({ paragraph }: { paragraph: Video }) {
-//   return <Media media={paragraph.field_video} />;
-// }
+export function ParagraphVideo({
+  paragraph,
+}: {
+  paragraph: FragmentParagraphVideoFragment;
+}) {
+  return <Media media={paragraph.video} />;
+}
