@@ -46,7 +46,7 @@ export function ParagraphHero({
               </Link>
             )}
 
-            {paragraph.secondaryLink && ( 
+            {paragraph.secondaryLink && (
               <Link
                 href={paragraph.secondaryLink.url}
                 className={clsx(
