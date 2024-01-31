@@ -83,3 +83,15 @@ export const FRAGMENT_NODE_PAGE = graphql(`
     }
   }
 `);
+
+export const FRAGMENT_ARTICLE_TEASER = graphql(`
+  fragment FragmentArticleTeaser on NodeArticle {
+    id
+    image {
+      url
+    }
+    path
+    title
+    excerpt
+  }
+`);

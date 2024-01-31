@@ -12,7 +12,10 @@ import { NodeFrontPage } from "@/components/node/node--frontpage";
 import { drupal } from "@/lib/drupal/drupal-client";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
-import { GET_ENTITY_AT_DRUPAL_PATH } from "@/lib/graphql/queries";
+import {
+  GET_ENTITY_AT_DRUPAL_PATH,
+  LISTING_ARTICLES,
+} from "@/lib/graphql/queries";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 import {
   ArticleTeaser,
@@ -95,6 +98,21 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
       "page[limit]": 3,
     },
   });
+
+  // Get the last 3 sticky articles in the current language:
+  const stickyArticleTeasers = await drupal.doGraphQlRequest(LISTING_ARTICLES, {
+    filter: {
+      sticky: true,
+      langcode: context.locale,
+    },
+    // Get the first page
+    page: 0,
+    // Get the last 3 items
+    pageSize: 3,
+  });
+
+  // TODO: We only console.log this for now
+  console.log(JSON.stringify(stickyArticleTeasers, null, 2));
 
   return {
     props: {

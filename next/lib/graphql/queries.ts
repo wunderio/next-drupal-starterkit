@@ -100,3 +100,30 @@ export const GET_MENU = graphql(`
     }
   }
 `);
+
+export const LISTING_ARTICLES = graphql(`
+  query ArticleListing(
+    $langcode: String = "en"
+    $sticky: Boolean = true
+    $offset: Int = 0
+    $pageSize: Int = 10
+    $page: Int = 0
+  ) {
+    articlesView(
+      page: $page
+      pageSize: $pageSize
+      filter: { langcode: $langcode, sticky: $sticky }
+      offset: $offset
+    ) {
+      results {
+        ...FragmentArticleTeaser
+      }
+      pageInfo {
+        offset
+        page
+        pageSize
+        total
+      }
+    }
+  }
+`);
