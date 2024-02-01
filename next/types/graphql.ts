@@ -1,4 +1,3 @@
-import { DocumentType } from "@/lib/gql";
 import { GetMenuQuery } from "@/lib/gql/graphql";
 import { ArticleListingQuery } from "@/lib/gql/graphql";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
