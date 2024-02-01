@@ -4,15 +4,15 @@ import { useTranslation } from "next-i18next";
 import { useState } from "react";
 
 import { MainMenu, MenuToggle } from "@/components/main-menu/main-menu";
-import { Menu } from "@/lib/zod/menu";
 import SearchIcon from "@/styles/icons/search.svg";
 import WunderIcon from "@/styles/icons/wunder.svg";
+import type { MenuType } from "@/types/graphql";
 
 import { LanguageSwitcher } from "./language-switcher";
 import { UserMenu } from "./user-menu";
 
 interface HeaderProps {
-  menu: Menu;
+  menu: MenuType;
 }
 
 export function Header({ menu }: HeaderProps) {

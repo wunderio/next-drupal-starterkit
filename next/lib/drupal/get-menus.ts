@@ -1,24 +1,22 @@
 import { GetStaticPropsContext } from "next";
 
 import { drupal } from "@/lib/drupal/drupal-client";
-import { validateAndCleanupMenu } from "@/lib/zod/menu";
-import { DrupalMenuLinkContentWithLangcode } from "@/types";
 
-export async function getMenus({
-  locale,
-  defaultLocale,
-}: GetStaticPropsContext) {
-  const [{ tree: main }, { tree: footer }] = await Promise.all(
-    ["main", "footer"].map((menu) =>
-      drupal.getMenu<DrupalMenuLinkContentWithLangcode>(menu, {
-        locale,
-        defaultLocale,
+import { MenuAvailable } from "../gql/graphql";
+import { GET_MENU } from "../graphql/queries";
+
+export async function getMenus({ locale }: GetStaticPropsContext) {
+  const [main, footer] = await Promise.all(
+    ["MAIN", "FOOTER"].map((menu) =>
+      drupal.doGraphQlRequest(GET_MENU, {
+        name: menu as MenuAvailable,
+        langcode: locale,
       }),
     ),
   );
 
   return {
-    main: validateAndCleanupMenu(main),
-    footer: validateAndCleanupMenu(footer),
+    main: main.menu,
+    footer: footer.menu,
   };
 }

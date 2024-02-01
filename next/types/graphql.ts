@@ -32,6 +32,8 @@ export type ArticleType = Extract<
 
 export type MenuType = GetMenuQuery["menu"];
 
+export type MenuItemType = MenuType["items"][number];
+
 /**
  * We have a representation of an article that we get from the ArticleListingQuery,
  * and we want to get its type to use it in the ArticleTeasers and ArticleTeaser components.
