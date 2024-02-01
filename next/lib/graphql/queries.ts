@@ -104,7 +104,7 @@ export const GET_MENU = graphql(`
 export const LISTING_ARTICLES = graphql(`
   query ArticleListing(
     $langcode: String = "en"
-    $sticky: Boolean = true
+    $sticky: Boolean = false
     $offset: Int = 0
     $pageSize: Int = 10
     $page: Int = 0

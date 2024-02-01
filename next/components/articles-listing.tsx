@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { ArticleTeaser } from "@/components/article-teaser";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { ArticleTeaser as ArticleTeaserType } from "@/lib/zod/article-teaser";
+import type { ArticleTeaserType } from "@/types/graphql";
 
 export function ArticlesListing({
   listingId,

@@ -4,12 +4,12 @@ import clsx from "clsx";
 
 import { ArticleTeaser } from "@/components/article-teaser";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
-import type { ArticleTeaser } from "@/types/graphql";
+import type { ArticleTeaserType } from "@/types/graphql";
 
 import { buttonVariants } from "@/ui/button";
 
 interface LatestArticlesProps {
-  articles?: ArticleTeaser[];
+  articles?: ArticleTeaserType[];
   heading: string;
 }
 
