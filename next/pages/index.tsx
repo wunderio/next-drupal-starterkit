@@ -7,7 +7,7 @@ import { ContactList } from "@/components/contact-list";
 import { LayoutProps } from "@/components/layout";
 import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
-import { NodeFrontPage } from "@/components/node/node--frontpage";
+import { Node } from "@/components/node";
 import { drupal } from "@/lib/drupal/drupal-client";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
@@ -37,7 +37,7 @@ export default function IndexPage({
         title={frontpage?.title}
         metatags={frontpage?.metatag as FragmentMetaTagFragment[]}
       />
-      <NodeFrontPage page={frontpage} />
+      <Node node={frontpage} />
       <Divider className="max-w-4xl" />
       <ContactForm />
       <Divider className="max-w-4xl" />
