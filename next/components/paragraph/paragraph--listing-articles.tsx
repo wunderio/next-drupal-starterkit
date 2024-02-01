@@ -7,7 +7,6 @@ export function ParagraphListingArticles({
 }: {
   paragraph: FragmentParagraphListingArticleFragment;
 }) {
-  console.log(JSON.stringify(paragraph, null, 2));
   return (
     <>
       {paragraph.paragraphListingArticleHeading && (
