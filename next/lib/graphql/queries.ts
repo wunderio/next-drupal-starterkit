@@ -116,6 +116,7 @@ export const LISTING_ARTICLES = graphql(`
       offset: $offset
     ) {
       results {
+        __typename
         ...FragmentArticleTeaser
       }
       pageInfo {

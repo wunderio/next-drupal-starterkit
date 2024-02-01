@@ -1,5 +1,4 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { DrupalNode } from "next-drupal";
 import { useTranslation } from "next-i18next";
 
 import { ArticleTeasers } from "@/components/article-teasers";
@@ -17,25 +16,21 @@ import {
   LISTING_ARTICLES,
 } from "@/lib/graphql/queries";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
-import {
-  ArticleTeaser,
-  validateAndCleanupArticleTeaser,
-} from "@/lib/zod/article-teaser";
+import type { ArticleTeaserType } from "@/types/graphql";
 import type { FrontpageType } from "@/types/graphql";
 
 import { Divider } from "@/ui/divider";
 
 interface HomepageProps extends LayoutProps {
   frontpage: FrontpageType | null;
-  promotedArticleTeasers: ArticleTeaser[];
+  stickyArticleTeasers: ArticleTeaserType[];
 }
 
 export default function IndexPage({
   frontpage,
-  promotedArticleTeasers,
+  stickyArticleTeasers,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
-
   return (
     <>
       <Meta
@@ -47,8 +42,8 @@ export default function IndexPage({
       <ContactForm />
       <Divider className="max-w-4xl" />
       <ArticleTeasers
-        articles={promotedArticleTeasers}
         heading={t("promoted-articles")}
+        articles={stickyArticleTeasers}
       />
       <ContactList />
       <LogoStrip />
@@ -85,42 +80,23 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
     };
   }
 
-  const promotedArticleTeasers = await drupal.getResourceCollectionFromContext<
-    DrupalNode[]
-  >("node--article", context, {
-    params: {
-      "filter[status]": 1,
-      "filter[langcode]": context.locale,
-      "filter[promote]": 1,
-      "fields[node--article]": "title,path,field_image,uid,created",
-      include: "field_image,uid",
-      sort: "-sticky,-created",
-      "page[limit]": 3,
-    },
-  });
-
   // Get the last 3 sticky articles in the current language:
   const stickyArticleTeasers = await drupal.doGraphQlRequest(LISTING_ARTICLES, {
-    filter: {
-      sticky: true,
-      langcode: context.locale,
-    },
-    // Get the first page
+    langcode: context.locale,
+    sticky: true,
     page: 0,
-    // Get the last 3 items
     pageSize: 3,
   });
 
-  // TODO: We only console.log this for now
-  console.log(JSON.stringify(stickyArticleTeasers, null, 2));
+  // We cast the results as the ListingArticle type to get type safety:
+  const articles =
+    (stickyArticleTeasers.articlesView?.results as ArticleTeaserType[]) ?? [];
 
   return {
     props: {
       ...(await getCommonPageProps(context)),
       frontpage,
-      promotedArticleTeasers: promotedArticleTeasers.map((teaser) =>
-        validateAndCleanupArticleTeaser(teaser),
-      ),
+      stickyArticleTeasers: articles,
     },
     revalidate: 60,
   };

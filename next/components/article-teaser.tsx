@@ -3,22 +3,21 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
-import { absoluteUrl } from "@/lib/drupal/absolute-url";
-import { formatDate } from "@/lib/utils";
-import { ArticleTeaser } from "@/lib/zod/article-teaser";
+import { formatDateTimestamp } from "@/lib/utils";
+import type { ArticleTeaserType } from "@/types/graphql";
 
 interface ArticleTeaserProps {
-  article: ArticleTeaser;
+  article: ArticleTeaserType;
 }
 
 export function ArticleTeaser({ article }: ArticleTeaserProps) {
   const { t } = useTranslation();
-  const author = article.uid?.display_name;
+  const author = article.author?.name;
   const router = useRouter();
-  const date = formatDate(article.created, router.locale);
+  const date = formatDateTimestamp(article.created.timestamp, router.locale);
   return (
     <Link
-      href={article.path.alias}
+      href={article.path}
       className="relative grid h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md"
     >
       <h3 className="mb-2 line-clamp-2 text-heading-xs font-bold">
@@ -28,12 +27,12 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
         {author && <>{t("posted-by", { author })} - </>}
         {date}
       </div>
-      {article.field_image && (
+      {article.image && (
         <Image
-          src={absoluteUrl(article.field_image.uri.url)}
+          src={article.image.url}
           width={384}
           height={240}
-          alt={article.field_image.resourceIdObjMeta.alt}
+          alt={article.image.alt}
           className="max-w-full object-cover"
         />
       )}

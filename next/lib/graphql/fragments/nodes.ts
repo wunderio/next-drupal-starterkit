@@ -86,12 +86,22 @@ export const FRAGMENT_NODE_PAGE = graphql(`
 
 export const FRAGMENT_ARTICLE_TEASER = graphql(`
   fragment FragmentArticleTeaser on NodeArticle {
+    __typename
     id
     image {
-      url
+      ...FragmentImage
     }
     path
     title
     excerpt
+    created {
+      timestamp
+    }
+    author {
+      __typename
+      ... on User {
+        ...FragmentUser
+      }
+    }
   }
 `);
