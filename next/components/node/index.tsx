@@ -1,5 +1,5 @@
 import { NodeArticle } from "@/components/node/node--article";
-import { NodeFrontPage } from "@/components/node/node--frontpage";
+import { NodeFrontpage } from "@/components/node/node--frontpage";
 import { NodePage } from "@/components/node/node--page";
 import { TypedRouteEntity } from "@/types/graphql";
 
@@ -8,7 +8,7 @@ export function Node({ node }: { node: TypedRouteEntity }) {
 
   switch (node.__typename) {
     case "NodeFrontpage": {
-      return <NodeFrontPage page={node} />;
+      return <NodeFrontpage page={node} />;
     }
     case "NodePage": {
       return <NodePage page={node} />;

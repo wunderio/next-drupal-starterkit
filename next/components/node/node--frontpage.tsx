@@ -2,7 +2,7 @@ import { Paragraph } from "@/components/paragraph";
 import { FragmentParagraphUnionFragment } from "@/lib/gql/graphql";
 import type { FrontpageType } from "@/types/graphql";
 
-export function NodeFrontPage({ page }: { page: FrontpageType }) {
+export function NodeFrontpage({ page }: { page: FrontpageType }) {
   return (
     <div className="grid gap-4">
       {page.contentElements?.map(
