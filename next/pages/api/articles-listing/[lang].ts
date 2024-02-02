@@ -15,16 +15,19 @@ export default async function handler(
 
     const limit = Number(req.query.limit) || 10;
 
-    const articles = await drupal.doGraphQlRequest(LISTING_ARTICLES, {
-      langcode: languagePrefix,
-      page: 0,
-      pageSize: limit,
-    });
+    const articlesQueryResult = await drupal.doGraphQlRequest(
+      LISTING_ARTICLES,
+      {
+        langcode: languagePrefix,
+        page: 0,
+        pageSize: limit,
+      },
+    );
 
     // Set cache headers: 60 seconds max-age, stale-while-revalidate
     res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate");
 
-    res.json(articles.articlesView?.results);
+    res.json(articlesQueryResult.articlesView?.results);
   }
 
   res.end();

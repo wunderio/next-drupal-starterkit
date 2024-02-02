@@ -95,6 +95,7 @@ export const FRAGMENT_ARTICLE_TEASER = graphql(`
     }
     path
     title
+    sticky
     excerpt
     created {
       timestamp

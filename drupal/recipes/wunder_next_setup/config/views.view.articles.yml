@@ -83,7 +83,7 @@ display:
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
-            items_per_page_options: '3, 5, 10, 25, 50'
+            items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
             items_per_page_options_all_label: '- All -'
             offset: false
@@ -107,6 +107,21 @@ display:
         options: {  }
       empty: {  }
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         created:
           id: created
           table: node_field_data
@@ -300,6 +315,19 @@ display:
             offset: true
             offset_label: Offset
           quantity: 9
+      exposed_form:
+        type: graphql
+        options:
+          submit_button: Apply
+          reset_button: 0
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: 1
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      row:
+        type: graphql_entity
+        options: null
       display_extenders: {  }
       graphql_query_name: articlesView
     cache_metadata:
