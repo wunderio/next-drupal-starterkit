@@ -150,6 +150,14 @@ The frontend uses [TypeScript](https://www.typescriptlang.org) to provide type s
 
 TypeScript is setup quite loosely by default to minimise friction and make it accessible to developers who are not familiar with it. It is recommended to increase type safety by enabling some of the disabled rules in `next/eslint.json`.
 
+#### Working with GraphQL and TypeScript
+
+The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/queries` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
+
+When adding or modifying queries and fragments, you will need to run `lando npm run graphql-codegen` to generate the corresponding types. The command will keep checking the files for changes. 
+
+When there are changes on the GraphQL server schema itself, you need to stop and start the command again to fetch the new schema definition. Also, you might need to `lando drush cr` to clear the Drupal cache.
+
 #### Data fetching with TypeScript and Zod
 
 [Zod](https://zod.dev) is also used on the frontend to type the data fetched from the backend. When it's necessary to change what data is fetched from the backend, check the following files:
