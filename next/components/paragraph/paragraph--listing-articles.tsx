@@ -1,4 +1,4 @@
-import { ArticlesListing } from "@/components/articles-listing";
+import { ArticlesListing } from "@/components/article/articles-listing";
 import { HeadingParagraph } from "@/components/heading--paragraph";
 import type { FragmentParagraphListingArticleFragment } from "@/lib/gql/graphql";
 

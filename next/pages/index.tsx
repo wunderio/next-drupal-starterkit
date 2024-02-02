@@ -1,9 +1,9 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useTranslation } from "next-i18next";
 
-import { ArticleTeasers } from "@/components/article-teasers";
-import { ContactForm } from "@/components/contact-form";
+import { ArticleTeasers } from "@/components/article/article-teasers";
 import { ContactList } from "@/components/contact-list";
+import { ContactForm } from "@/components/forms/contact-form";
 import { LayoutProps } from "@/components/layout";
 import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";

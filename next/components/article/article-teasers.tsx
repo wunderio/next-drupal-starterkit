@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import clsx from "clsx";
 
-import { ArticleTeaser } from "@/components/article-teaser";
+import { ArticleTeaser } from "@/components/article/article-teaser";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 import type { ArticleTeaserType } from "@/types/graphql";
 
