@@ -80,6 +80,10 @@ export const GET_MENU = graphql(`
         langcode
         title
         internal
+        attributes {
+          class
+          icon
+        }
         children {
           id
           description
@@ -87,6 +91,10 @@ export const GET_MENU = graphql(`
           langcode
           title
           internal
+          attributes {
+            class
+            icon
+          }
           children {
             id
             description
@@ -94,6 +102,10 @@ export const GET_MENU = graphql(`
             langcode
             title
             internal
+            attributes {
+              class
+              icon
+            }
           }
         }
       }
