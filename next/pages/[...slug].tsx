@@ -52,8 +52,8 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
   for (const locale of locales) {
     // Get the defined paths via graphql for the current locale:
     const data = await drupal.doGraphQlRequest(GET_STATIC_PATHS, {
-      // We will query for the latest 50 items of each content type:
-      number: 50,
+      // We will query for the latest 10 items of each content type:
+      number: 10,
       langcode: locale,
     });
 
