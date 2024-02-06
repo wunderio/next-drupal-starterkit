@@ -121,13 +121,16 @@ export const FRAGMENT_PARAGRAPH_ACCORDION_ITEM = graphql(`
       ... on ParagraphInterface {
         __typename
         id
-        # We include here only the paragraphs that can be added inside
-        # an accordion item.
-        ...FragmentParagraphFormattedText
-        ...FragmentParagraphImage
-        ...FragmentParagraphLink
-        ...FragmentParagraphFileAttachments
-        ...FragmentParagraphVideo
+        # Here we include only the paragraph types that can actually be used in the field
+        # contentElements for this paragraph type. Using the generated union type, we can be sure
+        # that all fragments we refer to here can actually be used.
+        ... on ParagraphAccordionItemContentElementsUnion {
+          ...FragmentParagraphFormattedText
+          ...FragmentParagraphImage
+          ...FragmentParagraphLink
+          ...FragmentParagraphFileAttachments
+          ...FragmentParagraphVideo
+        }
       }
     }
   }

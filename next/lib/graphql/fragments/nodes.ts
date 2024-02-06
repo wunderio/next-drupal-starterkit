@@ -51,15 +51,18 @@ export const FRAGMENT_NODE_FRONTPAGE = graphql(`
         __typename
         id
         # Here we include only the paragraph types that can actually be used in the field
-        # contentElements for this node type:
-        ...FragmentParagraphFormattedText
-        ...FragmentParagraphLink
-        ...FragmentParagraphImage
-        ...FragmentParagraphVideo
-        ...FragmentParagraphFileAttachments
-        ...FragmentParagraphHero
-        ...FragmentParagraphAccordion
-        ...FragmentParagraphListingArticle
+        # contentElements for this node type. Using the generated union type, we can be sure
+        # that all fragments we use here can actually be used.
+        ... on NodeFrontpageContentElementsUnion {
+          ...FragmentParagraphFormattedText
+          ...FragmentParagraphLink
+          ...FragmentParagraphImage
+          ...FragmentParagraphVideo
+          ...FragmentParagraphFileAttachments
+          ...FragmentParagraphHero
+          ...FragmentParagraphAccordion
+          ...FragmentParagraphListingArticle
+        }
       }
     }
   }
@@ -72,15 +75,19 @@ export const FRAGMENT_NODE_PAGE = graphql(`
         __typename
         id
         # Here we include only the paragraph types that can actually be used in the field
-        # contentElements for this node type:
-        ...FragmentParagraphFormattedText
-        ...FragmentParagraphLink
-        ...FragmentParagraphImage
-        ...FragmentParagraphVideo
-        ...FragmentParagraphFileAttachments
-        ...FragmentParagraphHero
-        ...FragmentParagraphAccordion
-        ...FragmentParagraphListingArticle
+        # contentElements for this node type. Using the generated union type, we can be sure
+        # that all fragments we refer to here can actually be used.
+        ... on NodePageContentElementsUnion {
+          ...FragmentParagraphFormattedText
+          ...FragmentParagraphLink
+          ...FragmentParagraphImage
+          ...FragmentParagraphVideo
+          ...FragmentParagraphFileAttachments
+          ...FragmentParagraphHero
+          ...FragmentParagraphAccordion
+          ...FragmentParagraphListingArticle
+          ...FragmentParagraphAccordion
+        }
       }
     }
   }

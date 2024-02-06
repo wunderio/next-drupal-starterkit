@@ -165,7 +165,7 @@ settings:
   schema_description: 'GraphQL Compose'
   schema_version: '1'
   simple_queries: true
-  simple_unions: true
+  simple_unions: false
   site_name: false
   site_slogan: false
   site_front: true
