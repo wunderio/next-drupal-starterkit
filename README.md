@@ -152,7 +152,7 @@ TypeScript is setup quite loosely by default to minimise friction and make it ac
 
 #### Working with GraphQL and TypeScript
 
-The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/queries` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
+The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql/queries` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
 
 When adding or modifying queries and fragments, you will need to run `lando npm run graphql-codegen` to generate the corresponding types. The command will keep checking the files for changes. 
 
