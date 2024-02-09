@@ -21,6 +21,10 @@ All features are kept but have been re-implemented to use the new way of handlin
 - JSONAPI modules and related configuration
 - Manual definitions in `zod` for JSONAPI responses
 
+### Changed
+- Reorganization of the components directory structure
+- Updated Readme with new instructions regarding GraphQL setup
+
 
 ## [1.0.0] - 09.02.2024
 
