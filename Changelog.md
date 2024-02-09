@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [2.0.0]
+
+This release is a major update. Instead of using JSONAPI, the starterkit now uses GraphQL to fetch data from Drupal.
+All features are kept but have been re-implemented to use the new way of handling data coming from the backend.
+
+### Added
+
+- GraphQL Drupal modules and related configuration
+- `graphql-request` for fetching data from Drupal
+- `graphql-codegen` for generating types from GraphQL schema, queries and fragments
+
+### Removed
+- JSONAPI modules and related configuration
+- Manual definitions in `zod` for JSONAPI responses
+
+
 ## [1.0.0] - 09.02.2024
 
 The starterkit provides a basic setup for a new project using next-drupal to build a decoupled Drupal frontend with Next.js.
