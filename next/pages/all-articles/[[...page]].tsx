@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { useRef } from "react";
 
-import { ArticleListItem } from "@/components/article-list-item";
+import { ArticleListItem } from "@/components/article/article-list-item";
 import { HeadingPage } from "@/components/heading--page";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
@@ -13,10 +13,7 @@ import {
 } from "@/lib/contexts/language-links-context";
 import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
-import {
-  ArticleTeaser as ArticleTeaserType,
-  validateAndCleanupArticleTeaser,
-} from "@/lib/zod/article-teaser";
+import type { ArticleTeaserType } from "@/types/graphql";
 
 interface AllArticlesPageProps extends LayoutProps {
   articleTeasers: ArticleTeaserType[];
@@ -68,7 +65,9 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
   // Get the page parameter:
   const page = context.params.page;
   const currentPage = parseInt(Array.isArray(page) ? page[0] : page || "1");
-  const PAGE_SIZE = 6;
+  // This has to match one of the allowed values in the article listing view
+  // in Drupal.
+  const PAGE_SIZE = 5;
 
   const { totalPages, articles } = await getLatestArticlesItems({
     limit: PAGE_SIZE,
@@ -98,9 +97,7 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
   return {
     props: {
       ...(await getCommonPageProps(context)),
-      articleTeasers: articles.map((teaser) =>
-        validateAndCleanupArticleTeaser(teaser),
-      ),
+      articleTeasers: articles,
       paginationProps: {
         currentPage,
         totalPages,

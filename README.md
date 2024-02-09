@@ -150,13 +150,14 @@ The frontend uses [TypeScript](https://www.typescriptlang.org) to provide type s
 
 TypeScript is setup quite loosely by default to minimise friction and make it accessible to developers who are not familiar with it. It is recommended to increase type safety by enabling some of the disabled rules in `next/eslint.json`.
 
-#### Data fetching with TypeScript and Zod
+#### Working with GraphQL and TypeScript
 
-[Zod](https://zod.dev) is also used on the frontend to type the data fetched from the backend. When it's necessary to change what data is fetched from the backend, check the following files:
+The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql/queries` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
 
-- `next/lib/get-node-page-json-api-params.ts` - this file creates the parameters that are passed to JSON API when fetching page data.
-- `next/lib/zod/*.ts` - these files contain the Zod schemas that are used to validate and cleanup the data fetched from the backend. Any data that is not accounted for in these schemas will be removed, in order to prevent sending more data than necessary to the client. During development, it can be handy to avoid this behaviour using [zod.passthrough()](https://zod.dev/?id=passthrough) to pass ALL data to the client, and then tighten the schema later to only pass the data that is actually needed.
+When adding or modifying queries and fragments, you will need to run `lando npm run graphql-codegen` to generate the corresponding types. The command will keep checking the files for changes. 
 
+When there are changes on the GraphQL server schema itself, you need to stop and start the command again to fetch the new schema definition. Also, you might need to `lando drush cr` to clear the Drupal cache.
+§
 #### Typesafe environment variables
 
 The environment variables used by the frontend are also checked for type safety. If used correctly, a Zod error will prevent the frontend from building if the environment variables are not set according to the schema defined in `next/env.ts`. To add a new environment variable:

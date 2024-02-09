@@ -1,0 +1,52 @@
+diff --git a/modules/graphql_compose_menus/src/Plugin/GraphQL/SchemaExtension/MenusSchemaExtension.php b/modules/graphql_compose_menus/src/Plugin/GraphQL/SchemaExtension/MenusSchemaExtension.php
+index 9c4ce64..a259a39 100644
+--- a/modules/graphql_compose_menus/src/Plugin/GraphQL/SchemaExtension/MenusSchemaExtension.php
++++ b/modules/graphql_compose_menus/src/Plugin/GraphQL/SchemaExtension/MenusSchemaExtension.php
+@@ -92,6 +92,16 @@ class MenusSchemaExtension extends SdlSchemaExtensionPluginBase implements Conta
+       )
+     );
+
++    // Menu link Langcode.
++    $registry->addFieldResolver('MenuItem', 'langcode',
++      $builder->compose(
++        $builder->produce('menu_tree_link')->map('element', $builder->fromParent()),
++        $builder->callback(function (MenuLinkInterface $link) {
++          return static::getLangcodeOfMenuLink($link);
++        }),
++      )
++    );
++
+     // Menu title.
+     $registry->addFieldResolver('MenuItem', 'title',
+       $builder->produce('menu_link_label')
+@@ -203,4 +213,15 @@ class MenusSchemaExtension extends SdlSchemaExtensionPluginBase implements Conta
+     return (bool) ($enabled[$name]['menu_route_enabled'] ?? FALSE);
+   }
+
++  /** Gets the language code of a menuLink */
++  public static function getLangcodeOfMenuLink(MenuLinkInterface $link) {
++    $uuid = $link->getDerivativeId();
++    $entity_repository = \Drupal::service('entity.repository');
++    $entity = $entity_repository->loadEntityByUuid('menu_link_content', $uuid);
++    if ($entity && $entity->isTranslatable()) {
++      $entity = $entity_repository->getTranslationFromContext($entity);
++      return $entity->langcode->value;
++    }
++  }
++
+ }
+diff --git a/modules/graphql_compose_menus/src/Plugin/GraphQLCompose/SchemaType/MenuItem.php b/modules/graphql_compose_menus/src/Plugin/GraphQLCompose/SchemaType/MenuItem.php
+index d25ef9a..2684956 100644
+--- a/modules/graphql_compose_menus/src/Plugin/GraphQLCompose/SchemaType/MenuItem.php
++++ b/modules/graphql_compose_menus/src/Plugin/GraphQLCompose/SchemaType/MenuItem.php
+@@ -43,6 +43,10 @@ class MenuItem extends GraphQLComposeSchemaTypeBase {
+           'type' => Type::string(),
+           'description' => (string) $this->t('The URL of the menu item.'),
+         ],
++        'langcode' => [
++          'type' => Type::string(),
++          'description' => (string) $this->t('The langcode of the menu item.'),
++        ],
+         'internal' => [
+           'type' => Type::nonNull(Type::boolean()),
+           'description' => (string) $this->t('Whether this menu item links to an internal route.'),

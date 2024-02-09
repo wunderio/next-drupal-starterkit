@@ -13,7 +13,7 @@ import {
   CommonPageProps,
   getCommonPageProps,
 } from "@/lib/get-common-page-props";
-import { formatDateComplete } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 import {
   isWebformSubmissionsListEmpty,
   validateAndCleanupWebformSubmissionList,
@@ -51,10 +51,7 @@ export default function DashboardPage({
             >
               <td className="p-3">{submission.webform_id[0]["target_id"]}</td>
               <td className="p-3">
-                {formatDateComplete(
-                  submission.completed[0]["value"],
-                  router.locale,
-                )}
+                {formatDate(submission.completed[0]["value"], router.locale)}
               </td>
               <td className="p-3">
                 <Link

@@ -8,14 +8,14 @@ import {
   PreviewBanner,
   useIsPreviewBannerVisible,
 } from "@/components/preview-banner";
-import { Menu } from "@/lib/zod/menu";
+import type { MenuType } from "@/types/graphql";
 
 import { SkipToContentLink } from "@/ui/skip-to-content-link";
 
 export interface LayoutProps {
   menus: {
-    main: Menu;
-    footer: Menu;
+    main: MenuType;
+    footer: MenuType;
   };
   children?: React.ReactNode;
 }

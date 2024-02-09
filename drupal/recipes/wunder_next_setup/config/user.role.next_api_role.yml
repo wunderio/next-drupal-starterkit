@@ -5,6 +5,7 @@ dependencies:
   module:
     - node
     - subrequests
+    - graphql
 id: next_api_role
 label: next_api_role
 weight: 4
@@ -15,3 +16,4 @@ permissions:
   - 'issue subrequests'
   - 'view all revisions'
   - 'view all media revisions'
+  - 'bypass graphql access'

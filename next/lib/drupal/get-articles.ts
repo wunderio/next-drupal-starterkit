@@ -1,8 +1,7 @@
-import { deserialize, DrupalNode, JsonApiResponse } from "next-drupal";
-import { DrupalJsonApiParams } from "drupal-jsonapi-params";
-
 import { drupal } from "@/lib/drupal/drupal-client";
-import { getNodePageJsonApiParams } from "@/lib/drupal/get-node-page-json-api-params";
+import type { ArticleTeaserType } from "@/types/graphql";
+
+import { LISTING_ARTICLES } from "../graphql/queries";
 
 import siteConfig from "@/site.config";
 
@@ -12,39 +11,32 @@ type GetArticlesArgs = {
   locale?: string;
 };
 
-export const getArticles = async (
-  { limit = 6, offset = 0, locale = siteConfig.defaultLocale }: GetArticlesArgs,
-  apiParams: DrupalJsonApiParams,
-): Promise<{
+export const getArticles = async ({
+  limit = 5,
+  offset = 0,
+  locale = siteConfig.defaultLocale,
+}: GetArticlesArgs): Promise<{
   totalPages: number;
-  nodes: DrupalNode[];
+  nodes: ArticleTeaserType[];
 }> => {
-  apiParams.addPageLimit(limit);
-
-  let nodes: DrupalNode[] = [];
+  let nodes: ArticleTeaserType[] = [];
   let totalPages = 1;
   try {
-    const result = await drupal.getResourceCollection<JsonApiResponse>(
-      "node--article",
-      {
-        deserialize: false,
-        params: {
-          ...apiParams.getQueryObject(),
-          "filter[langcode]": locale,
-          "filter[status]": "1",
-          page: {
-            limit,
-            offset,
-          },
-          sort: "-sticky,-created",
-        },
-        locale: locale,
-        defaultLocale: siteConfig.defaultLocale,
-      },
-    );
-    if (result.data) {
-      nodes = deserialize(result) as DrupalNode[];
-      totalPages = Math.ceil(result.meta.count / limit);
+    const articlesViewResult = await drupal.doGraphQlRequest(LISTING_ARTICLES, {
+      langcode: locale,
+      page: 0,
+      pageSize: limit,
+      offset: offset,
+    });
+
+    if (articlesViewResult.articlesView?.results) {
+      nodes = articlesViewResult.articlesView.results as ArticleTeaserType[];
+      // To get to the total number of pages, we need to add the offset
+      // to the "total" property, that is to be considered as the total "remaining"
+      // articles to be displayed.
+      totalPages = Math.ceil(
+        (articlesViewResult.articlesView.pageInfo.total + offset) / limit,
+      );
     }
   } catch (error) {
     console.error(error);
@@ -60,10 +52,9 @@ export const getLatestArticlesItems = async (
   args: GetArticlesArgs,
 ): Promise<{
   totalPages: number;
-  articles: DrupalNode[];
+  articles: ArticleTeaserType[];
 }> => {
-  const apiParams = getNodePageJsonApiParams("node--article");
-  const { totalPages, nodes } = await getArticles(args, apiParams);
+  const { totalPages, nodes } = await getArticles(args);
 
   return {
     totalPages,

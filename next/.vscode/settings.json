@@ -2,8 +2,8 @@
   // explicitly tell eslint extension to watch typescript files for linting errors
   "eslint.validate": ["typescript", "typescriptreact"],
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
   // Tailwind intellisense also in strings
   "editor.quickSuggestions": {

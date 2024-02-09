@@ -5,10 +5,10 @@ import { Dispatch, forwardRef, ReactNode, SetStateAction } from "react";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import clsx from "clsx";
 
-import { MenuItem as MenuItemType } from "@/lib/zod/menu";
 import Chevron from "@/styles/icons/chevron-down.svg";
 import CloseIcon from "@/styles/icons/close.svg";
 import MenuIcon from "@/styles/icons/menu.svg";
+import type { MenuItemType } from "@/types/graphql";
 
 import css from "./main-menu.module.css";
 import { disableHoverEvents, isMenuItemActive } from "./main-menu.utils";

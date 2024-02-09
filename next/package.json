@@ -14,7 +14,8 @@
     "storybook": "STORYBOOK=true storybook dev -p 6006",
     "build-storybook": "STORYBOOK=true storybook build",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "graphql-codegen": "graphql-codegen --watch"
   },
   "dependencies": {
     "@elastic/react-search-ui": "^1.20.2",
@@ -31,6 +32,8 @@
     "clsx": "^2.0.0",
     "cva": "npm:class-variance-authority@0.7.0",
     "drupal-jsonapi-params": "^2.3.1",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
     "html-react-parser": "^5.0.6",
     "i18next": "^23.7.6",
     "jwt-decode": "^4.0.0",
@@ -48,7 +51,10 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
     "@next/eslint-plugin-next": "^13.5.6",
+    "@parcel/watcher": "^2.4.0",
     "@storybook/addon-essentials": "^7.5.3",
     "@storybook/addon-interactions": "^7.5.3",
     "@storybook/addon-links": "^7.5.3",

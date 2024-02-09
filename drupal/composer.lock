@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd39d3ba5f7a153148289e2c2edbd4f1",
+    "content-hash": "2ba8dec28aae7eeb6d2af552af7b232e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1179,6 +1179,97 @@
             "time": "2023-09-27T20:04:15+00:00"
         },
         {
+            "name": "doctrine/inflector",
+            "version": "2.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/inflector.git",
+                "reference": "2930cd5ef353871c821d5c43ed030d39ac8cfe65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/2930cd5ef353871c821d5c43ed030d39ac8cfe65",
+                "reference": "2930cd5ef353871c821d5c43ed030d39ac8cfe65",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^11.0",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.3",
+                "phpunit/phpunit": "^8.5 || ^9.5",
+                "vimeo/psalm": "^4.25 || ^5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Inflector\\": "lib/Doctrine/Inflector"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "PHP Doctrine Inflector is a small library that can perform string manipulations with regard to upper/lowercase and singular/plural forms of words.",
+            "homepage": "https://www.doctrine-project.org/projects/inflector.html",
+            "keywords": [
+                "inflection",
+                "inflector",
+                "lowercase",
+                "manipulation",
+                "php",
+                "plural",
+                "singular",
+                "strings",
+                "uppercase",
+                "words"
+            ],
+            "support": {
+                "issues": "https://github.com/doctrine/inflector/issues",
+                "source": "https://github.com/doctrine/inflector/tree/2.0.9"
+            },
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Finflector",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-01-15T18:05:13+00:00"
+        },
+        {
             "name": "doctrine/lexer",
             "version": "2.1.0",
             "source": {
@@ -1968,152 +2059,36 @@
             }
         },
         {
-            "name": "drupal/jsonapi_extras",
-            "version": "3.24.0",
+            "name": "drupal/graphql",
+            "version": "4.6.0",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/project/jsonapi_extras.git",
-                "reference": "8.x-3.24"
+                "url": "https://git.drupalcode.org/project/graphql.git",
+                "reference": "8.x-4.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/jsonapi_extras-8.x-3.24.zip",
-                "reference": "8.x-3.24",
-                "shasum": "5031650d17b62f5da5586d3a2c551ac071dbd294"
+                "url": "https://ftp.drupal.org/files/projects/graphql-8.x-4.6.zip",
+                "reference": "8.x-4.6",
+                "shasum": "629eb1d405ea35460e6f94bd46a20316adf4fbe9"
             },
             "require": {
-                "drupal/core": "^9.2 || ^10",
-                "e0ipso/shaper": "^1"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-3.24",
-                    "datestamp": "1694442796",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Mateu Aguiló Bosch",
-                    "homepage": "https://www.drupal.org/user/3366066",
-                    "email": "mateu.aguilo.bosch@gmail.com"
-                },
-                {
-                    "name": "Martin Kolar",
-                    "homepage": "https://www.drupal.org/u/mkolar"
-                },
-                {
-                    "name": "Karel Majzlik",
-                    "homepage": "https://www.drupal.org/u/karlos007"
-                },
-                {
-                    "name": "Björn Brala",
-                    "homepage": "https://www.drupal.org/u/bbrala"
-                }
-            ],
-            "description": "JSON:API Extras provides a means to override and provide limited configurations to the default zero-configuration implementation provided by the JSON:API module.",
-            "homepage": "https://www.drupal.org/project/jsonapi_extras",
-            "support": {
-                "source": "https://git.drupalcode.org/project/jsonapi_extras"
-            }
-        },
-        {
-            "name": "drupal/jsonapi_menu_items",
-            "version": "1.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/jsonapi_menu_items.git",
-                "reference": "1.2.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/jsonapi_menu_items-1.2.4.zip",
-                "reference": "1.2.4",
-                "shasum": "84f4c896b7addbe21c6af7261b0ea4a1740dd9eb"
-            },
-            "require": {
-                "drupal/core": "^9 || ^10",
-                "drupal/jsonapi_resources": "^1.0"
+                "drupal/core": "^9.3 || ^10",
+                "drupal/typed_data": "*",
+                "php": ">=7.3",
+                "webonyx/graphql-php": "^14.8.0"
             },
             "require-dev": {
-                "drupal/jsonapi_hypermedia": "^1.6"
+                "drupal/node-node": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.2.4",
-                    "datestamp": "1670645270",
+                    "version": "8.x-4.6",
+                    "datestamp": "1699463388",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "acbramley",
-                    "homepage": "https://www.drupal.org/user/1036766"
-                },
-                {
-                    "name": "Deciphered",
-                    "homepage": "https://www.drupal.org/user/103796"
-                },
-                {
-                    "name": "larowlan",
-                    "homepage": "https://www.drupal.org/user/395439"
-                },
-                {
-                    "name": "mglaman",
-                    "homepage": "https://www.drupal.org/user/2416470"
-                }
-            ],
-            "description": "Adds a JSON API resource for menu items.",
-            "homepage": "https://www.drupal.org/project/jsonapi_menu_items",
-            "keywords": [
-                "Drupal",
-                "JSON API"
-            ],
-            "support": {
-                "source": "https://git.drupalcode.org/project/jsonapi_menu_items"
-            }
-        },
-        {
-            "name": "drupal/jsonapi_resources",
-            "version": "1.0.0-beta5",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/jsonapi_resources.git",
-                "reference": "8.x-1.0-beta5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/jsonapi_resources-8.x-1.0-beta5.zip",
-                "reference": "8.x-1.0-beta5",
-                "shasum": "dfd7145978efad8c258b023b47413220e590812b"
-            },
-            "require": {
-                "drupal/core": "^8.8 || ^9 || ^10"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-1.0-beta5",
-                    "datestamp": "1668787739",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -2123,26 +2098,105 @@
             ],
             "authors": [
                 {
-                    "name": "API-First Initiative",
-                    "homepage": "https://www.drupal.org/user/3616626"
+                    "name": "fubhy",
+                    "homepage": "https://www.drupal.org/user/761344"
                 },
                 {
-                    "name": "gabesullice",
-                    "homepage": "https://www.drupal.org/user/2287430"
+                    "name": "hideaway",
+                    "homepage": "https://www.drupal.org/user/741876"
                 },
                 {
-                    "name": "mglaman",
-                    "homepage": "https://www.drupal.org/user/2416470"
+                    "name": "joaogarin",
+                    "homepage": "https://www.drupal.org/user/612814"
+                },
+                {
+                    "name": "Kingdutch",
+                    "homepage": "https://www.drupal.org/user/1868952"
+                },
+                {
+                    "name": "klausi",
+                    "homepage": "https://www.drupal.org/user/262198"
+                },
+                {
+                    "name": "luigisa",
+                    "homepage": "https://www.drupal.org/user/1022312"
+                },
+                {
+                    "name": "pmelab",
+                    "homepage": "https://www.drupal.org/user/555322"
                 }
             ],
-            "description": "This module let's you define custom resources at routes of your choice that use existing resource types.",
-            "homepage": "https://www.drupal.org/project/jsonapi_resources",
-            "keywords": [
-                "Drupal",
-                "JSON API"
-            ],
+            "description": "Exposes your Drupal data model through a GraphQL schema.",
+            "homepage": "http://drupal.org/project/graphql",
             "support": {
-                "source": "https://git.drupalcode.org/project/jsonapi_resources"
+                "source": "https://git.drupalcode.org/project/graphql"
+            }
+        },
+        {
+            "name": "drupal/graphql_compose",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/graphql_compose.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "ce7dd62349bad0686542f2aa480efe658b67f710"
+            },
+            "require": {
+                "doctrine/inflector": "^2",
+                "drupal/core": "^9.5 || ^10",
+                "drupal/graphql": "^4.5",
+                "php": "^8.1",
+                "symfony/string": "^6"
+            },
+            "require-dev": {
+                "drupal/core-layout_builder": "*",
+                "drupal/eck": "*",
+                "drupal/graphql_compose_blocks": "*",
+                "drupal/graphql_compose_edges": "*",
+                "drupal/graphql_compose_layouts": "*",
+                "drupal/graphql_compose_routes": "*",
+                "drupal/layout_paragraphs": "*",
+                "drupal/metatag": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1699307444",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "almunnings",
+                    "homepage": "https://www.drupal.org/user/2251362"
+                },
+                {
+                    "name": "jmolivas",
+                    "homepage": "https://www.drupal.org/user/678770"
+                },
+                {
+                    "name": "juanramonperez",
+                    "homepage": "https://www.drupal.org/user/549414"
+                }
+            ],
+            "description": "Toolkit for generating GraphQL schemas in Drupal.",
+            "homepage": "http://drupal.org/project/graphql_compose",
+            "support": {
+                "source": "http://cgit.drupalcode.org/graphql_compose",
+                "issues": "https://www.drupal.org/project/issues/graphql_compose"
             }
         },
         {
@@ -3249,6 +3303,60 @@
             }
         },
         {
+            "name": "drupal/typed_data",
+            "version": "1.0.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/typed_data.git",
+                "reference": "8.x-1.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/typed_data-8.x-1.0-beta2.zip",
+                "reference": "8.x-1.0-beta2",
+                "shasum": "e0aa651b129d8dcd765ca49cba8682ebe09e6e73"
+            },
+            "require": {
+                "drupal/core": "^9.1 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-beta2",
+                    "datestamp": "1679429196",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": ">=9"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "fago",
+                    "homepage": "https://www.drupal.org/user/16747"
+                },
+                {
+                    "name": "TR",
+                    "homepage": "https://www.drupal.org/user/202830"
+                }
+            ],
+            "description": "Extends the core Typed Data API with new APIs and features.",
+            "homepage": "https://www.drupal.org/project/typed_data",
+            "support": {
+                "source": "https://git.drupalcode.org/project/typed_data",
+                "issues": "https://www.drupal.org/project/issues/typed_data"
+            }
+        },
+        {
             "name": "drupal/webform",
             "version": "6.2.0",
             "source": {
@@ -3560,52 +3668,6 @@
                 }
             ],
             "time": "2023-06-06T18:46:18+00:00"
-        },
-        {
-            "name": "e0ipso/shaper",
-            "version": "1.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/e0ipso/shaper.git",
-                "reference": "7d73018ec4fe8de9730dfe755067cc02460e1a38"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/e0ipso/shaper/zipball/7d73018ec4fe8de9730dfe755067cc02460e1a38",
-                "reference": "7d73018ec4fe8de9730dfe755067cc02460e1a38",
-                "shasum": ""
-            },
-            "require": {
-                "justinrainbow/json-schema": "^5.2"
-            },
-            "require-dev": {
-                "php-coveralls/php-coveralls": "^2.4",
-                "phpunit/phpcov": "^8.2",
-                "phpunit/phpunit": "^9.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Shaper\\": "src",
-                    "Shaper\\Tests\\": "tests/src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Mateu Aguiló Bosch",
-                    "email": "mateu.aguilo.bosch@gmail.com"
-                }
-            ],
-            "description": "Lightweight library to handle in and out transformations in PHP.",
-            "support": {
-                "issues": "https://github.com/e0ipso/shaper/issues",
-                "source": "https://github.com/e0ipso/shaper/tree/1.2.4"
-            },
-            "time": "2021-05-19T09:42:57+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -4334,76 +4396,6 @@
                 }
             ],
             "time": "2023-08-03T15:02:42+00:00"
-        },
-        {
-            "name": "justinrainbow/json-schema",
-            "version": "v5.2.13",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "fbbe7e5d79f618997bc3332a6f49246036c45793"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/fbbe7e5d79f618997bc3332a6f49246036c45793",
-                "reference": "fbbe7e5d79f618997bc3332a6f49246036c45793",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.2.20||~2.15.1",
-                "json-schema/json-schema-test-suite": "1.2.0",
-                "phpunit/phpunit": "^4.8.35"
-            },
-            "bin": [
-                "bin/validate-json"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "JsonSchema\\": "src/JsonSchema/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bruno Prieto Reis",
-                    "email": "bruno.p.reis@gmail.com"
-                },
-                {
-                    "name": "Justin Rainbow",
-                    "email": "justin.rainbow@gmail.com"
-                },
-                {
-                    "name": "Igor Wiedler",
-                    "email": "igor@wiedler.ch"
-                },
-                {
-                    "name": "Robert Schönthal",
-                    "email": "seroscho@googlemail.com"
-                }
-            ],
-            "description": "A library to validate a json schema.",
-            "homepage": "https://github.com/justinrainbow/json-schema",
-            "keywords": [
-                "json",
-                "schema"
-            ],
-            "support": {
-                "issues": "https://github.com/justinrainbow/json-schema/issues",
-                "source": "https://github.com/justinrainbow/json-schema/tree/v5.2.13"
-            },
-            "time": "2023-09-26T02:20:38+00:00"
         },
         {
             "name": "koodimonni/composer-dropin-installer",
@@ -9475,6 +9467,71 @@
             "time": "2020-10-27T09:42:17+00:00"
         },
         {
+            "name": "webonyx/graphql-php",
+            "version": "v14.11.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webonyx/graphql-php.git",
+                "reference": "d9c2fdebc6aa01d831bc2969da00e8588cffef19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/d9c2fdebc6aa01d831bc2969da00e8588cffef19",
+                "reference": "d9c2fdebc6aa01d831bc2969da00e8588cffef19",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^7.1 || ^8"
+            },
+            "require-dev": {
+                "amphp/amp": "^2.3",
+                "doctrine/coding-standard": "^6.0",
+                "nyholm/psr7": "^1.2",
+                "phpbench/phpbench": "^1.2",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "0.12.82",
+                "phpstan/phpstan-phpunit": "0.12.18",
+                "phpstan/phpstan-strict-rules": "0.12.9",
+                "phpunit/phpunit": "^7.2 || ^8.5",
+                "psr/http-message": "^1.0",
+                "react/promise": "2.*",
+                "simpod/php-coveralls-mirror": "^3.0"
+            },
+            "suggest": {
+                "psr/http-message": "To use standard GraphQL server",
+                "react/promise": "To leverage async resolving on React PHP platform"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP port of GraphQL reference implementation",
+            "homepage": "https://github.com/webonyx/graphql-php",
+            "keywords": [
+                "api",
+                "graphql"
+            ],
+            "support": {
+                "issues": "https://github.com/webonyx/graphql-php/issues",
+                "source": "https://github.com/webonyx/graphql-php/tree/v14.11.10"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/webonyx-graphql-php",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2023-07-05T14:23:37+00:00"
+        },
+        {
             "name": "wunderio/drupal-ping",
             "version": "2.5.3",
             "source": {
@@ -11595,6 +11652,76 @@
                 "source": "https://github.com/instaclick/php-webdriver/tree/1.4.16"
             },
             "time": "2022-10-28T13:30:35+00:00"
+        },
+        {
+            "name": "justinrainbow/json-schema",
+            "version": "v5.2.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/justinrainbow/json-schema.git",
+                "reference": "fbbe7e5d79f618997bc3332a6f49246036c45793"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/fbbe7e5d79f618997bc3332a6f49246036c45793",
+                "reference": "fbbe7e5d79f618997bc3332a6f49246036c45793",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.2.20||~2.15.1",
+                "json-schema/json-schema-test-suite": "1.2.0",
+                "phpunit/phpunit": "^4.8.35"
+            },
+            "bin": [
+                "bin/validate-json"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JsonSchema\\": "src/JsonSchema/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bruno Prieto Reis",
+                    "email": "bruno.p.reis@gmail.com"
+                },
+                {
+                    "name": "Justin Rainbow",
+                    "email": "justin.rainbow@gmail.com"
+                },
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch"
+                },
+                {
+                    "name": "Robert Schönthal",
+                    "email": "seroscho@googlemail.com"
+                }
+            ],
+            "description": "A library to validate a json schema.",
+            "homepage": "https://github.com/justinrainbow/json-schema",
+            "keywords": [
+                "json",
+                "schema"
+            ],
+            "support": {
+                "issues": "https://github.com/justinrainbow/json-schema/issues",
+                "source": "https://github.com/justinrainbow/json-schema/tree/v5.2.13"
+            },
+            "time": "2023-09-26T02:20:38+00:00"
         },
         {
             "name": "laravel/serializable-closure",

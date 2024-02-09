@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { DrupalNode } from "next-drupal";
 
 import { drupal } from "@/lib/drupal/drupal-client";
-import { validateAndCleanupArticleTeaser } from "@/lib/zod/article-teaser";
+import { LISTING_ARTICLES } from "@/lib/graphql/queries";
 
 import siteConfig from "@/site.config";
 
@@ -15,33 +14,20 @@ export default async function handler(
       req.headers["accept-language"] || siteConfig.defaultLocale;
 
     const limit = Number(req.query.limit) || 10;
-    const articleTeasers = await drupal.getResourceCollection<DrupalNode[]>(
-      "node--article",
+
+    const articlesQueryResult = await drupal.doGraphQlRequest(
+      LISTING_ARTICLES,
       {
-        params: {
-          "filter[status]": 1,
-          "filter[langcode]": languagePrefix,
-          "fields[node--article]": "title,path,field_image,uid,created",
-          include: "field_image,uid",
-          sort: "-sticky,-created",
-          "page[limit]": limit,
-        },
-        locale: languagePrefix,
-        defaultLocale: siteConfig.defaultLocale,
+        langcode: languagePrefix,
+        page: 0,
+        pageSize: limit,
       },
     );
-
-    const validatedArticleTeasers = articleTeasers
-      .map((articleNode) => validateAndCleanupArticleTeaser(articleNode))
-      // If any article teaser is invalid, it will be replaced by null in the array, so we need to filter it out:
-      .filter((teaser) => {
-        return teaser !== null;
-      });
 
     // Set cache headers: 60 seconds max-age, stale-while-revalidate
     res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate");
 
-    res.json(validatedArticleTeasers);
+    res.json(articlesQueryResult.articlesView?.results);
   }
 
   res.end();

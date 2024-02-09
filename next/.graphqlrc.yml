@@ -1,0 +1,6 @@
+# .graphqlrc.yml
+# NOTE: this needs to be http and not https:
+# Also, this should be updated with the project's lando url:
+schema: "http://next-drupal-starterkit.lndo.site/graphql"
+documents:
+  - "lib/graphql/**/*.{graphql,js,ts,jsx,tsx}"
