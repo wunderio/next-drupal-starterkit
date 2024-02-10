@@ -5,8 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.1] 10.2.2024
 
-## [2.0.0]
+### Changed
+- Updated Drupal core to 10.1.8 and contrib modules to latest versions
+- Updated the graphql_compose module to 2.1 beta1
+- Switched the graphql schema to use Drupal entity ids instead of UUIDs, to fix rendering of nodes at specific revisions.
+
+
+## [2.0.0] 9.2.2024
 
 This release is a major update. Instead of using JSONAPI, the starterkit now uses GraphQL to fetch data from Drupal.
 All features are kept but have been re-implemented to use the new way of handling data coming from the backend.
