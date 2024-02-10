@@ -214,7 +214,7 @@ export type MediaAudio = EdgeNode & MediaInterface & MetaTagInterface & {
   changed: DateTime;
   /** The time the media item was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
@@ -228,6 +228,8 @@ export type MediaAudio = EdgeNode & MediaInterface & MetaTagInterface & {
   path: Scalars['String']['output'];
   /** Published */
   status: Scalars['Boolean']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A paginated set of results for MediaAudio. */
@@ -252,7 +254,7 @@ export type MediaDocument = EdgeNode & MediaInterface & MetaTagInterface & {
   changed: DateTime;
   /** The time the media item was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
@@ -266,6 +268,8 @@ export type MediaDocument = EdgeNode & MediaInterface & MetaTagInterface & {
   path: Scalars['String']['output'];
   /** Published */
   status: Scalars['Boolean']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A paginated set of results for MediaDocument. */
@@ -290,7 +294,7 @@ export type MediaImage = EdgeNode & MediaInterface & MetaTagInterface & {
   changed: DateTime;
   /** The time the media item was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
@@ -304,6 +308,8 @@ export type MediaImage = EdgeNode & MediaInterface & MetaTagInterface & {
   path: Scalars['String']['output'];
   /** Published */
   status: Scalars['Boolean']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A paginated set of results for MediaImage. */
@@ -327,7 +333,7 @@ export type MediaInterface = {
   changed: DateTime;
   /** The time the media item was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
@@ -339,6 +345,8 @@ export type MediaInterface = {
   path: Scalars['String']['output'];
   /** Published */
   status: Scalars['Boolean']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A remotely hosted video from YouTube or Vimeo. */
@@ -348,7 +356,7 @@ export type MediaRemoteVideo = EdgeNode & MediaInterface & MetaTagInterface & {
   changed: DateTime;
   /** The time the media item was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
@@ -362,6 +370,8 @@ export type MediaRemoteVideo = EdgeNode & MediaInterface & MetaTagInterface & {
   path: Scalars['String']['output'];
   /** Published */
   status: Scalars['Boolean']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A paginated set of results for MediaRemoteVideo. */
@@ -389,7 +399,7 @@ export type MediaVideo = EdgeNode & MediaInterface & MetaTagInterface & {
   changed: DateTime;
   /** The time the media item was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
@@ -403,6 +413,8 @@ export type MediaVideo = EdgeNode & MediaInterface & MetaTagInterface & {
   path: Scalars['String']['output'];
   /** Published */
   status: Scalars['Boolean']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A paginated set of results for MediaVideo. */
@@ -423,12 +435,14 @@ export type MediaVideoEdge = Edge & {
 /** Entity type menu. */
 export type Menu = MenuInterface & {
   __typename?: 'Menu';
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The menu items. */
   items: Array<MenuItem>;
   /** The menu name. */
   name: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** List of menus available to load. */
@@ -441,12 +455,14 @@ export enum MenuAvailable {
 
 /** Entity type menu. */
 export type MenuInterface = {
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The menu items. */
   items: Array<MenuItem>;
   /** The menu name. */
   name: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A menu item defined in the CMS. */
@@ -574,7 +590,7 @@ export type NodeArticle = EdgeNode & MetaTagInterface & NodeInterface & {
   created: DateTime;
   /** Add an excerpt for this piece of content. It will also be used for search results and HTML meta tags. */
   excerpt?: Maybe<Scalars['String']['output']>;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Image */
   image?: Maybe<Image>;
@@ -594,6 +610,8 @@ export type NodeArticle = EdgeNode & MetaTagInterface & NodeInterface & {
   tags?: Maybe<Array<UnsupportedType>>;
   /** Title */
   title: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A paginated set of results for NodeArticle. */
@@ -624,7 +642,7 @@ export type NodeFrontpage = MetaTagInterface & NodeInterface & {
   created: DateTime;
   /** Add an excerpt for this piece of content. It will also be used for search results and HTML meta tags. */
   excerpt?: Maybe<Scalars['String']['output']>;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Image used in the search results and for Open Graph HTML meta tags, so that sharing the content looks good. */
   image?: Maybe<Image>;
@@ -642,6 +660,8 @@ export type NodeFrontpage = MetaTagInterface & NodeInterface & {
   sticky: Scalars['Boolean']['output'];
   /** Title */
   title: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** Content elements */
@@ -655,7 +675,7 @@ export type NodeInterface = {
   changed: DateTime;
   /** The time that the node was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
@@ -671,6 +691,8 @@ export type NodeInterface = {
   sticky: Scalars['Boolean']['output'];
   /** Title */
   title: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** Page content type. Contains paragraphs. */
@@ -686,7 +708,7 @@ export type NodePage = EdgeNode & MetaTagInterface & NodeInterface & {
   created: DateTime;
   /** Add an excerpt for this piece of content. It will also be used for search results and HTML meta tags. */
   excerpt?: Maybe<Scalars['String']['output']>;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Image used in the search results and for Open Graph HTML meta tags, so that sharing the content looks good. */
   image?: Maybe<Image>;
@@ -704,6 +726,8 @@ export type NodePage = EdgeNode & MetaTagInterface & NodeInterface & {
   sticky: Scalars['Boolean']['output'];
   /** Title */
   title: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A paginated set of results for NodePage. */
@@ -740,12 +764,14 @@ export type ParagraphAccordion = ParagraphInterface & {
   formattedText?: Maybe<Text>;
   /** Heading for the whole accordion */
   heading?: Maybe<Scalars['String']['output']>;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
   /** Primary link */
   primaryLink?: Maybe<Link>;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** This paragraph holds an accordion item, with a title and other paragraphs as content. */
@@ -759,10 +785,12 @@ export type ParagraphAccordionItem = ParagraphInterface & {
   formattedText?: Maybe<Text>;
   /** Heading */
   heading: Scalars['String']['output'];
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** Add one or more paragraphs to display in this accordion item. */
@@ -779,10 +807,12 @@ export type ParagraphFileAttachment = ParagraphInterface & {
   formattedText?: Maybe<Text>;
   /** Heading */
   heading?: Maybe<Scalars['String']['output']>;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A paragraph containing formatted text */
@@ -794,10 +824,12 @@ export type ParagraphFormattedText = ParagraphInterface & {
   formattedText: Text;
   /** Heading */
   heading?: Maybe<Scalars['String']['output']>;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** Entity type paragraph. */
@@ -809,7 +841,7 @@ export type ParagraphHero = ParagraphInterface & {
   formattedText?: Maybe<Text>;
   /** Heading */
   heading: Scalars['String']['output'];
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Image */
   image: MediaImage;
@@ -819,6 +851,8 @@ export type ParagraphHero = ParagraphInterface & {
   primaryLink?: Maybe<Link>;
   /** Secondary link */
   secondaryLink?: Maybe<Link>;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** A paragraph containing an image. */
@@ -826,22 +860,26 @@ export type ParagraphImage = ParagraphInterface & {
   __typename?: 'ParagraphImage';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** Image */
   image: MediaImage;
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** Entity type paragraph. */
 export type ParagraphInterface = {
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** a paragraph type containing a list of links. */
@@ -849,12 +887,14 @@ export type ParagraphLink = ParagraphInterface & {
   __typename?: 'ParagraphLink';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
   /** Add a list of links. */
   links: Array<Link>;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** Renders a listing of articles in the frontend. */
@@ -864,12 +904,14 @@ export type ParagraphListingArticle = ParagraphInterface & {
   created: DateTime;
   /** Heading */
   heading: Scalars['String']['output'];
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
   /** Choose how many items at most you want to display for the listing. */
   limit: Scalars['Int']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** Entity type paragraph. */
@@ -880,10 +922,12 @@ export type ParagraphVideo = ParagraphInterface & {
   __typename?: 'ParagraphVideo';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
   /** Video */
   video: ParagraphVideoVideoUnion;
 };
@@ -1207,7 +1251,7 @@ export type User = MetaTagInterface & UserInterface & {
   changed: DateTime;
   /** The time that the user was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The email of this user. */
   mail?: Maybe<Scalars['Email']['output']>;
@@ -1221,6 +1265,8 @@ export type User = MetaTagInterface & UserInterface & {
   roles?: Maybe<Array<Scalars['UserRoles']['output']>>;
   /** Whether the user is active or blocked. */
   status: UserStatus;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** Entity type user. */
@@ -1229,7 +1275,7 @@ export type UserInterface = {
   changed: DateTime;
   /** The time that the user was created. */
   created: DateTime;
-  /** The Universally Unique IDentifier (UUID). */
+  /** The entity ID. */
   id: Scalars['ID']['output'];
   /** The email of this user. */
   mail?: Maybe<Scalars['Email']['output']>;
@@ -1243,6 +1289,8 @@ export type UserInterface = {
   roles?: Maybe<Array<Scalars['UserRoles']['output']>>;
   /** Whether the user is active or blocked. */
   status: UserStatus;
+  /** The Universally Unique IDentifier (UUID). */
+  uuid: Scalars['ID']['output'];
 };
 
 /** Whether the user is active or blocked. */

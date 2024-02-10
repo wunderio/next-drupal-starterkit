@@ -161,7 +161,7 @@ field_config:
         enabled: true
 settings:
   exclude_unpublished: true
-  expose_entity_ids: false
+  expose_entity_ids: true
   schema_description: 'GraphQL Compose'
   schema_version: '1'
   simple_queries: true
@@ -169,5 +169,9 @@ settings:
   site_name: false
   site_slogan: false
   site_front: true
+  svg_image: false
+  svg_filesize: 100
   inflector_langcode: en
   inflector_singularize: true
+  custom: {  }
+  edge_max_limit: 100
