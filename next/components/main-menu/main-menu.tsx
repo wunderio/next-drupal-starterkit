@@ -73,18 +73,16 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
       setActiveSubmenu(null);
     } else {
       // Set active menu and submenu when menu opens
-      const didSetMenuAndSubmenu = menu.items?.some(
-        (item) =>
-          item.children?.some(
-            (subItem) =>
-              subItem.children?.some((subSubItem) => {
-                if (isMenuItemActive(router, subSubItem.url)) {
-                  setActiveMenu(item.id);
-                  setActiveSubmenu(subItem.id);
-                  return true;
-                }
-              }),
-          ),
+      const didSetMenuAndSubmenu = menu.items?.some((item) =>
+        item.children?.some((subItem) =>
+          subItem.children?.some((subSubItem) => {
+            if (isMenuItemActive(router, subSubItem.url)) {
+              setActiveMenu(item.id);
+              setActiveSubmenu(subItem.id);
+              return true;
+            }
+          }),
+        ),
       );
 
       // Active menu and submenu found, done
@@ -94,15 +92,14 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
       }
 
       // User is not on a page matching a submenu item, so try to find a matching top-level menu item
-      menu.items?.some(
-        (item) =>
-          item.children?.some((subItem) => {
-            if (isMenuItemActive(router, subItem.url)) {
-              setActiveMenu(item.id);
-              setActiveSubmenu(null);
-              return true;
-            }
-          }),
+      menu.items?.some((item) =>
+        item.children?.some((subItem) => {
+          if (isMenuItemActive(router, subItem.url)) {
+            setActiveMenu(item.id);
+            setActiveSubmenu(null);
+            return true;
+          }
+        }),
       );
 
       setDidInit(true);
