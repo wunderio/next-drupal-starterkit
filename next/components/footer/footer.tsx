@@ -21,7 +21,7 @@ export function Footer({ menu }: FooterProps) {
       <div className="mx-auto max-w-6xl px-6">
         <nav className="flex flex-col items-center gap-2 py-8 text-md sm:flex-row sm:justify-between">
           <ul className="mr-4 flex flex-wrap gap-x-12 gap-y-4">
-            {filteredItems.map((link) => {
+            {filteredItems?.map((link) => {
               const icon = link.attributes?.icon;
               return (
                 <li key={link.id}>
