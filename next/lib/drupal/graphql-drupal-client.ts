@@ -6,7 +6,7 @@ export class GraphQlDrupalClient extends DrupalClient {
   async doGraphQlRequest<T>(
     query: TypedDocumentNode<T> | RequestDocument,
     variables?: Variables,
-    withAuth = true,
+    withAuth = false,
   ): Promise<ReturnType<typeof request<T, Variables>>> {
     const endpoint = this.buildUrl("/graphql").toString();
     // The drupal.client has better handling of authentication,
