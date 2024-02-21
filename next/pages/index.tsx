@@ -60,9 +60,14 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
     langcode: context.locale,
   };
 
+  // Are we in Next.js preview mode?
+  const isPreview = context.preview || false;
+
   const data = await drupal.doGraphQlRequest(
     GET_ENTITY_AT_DRUPAL_PATH,
     variables,
+    // We only need to authenticate if we are in preview mode:
+    isPreview,
   );
 
   const frontpage = extractEntityFromRouteQueryResult(data);
@@ -74,7 +79,7 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
   }
 
   // Unless we are in preview, return 404 if the node is set to unpublished:
-  if (!context.preview && frontpage.status !== true) {
+  if (!isPreview && frontpage.status !== true) {
     return {
       notFound: true,
     };
