@@ -21,7 +21,6 @@ export default async function handler(
 
   try {
     await response.revalidate(slug);
-    console.log(`Revalidated slug: ${slug}`);
     return response.json({ revalidated: true });
   } catch (error) {
     return response.status(404).json({
