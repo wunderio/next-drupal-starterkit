@@ -28,6 +28,11 @@ $settings['config_sync_directory'] = '../config/sync';
 // Load services definition file.
 $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
 
+// Raise memory limit for drush.
+if (PHP_SAPI === 'cli') {
+  ini_set('memory_limit', '768M');
+}
+
 /**
  * The default list of directories that will be ignored by Drupal's file API.
  *
