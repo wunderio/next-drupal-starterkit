@@ -13,6 +13,7 @@ commands=(
   "lando npm i"
   "lando npm run build"
   "(lando npm run start&)"
+  "sleep 6"
   "lando drush en wunder_democontent -y"
   "lando drush mim --group=demo_content --execute-dependencies"
   "lando npm-stop || true"
