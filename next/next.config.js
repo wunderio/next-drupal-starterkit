@@ -4,7 +4,13 @@ const { i18n } = require("./next-i18next.config");
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [process.env.NEXT_IMAGE_DOMAIN],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_IMAGE_DOMAIN,
+        pathname: "**",
+      },
+    ],
   },
   i18n,
   async rewrites() {

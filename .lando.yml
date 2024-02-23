@@ -116,11 +116,11 @@ services:
 
   # This service handles the frontend part of the application
   node:
-    type: node:18
+    type: node:20
     ssl: true
     sslExpose: true
     overrides:
-      image: "cypress/included:cypress-12.17.3-node-18.16.1-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1"
+      image: "cypress/included:cypress-13.6.4-node-20.11.0-chrome-121.0.6167.85-1-ff-120.0-edge-121.0.2277.83-1"
       ports:
         - "3000:3000"
         - "6006:6006"
@@ -216,4 +216,4 @@ env_file:
   - .lando/.env
 
 # Tested with Lando version
-version: v3.20.2
+version: v3.21

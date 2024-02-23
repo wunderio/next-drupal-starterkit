@@ -22,6 +22,10 @@ This example is meant to be used together with the [Silta](https://wunderio.gith
 Local development is handled by [Lando](https://lando.dev/). Both frontend and backend are covered by the Lando setup, so that is the only real requirement. The frontend site can be run in either dev or prod mode,
 and it will be proxied by Lando. The default URL for the frontend is [https://frontend.lndo.site](https://frontend.lndo.site), but it can be changed by editing the `.lando.yml` file.
 
+### Lando minimum version
+
+The minimum version of lando required is 3.21.
+
 > Check the `version` property in the `.lando.yml` file to see which version of Lando is currently supported.
 
 ### ⚠️⚠️ NOTE: Use npm inside Lando!
