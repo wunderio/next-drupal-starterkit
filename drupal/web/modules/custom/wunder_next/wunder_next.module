@@ -177,3 +177,23 @@ function wunder_next_form_user_reset_password_form_submit(array $form, FormState
   $response = new TrustedRedirectResponse($frontend_login_url->toString());
   $form_state->setResponse($response);
 }
+
+/**
+ * Implements hook_form_alter().
+ */
+function wunder_next_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // We want to force the pathauto checkbox to be checked and disabled for nodes
+  // of type "frontpage". We have restraints in place to make sure that there
+  // can be only one node for each language of type frontpage, and next.js will
+  // select the only existing node for a language to populate the content
+  // of the /en /fi etc. pages.
+  // In addition to this, a redirect to /en will be issued by the frontend
+  // if a user goes to the /frontpage-en page for example. This is what happens
+  // when visiting the preview of the frontpage in the iframe in Drupal.
+  if ($form_id === 'node_frontpage_edit_form' && isset($form['path']['widget']['0']['pathauto']['#default_value'])) {
+    $pathauto_checkbox = &$form['path']['widget']['0']['pathauto'];
+    $pathauto_checkbox['#default_value'] = TRUE;
+    $pathauto_checkbox['#disabled'] = TRUE;
+    $pathauto_checkbox['#description'] = t('Frontpage node paths are used only internally and cannot be changed. The content of the page will be displayed by the frontend at /[language] automatically.');
+  }
+}
