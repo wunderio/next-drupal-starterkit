@@ -1,4 +1,3 @@
 # Ignore file for the Next container
-node_modules
-.next
 .graphqlrc.yml
+.vscode
