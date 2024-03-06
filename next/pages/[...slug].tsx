@@ -123,6 +123,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   if (!nodeEntity) {
     return {
       notFound: true,
+      revalidate: 60,
     };
   }
 
@@ -162,6 +163,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     if (!nodeEntity) {
       return {
         notFound: true,
+        revalidate: 60,
       };
     }
   }
@@ -170,6 +172,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   if (!isPreview && nodeEntity.status !== true) {
     return {
       notFound: true,
+      revalidate: 60,
     };
   }
 
