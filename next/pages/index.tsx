@@ -70,6 +70,7 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
   if (!frontpage || !(frontpage.__typename === "NodeFrontpage")) {
     return {
       notFound: true,
+      revalidate: 10,
     };
   }
 
@@ -77,6 +78,7 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
   if (!context.preview && frontpage.status !== true) {
     return {
       notFound: true,
+      revalidate: 10,
     };
   }
 
