@@ -19,8 +19,8 @@
         "composer/installers": "^2.1",
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_toolbar": "^3.4",
-        "drupal/core-composer-scaffold": "^10.0",
-        "drupal/core-recommended": "^10.0",
+        "drupal/core-composer-scaffold": "^10.2",
+        "drupal/core-recommended": "^10.2",
         "drupal/elasticsearch_helper": "^8.1",
         "drupal/graphql_compose": "^2.1@beta",
         "drupal/menu_link_attributes": "^1.3",
@@ -42,14 +42,14 @@
         "drupal/token": "^1.13",
         "drupal/webform": "^6.2",
         "drupal/webform_rest": "^4.0",
-        "drush/drush": "^11.4",
+        "drush/drush": "^12",
         "elasticsearch/elasticsearch": "^8.9",
         "vlucas/phpdotenv": "^5.4",
         "webflo/drupal-finder": "^1.2",
         "wunderio/drupal-ping": "^2.4"
     },
     "require-dev": {
-        "drupal/core-dev": "^10.0",
+        "drupal/core-dev": "^10.2",
         "wunderio/code-quality": "^2.2"
     },
     "conflict": {
@@ -133,7 +133,8 @@
                 "#3111456-59 - Unable to resolve path on node in other language than default": "https://www.drupal.org/files/issues/2022-12-01/decouple_router-3111456-resolve-language-issue-58--get-translation.patch"
             },
             "drupal/paragraphs": {
-                "Paragraphs (stable) title from form options not being applied (issue #3401581)": "https://www.drupal.org/files/issues/2023-11-14/paragraphs-custom-title-not-displayed-3401581-2.patch"
+                "Paragraphs (stable) title from form options not being applied (issue #3401581)": "https://www.drupal.org/files/issues/2023-11-14/paragraphs-custom-title-not-displayed-3401581-2.patch",
+                "Weight fields appear when editing a translation even if the order can't be changed": "https://www.drupal.org/files/issues/2024-03-04/paragraphs_fix_tabledrag_3425348-3.patch"
             },
             "drupal/graphql" : {
                 "drupal-graphql#1323: Add check for translation (from Github)": "https://patch-diff.githubusercontent.com/raw/drupal-graphql/graphql/pull/1388.patch"
@@ -142,7 +143,7 @@
                 "Add the langcode field to the menu_item entity in graphql (local patch)": "./patches/grapqhl_compose_add_langcode_to_menu_item.patch"
             },
             "drupal/core": {
-                "Add support for the experimental recipes functionality": "https://git.drupalcode.org/project/distributions_recipes/-/raw/patch/recipe.patch",
+                "Add support for the experimental recipes functionality": "https://git.drupalcode.org/project/distributions_recipes/-/raw/patch/recipe-10.2.x.patch",
                 "Fix error when enabling the language module via recipe": "https://www.drupal.org/files/issues/2019-11-19/drupal.8.8.x-3002532-20.patch",
                 "Do not set user as blocked when created via REST": "https://www.drupal.org/files/issues/2022-08-17/3055807-47.patch"
             }
