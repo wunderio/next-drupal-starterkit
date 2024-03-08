@@ -2,9 +2,12 @@
 
 namespace Drupal\wunder_sitemap;
 
-use Drupal\Core\File\Exception\FileException;
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\file\FileRepository;
+use Drupal\file\FileRepositoryInterface;
+use Drupal\file\FileUsage\DatabaseFileUsageBackend;
 use Drupal\simple_sitemap\Manager\Generator;
 
 /**
@@ -17,7 +20,7 @@ class SitemapExporter {
    *
    * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected LoggerChannelInterface $loggerChannelTeklacomSitemap;
+  protected LoggerChannelInterface $loggerChannel;
 
   /**
    * Drupal\simple_sitemap\Manager\Generator definition.
@@ -29,52 +32,68 @@ class SitemapExporter {
   /**
    * Drupal\Core\File\FileSystem definition.
    *
-   * @var \Drupal\Core\File\FileSystemInterface
+   * @var \Drupal\file\FileRepositoryInterface
    */
-  protected FileSystemInterface $fileSystem;
+  protected FileRepository $fileRepository;
+
+  /**
+   * Drupal\Core\File\FileSystem definition.
+   *
+   * @var \Drupal\file\FileUsage\DatabaseFileUsageBackend
+   */
+  protected DatabaseFileUsageBackend $fileUsageBackend;
 
   /**
    * Constructs a new TeklacomSitemapExporter object.
    */
-  public function __construct(LoggerChannelInterface $logger_channel_wunder_sitemap, Generator $simple_sitemap_generator, FileSystemInterface $fileSystem) {
-    $this->loggerChannelTeklacomSitemap = $logger_channel_wunder_sitemap;
+  public function __construct(LoggerChannelInterface $logger_channel_wunder_sitemap, Generator $simple_sitemap_generator, FileRepositoryInterface $fileRepository, DatabaseFileUsageBackend $fileUsageBackend) {
+    $this->loggerChannel = $logger_channel_wunder_sitemap;
     $this->simpleSitemapGenerator = $simple_sitemap_generator;
-    $this->fileSystem = $fileSystem;
+    $this->fileRepository = $fileRepository;
+    $this->fileUsageBackend = $fileUsageBackend;
   }
 
   /**
-   * Exports a sitemap (created by the simple_sitemap module to a file)
+   * Exports a sitemap (created by the simple_sitemap module) to a file.
    *
    * @param string $variant
    *   The variant of the sitemap, according to simple_sitemap config.
    * @param string $filepath
    *   The path to save the file to.
    */
-  public function exportSitemapToFile($variant, $filepath): void {
+  public function exportSitemapToFile(string $variant, string $filepath): void {
     // Get the current sitemap:
-    $output = $this->simpleSitemapGenerator->setVariants($variant)->getContent();
-    // Delete the existing file, otherwise s3 will not overwrite it:
-    try {
-      $this->fileSystem->delete($filepath);
+    $output = $this->simpleSitemapGenerator->setSitemaps($variant)->getContent();
+
+    // Check that it's not empty:
+    if (empty($output)) {
+      $this->loggerChannel->error('No sitemap content found for the variant: @variant', [
+        '@variant' => $variant,
+      ]);
+      return;
     }
-    catch (FileException $e) {
-      $this->loggerChannelTeklacomSitemap->error('Error deleting existing sitemap file: @error', [
-        '@error' =>
-        $e->getMessage(),
+    // Delete the existing file:
+    try {
+      $file = $this->fileRepository->loadByUri($filepath);
+      $file?->delete();
+    }
+    catch (EntityStorageException $e) {
+      $this->loggerChannel->error('Error deleting existing sitemap file: @error', [
+        '@error' => $e->getMessage(),
       ]);
     }
     // Save a new file with the contents:
-    $saved_path = $this->fileSystem->saveData($output, $filepath, $this->fileSystem::EXISTS_REPLACE);
-    if ($saved_path) {
-      $this->loggerChannelTeklacomSitemap->info('Sitemap exported to the filepath: @filepath', [
-        '@filepath' =>
-        $saved_path,
+    try {
+      $sitemap_file = $this->fileRepository->writeData($output, $filepath, FileSystemInterface::EXISTS_REPLACE);
+      $sitemap_file->setPermanent();
+      $this->fileUsageBackend->add($sitemap_file, 'wunder_sitemap', 'sitemap', 1);
+      $this->loggerChannel->info('Sitemap exported to the filepath: @filepath', [
+        '@filepath' => $filepath,
       ]);
     }
-    else {
-      $this->loggerChannelTeklacomSitemap->error('Sitemap could not be exported to the requested filepath: @requested_filepath', [
-        '@requested_filepath' =>
-        $filepath,
+    catch (EntityStorageException $e) {
+      $this->loggerChannel->error('Error exporting sitemap: @error', [
+        '@error' => $e->getMessage(),
       ]);
     }
   }

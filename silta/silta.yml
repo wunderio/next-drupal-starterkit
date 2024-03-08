@@ -30,6 +30,7 @@ php:
       drush eshd -y
       drush eshs
       drush mim --group=demo_content --execute-dependencies --skip-progress-bar
+      drush cron
 
 # Configure reference data that will be used when creating new environments.
 referenceData:
