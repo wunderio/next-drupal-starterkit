@@ -18,7 +18,7 @@ const nextConfig = {
       beforeFiles: [
         {
           source: "/sitemap.xml",
-          destination: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/sites/default/files/sitemap.xml`,
+          destination: `https://${process.env.NEXT_IMAGE_DOMAIN}/sites/default/files/sitemap.xml`,
         },
       ],
     };
