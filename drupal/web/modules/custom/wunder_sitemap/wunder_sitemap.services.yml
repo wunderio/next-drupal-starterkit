@@ -4,4 +4,4 @@ services:
     arguments: ['wunder_sitemap']
   wunder_sitemap.exporter:
     class: Drupal\wunder_sitemap\SitemapExporter
-    arguments: ['@logger.channel.wunder_sitemap', '@simple_sitemap.generator', '@file_system']
+    arguments: ['@logger.channel.wunder_sitemap', '@simple_sitemap.generator', '@file.repository', '@file.usage']
