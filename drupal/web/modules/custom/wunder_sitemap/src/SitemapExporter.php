@@ -5,7 +5,6 @@ namespace Drupal\wunder_sitemap;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
-use Drupal\file\FileRepository;
 use Drupal\file\FileRepositoryInterface;
 use Drupal\file\FileUsage\DatabaseFileUsageBackend;
 use Drupal\simple_sitemap\Manager\Generator;
@@ -30,14 +29,14 @@ class SitemapExporter {
   protected Generator $simpleSitemapGenerator;
 
   /**
-   * Drupal\Core\File\FileSystem definition.
+   * Drupal\file\FileRepositoryInterface definition.
    *
    * @var \Drupal\file\FileRepositoryInterface
    */
-  protected FileRepository $fileRepository;
+  protected FileRepositoryInterface $fileRepository;
 
   /**
-   * Drupal\Core\File\FileSystem definition.
+   * Drupal\file\FileUsage\DatabaseFileUsageBackend definition.
    *
    * @var \Drupal\file\FileUsage\DatabaseFileUsageBackend
    */
