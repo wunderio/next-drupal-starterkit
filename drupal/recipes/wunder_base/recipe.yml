@@ -45,6 +45,7 @@ config:
     claro: '*'
     webform: '*'
     webform_ui: '*'
+    editor: '*'
   actions:
     system.theme:
       simple_config_update:

@@ -66,6 +66,8 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
     // Build static paths for the current locale.
     const localePaths = drupal.buildStaticPathsParamsFromPaths(pathArray, {
       locale,
+      // Because graphql returns the path with the language prefix, we strip it using the pathPrefix option:
+      pathPrefix: `/${locale}`,
     });
 
     // Add the paths to the static paths array:
