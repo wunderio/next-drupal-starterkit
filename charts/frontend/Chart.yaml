@@ -29,6 +29,10 @@ dependencies:
   # repository: https://charts.bitnami.com/bitnami
   repository: https://storage.googleapis.com/charts.wdr.io
   condition: postgresql.enabled
+- name: redis-stack
+  version: 0.4.9
+  repository: https://redis-stack.github.io/helm-redis-stack/
+  condition: redis-stack.enabled
 - name: silta-release
   version: ^1.x
   repository: file://../silta-release

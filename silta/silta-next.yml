@@ -33,3 +33,6 @@ nginx:
     base-uri 'self';
     connect-src 'self';
     form-action 'self';
+
+redis-stack:
+  enabled: true

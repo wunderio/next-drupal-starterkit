@@ -38,6 +38,9 @@ mongodb:
 rabbitmq:
   enabled: true
 
+redis-stack:
+  enabled: true
+
 mounts:
   files:
     enabled: true
