@@ -115,6 +115,12 @@ rsync -az /values_mounts/ /backups/current/
 - name: MONGODB_HOST
   value: {{ .Release.Name }}-mongodb
 {{- end }}
+{{- if .Values.redis-stack.enabled }}
+- name: REDIS_CACHE_HOST
+  value: {{ .Release.Name }}-redis-stack
+- name: REDIS_AVAILABLE
+  value: 1
+{{- end }}
 # Shell / Gitauth
 {{ if .Values.shell.enabled -}}
 - name: GITAUTH_URL
