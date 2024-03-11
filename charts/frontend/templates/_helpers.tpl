@@ -115,7 +115,7 @@ rsync -az /values_mounts/ /backups/current/
 - name: MONGODB_HOST
   value: {{ .Release.Name }}-mongodb
 {{- end }}
-{{- if .Values.redis-stack.enabled }}
+{{- if ( index .Values "redis-stack" ).enabled }}
 - name: REDIS_CACHE_HOST
   value: {{ .Release.Name }}-redis-stack
 - name: REDIS_AVAILABLE
