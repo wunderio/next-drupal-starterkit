@@ -1,0 +1,4 @@
+apiVersion: v2
+name: silta-release
+description: A library chart to provide generic functionality for a silta Helm release.
+version: 1.0.0

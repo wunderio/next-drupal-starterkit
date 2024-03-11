@@ -1,0 +1,31 @@
+
+# Keep track of the git branch from which the release was created.
+branchName: ""
+
+# By default, access to pods is limited to the current namespace, you can specify exceptions here.
+# Note that the key is only used for documentation purposes and to facilitate overrides.
+# Structure:
+#
+#  nameYourAccessException:
+#    additionalPodSelector:
+#      # The current release is selected by default, add additional pod selectors here.
+#      app: drupal
+#
+#    # This is passed directly to the "from" clause of the Kubernetes NetworkPolicy resource.
+#    from:
+#      - namespaceSelector:
+#          matchLabels:
+#            name: other-namespace
+ingressAccess: {}
+
+# Add information regarding an HTTP proxy.
+# Note that it's up to subchart to use this information.
+proxy:
+  enabled: false
+  url: 'silta-cluster-proxy.silta-cluster'
+  port: 80
+
+  # Set a comma-separated list of hostnames or hostname suffixes that should not be proxied,
+  # such as cluster-internal services from other namespaces. For example, for unproxied access
+  # to services in the namespace "foo", use ".foo" as the value.
+  no_proxy: ""
