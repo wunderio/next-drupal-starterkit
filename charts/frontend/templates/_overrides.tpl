@@ -32,3 +32,10 @@ we make it compatible by overriding the following templates.
 {{- define "mariadb.fullname" -}}
 {{ .Release.Name }}-mariadb
 {{- end }}
+
+{{/*
+The redis stack chart has some unconventional naming logic, we prefer to keep things simple.
+*/}}
+{{- define "redis-stack.fullname" -}}
+{{ .Release.Name }}-redis-stack
+{{- end -}}
