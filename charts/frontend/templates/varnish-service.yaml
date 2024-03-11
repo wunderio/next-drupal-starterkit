@@ -1,0 +1,35 @@
+{{- if .Values.varnish.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-varnish
+  annotations:
+    {{- if (index .Values "silta-release").downscaler.enabled }}
+    auto-downscale/down: "false"
+    {{- end }}
+    {{- if and (eq .Values.cluster.type "gke") (.Values.backendConfig) }}
+    cloud.google.com/backend-config: '{"default":"{{ .Release.Name }}-nginx"}'
+    {{- end }}
+    {{- if .Values.cluster }}
+    {{- if .Values.cluster.vpcNative }}
+    cloud.google.com/neg: '{"ingress": true}'
+    {{- end }}
+    {{- end }}
+  labels:
+    {{- include "frontend.release_labels" . | nindent 4 }}
+    service: varnish
+spec:
+  type: ClusterIP
+  ports:
+  - name: web
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  - name: admin
+    protocol: TCP
+    port: 6082
+    targetPort: 6082
+  selector:
+    {{- include "frontend.release_selector_labels" . | nindent 4 }}
+    service: varnish
+{{- end }}

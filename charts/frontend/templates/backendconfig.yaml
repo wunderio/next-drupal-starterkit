@@ -1,0 +1,10 @@
+{{- if and (eq .Values.cluster.type "gke") (.Values.backendConfig) }}
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: {{ .Release.Name }}-nginx
+  labels:
+    {{- include "frontend.release_labels" $ | nindent 4 }}
+spec:
+  {{- toYaml .Values.backendConfig | nindent 2 }}
+{{- end }}

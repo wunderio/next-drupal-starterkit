@@ -1,0 +1,24 @@
+dependencies:
+- name: mariadb
+  repository: https://storage.googleapis.com/charts.wdr.io
+  version: 7.10.4
+- name: mailhog
+  repository: https://codecentric.github.io/helm-charts
+  version: 5.1.0
+- name: elasticsearch
+  repository: file://../elasticsearch
+  version: 8.5.1
+- name: rabbitmq
+  repository: https://storage.googleapis.com/charts.wdr.io
+  version: 6.17.5
+- name: mongodb
+  repository: https://storage.googleapis.com/charts.wdr.io
+  version: 10.26.4
+- name: postgresql
+  repository: https://storage.googleapis.com/charts.wdr.io
+  version: 13.2.24
+- name: silta-release
+  repository: file://../silta-release
+  version: 1.0.0
+digest: sha256:95eb80d5b21e1fb9cf5c0bf1b917801d027df824b84fcb6cd4d377fcb6a542b4
+generated: "2023-12-13T16:17:41.789630834+02:00"

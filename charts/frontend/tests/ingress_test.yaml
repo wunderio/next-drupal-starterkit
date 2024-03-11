@@ -1,0 +1,277 @@
+suite: Site ingress
+templates:
+  - ingress.yaml
+tests:
+  - it: is a ingress
+    template: ingress.yaml
+    asserts:
+      - isKind:
+          of: Ingress
+
+  - it: uses traefik ingress class (pre 1.18)
+    template: ingress.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 17
+      apiVersions:
+        - networking.k8s.io/v1beta1
+    asserts:
+      - equal:
+          path: 'metadata.annotations.kubernetes\.io/ingress\.class'
+          value: 'traefik'
+
+  - it: uses traefik ingress class (1.18+)
+    template: ingress.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 22
+      apiVersions:
+        - networking.k8s.io/v1
+    asserts:
+      - equal:
+          path: 'spec.ingressClassName'
+          value: 'traefik'
+
+  - it: sets correct hostname for deployment
+    template: ingress.yaml
+    set:
+      environmentName: 'foo'
+      projectName: 'bar' 
+      clusterDomain: 'baz' 
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: 'foo.bar.baz'
+  
+  - it: sets correct hostname for deployment when projectName is absent
+    template: ingress.yaml
+    set:
+      environmentName: 'foo'
+      clusterDomain: 'baz' 
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: 'foo.namespace.baz'
+
+  - it: directs traefik requests to nginx service by default (cm 0.8)
+    template: ingress.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 17
+      apiVersions:
+        - certmanager.k8s.io/v1alpha1
+        - networking.k8s.io/v1beta1
+    asserts:
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.serviceName
+          value: 'RELEASE-NAME-nginx'
+
+  - it: directs traefik requests to nginx service by default (cm 1.4+)
+    template: ingress.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 18
+      apiVersions:
+        - cert-manager.io/v1
+        - networking.k8s.io/v1
+    asserts:
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: 'RELEASE-NAME-nginx'
+  
+  - it: uses correct ingress api version (1.17)
+    template: ingress.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 17
+      apiVersions:
+        - certmanager.k8s.io/v1alpha1
+        - networking.k8s.io/v1beta1
+    asserts:
+      - equal:
+          path: apiVersion
+          value: 'networking.k8s.io/v1beta1'
+
+  - it: uses correct ingress api version (1.18+)
+    template: ingress.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 18
+      apiVersions:
+        - cert-manager.io/v1
+        - networking.k8s.io/v1
+    asserts:
+      - equal:
+          path: apiVersion
+          value: 'networking.k8s.io/v1'
+
+  - it: shortens long project names
+    template: ingress.yaml
+    set:
+      projectName: 'client-fi-longclient-longproject-backend'
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: 'release-name.client-fi-longclient-longpra6b.silta.wdr.io'
+
+  - it: shortens long branch names
+    template: ingress.yaml
+    set:
+      environmentName: 'feature/my-project-shortname-12345-with-additional-description'
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: 'feature-my-project-shortname-12345-witdb6.namespace.silta.wdr.io'
+
+  - it: shortens branch names more when project name is already long
+    template: ingress.yaml
+    set:
+      projectName: 'client-fi-longclient-longproject-backend'
+      environmentName: 'feature/my-project-shortname-12345-with-additional-description'
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: 'feature-my-projecdb6.client-fi-longclient-longpra6b.silta.wdr.io'
+
+  - it: takes a hostname prefix
+    template: ingress.yaml
+    set:
+      domainPrefixes: ['qux', 'quux']
+      environmentName: 'foo'
+      projectName: 'bar'
+      clusterDomain: 'baz'
+    asserts:
+      - equal:
+          path: spec.rules[0].host
+          value: 'foo.bar.baz'
+      - equal:
+         path: spec.rules[1].host
+         value: 'qux.foo.bar.baz'
+      - equal:
+         path: spec.rules[2].host
+         value: 'quux.foo.bar.baz'
+
+  - it: exposeDomains - uses default ingress type and has correct hostname (pre 1.18)
+    template: ingress.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 17
+      apiVersions:
+        - certmanager.k8s.io/v1alpha1
+        - networking.k8s.io/v1beta1
+    set:
+      ingress:
+        default:
+          type: foo
+      exposeDomains:
+        bar:
+          hostname: bar.baz
+    asserts:
+      - documentIndex: 1
+        equal:
+          path: 'metadata.annotations.kubernetes\.io/ingress\.class'
+          value: 'foo'
+
+  - it: exposeDomains - uses default ingress type and has correct hostname (1.18+)
+    template: ingress.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 22
+      apiVersions:
+        - networking.k8s.io/v1
+    set:
+      ingress:
+        default:
+          type: foo
+      exposeDomains:
+        bar:
+          hostname: bar.baz
+    asserts:
+      - documentIndex: 1
+        equal:
+          path: 'spec.ingressClassName'
+          value: 'foo'
+  
+  - it: exposeDomains - has correct hostname
+    template: ingress.yaml
+    set:
+      exposeDomains:
+        bar:
+          hostname: foo.bar
+    asserts:
+      - documentIndex: 1
+        equal:
+          path: spec.rules[0].host
+          value: 'foo.bar'
+
+  - it: exposeDomains - can disable ssl for a certain ingress
+    template: ingress.yaml
+    set:
+      ingress:
+        nossl:
+          tls: false
+          redirect-https: false
+      exposeDomains:
+        foo:
+          hostname: foo.bar
+          ingress: nossl
+    asserts:
+      - documentIndex: 1
+        equal:
+          path: 'metadata.annotations.traefik\.ingress\.kubernetes\.io\/frontend-entry-points'
+          value: 'http'
+      - documentIndex: 1
+        equal:
+          path: 'ingress\.kubernetes\.io\/ssl-redirect'
+          value: null
+
+  - it: exposeDomains - can disable ssl redirect
+    template: ingress.yaml
+    set:
+      ingress:
+        nossl:
+          redirect-https: false
+      exposeDomains:
+        foo:
+          hostname: foo.bar
+          ingress: nossl
+    asserts:
+      - documentIndex: 1
+        equal:
+          path: 'metadata.annotations.ingress\.kubernetes\.io\/ssl-redirect'
+          value: null
+
+  - it: exposeDomains - multiple hostnames can use the same ingress 
+    template: ingress.yaml
+    set:
+      exposeDomains:
+        foo:
+          hostname: foo.baz
+        bar:
+          hostname: bar.baz
+        
+    asserts:
+      - documentIndex: 1
+        equal:
+          path: 'spec.rules[1].host'
+          value: 'foo.baz'
+      - documentIndex: 1
+        equal:
+          path: 'spec.rules[0].host'
+          value: 'bar.baz'
+
+  - it: exposeDomains - can supply staticIpAddressName for gce type ingress
+    template: ingress.yaml
+    set:
+      exposeDomains:
+        bar:
+          hostname: foo.bar
+          ingress: gce
+      ingress:
+        gce:
+          staticIpAddressName: baz
+    asserts:
+      - documentIndex: 1
+        equal:
+          path: 'metadata.annotations.kubernetes\.io\/ingress\.global-static-ip-name'
+          value: 'baz'

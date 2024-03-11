@@ -1,0 +1,280 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-nginx-conf
+  labels:
+    {{- include "frontend.release_labels" . | nindent 4 }}
+data:
+  {{- if .Values.signalsciences.enabled }}
+  nginx_signalsciences_conf: |
+    load_module /etc/nginx/modules/ngx_http_sigsci_module.so;
+    load_module /etc/nginx/modules/ndk_http_module.so;
+  {{- end }}
+
+  nginx_conf: |
+
+    include modules/*.conf;
+
+    # user                            nginx;
+    worker_processes                auto;
+    worker_rlimit_nofile            10240;
+
+    error_log                       /proc/self/fd/2 {{ .Values.nginx.loglevel }};
+
+    events {
+        worker_connections          10240;
+        multi_accept                on;
+    }
+
+    http {
+
+      {{- if .Values.signalsciences.enabled }}
+      # Signal sciences agent socket
+      sigsci_agent_host unix:/sigsci/tmp/sigsci.sock;
+      {{- end }}
+
+      # List of upstream proxies we trust to set X-Forwarded-For correctly.
+      {{- if kindIs "string" .Values.nginx.realipfrom }}
+      set_real_ip_from            {{ .Values.nginx.realipfrom }};
+      {{- end }}
+      {{- if kindIs "map" .Values.nginx.realipfrom }}
+      {{- range .Values.nginx.realipfrom }}
+      set_real_ip_from            {{ . }};
+      {{- end }}
+      {{- end }}
+
+      real_ip_header              {{ .Values.nginx.real_ip_header }};
+
+      include                     /etc/nginx/mime.types;
+      default_type                application/octet-stream;
+
+      log_format  main            '$remote_addr - $remote_user [$time_local] "$request" '
+                                  '$status $body_bytes_sent "$http_referer" '
+                                  '"$http_user_agent" "$http_x_forwarded_for" $host "$http_ja3"';
+
+
+      access_log                  /proc/self/fd/1 main;
+
+      send_timeout                60s;
+      sendfile                    on;
+      client_body_timeout         60s;
+      client_header_timeout       60s;
+      client_max_body_size        32m;
+      client_body_buffer_size     16k;
+      client_header_buffer_size   4k;
+      large_client_header_buffers 8 16K;
+      keepalive_timeout           75s;
+      keepalive_requests          100;
+      reset_timedout_connection   off;
+      tcp_nodelay                 on;
+      tcp_nopush                  on;
+      server_tokens               off;
+
+      ## upload_progress             uploads 1m;
+
+      gzip                        on;
+      gzip_buffers                16 8k;
+      gzip_comp_level             1;
+      gzip_http_version           1.1;
+      gzip_min_length             20;
+      gzip_types                  text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascrip
+      gzip_vary                   on;
+      gzip_proxied                any;
+      gzip_disable                msie6;
+
+      {{- include "frontend.security_headers" $ | trim | indent 6 }}
+
+      map_hash_bucket_size 128;
+
+      map $http_host $x_robots_tag_header {
+          "~{{ template "frontend.domain" $ }}$" "noindex, nofollow, nosnippet, noarchive";
+          {{- range $index, $prefix := .Values.domainPrefixes }}
+          {{- $params := dict "prefix" $prefix  -}}
+          "~{{ template "frontend.domain" ( merge $params $ ) }}$" "noindex, nofollow, nosnippet, noarchive";
+          {{- end }}
+          default  '';
+      }
+      add_header                  X-Robots-Tag $x_robots_tag_header;
+
+      map $uri $no_slash_uri {
+          ~^/(?<no_slash>.*)$ $no_slash;
+      }
+
+      # List health checks that need to return status 200 here
+      map $http_user_agent $hc_ua { default 0; 'GoogleHC/1.0' 1; 'Varnish' 1; }
+
+      include conf.d/*.conf;
+    }
+
+  frontend_conf: |
+
+    map $http_x_forwarded_proto $fastcgi_https {
+      default $https;
+      http '';
+      https on;
+    }
+
+    {{- if .Values.nginx.redirects }}
+    # Custom redirects with full url matching
+    map '$scheme://$host$request_uri' $redirect_uri {
+      {{- range .Values.nginx.redirects }}
+      {{- if contains "://" .from }}
+      {{ .from | squote }} {{ .to | squote }};
+      {{- end }}
+      {{- end }}
+    }
+    # Custom redirects with absolute path matching
+    map $request_uri $redirect_uri_local {
+      {{- range .Values.nginx.redirects }}
+      {{- if not ( contains "://" .from ) }}
+      {{ .from | squote }} {{ .to | squote }};
+      {{- end }}
+      {{- end }}
+    }
+    {{- end }}
+
+    server {
+      server_name frontend;
+      listen 8080;
+      port_in_redirect off;
+      server_name_in_redirect off;
+
+      # Loadbalancer health checks need to be fed with http 200
+      if ($hc_ua) { return 200; }
+
+      {{- if .Values.nginx.redirects }}
+      # Redirects to specified path if map returns anything
+      if ($redirect_uri) {
+        return 301 $redirect_uri;
+      }
+      if ($redirect_uri_local) {
+        return 301 $redirect_uri_local;
+      }
+      {{- end }}
+
+      root /app/web;
+      index index.html;
+
+      include fastcgi.conf;
+
+      {{- if .Values.mailhog.enabled }}
+      location /mailhog {
+
+        # Auth / whitelist always enabled
+        satisfy any;
+        allow 127.0.0.1;
+        {{- range .Values.nginx.noauthips }}
+        allow {{ . }};
+        {{- end }}
+        deny all;
+
+        {{- if gt (len .Values.nginx.noauthips) 1 -}}
+        # Basic auth only offered when at least one extra ip is whitelisted. Prevents using default credentials.
+        auth_basic "Restricted";
+        auth_basic_user_file /etc/nginx/.htaccess;
+        {{- end}}
+
+        rewrite ^/mailhog$ /mailhog/ permanent;
+
+        # Proxy to mailhog container
+        rewrite /mailhog(.*) $1 break;
+        proxy_pass http://{{ .Release.Name }}-mailhog:8025/;
+
+        # Websock connection
+        chunked_transfer_encoding on;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_buffering off;
+      }
+      {{- end}}
+
+      # Custom configuration gets included here
+      {{- if .Values.nginx.serverExtraConfig }}
+      {{- tpl .Values.nginx.serverExtraConfig . | trim | nindent 6 }}
+      {{- end }}
+
+      {{- range $index, $service := .Values.services }}
+      {{- if $service.exposedRoute }}
+      location {{ $service.exposedRoute }} {
+
+        {{- if ne $.Values.nginx.x_proxy_auth "" }}
+        # Verify if x_proxy_auth value is correct
+        if ( $http_x_proxy_auth != '{{ $.Values.nginx.x_proxy_auth }}') { return 403; }
+        {{- end}}
+
+        {{- if $.Values.nginx.extra_conditions }}
+        {{- $.Values.nginx.extra_conditions | nindent 8 }}
+        {{- end}}
+
+        # Custom configuration gets included here
+        {{- if $.Values.nginx.locationExtraConfig }}
+        {{- tpl $.Values.nginx.locationExtraConfig $ | nindent 8 }}
+        {{- end }}
+
+        {{- include "frontend.basicauth" $ | trim | nindent 8 }}
+
+        location = {{ $service.exposedRoute }}/robots.txt {
+          access_log off;
+          {{- if $.Values.signalsciences.enabled }}
+          sigsci_enabled off;
+          {{- end }}
+        }
+
+        ## Most sites won't have configured favicon
+        ## and since its always grabbed, turn it off in access log
+        ## and turn off it's not-found error in the error log
+        location = {{ $service.exposedRoute }}/favicon.ico { access_log off; log_not_found off;  }
+
+        ## Same for apple-touch-icon files
+        location = {{ $service.exposedRoute }}/apple-touch-icon.png { access_log off; log_not_found off; }
+        location = {{ $service.exposedRoute }}/apple-touch-icon-precomposed.png { access_log off; log_not_found off; }
+
+        ## Rather than just denying .ht* in the config, why not deny
+        ## access to all .invisible files
+        location ~ /\. { return 404; access_log off; log_not_found off; }
+
+        # Pass the request on to frontend.
+        proxy_pass http://{{ $.Release.Name }}-{{ $index }}:{{ default $.Values.serviceDefaults.port $service.port }}{{ $service.exposedRoute }};
+
+        # We expect the downsteam servers to redirect to the
+        # right hostname, so don't do any rewrites here.
+        proxy_redirect             off;
+
+        proxy_connect_timeout  180s;
+        proxy_send_timeout  180s;
+        proxy_read_timeout  180s;
+
+        # Let's increase the buffer size
+        proxy_buffer_size   512k;
+        proxy_buffers   16 512k;
+        proxy_busy_buffers_size   512k;
+
+        # Pass a bunch of headers to the downstream server
+        # so they'll know what's going on.
+        proxy_set_header           Host             $host;
+        proxy_set_header           X-Real-IP        $remote_addr;
+        proxy_set_header           X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+        # Most web apps can be configured to read this header and
+        # understand that the current session is actually HTTPS.
+        proxy_set_header        X-Forwarded-Proto $scheme;
+        proxy_set_header        X-Forwarded-Port  $server_port;
+        add_header              Front-End-Https   on;
+
+        {{- include "frontend.security_headers" $ | trim | nindent 8 }}
+
+        {{- range $header_name, $header_value := $.Values.nginx.extra_headers }}
+        add_header {{ $header_name }} {{ $header_value }};
+        {{- end }}
+      }
+      {{- end }}
+      {{- end }}
+    }
+
+  {{- if .Values.nginx.extraConfig }}
+  extraConfig: |
+    {{ tpl .Values.nginx.extraConfig . | nindent 4 }}
+  {{- end }}

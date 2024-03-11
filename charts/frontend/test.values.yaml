@@ -1,0 +1,50 @@
+# This file includes the configuration used to validate the chart with a dry-run installation.
+
+exposeDomains:
+  example:
+    hostname: example.com
+  example2:
+    hostname: www.example.com
+    ssl:
+      enabled: true
+      issuer: letsencrypt-staging
+
+domainPrefixes: ['en', 'fi']
+
+nginx:
+  autoscaling:
+    enabled: true
+  x_proxy_auth: ""
+
+services:
+  node:
+    # This value needs to be present, but is not validated to be a correct docker image
+    image: test/test:version
+    autoscaling:
+      enabled: true
+
+shell:
+  enabled: true
+
+elasticsearch:
+  enabled: true
+
+mailhog:
+  enabled: true
+
+mongodb:
+  enabled: true
+
+rabbitmq:
+  enabled: true
+
+mounts:
+  files:
+    enabled: true
+    storage: 1G
+    mountPath: /app/files
+    storageClassName: silta-shared
+    csiDriverName: csi-rclone
+
+cluster:
+  type: ""

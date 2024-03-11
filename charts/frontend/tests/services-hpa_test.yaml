@@ -1,0 +1,124 @@
+suite: Site deployment
+templates:
+  - services-deployment.yaml
+  - configmap.yaml
+tests:
+  - it: can autoscale with default values
+    template: services-deployment.yaml
+    set:
+      services.foo:
+        image: 'bar'
+        autoscaling:
+          enabled: true
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: HorizontalPodAutoscaler
+      - documentIndex: 1
+        equal:
+          path: spec.minReplicas
+          value: 1
+      - documentIndex: 1
+        equal:
+          path: spec.maxReplicas
+          value: 3
+
+  - it: can override autoscale values
+    template: services-deployment.yaml
+    set:
+      services.foo:
+        image: 'bar'
+        autoscaling:
+          enabled: true
+          minReplicas: 5
+          maxReplicas: 7
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: HorizontalPodAutoscaler
+      - documentIndex: 1
+        equal:
+          path: spec.minReplicas
+          value: 5
+      - documentIndex: 1
+        equal:
+          path: spec.maxReplicas
+          value: 7
+
+  - it: HPA resource is present when autoscaler is enabled
+    template: services-deployment.yaml
+    set:
+      services.foo:
+        image: 'bar'
+        autoscaling:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+
+  - it: HPA resource is absent when autoscaler is disabled
+    template: services-deployment.yaml
+    set:
+      services.foo:
+        image: 'bar'
+        autoscaling:
+          enabled: false
+    asserts:
+      - hasDocuments:
+          count: 1
+
+  - it: HPA defines pre 1.23 format metrics
+    template: services-deployment.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 22
+      apiVersions:
+        - autoscaling/v2beta1
+    set:
+      services.foo:
+        image: 'bar'
+        autoscaling:
+          enabled: true
+          metrics:
+          - type: Resource
+            resource:
+              name: foo
+              targetAverageUtilization: bar
+    asserts:
+      - documentIndex: 1
+        contains:
+          path: spec.metrics
+          content:
+            resource:
+              name: foo
+              targetAverageUtilization: bar
+            type: Resource
+
+  - it: HPA defines 1.23+ format metrics
+    template: services-deployment.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 23
+      apiVersions:
+        - autoscaling/v2
+    set:
+      services.foo:
+        image: 'bar'
+        autoscaling:
+          enabled: true
+          metrics:
+          - type: Resource
+            resource:
+              name: foo
+              targetAverageUtilization: bar
+    asserts:
+      - documentIndex: 1
+        contains:
+          path: spec.metrics
+          content:
+            resource:
+              name: foo
+              target:
+                type: Utilization
+                averageUtilization: bar
+            type: Resource

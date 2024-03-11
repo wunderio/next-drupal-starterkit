@@ -1,0 +1,74 @@
+suite: HorizontalPodAutoscaler
+templates:
+  - nginx.yaml
+tests:
+  - it: HPA resource is present when autoscaler is enabled
+    template: nginx.yaml
+    set:
+      nginx:
+        autoscaling:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+  - it: HPA resource is absent when autoscaler is disabled
+    template: nginx.yaml
+    set:
+      nginx:
+        autoscaling:
+          enabled: false
+    asserts:
+      - hasDocuments:
+          count: 1
+  - it: HPA defines pre 1.23 format metrics
+    template: nginx.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 22
+      apiVersions:
+        - autoscaling/v2beta1
+    set:
+      nginx:
+        autoscaling:
+          enabled: true
+          metrics:
+          - type: Resource
+            resource:
+              name: foo
+              targetAverageUtilization: bar
+    asserts:
+      - documentIndex: 1
+        contains:
+          path: spec.metrics
+          content:
+            resource:
+              name: foo
+              targetAverageUtilization: bar
+            type: Resource
+  - it: HPA defines 1.23+ format metrics
+    template: nginx.yaml
+    capabilities:
+      majorVersion: 1
+      minorVersion: 23
+      apiVersions:
+        - autoscaling/v2
+    set:
+      nginx:
+        autoscaling:
+          enabled: true
+          metrics:
+          - type: Resource
+            resource:
+              name: foo
+              targetAverageUtilization: bar
+    asserts:
+      - documentIndex: 1
+        contains:
+          path: spec.metrics
+          content:
+            resource:
+              name: foo
+              target:
+                type: Utilization
+                averageUtilization: bar
+            type: Resource

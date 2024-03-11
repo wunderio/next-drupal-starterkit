@@ -1,0 +1,293 @@
+{{- range $index, $service := .Values.services }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Release.Name }}-{{ $index }}
+  labels:
+    {{- include "frontend.release_labels" $ | nindent 4 }}
+    silta-frontend: service
+spec:
+  {{- if or (not $service.autoscaling) (not (($service.autoscaling).enabled)) }}
+  replicas: {{ default 1 $service.replicas }}
+  {{- end }}
+  strategy:
+    {{ default $.Values.serviceDefaults.strategy $service.strategy | toYaml }}
+  selector:
+    matchLabels:
+      {{- include "frontend.release_selector_labels" $ | nindent 6 }}
+      deployment: frontend-{{ $index }}
+  template:
+    metadata:
+      labels:
+        {{- include "frontend.release_labels" $ | nindent 8 }}
+        deployment: frontend-{{ $index }}
+        silta-frontend: service
+        {{ if $.Values.shell.enabled -}}
+        silta-ingress: allow
+        {{- end }}
+      annotations:
+        # We use a checksum to redeploy the pods when the configMap changes.
+        configMap-checksum: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
+    spec:
+      enableServiceLinks: false
+      containers:
+      - name: {{ $index }}
+        image: {{ $service.image | quote }}
+        ports:
+        - containerPort: {{ default $.Values.serviceDefaults.port $service.port }}
+          name: {{ $index }}
+        volumeMounts:
+          {{ if $service.mounts }}
+          {{- range $index, $mountName := $service.mounts -}}
+          {{ $mount := (index $.Values.mounts $mountName) }}
+          {{- if eq $mount.enabled true }}
+          - name: frontend-{{ $mountName }}
+            mountPath: {{ $mount.mountPath }}
+          {{- end }}
+          {{- end }}
+          {{- end }}
+          {{ if $.Values.shell.enabled -}}
+          - name: shell-keys
+            mountPath: /etc/ssh/keys
+          {{- end }}
+        livenessProbe:
+        {{- if $service.livenessProbe }}
+        {{- toYaml $service.livenessProbe | nindent 10 }}
+        {{- else }}
+          tcpSocket:
+            port: {{ default $.Values.serviceDefaults.port $service.port }}
+        {{- end }}
+        readinessProbe:
+        {{- if $service.readinessProbe }}
+        {{- toYaml $service.readinessProbe | nindent 10 }}
+        {{- else }}
+          tcpSocket:
+            port: {{ default $.Values.serviceDefaults.port $service.port }}
+        {{- end }}
+        env:
+        {{- include "services.env" (dict "Values" $.Values "Release" $.Release "service" $service) | nindent 8 }}
+        {{- range $key, $val := $service.env }}
+        - name: {{ $key }}
+        {{- if or (kindIs "string" $val) (kindIs "int" $val) (kindIs "float64" $val) (kindIs "bool" $val) (kindIs "invalid" $val) }}
+          value: {{ $val | quote }}
+        {{- else }}
+          {{ $val | toYaml | indent 12 | trim }}
+        {{- end }}
+        {{- end }}
+        resources:
+          {{- if $service.resources -}}
+          {{ merge $service.resources $.Values.serviceDefaults.resources | toYaml | nindent 10 }}
+          {{ else -}}
+          {{ $.Values.serviceDefaults.resources | toYaml | nindent 10 }}
+          {{- end }}
+      volumes:
+        {{ if $service.mounts }}
+        {{- range $index, $mountName := $service.mounts -}}
+        {{ $mount := (index $.Values.mounts $mountName) }}
+        {{- if eq $mount.enabled true }}
+        - name: frontend-{{ $mountName }}
+        {{- if hasKey $mount "secretName" }}
+          secret:
+            secretName: {{ $mount.secretName }}
+        {{- else if hasKey $mount "configMapName" }}
+          configMap:
+            name: {{ $mount.configMapName }}
+        {{- else }}
+          persistentVolumeClaim:
+            claimName: {{ $.Release.Name }}-{{ $mountName }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+        {{ if $.Values.shell.enabled -}}
+        - name: shell-keys
+          persistentVolumeClaim:
+            claimName: {{ $.Release.Name }}-shell-keys
+        {{- end }}
+      {{ if $service.nodeSelector -}}
+      nodeSelector:
+        {{- $service.nodeSelector | toYaml | nindent 8 }}
+      tolerations:
+        {{- include "frontend.tolerations" $service.nodeSelector | nindent 8 }}
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          # Preferrably keep pods on the same node as the database.
+          - weight: 1
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: release
+                  operator: In
+                  values:
+                  - "{{ $.Release.Name }}"
+                - key: mariadb
+                  operator: In
+                  values:
+                  - mariadb
+              topologyKey: kubernetes.io/hostname
+          # Preferrably keep pods in the same zone as the database.
+          - weight: 1
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: release
+                  operator: In
+                  values:
+                  - "{{ $.Release.Name }}"
+                - key: mariadb
+                  operator: In
+                  values:
+                  - mariadb
+              topologyKey: topology.kubernetes.io/zone
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                - key: release
+                  operator: In
+                  values:
+                  - "{{ $.Release.Name }}"
+                - key: deployment
+                  operator: In
+                  values:
+                  - frontend-{{ $index }}
+      {{- end }}
+{{- if or $service.postupgrade $service.postinstall }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ $.Release.Name }}-{{ $index }}-post-release"
+  labels:
+    {{- include "frontend.release_labels" $ | nindent 4 }}
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": "post-install,post-upgrade"
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+spec:
+  completions: 1
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        {{- include "frontend.release_labels" $ | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      enableServiceLinks: false
+      containers:
+      - name: {{ $index }}
+        image: {{ $service.image | quote }}
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+            {{- if $.Release.IsInstall }}
+            {{- if ($service.postinstall).command }}
+            {{- $service.postinstall.command | nindent 10 }}
+            {{- end }}
+            {{- end }}
+            {{- if ($service.postupgrade).command }}
+            {{- $service.postupgrade.command | nindent 10 }}
+            {{- end }}
+        volumeMounts:
+          {{ if $service.mounts }}
+          {{- range $index, $mountName := $service.mounts -}}
+          {{ $mount := (index $.Values.mounts $mountName) }}
+          {{- if eq $mount.enabled true }}
+          - name: frontend-{{ $mountName }}
+            mountPath: {{ $mount.mountPath }}
+          {{- end }}
+          {{- end }}
+          {{- end }}
+          {{ if $.Values.shell.enabled -}}
+          - name: shell-keys
+            mountPath: /etc/ssh/keys
+          {{- end }}
+        env:
+        {{- include "services.env" (dict "Values" $.Values "Release" $.Release "service" $service) | nindent 8 }}
+        {{- range $key, $val := $service.env }}
+        - name: {{ $key }}
+        {{- if or (kindIs "string" $val) (kindIs "int" $val) (kindIs "float64" $val) (kindIs "bool" $val) (kindIs "invalid" $val) }}
+          value: {{ $val | quote }}
+        {{- else }}
+          {{ $val | toYaml | indent 4 | trim }}
+        {{- end }}
+        {{- end }}
+      volumes:
+        {{ if $service.mounts }}
+        {{- range $index, $mountName := $service.mounts -}}
+        {{ $mount := (index $.Values.mounts $mountName) }}
+        {{- if eq $mount.enabled true }}
+        - name: frontend-{{ $mountName }}
+        {{- if hasKey $mount "secretName" }}
+          secret:
+            secretName: {{ $mount.secretName }}
+        {{- else if hasKey $mount "configMapName" }}
+          configMap:
+            name: {{ $mount.configMapName }}
+        {{- else }}
+          persistentVolumeClaim:
+            claimName: {{ $.Release.Name }}-{{ $mountName }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+        {{ if $.Values.shell.enabled -}}
+        - name: shell-keys
+          persistentVolumeClaim:
+            claimName: {{ $.Release.Name }}-shell-keys
+        {{- end }}
+{{- end }}
+
+{{- if $service.autoscaling }}
+{{- if $service.autoscaling.enabled }}
+---
+apiVersion: {{ include "frontend.autoscaling.api-version" $ | trim }}
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ $.Release.Name }}-{{ $index }}
+  labels:
+    {{- include "frontend.release_labels" $ | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $.Release.Name }}-{{ $index }}
+  minReplicas: {{ default $.Values.serviceDefaults.autoscaling.minReplicas $service.autoscaling.minReplicas }}
+  maxReplicas: {{ default $.Values.serviceDefaults.autoscaling.maxReplicas $service.autoscaling.maxReplicas }}
+  metrics:
+  {{- $metrics := $.Values.serviceDefaults.autoscaling.metrics }}
+  {{- if $service.autoscaling.metrics }}
+  {{- $metrics = $service.autoscaling.metrics }}
+  {{- end }}
+  {{- if eq ( include "frontend.autoscaling.api-version" $ | trim ) "autoscaling/v2beta1" }}
+  {{- range $metrics }}
+  - type: Resource
+    resource:
+      name: {{ .resource.name }}
+      {{- if .resource.targetAverageUtilization }}
+      targetAverageUtilization: {{ .resource.targetAverageUtilization }}
+      {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- if eq ( include "frontend.autoscaling.api-version" $ | trim ) "autoscaling/v2" }}
+  {{- range $metrics }}
+  - type: Resource
+    resource:
+      name: {{ .resource.name }}
+      {{- if .resource.targetAverageUtilization }}
+      target:
+        type: Utilization
+        averageUtilization: {{ .resource.targetAverageUtilization }}
+      {{- end }}
+  {{- end }}
+  {{- end }}
+{{- end }}
+{{- end }}
+---
+{{- end }}

@@ -1,0 +1,438 @@
+{{- if .Values.varnish.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-varnish-vcl
+  labels:
+    {{- include "frontend.release_labels" . | nindent 4 }}
+data:
+  default_vcl: |
+    vcl 4.0;
+
+    import std;
+
+    backend default {
+      .host = "{{ .Release.Name }}-nginx";
+      .port = "80";
+      {{ .Values.varnish.backend_config | nindent 6 | trim }}
+    }
+
+    # Following hosts have internal access to cache purging
+    acl internal {
+      {{- range .Values.nginx.noauthips }}
+      {{ . | quote }};
+      {{- end }}
+    }
+
+    # List of upstream proxies we trust to set X-Forwarded-For correctly.
+    acl upstream_proxy {
+      {{- if kindIs "string" .Values.nginx.realipfrom }}
+      {{ .Values.nginx.realipfrom | quote }};
+      {{- end }}
+      {{- if kindIs "map" .Values.nginx.realipfrom }}
+      {{- range .Values.nginx.realipfrom }}
+      {{ . | quote }};
+      {{- end }}
+      {{- end }}
+    }
+
+    # Client side
+    sub vcl_recv {
+      {{- if ne .Values.nginx.x_proxy_auth "" }}
+      # Block request if proxy header is set but does not match defined value
+      if (req.http.x-proxy-auth != "{{ .Values.nginx.x_proxy_auth }}") {
+        return (synth(403, "Not allowed."));
+      }
+      {{- end }}
+
+      # Require a valid host header
+      if (req.http.host ~ "[[:upper:]]") {
+        set req.http.host = req.http.host.lower();
+      }
+      if (!req.http.host &&
+          req.esi_level == 0 &&
+          req.proto == "HTTP/1.1") {
+        # In HTTP/1.1, Host is required.
+        return (synth(400));
+      }
+
+      # Match upstream allowlist to supply headers containing real ip
+      if (client.ip ~ upstream_proxy && req.http.X-Envoy-External-Address) {
+        set req.http.X-Forwarded-For = req.http.X-Envoy-External-Address;
+        set req.http.X-Real-IP = req.http.X-Envoy-External-Address;
+      }
+      elseif (client.ip ~ upstream_proxy && req.http.X-Forwarded-For) {
+        set req.http.X-Forwarded-For = req.http.X-Forwarded-For;
+        set req.http.X-Real-IP = req.http.X-Forwarded-For;
+      }
+      elseif (client.ip ~ upstream_proxy && req.http.X-Real-IP) {
+        set req.http.X-Forwarded-For = req.http.X-Real-IP;
+        set req.http.X-Real-IP = req.http.X-Real-IP;
+      }
+      else {
+        set req.http.X-Forwarded-For = client.ip;
+        set req.http.X-Real-IP = client.ip;
+      }
+
+      # Check request methods
+      if (req.method == "PRI") {
+        # This will never happen in properly formed traffic.
+        return (synth(405));
+      }
+      if (req.method != "GET" &&
+          req.method != "HEAD" &&
+          req.method != "PUT" &&
+          req.method != "POST" &&
+          req.method != "TRACE" &&
+          req.method != "OPTIONS" &&
+          req.method != "DELETE" &&
+          req.method != "PATCH") {
+        # Non-RFC2616 or CONNECT which is weird.
+        return (pipe);
+      }
+      if (req.method != "GET" && req.method != "HEAD") {
+        # We only deal with GET and HEAD by default.
+        return (pass);
+      }
+
+      # Do not cache requests with Authorization header
+      if (req.http.Authorization) {
+        return (pass);
+      }
+
+      # Only allow BAN requests from IP addresses in the 'purge' ACL.
+      if (req.method == "BAN" || req.method == "URIBAN") {
+        # Admin port is only exposed to internal network
+        if (!client.ip ~ internal) {
+          return (synth(403, "Not allowed."));
+        }
+
+        # Logic for the ban, using the cache tags headers.
+        if (req.http.Cache-Tags) {
+          ban("obj.http.Cache-Tags ~ " + req.http.Cache-Tags);
+        }
+        elseif (req.method == "URIBAN") {
+          ban("req.http.host == " + req.http.host + " && req.url == " + req.url);
+        }
+        else {
+          return (synth(403, "Cache tags headers not present."));
+        }
+        # Throw a synthetic page so the request won't go to the backend.
+        return (synth(200, "Ban added."));
+      }
+
+      # Implementing websocket support (https://www.varnish-cache.org/docs/4.0/users-guide/vcl-example-websockets.html)
+      if (req.http.Upgrade ~ "(?i)websocket") {
+        return (pipe);
+      }
+
+      # Fixes "Too many restarts" error
+      if (req.restarts > 0) {
+        set req.hash_always_miss = true;
+      }
+
+      {{- if .Values.mailhog.enabled }}
+      # No varnish for mailhog
+      if (req.url ~ "^/mailhog$") {
+        return (pass);
+      }
+      {{- end }}
+
+      if (req.http.Accept-Encoding) {
+        if (req.url ~ "\.(jpg|png|gif|svg|tif|tiff|ico|webp|gz|tgz|bz2|tbz|mp3|ogg|swf|zip|pdf|woff|eot|ttf)(\?.*)?$") {
+          # No point in compressing these
+          unset req.http.Accept-Encoding;
+        } elsif (req.http.Accept-Encoding ~ "gzip") {
+            set req.http.Accept-Encoding = "gzip";
+        } elsif (req.http.Accept-Encoding ~ "deflate") {
+            set req.http.Accept-Encoding = "deflate";
+        } else {
+          # unknown algorithm
+          unset req.http.Accept-Encoding;
+        }
+      }
+
+      # Pipe requests directly to backend for POST requests with multipart/form-data content type
+      if (req.method == "POST" && req.http.Content-Type ~ "multipart/form-data") {
+        return (pipe);
+      }
+
+      {{- if .Values.varnish.vcl_recv }}
+      # Custom VCL rules
+      {{ .Values.varnish.vcl_recv | nindent 6 | trim }}
+      {{- end }}
+
+      return (hash);
+    }
+
+    sub vcl_pipe {
+      # Called upon entering pipe mode.
+      # In this mode, the request is passed on to the backend, and any further data from both the client
+      # and backend is passed on unaltered until either end closes the connection. Basically, Varnish will
+      # degrade into a simple TCP proxy, shuffling bytes back and forth. For a connection in pipe mode,
+      # no other VCL subroutine will ever get called after vcl_pipe.
+
+      # Note that only the first request to the backend will have
+      # X-Forwarded-For set.  If you use X-Forwarded-For and want to
+      # have it set for all requests, make sure to have:
+      # set bereq.http.connection = "close";
+      # here.  It is not set by default as it might break some broken web
+      # applications, like IIS with NTLM authentication.
+      set bereq.http.Connection = "Close";
+
+      # Implementing websocket support (https://www.varnish-cache.org/docs/4.0/users-guide/vcl-example-websockets.html)
+      if (req.http.upgrade) {
+        set bereq.http.upgrade = req.http.upgrade;
+      }
+
+      return (pipe);
+    }
+
+    sub vcl_pass {
+      return (fetch);
+    }
+
+    # The data on which the hashing will take place
+    sub vcl_hash {
+      # Called after vcl_recv to create a hash value for the request. This is used as a key
+      # to look up the object in Varnish.
+
+      hash_data(req.url);
+
+      if (req.http.host) {
+        hash_data(req.http.host);
+      } else {
+        hash_data(server.ip);
+      }
+
+      # Make sure HTTPS request (X-Forwarded-Proto=https) are cached separately
+      if (req.http.HTTPS) {
+        hash_data(req.http.HTTPS);
+      }
+
+      # hash cookies for requests that have them
+      if (req.http.Cookie) {
+        hash_data(req.http.Cookie);
+      }
+    }
+
+    sub vcl_purge {
+      # Only handle actual PURGE HTTP methods, everything else is discarded
+      if (req.method != "PURGE") {
+        # restart request
+        set req.http.X-Purge = "Yes";
+        return(restart);
+      }
+    }
+
+    sub vcl_hit {
+      if (obj.ttl >= 0s) {
+        # normal hit
+        return (deliver);
+      }
+      # We have no fresh fish. Lets look at the stale ones.
+      if (std.healthy(req.backend_hint)) {
+        # Backend is healthy. If the object is not older then 30secs, deliver it to the client
+        # and automatically create a separate backend request to warm the cache for this request.
+        if (obj.ttl + 30s > 0s) {
+          set req.http.grace = "normal(limited)";
+          return (deliver);
+        } else {
+            # No candidate for grace. Fetch a fresh object.
+            return (restart);
+        }
+      } else {
+        # backend is sick - use full grace
+        if (obj.ttl + obj.grace > 0s) {
+          set req.http.grace = "full";
+          return (deliver);
+        } else {
+          # no graced object.
+          return (restart);
+        }
+      }
+    }
+
+    sub vcl_miss {
+      # Called after a cache lookup if the requested document was not found in the cache. Its purpose
+      # is to decide whether or not to attempt to retrieve the document from the backend, and which
+      # backend to use.
+
+      return (fetch);
+    }
+
+    sub vcl_deliver {
+      # Adds debug header to see if it's a HIT/MISS and the number of hits
+      if (obj.hits > 0) {
+        set resp.http.X-W-Cache = "HIT";
+      } else {
+        set resp.http.X-W-Cache = "MISS";
+      }
+      set resp.http.X-W-Cache-Hits = obj.hits;
+
+      # Remove some headers: Webserver version & OS
+      unset resp.http.Server;
+      unset resp.http.X-Varnish;
+      unset resp.http.Via;
+      unset resp.http.Link;
+      unset resp.http.X-Generator;
+      unset resp.http.X-Proxy;
+      unset resp.http.X-Powered-By;
+
+      unset resp.http.x-do-esi;
+      unset resp.http.X-Forced-Gzip;
+
+      # deliver can return synth, but we must avoid a potential loop.
+      # This GET-param can be used to see the real backend error:
+      # error-debug=randomvar (used for convenient debugging).
+      if(resp.status >= 500 && req.url !~ "error-debug=randomvar"){
+        return (synth(resp.status, "Internal Error"));
+      }
+
+      # Remove the request url from the cached item's headers
+      # See "Smart banning" https://www.varnish-software.com/static/book/Cache_invalidation.html
+      unset resp.http.x-url;
+      unset resp.http.x-host;
+
+      {{- if not .Values.nginx.expose_cache_headers }}
+      # Removing cache headers from final response
+      unset resp.http.cache-tags;
+      unset resp.http.purge-cache-tags;
+      unset resp.http.X-Drupal-Cache-Tags;
+      unset resp.http.X-Drupal-Cache-Contexts;
+      {{- end }}
+
+      return (deliver);
+    }
+
+    # We can come here "invisibly" with the following errors: 500 & 503
+    sub vcl_synth {
+      set resp.http.Content-Type = "text/html; charset=utf-8";
+      set resp.http.Retry-After = "5";
+      # set resp.body = {"<!DOCTYPE html><html>"} + resp.status + " " + resp.reason + {"</html>"};
+      include "includes/vcl_synth_500.vcl";
+      return (deliver);
+    }
+
+    # Backend Fetch
+    sub vcl_backend_fetch {
+      if (bereq.method == "GET") {
+        unset bereq.body;
+      }
+      return (fetch);
+    }
+
+    sub vcl_backend_response {
+      if (bereq.uncacheable) {
+        return (deliver);
+      }
+
+      if (beresp.ttl <= 0s) {
+        call vcl_beresp_hitmiss;
+      }
+
+      if (beresp.http.Surrogate-control ~ "(?i)no-store" ||
+          (!beresp.http.Surrogate-Control &&
+            beresp.http.Cache-Control ~ "(?i:no-cache|no-store|private)")) {
+        call vcl_beresp_hitmiss;
+      }
+
+      if (beresp.http.Vary == "*") {
+        call vcl_beresp_hitmiss;
+      }
+
+      # Store the request url in cached item
+      # See "Smart banning" https://www.varnish-software.com/static/book/Cache_invalidation.html
+      set beresp.http.x-url = bereq.url;
+      set beresp.http.x-host = bereq.http.host;
+
+      # gzip is by default on for (easily) compressable transfer types
+      if (beresp.http.content-type ~ "text/html" || beresp.http.content-type ~ "css" || beresp.http.content-type ~ "javascript") {
+        set beresp.do_gzip = true;
+      }
+
+      {{- if .Values.varnish.vcl_backend_response }}
+      # Custom VCL rules
+      {{- .Values.varnish.vcl_backend_response | trim | nindent 4 }}
+      {{- end }}
+
+      if (beresp.status == 404) {
+        if (beresp.http.isstatic) {
+          set beresp.ttl = 0s;
+        }
+      }
+
+      if(beresp.status >= 500){
+        # Cache (public) internal errors, but for only 1s. Never cache client side.
+        set beresp.ttl = 1s;
+        set beresp.http.Cache-control = "no-cache, max-age=0, must-revalidate";
+      }
+
+      # Allow items to be stale if needed.
+      set beresp.grace = 2h;
+
+      return (deliver);
+    }
+
+    sub vcl_beresp_hitmiss {
+      set beresp.ttl = 120s;
+      set beresp.uncacheable = true;
+      return (deliver);
+    }
+
+    sub vcl_backend_error {
+      set beresp.http.Content-Type = "text/html; charset=utf-8";
+      set beresp.http.Retry-After = "5";
+      # set beresp.body = {"<!DOCTYPE html><html>"} + beresp.status + " " + beresp.reason + {"</html>"};
+      include "includes/vcl_synth_500.vcl";
+      return (deliver);
+    }
+
+    sub vcl_init {
+      return (ok);
+    }
+
+    sub vcl_fini {
+      return (ok);
+    }
+
+  vcl_synth_500_vcl: |
+    synthetic( {"
+      {{- if .Values.varnish.status_500_html }}
+      {{ .Values.varnish.status_500_html | nindent 6 | trim }}
+      {{- else }}
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+          body {
+            background-color: #ffffff;
+            font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+            text-align: center;
+            color: #656669;
+          }
+          #error-box {
+            margin-top: 100px;
+          }
+          #emoji {
+            font-size: 100px;
+          }
+        </style>
+        <title>Something went wrong</title>
+      </head>
+      <body>
+        <div id="error-box">
+          <div id="error-message">
+            <span id="emoji">🤔</span>
+            <h1>Something went wrong, but it's not your fault.</h1>
+            <h2>We are working on it, please check back shortly.</h2>
+          </div>
+        </div>
+      </body>
+      </html>
+      {{- end }}
+    "} );
+    return (deliver);
+
+{{- end }}

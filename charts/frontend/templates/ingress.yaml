@@ -1,0 +1,283 @@
+{{- $ingress := .Values.ingress.default }}
+{{- $context_ssl := .Values.ssl }}
+{{- $letsencrypt_in_use := false }}
+{{- if $ingress.tls }}
+{{- if has $context_ssl.issuer (list "letsencrypt" "letsencrypt-staging") }}
+{{- $letsencrypt_in_use = true }}
+{{- end }}
+{{- end }}
+apiVersion: {{ include "ingress.api-version" . | trim }}
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-nginx
+  annotations:
+    {{- if or (eq $ingress.type "gce") (eq ( include "ingress.api-version" . | trim ) "networking.k8s.io/v1beta1") }}
+    kubernetes.io/ingress.class: {{ $ingress.type | quote }}
+    {{- end }}
+    {{- if $ingress.tls }}
+    {{- if eq ( include "cert-manager.api-version" . | trim ) "cert-manager.io/v1" }}
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    {{- else }}
+    certmanager.k8s.io/acme-http01-edit-in-place: "true"
+    {{- end }}
+    {{- if eq $ingress.type "traefik" }}
+    traefik.ingress.kubernetes.io/frontend-entry-points: "http,https"
+    {{- end }}
+    {{- else }}
+    {{- if eq $ingress.type "traefik" }}
+    traefik.ingress.kubernetes.io/frontend-entry-points: "http"
+    {{- end }}
+    {{- end }}
+
+    {{- $redirect_https := false }}
+    {{- if (hasKey $ingress "redirect-https") }}
+    {{- $redirect_https = (index $ingress "redirect-https") }}
+    {{- end }}
+    {{- if not $ingress.tls }}
+    {{- $redirect_https = false }}
+    {{- end }}
+    {{- if $redirect_https }}
+    ingress.kubernetes.io/ssl-redirect: {{ $redirect_https | quote }}
+    {{- if eq $ingress.type "traefik" }}
+    nginx.ingress.kubernetes.io/ssl-redirect: {{ $redirect_https | quote }}
+    nginx.org/redirect-to-https: {{ $redirect_https | quote }}
+    {{- end }}
+    {{- if or (eq $ingress.type "azure/application-gateway") (eq $ingress.type "azure-application-gateway") }}
+    appgw.ingress.kubernetes.io/ssl-redirect: {{ $redirect_https | quote }}
+    {{- end }}
+    {{- if eq $ingress.type "nginx" }}
+    nginx.ingress.kubernetes.io/ssl-redirect: {{ $redirect_https | quote }}
+    nginx.org/redirect-to-https: {{ $redirect_https | quote }}
+    {{- end }}
+    {{- end }}
+    
+    {{- if eq $ingress.type "gce" }}
+    {{- if $letsencrypt_in_use }}
+    cert-manager.io/cluster-issuer: letsencrypt
+    {{- end }}
+    {{- end }}
+    {{- if $ingress.staticIpAddressName }}
+    kubernetes.io/ingress.global-static-ip-name: {{ $ingress.staticIpAddressName | quote }}
+    {{- end }}
+
+    {{- if or (eq $ingress.type "azure/application-gateway") (eq $ingress.type "azure-application-gateway") }}
+    {{- if $letsencrypt_in_use }}
+    cert-manager.io/cluster-issuer: letsencrypt
+    {{- end }}
+    appgw.ingress.kubernetes.io/health-probe-status-codes: "200-399, 401-404"
+    {{- end }}
+
+    {{- if $ingress.extraAnnotations }}
+    {{- $ingress.extraAnnotations | toYaml | nindent 4 }}
+    {{- end }}
+
+    {{- if (index .Values "silta-release").downscaler.enabled }}
+    auto-downscale/down: "false"
+    auto-downscale/last-update: {{ dateInZone "2006-01-02T15:04:05.999Z" (now) "UTC" }}
+    auto-downscale/label-selector: "release={{ .Release.Name }}"
+    auto-downscale/services: {{ include "frontend.servicename" $ }}
+    {{- end }}
+  labels:
+    {{- include "frontend.release_labels" $ | nindent 4 }}
+spec:
+  {{- if and (ne $ingress.type "gce" ) (eq ( include "ingress.api-version" . | trim ) "networking.k8s.io/v1") }}
+  ingressClassName: {{ regexReplaceAll "[^[:alnum:]]" $ingress.type "-" | quote }}
+  {{- end }}
+  {{- if $ingress.tls }}
+  tls:
+  - secretName: {{ .Release.Name }}-tls{{- if eq $.Values.ssl.issuer "custom" }}-custom{{- end }}
+    hosts: 
+      - {{ include "frontend.domain" . | quote }}
+  {{- range $index, $prefix := .Values.domainPrefixes }}
+  {{ $params := dict "prefix" $prefix -}}
+  - secretName: {{ $.Release.Name }}-tls-p{{ $index }}{{- if eq $.Values.ssl.issuer "custom" }}-custom{{- end }}
+    hosts: 
+      - '{{ template "frontend.domain" (merge $params $ ) }}'
+  {{- end }}
+  {{- end }}
+  rules:
+  - host: {{ template "frontend.domain" . }}
+    http:
+      paths:
+      - path: /
+        {{- if eq ( include "ingress.api-version" . | trim ) "networking.k8s.io/v1" }}
+        pathType: Prefix
+        {{- end }}
+        backend:
+          {{- if eq ( include "ingress.api-version" . | trim ) "networking.k8s.io/v1" }}
+          service:
+            name: {{ include "frontend.servicename" $ }}
+            port: 
+              number: 80
+          {{- else }}
+          serviceName: {{ include "frontend.servicename" $ }}
+          servicePort: 80
+          {{- end }}
+{{- range $index, $prefix := .Values.domainPrefixes }}
+{{ $params := dict "prefix" $prefix }}
+  - host: {{ template "frontend.domain" (merge $params $ ) }}
+    http:
+      paths:
+      - path: /
+        {{- if eq ( include "ingress.api-version" $ | trim ) "networking.k8s.io/v1" }}
+        pathType: Prefix
+        {{- end }}
+        backend:
+          {{- if eq ( include "ingress.api-version" $ | trim ) "networking.k8s.io/v1" }}
+          service:
+            name: {{ include "frontend.servicename" $ }}
+            port: 
+              number: 80
+          {{- else }}
+          serviceName: {{ include "frontend.servicename" $ }}
+          servicePort: 80
+          {{- end }}
+{{- end }}
+---
+# Ingresses for exposeDomains 
+{{- range $ingress_index, $ingress := $.Values.ingress }}
+
+{{- $ingress := mergeOverwrite (deepCopy $.Values.ingress.default) $ingress }}
+
+{{- $ingress_in_use := false }}
+{{- range $domain_index, $domain := $.Values.exposeDomains }}
+  {{- $domain := mergeOverwrite (deepCopy $.Values.exposeDomainsDefaults) $domain }}
+  {{- if $domain.ingress }}
+    {{- if eq $ingress_index $domain.ingress }}
+      {{- $ingress_in_use = true }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- $letsencrypt_in_use := false }}
+{{- range $index, $domain := $.Values.exposeDomains }}
+{{ $domain := merge $domain $.Values.exposeDomainsDefaults}}
+{{- if eq $domain.ingress $ingress_index }}
+{{- if $domain.ssl }}
+{{- if $domain.ssl.enabled }}
+{{- if has $domain.ssl.issuer (list "letsencrypt" "letsencrypt-staging") }}
+{{- $letsencrypt_in_use = true }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if $ingress_in_use }}
+apiVersion: {{ include "ingress.api-version" $ | trim }}
+kind: Ingress
+metadata:
+  name: {{ $.Release.Name }}-nginx-{{ $ingress_index }}
+  annotations:
+    {{- if or (eq $ingress.type "gce") (eq ( include "ingress.api-version" $ | trim ) "networking.k8s.io/v1beta1") }}
+    kubernetes.io/ingress.class: {{ $ingress.type | quote }}
+    {{- end }}
+    {{- if $ingress.tls }}
+    {{- if eq ( include "cert-manager.api-version" $ | trim ) "cert-manager.io/v1" }}
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    {{- else }}
+    certmanager.k8s.io/acme-http01-edit-in-place: "true"
+    {{- end }}
+    {{- if eq $ingress.type "traefik" }}
+    traefik.ingress.kubernetes.io/frontend-entry-points: "http,https"
+    {{- end }}
+    {{- else }}
+    {{- if eq $ingress.type "traefik" }}
+    traefik.ingress.kubernetes.io/frontend-entry-points: "http"
+    {{- end }}
+    {{- end }}
+    
+    {{- $redirect_https := false }}
+    {{- if (hasKey $ingress "redirect-https") }}
+    {{- $redirect_https = (index $ingress "redirect-https") }}
+    {{- end }}
+    {{- if not $ingress.tls }}
+    {{- $redirect_https = false }}
+    {{- end }}
+    {{- if $redirect_https }}
+    ingress.kubernetes.io/ssl-redirect: {{ $redirect_https | quote }}
+    {{- if eq $ingress.type "traefik" }}
+    nginx.ingress.kubernetes.io/ssl-redirect: {{ $redirect_https | quote }}
+    nginx.org/redirect-to-https: {{ $redirect_https | quote }}
+    {{- end }}
+    {{- if or (eq $ingress.type "azure/application-gateway") (eq $ingress.type "azure-application-gateway") }}
+    appgw.ingress.kubernetes.io/ssl-redirect: {{ $redirect_https | quote }}
+    {{- end }}
+    {{- if eq $ingress.type "nginx" }}
+    nginx.ingress.kubernetes.io/ssl-redirect: {{ $redirect_https | quote }}
+    nginx.org/redirect-to-https: {{ $redirect_https | quote }}
+    {{- end }}
+    {{- end }}
+    
+    {{- if eq $ingress.type "gce" }}
+    {{- if $letsencrypt_in_use }}
+    cert-manager.io/cluster-issuer: letsencrypt
+    {{- end }}
+    {{- end }}
+    {{- if $ingress.staticIpAddressName }}
+    kubernetes.io/ingress.global-static-ip-name: {{ $ingress.staticIpAddressName | quote }}
+    {{- end }}
+
+    {{- if or (eq $ingress.type "azure/application-gateway") (eq $ingress.type "azure-application-gateway") }}
+    {{- if $letsencrypt_in_use }}
+    cert-manager.io/cluster-issuer: letsencrypt
+    {{- end }}
+    appgw.ingress.kubernetes.io/health-probe-status-codes: "200-399, 401-404"
+    {{- end }}
+
+    {{- if $ingress.extraAnnotations }}
+    {{- $ingress.extraAnnotations | toYaml | nindent 4 }}
+    {{- end }}
+
+    {{- if (index $.Values "silta-release").downscaler.enabled }}
+    auto-downscale/down: "false"
+    auto-downscale/last-update: {{ dateInZone "2006-01-02T15:04:05.999Z" (now) "UTC" }}
+    auto-downscale/label-selector: "release={{ $.Release.Name }}"
+    auto-downscale/services: {{ include "frontend.servicename" $ }}
+    {{- end }}
+  labels:
+    {{ include "frontend.release_labels" $ | indent 4 }}
+spec:
+  {{- if and (ne $ingress.type "gce" ) (eq ( include "ingress.api-version" $ | trim ) "networking.k8s.io/v1") }}
+  ingressClassName: {{ regexReplaceAll "[^[:alnum:]]" $ingress.type "-" | quote }}
+  {{- end }}
+  {{- if $ingress.tls }}
+  tls:
+  {{- range $domain_index, $domain := $.Values.exposeDomains }}
+  {{- $domain := mergeOverwrite (deepCopy $.Values.exposeDomainsDefaults) $domain }}
+  {{- if eq $domain.ingress $ingress_index }}
+  {{- if $domain.ssl }}
+  {{- if $domain.ssl.enabled }}
+  - secretName: {{ $.Release.Name }}-tls-{{ $domain_index }}{{- if eq $domain.ssl.issuer "custom" }}-custom{{- end }}
+    hosts: 
+      - {{ $domain.hostname | quote }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  rules:
+  {{- range $domain_index, $domain := $.Values.exposeDomains }}
+  {{- $domain := mergeOverwrite (deepCopy $.Values.exposeDomainsDefaults) $domain }}
+  {{- if eq $domain.ingress $ingress_index }}
+  - host: {{ $domain.hostname }}
+    http:
+      paths:
+      - path: /{{ if and ( eq $ingress.type "gce" ) ( and ( le $.Capabilities.KubeVersion.Major "1") ( le $.Capabilities.KubeVersion.Minor "18" ) ) }}*{{ end }}
+        {{- if eq ( include "ingress.api-version" $ | trim ) "networking.k8s.io/v1" }}
+        pathType: Prefix
+        {{- end }}
+        backend:
+          {{- if eq ( include "ingress.api-version" $ | trim ) "networking.k8s.io/v1" }}
+          service:
+            name: {{ include "frontend.servicename" $ }}
+            port: 
+              number: 80
+          {{- else }}
+          serviceName: {{ include "frontend.servicename" $ }}
+          servicePort: 80
+          {{- end }}
+  {{- end }}
+  {{- end }}
+---
+{{- end }}
+{{- end }}

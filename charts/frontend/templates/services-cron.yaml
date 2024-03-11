@@ -1,0 +1,124 @@
+{{- range $serviceName, $service := .Values.services }}
+{{- if $service.cron }}
+{{- range $jobName, $job := $service.cron }}
+apiVersion: {{ include "frontend.cron.api-version" $ | trim }}
+kind: CronJob
+metadata:
+  name: {{ $.Release.Name }}-{{ $jobName }}
+  labels:
+    {{- include "frontend.release_labels" $ | nindent 4 }}
+spec:
+  {{- if $.Values.timezone }}
+  {{- if eq ( include "frontend.cron.timezone-support" $ ) "true" }}
+  timeZone: {{ $.Values.timezone | quote }}
+  {{- end }}
+  {{- end }}
+  schedule: {{ $job.schedule | replace "~" (randNumeric 1) | quote }}
+  concurrencyPolicy: {{ default "Forbid" $job.concurrencyPolicy }}
+  startingDeadlineSeconds: 3600
+  successfulJobsHistoryLimit: 0
+  suspend: false
+  jobTemplate:
+    spec:
+      parallelism: {{ default 1 $job.parallelism }}
+      template:
+        metadata:
+          labels:
+            {{- include "frontend.release_labels" $ | nindent 12 }}
+            cronjob: "true"
+        spec:
+          enableServiceLinks: false
+          containers:
+          - name: {{ $jobName }}-cron
+            image: {{ $service.image | quote }}
+            volumeMounts:
+              {{- if $service.mounts }}
+              {{- range $index, $mountName := $service.mounts -}}
+              {{ $mount := (index $.Values.mounts $mountName) }}
+              {{- if eq $mount.enabled true }}
+              - name: frontend-{{ $mountName }}
+                mountPath: {{ $mount.mountPath }}
+              {{- end }}
+              {{- end }}
+              {{- end }}
+            env:
+            {{- include "services.env" (dict "Values" $.Values "Release" $.Release "service" $service) | nindent 12 }}
+            {{- range $key, $val := $service.env }}
+            - name: {{ $key }}
+            {{- if or (kindIs "string" $val) (kindIs "int" $val) (kindIs "float64" $val) (kindIs "bool" $val) (kindIs "invalid" $val) }}
+              value: {{ $val | quote }}
+            {{- else }}
+              {{ $val | toYaml | indent 14 | trim }}
+            {{- end }}
+            {{- end }}
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                 set -ex
+                 {{ $job.command | nindent 18 }}
+            resources:
+              {{- if $job.resources }}
+              {{- if $service.resources }}
+              {{- if ($.Values.cronJobDefaults).resources }}
+              {{- merge $job.resources (merge $.Values.cronJobDefaults.resources (merge $service.resources $.Values.serviceDefaults.resources)) | toYaml | nindent 14 }}
+              {{- else }}
+              {{- merge $job.resources (merge $service.resources $.Values.serviceDefaults.resources) | toYaml | nindent 14 }}
+              {{- end }}
+              {{- else }}
+              {{- if ($.Values.cronJobDefaults).resources }}
+              {{- merge $job.resources (merge $.Values.cronJobDefaults.resources $.Values.serviceDefaults.resources) | toYaml | nindent 14 }}
+              {{- else }}
+              {{- merge $job.resources $.Values.serviceDefaults.resources | toYaml | nindent 14 }}
+              {{- end }}
+              {{- end }}
+              {{- else if $service.resources }}
+              {{- if ($.Values.cronJobDefaults).resources }}
+              {{- merge $.Values.cronJobDefaults.resources (merge $service.resources $.Values.serviceDefaults.resources) | toYaml | nindent 14 }}
+              {{- else }}
+              {{- merge $service.resources $.Values.serviceDefaults.resources | toYaml | nindent 14 }}
+              {{- end }}
+              {{- else }}
+              {{- if ($.Values.cronJobDefaults).resources }}
+              {{- merge $.Values.cronJobDefaults.resources $.Values.serviceDefaults.resources | toYaml | nindent 14 }}
+              {{- else }}
+              {{- $.Values.serviceDefaults.resources | toYaml | nindent 14 }}
+              {{- end }}
+              {{- end }}
+          volumes:
+            {{- if $service.mounts }}
+            {{- range $index, $mountName := $service.mounts -}}
+            {{ $mount := (index $.Values.mounts $mountName) }}
+            {{- if eq $mount.enabled true }}
+            - name: frontend-{{ $mountName }}
+              persistentVolumeClaim:
+                claimName: {{ $.Release.Name }}-{{ $mountName }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+          restartPolicy: OnFailure
+          {{- if or $job.nodeSelector $service.nodeSelector ($.Values.cronJobDefaults).nodeSelector }}
+          nodeSelector:
+            {{- if $job.nodeSelector }}
+            {{- $job.nodeSelector | toYaml | nindent 12 }}
+            {{- else }}
+            {{- if ($.Values.cronJobDefaults).nodeSelector }}
+            {{- $.Values.cronJobDefaults.nodeSelector | toYaml | nindent 12 }}
+            {{- else }}
+            {{- $service.nodeSelector | toYaml | nindent 12 }}
+            {{- end }}
+            {{- end }}
+          tolerations:
+            {{- if $job.nodeSelector }}
+            {{- include "frontend.tolerations" $job.nodeSelector | nindent 12 }}
+            {{- else }}
+            {{- if ($.Values.cronJobDefaults).nodeSelector }}
+            {{- include "frontend.tolerations" $.Values.cronJobDefaults.nodeSelector | nindent 12 }}
+            {{- else }}
+            {{- include "frontend.tolerations" $service.nodeSelector | nindent 12 }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

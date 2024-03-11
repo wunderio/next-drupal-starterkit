@@ -1,0 +1,34 @@
+apiVersion: v2
+name: frontend
+version: 1.6.0
+dependencies:
+- name: mariadb
+  version: 7.10.x
+  repository: https://storage.googleapis.com/charts.wdr.io
+  condition: mariadb.enabled
+- name: mailhog
+  version: 5.1.x
+  repository: https://codecentric.github.io/helm-charts
+  condition: mailhog.enabled
+- name: elasticsearch
+  version: 8.5.x
+  # repository: https://helm.elastic.co
+  # Forked at https://github.com/elastic/helm-charts/commit/2fd64d0af65f14df7aa01da591919460dabac4b3
+  repository: file://../elasticsearch
+  condition: elasticsearch.enabled
+- name: rabbitmq
+  version: 6.17.x
+  repository: https://storage.googleapis.com/charts.wdr.io
+  condition: rabbitmq.enabled
+- name: mongodb
+  version: 10.26.x
+  repository: https://storage.googleapis.com/charts.wdr.io
+  condition: mongodb.enabled
+- name: postgresql
+  version: 13.2.x
+  # repository: https://charts.bitnami.com/bitnami
+  repository: https://storage.googleapis.com/charts.wdr.io
+  condition: postgresql.enabled
+- name: silta-release
+  version: ^1.x
+  repository: file://../silta-release

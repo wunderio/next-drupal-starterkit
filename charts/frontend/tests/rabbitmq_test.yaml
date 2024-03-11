@@ -1,0 +1,27 @@
+suite: RabbitMQ
+templates:
+  - services-deployment.yaml
+  - services-cron.yaml
+tests:
+  - it: gets exposed when enabled
+    template: services-deployment.yaml
+    set:
+      services.foo:
+        image: 'bar'
+        cron:
+          foo:
+            command: echo "Hello world"
+            schedule: '1 2 3 * *'
+      rabbitmq.enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: RABBITMQ_HOST
+            value: RELEASE-NAME-rabbitmq
+      - template: services-cron.yaml
+        contains:
+          path: spec.jobTemplate.spec.template.spec.containers[0].env
+          content:
+            name: RABBITMQ_HOST
+            value: RELEASE-NAME-rabbitmq
