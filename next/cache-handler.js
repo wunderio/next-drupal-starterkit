@@ -8,7 +8,7 @@ IncrementalCache.onCreation(async () => {
   let redisCache;
 
   // check if Redis is available
-  if (process.env.REDIS_AVAILABLE) {
+  if (process.env.REDIS_AVAILABLE === "True") {
     // always create a Redis client inside the `onCreation` callback
     const client = createClient({
       url: process.env.REDIS_CACHE_HOST,

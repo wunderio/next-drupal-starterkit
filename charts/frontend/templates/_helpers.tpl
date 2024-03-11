@@ -117,9 +117,9 @@ rsync -az /values_mounts/ /backups/current/
 {{- end }}
 {{- if ( index .Values "redis-stack" ).enabled }}
 - name: REDIS_CACHE_HOST
-  value: {{ .Release.Name }}-redis-stack
+  value: redis://{{ .Release.Name }}-redis-stack:6379
 - name: REDIS_AVAILABLE
-  value: 1
+  value: "True"
 {{- end }}
 # Shell / Gitauth
 {{ if .Values.shell.enabled -}}

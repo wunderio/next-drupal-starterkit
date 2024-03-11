@@ -145,7 +145,7 @@ services:
         NEXTAUTH_SECRET: nextauth_secret_not_secure_used_only_locally
         NEXTAUTH_URL: https://frontend.lndo.site
         REDIS_CACHE_HOST: redis://:thisismypass@cache:6379
-        REDIS_AVAILABLE: 1
+        REDIS_AVAILABLE: "True"
     build:
       - "cd next && npm install"
     scanner: false
