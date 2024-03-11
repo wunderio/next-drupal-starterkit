@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] 08.3.2024
+
+- Update Drupal core to 10.2.4 and contrib modules to latest versions
+- Added patch for paragraphs module to fix ui bug when translating paragraphs
+- Update to node 20, cypress 13 and other dependencies
+- Update to lando > 3.21
+- Bump jose from 4.15.4 to 4.15.5
+- Fix issue with generated paths for static pages having the language path twice
+
 ## [2.0.1] 10.2.2024
 
 ### Changed

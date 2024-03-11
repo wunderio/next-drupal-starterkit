@@ -1,6 +1,5 @@
 import { useTranslation } from "next-i18next";
 
-import { absoluteUrl } from "@/lib/drupal/absolute-url";
 import type { FragmentMediaDocumentFragment } from "@/lib/gql/graphql";
 import { formatFileSizeInBytes } from "@/lib/utils";
 import ListIcon from "@/styles/icons/list.svg";
@@ -55,7 +54,7 @@ export function MediaDocument({
 
   return (
     <a
-      href={absoluteUrl(media.mediaDocumentFile.url)}
+      href={media.mediaDocumentFile.url}
       className="flex items-center"
       download
     >
