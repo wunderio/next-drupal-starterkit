@@ -306,6 +306,18 @@ workflows:
                 path: "./next"
                 identifier: "node"
                 docker-hash-prefix: v1
+              # temporary lines, used to work with local chart, can be removed when changes
+              # are pushed to the chart repository
+            - run:
+                name: Add helm repositories and build local chart
+                command: |
+                  helm repo add elastic https://helm.elastic.co
+                  helm repo add codecentric https://codecentric.github.io/helm-charts
+                  helm dependency build ./charts/frontend
+            - run:
+                name: Dry-run helm install
+                command: helm install --dry-run --generate-name ./charts/frontend --values charts/frontend/test.values.yaml
+              # end of temporary lines
           filters:
             branches:
               ignore:
