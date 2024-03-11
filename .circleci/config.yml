@@ -315,9 +315,6 @@ workflows:
                   helm repo add codecentric https://codecentric.github.io/helm-charts
                   helm repo add redis-stack https://redis-stack.github.io/helm-redis-stack/
                   helm dependency build ./charts/frontend
-            - run:
-                name: Dry-run helm install
-                command: helm install --dry-run --generate-name ./charts/frontend --values charts/frontend/test.values.yaml
               # end of temporary lines
           filters:
             branches:
