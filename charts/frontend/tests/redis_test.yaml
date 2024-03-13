@@ -1,0 +1,32 @@
+suite: drupal redis
+templates:
+  - services-deployment.yaml
+  - configmap.yaml
+capabilities:
+  apiVersions:
+    - pxc.percona.com/v1
+tests:
+  - it: sets redis hostname in drupal environment if redis is enabled
+    template: services-deployment.yaml
+    set:
+      redis:
+        enabled: true
+        auth:
+          password: "foo"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REDIS_HOST
+            value: RELEASE-NAME-redis-master
+
+  - it: sets no redis hostname in frontend environment if redis is disabled
+    template: services-deployment.yaml
+    set:
+      redis.enabled: false
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REDIS_HOST
+            value: RELEASE-NAME-redis-master

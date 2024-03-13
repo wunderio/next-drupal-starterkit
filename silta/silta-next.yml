@@ -34,5 +34,5 @@ nginx:
     connect-src 'self';
     form-action 'self';
 
-redis-stack:
+redis:
   enabled: true
