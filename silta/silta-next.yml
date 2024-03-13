@@ -45,9 +45,3 @@ redis:
   auth:
     # in a real project this has to be set via secrets file.
     password: "mypassword"
-
-# Enable autoscaling
-autoscaling:
-  enabled: true
-  minReplicas: 1
-  maxReplicas: 5
