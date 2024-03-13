@@ -17,11 +17,11 @@ dependencies:
 - name: postgresql
   repository: https://storage.googleapis.com/charts.wdr.io
   version: 13.2.24
-- name: redis-stack
-  repository: https://redis-stack.github.io/helm-redis-stack/
-  version: 0.4.9
 - name: silta-release
   repository: file://../silta-release
   version: 1.0.0
-digest: sha256:714e95e09635ebe6e371edb44a777df627e4a941d3b48be709994f7e4f03288f
-generated: "2024-03-11T12:41:38.962914045+02:00"
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.13.2
+digest: sha256:1c85bd055a8ca790ee9df759766a6aad6942bd8023e5aa8b4e1218332cfd3ac7
+generated: "2024-03-13T08:54:08.166354477+01:00"

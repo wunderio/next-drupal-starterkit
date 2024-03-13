@@ -539,9 +539,24 @@ mailhog:
       cpu: 1m
       memory: 10M
 
-# Redis service overrides
-redis-stack:
+# Redis
+# https://github.com/bitnami/charts/blob/master/bitnami/redis/values.yaml
+redis:
   enabled: false
-  image:
-    repository: redis/redis-stack-server
-    tag: 7.2.0-v9
+  architecture: standalone
+  auth:
+    # mandatory value
+    password: ""
+  replica:
+    # replicaCount: 1
+    autoscaling:
+      enabled: false
+  master:
+    resources:
+      limits:
+        cpu: 250m
+        memory: 512Mi
+      requests:
+        cpu: 50m
+        memory: 256Mi
+

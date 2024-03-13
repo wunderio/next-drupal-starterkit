@@ -1,6 +1,6 @@
 apiVersion: v2
 name: frontend
-version: 1.7.0
+version: 1.6.0
 dependencies:
 - name: mariadb
   version: 7.10.x
@@ -29,10 +29,10 @@ dependencies:
   # repository: https://charts.bitnami.com/bitnami
   repository: https://storage.googleapis.com/charts.wdr.io
   condition: postgresql.enabled
-- name: redis-stack
-  version: 0.4.9
-  repository: https://redis-stack.github.io/helm-redis-stack/
-  condition: redis-stack.enabled
 - name: silta-release
   version: ^1.x
   repository: file://../silta-release
+- name: redis
+  version: 16.13.x
+  repository: https://charts.bitnami.com/bitnami
+  condition: redis.enabled

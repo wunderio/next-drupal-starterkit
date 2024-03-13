@@ -529,6 +529,13 @@
         "enabled": { "type": "boolean" }
       }
     },
+    "redis": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "enabled": { "type": "boolean" }
+      }
+    },
     "mailhog": {
       "type": "object",
       "properties": {
@@ -542,13 +549,6 @@
             "pullPolicy": { "type": "string" }
           }
         }
-      }
-    },
-    "redis-stack": {
-      "type": "object",
-      "properties": {
-        "enabled": { "type": "boolean" },
-        "image": { "type": "object" }
       }
     },
     "silta-release": {

@@ -38,8 +38,11 @@ mongodb:
 rabbitmq:
   enabled: true
 
-redis-stack:
+redis:
   enabled: true
+  auth:
+    password: foo
+
 
 mounts:
   files:
