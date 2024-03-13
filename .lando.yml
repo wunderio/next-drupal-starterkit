@@ -144,7 +144,7 @@ services:
         # Environment variables for next_auth:
         NEXTAUTH_SECRET: nextauth_secret_not_secure_used_only_locally
         NEXTAUTH_URL: https://frontend.lndo.site
-        REDIS_CACHE_HOST: redis://:mypassword@cache:6379
+        REDIS_CACHE_HOST: redis://:mypassword@redis:6379
         REDIS_AVAILABLE: "True"
     build:
       - "cd next && npm install"
@@ -199,17 +199,8 @@ services:
     hogfrom:
       - appserver
 
-#  cache:
-#    type: redis:7
-#    persist: true
-#    overrides:
-#      ports:
-#        - "6379:6379"
-#      image: "redis/redis-stack-server:7.2.0-v8"
-#      command: '/entrypoint.sh'
-#      environment:
-#        REDIS_ARGS: "--requirepass mypassword"
-  cache:
+  # This service adds redis, used by the frontend application for caching.
+  redis:
     type: redis:7
     persist: true
     password: mypassword
