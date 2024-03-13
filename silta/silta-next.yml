@@ -36,3 +36,6 @@ nginx:
 
 redis:
   enabled: true
+  auth:
+    # in a real project this has to be set via secrets file.
+    password: "mypassword"
