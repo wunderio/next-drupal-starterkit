@@ -33,6 +33,6 @@ dependencies:
   version: ^1.x
   repository: file://../silta-release
 - name: redis
-  version: 16.13.x
+  version: 18.19.x
   repository: https://charts.bitnami.com/bitnami
   condition: redis.enabled
