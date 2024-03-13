@@ -12,9 +12,12 @@ const nextConfig = {
       : // If no build number is available, we generate a random build ID.
         crypto.randomBytes(20).toString("hex");
   },
-  cacheHandler: process.env.REDIS_CACHE_HOST
-    ? require.resolve("./cache-handler.js")
-    : undefined,
+  cacheHandler:
+    process.env.REDIS_CACHE_HOST &&
+    process.env.NODE_ENV === "production" &&
+    process.env.REDIS_AVAILABLE === "True"
+      ? require.resolve("./cache-handler.mjs")
+      : undefined,
   images: {
     remotePatterns: [
       {

@@ -21,7 +21,7 @@
     "@elastic/react-search-ui": "^1.20.2",
     "@elastic/react-search-ui-views": "^1.20.2",
     "@elastic/search-ui": "^1.20.2",
-    "@neshca/cache-handler": "^0.6.10",
+    "@neshca/cache-handler": "^1.0.7",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
