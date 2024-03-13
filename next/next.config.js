@@ -13,9 +13,8 @@ const nextConfig = {
         crypto.randomBytes(20).toString("hex");
   },
   cacheHandler:
-    process.env.REDIS_CACHE_HOST &&
-    process.env.NODE_ENV === "production" &&
-    process.env.REDIS_AVAILABLE === "True"
+    // If the environment has a redis host set, we use a cache handler:
+    process.env.REDIS_HOST && process.env.NODE_ENV === "production"
       ? require.resolve("./cache-handler.mjs")
       : undefined,
   images: {

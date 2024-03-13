@@ -144,8 +144,8 @@ services:
         # Environment variables for next_auth:
         NEXTAUTH_SECRET: nextauth_secret_not_secure_used_only_locally
         NEXTAUTH_URL: https://frontend.lndo.site
-        REDIS_CACHE_HOST: redis://:mypassword@redis:6379
-        REDIS_AVAILABLE: "True"
+        REDIS_HOST: redis
+        REDIS_PASS: "mypassword"
     build:
       - "cd next && npm install"
     scanner: false

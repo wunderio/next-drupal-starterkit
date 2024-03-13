@@ -5,11 +5,15 @@ import { createClient } from 'redis';
 
 CacheHandler.onCreation(async () => {
   let redisHandler;
-  // check if Redis is available
-  if (process.env.REDIS_AVAILABLE === "True") {
+  // Check if the Redis environment variables are set:
+  if (process.env.REDIS_HOST) {
     // always create a Redis client inside the `onCreation` callback
     const client = createClient({
-      url: process.env.REDIS_CACHE_HOST ?? 'redis://localhost:6379',
+      password: process.env.REDIS_PASS,
+      socket: {
+        port: 6379,
+        host: process.env.REDIS_HOST,
+      },
     });
 
     client.on("error", (error) => {
