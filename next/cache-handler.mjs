@@ -5,6 +5,7 @@ import { createClient } from 'redis';
 
 CacheHandler.onCreation(async () => {
   let redisHandler;
+  console.log("trying to set up redis handler");
   // Check if the Redis environment variables are set:
   if (process.env.REDIS_HOST) {
     // always create a Redis client inside the `onCreation` callback
@@ -21,6 +22,8 @@ CacheHandler.onCreation(async () => {
     });
 
     await client.connect();
+
+    console.log("working with redis");
 
     redisHandler = await createRedisHandler({
       client,
