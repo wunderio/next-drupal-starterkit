@@ -32,7 +32,7 @@ CacheHandler.onCreation(async () => {
 
   return {
     handlers: [redisHandler, localHandler],
-    ttl: { defaultStaleAge: 3600, estimateExpireAge: (staleAge) => staleAge * 2 },  };
+  };
 });
 
 export default CacheHandler;
