@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
+import pRetry from "p-retry";
 
 import { drupal } from "@/lib/drupal/drupal-client";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
@@ -25,21 +26,25 @@ export default async function handler(
       const body = JSON.parse(req.body);
 
       // Submit to Drupal.
-      const result = await drupal.fetch(url.toString(), {
-        method: "POST",
-        body: JSON.stringify({
-          webform_id: "contact",
-          name: body.name,
-          email: body.email,
-          message: body.message,
-          subject: body.subject,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          // Pass the token to authenticate the request:
-          Authorization: `Bearer ${session.accessToken}`, // eslint-disable-line @typescript-eslint/no-base-to-string
-        },
-      });
+      const result = await pRetry(
+        () =>
+          drupal.fetch(url.toString(), {
+            method: "POST",
+            body: JSON.stringify({
+              webform_id: "contact",
+              name: body.name,
+              email: body.email,
+              message: body.message,
+              subject: body.subject,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+              // Pass the token to authenticate the request:
+              Authorization: `Bearer ${session.accessToken}`, // eslint-disable-line @typescript-eslint/no-base-to-string
+            },
+          }),
+        { retries: 5 },
+      );
 
       if (result.ok) {
         res.status(200).end();
