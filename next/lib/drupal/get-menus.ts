@@ -7,17 +7,17 @@ import { MenuAvailable } from "../gql/graphql";
 import { GET_MENU } from "../graphql/queries";
 
 export async function getMenus({ locale }: GetStaticPropsContext) {
-  const [main, footer] = await pRetry(
-    () =>
-      Promise.all(
-        ["MAIN", "FOOTER"].map((menu) =>
+  const [main, footer] = await Promise.all(
+    ["MAIN", "FOOTER"].map((menu) =>
+      pRetry(
+        () =>
           drupal.doGraphQlRequest(GET_MENU, {
             name: menu as MenuAvailable,
             langcode: locale,
           }),
-        ),
+        { retries: 5 },
       ),
-    { retries: 5 },
+    ),
   );
 
   return {
