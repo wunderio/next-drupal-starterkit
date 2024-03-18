@@ -1,6 +1,5 @@
 import type { PreviewData } from "next";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import pRetry from "p-retry";
 
 import { Meta } from "@/components/meta";
 import { Node } from "@/components/node";
@@ -52,15 +51,11 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 
   for (const locale of locales) {
     // Get the defined paths via graphql for the current locale:
-    const data = await pRetry(
-      () =>
-        drupal.doGraphQlRequest(GET_STATIC_PATHS, {
-          // We will query for the latest 10 items of each content type:
-          number: 10,
-          langcode: locale,
-        }),
-      { retries: 5 },
-    );
+    const data = await drupal.doGraphQlRequest(GET_STATIC_PATHS, {
+      // We will query for the latest 10 items of each content type:
+      number: 10,
+      langcode: locale,
+    });
 
     // Get all paths from the response:
     const pathArray = [
@@ -105,15 +100,11 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   const isPreview = context.preview || false;
 
   // Get the page data with Graphql:
-  const data = await pRetry(
-    () =>
-      drupal.doGraphQlRequest(
-        GET_ENTITY_AT_DRUPAL_PATH,
-        variables,
-        // We want to use authentication only if this is a preview request:
-        isPreview ? true : false,
-      ),
-    { retries: 5 },
+  const data = await drupal.doGraphQlRequest(
+    GET_ENTITY_AT_DRUPAL_PATH,
+    variables,
+    // We want to use authentication only if this is a preview request:
+    isPreview ? true : false,
   );
 
   // If the data contains a RedirectResponse, we redirect to the path:
@@ -161,15 +152,11 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     const revisionPath = `/node/${nodeId}/revisions/${revisionId}/view`;
 
     // Get the node at the specific data with Graphql:
-    const revisionRoutedata = await pRetry(
-      () =>
-        drupal.doGraphQlRequest(
-          GET_ENTITY_AT_DRUPAL_PATH,
-          { path: revisionPath, langcode: context.locale },
-          // We need to do an authenticated request to get the revision:
-          true,
-        ),
-      { retries: 5 },
+    const revisionRoutedata = await drupal.doGraphQlRequest(
+      GET_ENTITY_AT_DRUPAL_PATH,
+      { path: revisionPath, langcode: context.locale },
+      // We need to do an authenticated request to get the revision:
+      true,
     );
 
     // Instead of the entity at the current revision, we want now to

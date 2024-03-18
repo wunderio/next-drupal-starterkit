@@ -1,6 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useTranslation } from "next-i18next";
-import pRetry from "p-retry";
 
 import { ArticleTeasers } from "@/components/article/article-teasers";
 import { ContactList } from "@/components/contact-list";
@@ -61,9 +60,9 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
     langcode: context.locale,
   };
 
-  const data = await pRetry(
-    () => drupal.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, variables),
-    { retries: 5 },
+  const data = await drupal.doGraphQlRequest(
+    GET_ENTITY_AT_DRUPAL_PATH,
+    variables,
   );
 
   const frontpage = extractEntityFromRouteQueryResult(data);
@@ -84,16 +83,12 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
   }
 
   // Get the last 3 sticky articles in the current language:
-  const stickyArticleTeasers = await pRetry(
-    () =>
-      drupal.doGraphQlRequest(LISTING_ARTICLES, {
-        langcode: context.locale,
-        sticky: true,
-        page: 0,
-        pageSize: 3,
-      }),
-    { retries: 5 },
-  );
+  const stickyArticleTeasers = await drupal.doGraphQlRequest(LISTING_ARTICLES, {
+    langcode: context.locale,
+    sticky: true,
+    page: 0,
+    pageSize: 3,
+  });
 
   // We cast the results as the ListingArticle type to get type safety:
   const articles =

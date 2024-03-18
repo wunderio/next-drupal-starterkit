@@ -1,6 +1,7 @@
 import { DrupalClient } from "next-drupal";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { request, RequestDocument, Variables } from "graphql-request";
+import pRetry from "p-retry";
 
 export class GraphQlDrupalClient extends DrupalClient {
   async doGraphQlRequest<T>(
@@ -9,15 +10,26 @@ export class GraphQlDrupalClient extends DrupalClient {
     withAuth = true,
   ): Promise<ReturnType<typeof request<T, Variables>>> {
     const endpoint = this.buildUrl("/graphql").toString();
+    let requestHeaders: Record<string, string> = {};
     // The drupal.client has better handling of authentication,
     // here we just add the token to the request headers.
     if (withAuth) {
       const token = await this.getAccessToken();
-      const requestHeaders = {
+      requestHeaders = {
         authorization: `Bearer ${token.access_token}`,
       };
-      return await request(endpoint, query, variables, requestHeaders);
     }
-    return await request(endpoint, query, variables);
+    // Wrap the request in pRetry to retry failed attempts.
+    return await pRetry(
+      () => request(endpoint, query, variables, requestHeaders),
+      {
+        retries: 5,
+        onFailedAttempt: (error) => {
+          console.log(
+            `Drupal GraphQl: attempt ${error.attemptNumber} failed. There are ${error.retriesLeft} retries left.`,
+          );
+        },
+      },
+    );
   }
 }

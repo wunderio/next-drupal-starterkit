@@ -1,5 +1,3 @@
-import pRetry from "p-retry";
-
 import { drupal } from "@/lib/drupal/drupal-client";
 import type { ArticleTeaserType } from "@/types/graphql";
 
@@ -24,16 +22,12 @@ export const getArticles = async ({
   let nodes: ArticleTeaserType[] = [];
   let totalPages = 1;
   try {
-    const articlesViewResult = await pRetry(
-      () =>
-        drupal.doGraphQlRequest(LISTING_ARTICLES, {
-          langcode: locale,
-          page: 0,
-          pageSize: limit,
-          offset: offset,
-        }),
-      { retries: 5 },
-    );
+    const articlesViewResult = await drupal.doGraphQlRequest(LISTING_ARTICLES, {
+      langcode: locale,
+      page: 0,
+      pageSize: limit,
+      offset: offset,
+    });
 
     if (articlesViewResult.articlesView?.results) {
       nodes = articlesViewResult.articlesView.results as ArticleTeaserType[];

@@ -1,5 +1,4 @@
 import { GetStaticPropsContext } from "next";
-import pRetry from "p-retry";
 
 import { Translations } from "@/lib/contexts/language-links-context";
 import { GET_NODE_PATH_BY_ID_AND_LANGCODE } from "@/lib/graphql/queries";
@@ -36,10 +35,9 @@ export const getNodeTranslatedVersions = async (
         langcode: locales[i],
       };
 
-      const translatedNodeResult = await pRetry(
-        () =>
-          drupal.doGraphQlRequest(GET_NODE_PATH_BY_ID_AND_LANGCODE, variables),
-        { retries: 5 },
+      const translatedNodeResult = await drupal.doGraphQlRequest(
+        GET_NODE_PATH_BY_ID_AND_LANGCODE,
+        variables,
       );
 
       if (
