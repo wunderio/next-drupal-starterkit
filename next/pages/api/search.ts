@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { env } from "@/env";
+import { drupal } from "@/lib/drupal/drupal-client";
 
+import { env } from "@/env";
 /**
  * Example backend proxy for Elasticsearch Search-UI frontend client.
  */
@@ -13,7 +14,7 @@ const Search = async (req: NextApiRequest, res: NextApiResponse) => {
   const ProxyUrl = `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/${languagePrefix}/wunder_search/proxy`;
 
   try {
-    const result = await fetch(ProxyUrl, {
+    const result = await drupal.fetch(ProxyUrl, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(req.body),
