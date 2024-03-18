@@ -2,7 +2,6 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { useTranslation } from "next-i18next";
-import pRetry from "p-retry";
 
 import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
@@ -70,18 +69,14 @@ export const getServerSideProps: GetServerSideProps<
     `/${locale}/webform_rest/${params.webformName}/complete_submission/${params.webformSubmissionUuid}`,
   );
 
-  const result = await pRetry(
-    () =>
-      drupal.fetch(url.toString(), {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          // Pass the token to authenticate the request:
-          Authorization: `Bearer ${session.accessToken}`, // eslint-disable-line @typescript-eslint/no-base-to-string
-        },
-      }),
-    { retries: 5 },
-  );
+  const result = await drupal.fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      // Pass the token to authenticate the request:
+      Authorization: `Bearer ${session.accessToken}`, // eslint-disable-line @typescript-eslint/no-base-to-string
+    },
+  });
 
   if (!result.ok) {
     return {

@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import pRetry from "p-retry";
 
 import { env } from "@/env";
 
@@ -14,15 +13,11 @@ const Search = async (req: NextApiRequest, res: NextApiResponse) => {
   const ProxyUrl = `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/${languagePrefix}/wunder_search/proxy`;
 
   try {
-    const result = await pRetry(
-      () =>
-        fetch(ProxyUrl, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(req.body),
-        }),
-      { retries: 5 },
-    );
+    const result = await fetch(ProxyUrl, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(req.body),
+    });
 
     if (!result.ok) {
       res.status(result.status).json({ error: result.statusText });

@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import pRetry from "p-retry";
 
 import { drupal } from "@/lib/drupal/drupal-client";
 import { LISTING_ARTICLES } from "@/lib/graphql/queries";
@@ -16,14 +15,13 @@ export default async function handler(
 
     const limit = Number(req.query.limit) || 10;
 
-    const articlesQueryResult = await pRetry(
-      () =>
-        drupal.doGraphQlRequest(LISTING_ARTICLES, {
-          langcode: languagePrefix,
-          page: 0,
-          pageSize: limit,
-        }),
-      { retries: 5 },
+    const articlesQueryResult = await drupal.doGraphQlRequest(
+      LISTING_ARTICLES,
+      {
+        langcode: languagePrefix,
+        page: 0,
+        pageSize: limit,
+      },
     );
 
     // Set cache headers: 60 seconds max-age, stale-while-revalidate
