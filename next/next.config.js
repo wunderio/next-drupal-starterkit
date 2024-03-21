@@ -3,6 +3,8 @@ const { i18n } = require("./next-i18next.config");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Only generate standalone output in circle ci:
+  output: process.env.CI ? "standalone" : undefined,
   images: {
     remotePatterns: [
       {

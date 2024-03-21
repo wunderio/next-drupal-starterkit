@@ -1,5 +1,8 @@
 FROM wunderio/silta-node:20-alpine-v1
 
-COPY . /app
+COPY ./.next/standalone /app
+COPY ./.next/static /app/.next/static
+COPY ./public /app/public
 
-CMD npm run start
+
+CMD ["node", "server.js"]
