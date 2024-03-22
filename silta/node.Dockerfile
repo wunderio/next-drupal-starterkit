@@ -10,5 +10,5 @@ WORKDIR /app
 
 ENV PORT 3000
 
-# In standalone mode, we cannot use npm run start, we have to use the server.js file
+# server.js is created by next build from the standalone output
 CMD ["node", "server.js"]
