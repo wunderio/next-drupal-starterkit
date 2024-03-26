@@ -15,6 +15,7 @@ commands=(
   "(lando npm run start&)"
   "lando drush en wunder_democontent -y"
   "lando drush mim --group=demo_content --execute-dependencies"
+  "lando drush pm-uninstall wunder_democontent migrate migrate_tools migrate_plus -y"
   "lando npm-stop || true"
 )
 

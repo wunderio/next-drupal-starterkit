@@ -198,8 +198,6 @@ services:
 proxy:
   mailhog:
     - mail.lndo.site
-  elasticsearch:
-    - elasticsearch.lndo.site:9200
   kibana:
     - kibana.lndo.site:5601
   node:
