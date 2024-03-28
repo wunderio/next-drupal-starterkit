@@ -1,0 +1,10 @@
+services:
+  wunder_democontent.event_subscriber:
+    class: Drupal\wunder_democontent\EventSubscriber\WunderDemocontentRevalidateSubscriber
+    arguments: ['@logger.channel.wunder_democontent', '@state']
+    tags:
+      - { name: event_subscriber }
+  logger.channel.wunder_democontent:
+    class: Drupal\Core\Logger\LoggerChannel
+    factory: logger.factory:get
+    arguments: ['wunder_democontent']

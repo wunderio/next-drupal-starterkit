@@ -4,6 +4,8 @@ var crypto = require("crypto");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Only generate standalone output in circle ci:
+  output: process.env.CIRCLECI ? "standalone" : undefined,
   generateBuildId: async () => {
     // This environment variable is set by CircleCI.
     // adjust this to your needs if you use another CI/CD tool.
