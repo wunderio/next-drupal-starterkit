@@ -2,6 +2,7 @@
 
 # List of commands to run:
 commands=(
+  "lando rebuild -y"
   "lando composer install"
   "lando generate-oauth-keys"
   "lando drush si minimal -y"
