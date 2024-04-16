@@ -2,7 +2,6 @@
 
 # List of commands to run:
 commands=(
-  "lando rebuild -y"
   "lando composer install"
   "lando generate-oauth-keys"
   "lando drush si minimal -y"
@@ -10,13 +9,14 @@ commands=(
   "lando drush wunder_next:setup-user-and-consumer"
   "lando drush eshd -y"
   "lando drush eshs"
-  "lando npm i"
-  "lando npm run build"
-  "(lando npm run start&)"
   "lando drush en wunder_democontent -y"
+  "lando drush state:set wunder_democontent.disable_revalidation TRUE"
   "lando drush mim --group=demo_content --execute-dependencies"
   "lando drush pm-uninstall wunder_democontent migrate migrate_tools migrate_plus -y"
-  "lando npm-stop || true"
+  "lando drush state:del wunder_democontent.disable_revalidation"
+  "lando drush cron"
+  "lando npm i"
+  "lando npm run build"
 )
 
 last_successful_command=0
