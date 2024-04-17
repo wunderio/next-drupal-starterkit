@@ -179,6 +179,7 @@ services:
   # The kibana service can be used to monitor and issue queries to elasticsearch.
   kibana:
     type: compose
+    scanner: false
     services:
       image: "docker.elastic.co/kibana/kibana:8.10.2"
       command: "/bin/tini -- /usr/local/bin/kibana-docker"
