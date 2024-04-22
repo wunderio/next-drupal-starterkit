@@ -15,7 +15,9 @@ interface FooterProps {
 export function Footer({ menu }: FooterProps) {
   // Only show the menu items that match the current locale:
   const { locale } = useRouter();
-  const filteredItems = menu.items?.filter((link) => link.langcode == locale);
+  const filteredItems = menu.items?.filter(
+    (link) => link.langcode?.id == locale,
+  );
   return (
     <footer className="border-t border-finnishwinter">
       <div className="mx-auto max-w-6xl px-6">

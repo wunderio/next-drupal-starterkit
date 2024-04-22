@@ -21,10 +21,16 @@ entity_config:
       query_load_enabled: true
       edges_enabled: true
   menu:
+    account:
+      enabled: false
+    admin:
+      enabled: false
     footer:
       enabled: true
     main:
       enabled: true
+    tools:
+      enabled: false
   node:
     article:
       enabled: true
@@ -59,6 +65,9 @@ entity_config:
       enabled: true
     video:
       enabled: true
+  taxonomy_term:
+    tags:
+      enabled: false
   user:
     user:
       enabled: true
