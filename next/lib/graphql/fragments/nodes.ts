@@ -41,6 +41,9 @@ export const FRAGMENT_NODE_ARTICLE = graphql(`
         ...FragmentUser
       }
     }
+    translations {
+      ...FragmentNodeTranslation
+    }
   }
 `);
 
@@ -64,6 +67,9 @@ export const FRAGMENT_NODE_FRONTPAGE = graphql(`
           ...FragmentParagraphListingArticle
         }
       }
+    }
+    translations {
+      ...FragmentNodeTranslation
     }
   }
 `);
@@ -89,6 +95,9 @@ export const FRAGMENT_NODE_PAGE = graphql(`
           ...FragmentParagraphAccordion
         }
       }
+    }
+    translations {
+      ...FragmentNodeTranslation
     }
   }
 `);

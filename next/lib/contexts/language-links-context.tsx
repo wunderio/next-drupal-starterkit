@@ -1,12 +1,11 @@
 import { GetStaticPropsContext } from "next";
 import { createContext, useContext } from "react";
 
+import { FragmentNodeTranslationFragment } from "../gql/graphql";
+
 import siteConfig from "@/site.config";
 
 export type LanguageLinks = typeof siteConfig.locales;
-export type Translations = Readonly<
-  Partial<Record<keyof LanguageLinks, `/${string}`>>
->;
 
 const LanguageLinksContext = createContext(siteConfig.locales);
 
@@ -14,11 +13,11 @@ const LanguageLinksContext = createContext(siteConfig.locales);
  * From the site config and available node translations, create links to be used in the language switcher.
  */
 export function createLanguageLinks(
-  nodeTranslations?: Translations,
+  nodeTranslations?: FragmentNodeTranslationFragment[],
 ): LanguageLinks {
   const languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
-  Object.entries(nodeTranslations).forEach(([key, path]) => {
-    languageLinks[key].path = path;
+  Object.entries(nodeTranslations).forEach(([_, item]) => {
+    languageLinks[item.langcode.id].path = item.path;
   });
   return languageLinks;
 }
