@@ -187,7 +187,7 @@ services:
       environment:
         ELASTICVUE_CLUSTERS: '[{"name": "dev cluster", "uri": "http://localhost:9200", "password": "", "user": ""}]'
 
-  # Uncomment this section if you prefer to use the mode advanced Kibana tool with Elasticsearch:
+  # Uncomment this section if you prefer to use the more advanced Kibana tool with Elasticsearch:
   #
   # kibana:
   #   type: lando
