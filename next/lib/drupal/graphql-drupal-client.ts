@@ -3,6 +3,8 @@ import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { request, RequestDocument, Variables } from "graphql-request";
 import pRetry from "p-retry";
 
+import { env } from "@/env";
+
 export class GraphQlDrupalClient extends DrupalClient {
   async doGraphQlRequest<T>(
     query: TypedDocumentNode<T> | RequestDocument,
@@ -23,7 +25,7 @@ export class GraphQlDrupalClient extends DrupalClient {
     return await pRetry(
       () => request(endpoint, query, variables, requestHeaders),
       {
-        retries: 5,
+        retries: env.NODE_ENV === "development" ? 0 : 5,
         onFailedAttempt: (error) => {
           console.log(
             `Drupal GraphQl: attempt ${error.attemptNumber} failed. There are ${error.retriesLeft} retries left.`,

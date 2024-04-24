@@ -14,7 +14,7 @@ const getFetcher =
     };
     // Return the pRetry wrapped fetch function:
     return pRetry(wrappedFetch, {
-      retries: 5,
+      retries: env.NODE_ENV === "development" ? 0 : 5,
       onFailedAttempt: (error) => {
         console.log(
           `Drupal fetch: attempt ${error.attemptNumber} failed. There are ${error.retriesLeft} retries left.`,

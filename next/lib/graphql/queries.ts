@@ -77,34 +77,40 @@ export const GET_MENU = graphql(`
         id
         description
         url
-        langcode
         title
         internal
         attributes {
           class
           icon
         }
+        langcode {
+          id
+        }
         children {
           id
           description
           url
-          langcode
           title
           internal
           attributes {
             class
             icon
           }
+          langcode {
+            id
+          }
           children {
             id
             description
             url
-            langcode
             title
             internal
             attributes {
               class
               icon
+            }
+            langcode {
+              id
             }
           }
         }
