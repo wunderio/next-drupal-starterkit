@@ -1,27 +1,35 @@
-import { graphql } from "@/lib/gql";
+import { graphql } from "gql.tada";
+
+import {
+  FRAGMENT_ARTICLE_TEASER,
+  FRAGMENT_NODE_UNION,
+} from "./fragments/nodes";
 
 /**
  * Given a path, this query will return the node, or a redirect.
  */
-export const GET_ENTITY_AT_DRUPAL_PATH = graphql(`
-  query GetNodeByPath($path: String!, $langcode: String!) {
-    route(path: $path, langcode: $langcode) {
-      __typename
-      ... on RouteInternal {
+export const GET_ENTITY_AT_DRUPAL_PATH = graphql(
+  `
+    query GetNodeByPath($path: String!, $langcode: String!) {
+      route(path: $path, langcode: $langcode) {
         __typename
-        entity {
-          ...FragmentNodeUnion
+        ... on RouteInternal {
+          __typename
+          entity {
+            ...FragmentNodeUnion
+          }
+        }
+        ... on RouteRedirect {
+          __typename
+          status
+          url
+          internal
         }
       }
-      ... on RouteRedirect {
-        __typename
-        status
-        url
-        internal
-      }
     }
-  }
-`);
+  `,
+  [FRAGMENT_NODE_UNION],
+);
 
 /**
  * This query is used get all node paths and fed to
@@ -119,30 +127,33 @@ export const GET_MENU = graphql(`
   }
 `);
 
-export const LISTING_ARTICLES = graphql(`
-  query ArticleListing(
-    $langcode: String = "en"
-    $sticky: Boolean
-    $offset: Int = 0
-    $pageSize: Int = 10
-    $page: Int = 0
-  ) {
-    articlesView(
-      page: $page
-      pageSize: $pageSize
-      filter: { langcode: $langcode, sticky: $sticky }
-      offset: $offset
+export const LISTING_ARTICLES = graphql(
+  `
+    query ArticleListing(
+      $langcode: String = "en"
+      $sticky: Boolean
+      $offset: Int = 0
+      $pageSize: Int = 10
+      $page: Int = 0
     ) {
-      results {
-        __typename
-        ...FragmentArticleTeaser
-      }
-      pageInfo {
-        offset
-        page
-        pageSize
-        total
+      articlesView(
+        page: $page
+        pageSize: $pageSize
+        filter: { langcode: $langcode, sticky: $sticky }
+        offset: $offset
+      ) {
+        results {
+          __typename
+          ...FragmentArticleTeaser
+        }
+        pageInfo {
+          offset
+          page
+          pageSize
+          total
+        }
       }
     }
-  }
-`);
+  `,
+  [FRAGMENT_ARTICLE_TEASER],
+);

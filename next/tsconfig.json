@@ -1,5 +1,17 @@
 {
   "compilerOptions": {
+    "plugins": [ 
+      { 
+        "name": "@0no-co/graphqlsp", 
+        "schema": {
+          "url": "http://next-drupal-starterkit.lndo.site/graphql",
+          "headers": {
+            "Accept": "application/graphql-response+json"
+          }
+        },
+        "tadaOutputLocation": "./src/graphql-env.d.ts"
+      } 
+    ], 
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]

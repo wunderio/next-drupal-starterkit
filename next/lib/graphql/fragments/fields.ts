@@ -1,4 +1,4 @@
-import { graphql } from "@/lib/gql";
+import { graphql } from "gql.tada";
 
 export const FRAGMENT_TEXT = graphql(`
   fragment FragmentText on Text {

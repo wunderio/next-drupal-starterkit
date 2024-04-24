@@ -32,6 +32,7 @@
     "clsx": "^2.0.0",
     "cva": "npm:class-variance-authority@0.7.0",
     "drupal-jsonapi-params": "^2.3.1",
+    "gql.tada": "^1.5.6",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "html-react-parser": "^5.0.6",
@@ -52,6 +53,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@0no-co/graphqlsp": "^1.11.0",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/client-preset": "^4.1.0",
     "@next/eslint-plugin-next": "^13.5.6",
