@@ -1,9 +1,20 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+The format is based on [Keep a Changelog](http://keepachangelog.com/).
+
+## [2.2.0] 25.4.2024
+
+- Update Drupal to 10.2.5 and contrib modules to their latest versions
+- Update Next.js to 14.2.2
+- Use the new Translations GraphQL field to get translated versions of the node
+- Enable noErrorTruncation in TypeScript
+- Replace kibana with Elasticvue in Lando
+- If a catch-all route loads a frontpage node, redirect to / in the correct locale
+- Add mechanism to inhibit revalidation (used during migration of default content)
+- Add retry functionality for failed requests to the backend
+- Switch to standalone Next.js build in CI
 
 ## [2.1.0] 08.3.2024
 
