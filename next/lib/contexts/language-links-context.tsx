@@ -1,7 +1,7 @@
 import { GetStaticPropsContext } from "next";
 import { createContext, useContext } from "react";
 
-import { FragmentNodeTranslationFragment } from "../gql/graphql";
+import { FragmentNodeTranslationFragment } from "@/lib/gql/graphql";
 
 import siteConfig from "@/site.config";
 
