@@ -16,8 +16,8 @@ export function createLanguageLinks(
   nodeTranslations?: FragmentNodeTranslationFragment[],
 ): LanguageLinks {
   const languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
-  Object.entries(nodeTranslations).forEach(([_, item]) => {
-    languageLinks[item.langcode.id].path = item.path;
+  Object.values(nodeTranslations).forEach(({ langcode, path }) => {
+    languageLinks[langcode.id].path = path;
   });
   return languageLinks;
 }
