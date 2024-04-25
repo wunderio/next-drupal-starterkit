@@ -8,7 +8,6 @@ import {
   LanguageLinks,
 } from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal/drupal-client";
-import { getNodeTranslatedVersions } from "@/lib/drupal/get-node-translated-versions";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -190,12 +189,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   }
 
   // Add information about possible other language versions of this node.
-  const nodeTranslations = await getNodeTranslatedVersions(
-    nodeEntity,
-    context,
-    drupal,
-  );
-  const languageLinks = createLanguageLinks(nodeTranslations);
+  const languageLinks = createLanguageLinks(nodeEntity.translations);
 
   return {
     props: {

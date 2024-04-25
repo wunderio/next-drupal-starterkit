@@ -66,3 +66,13 @@ export const FRAGMENT_METATAG = graphql(`
     }
   }
 `);
+
+export const FRAGMENT_NODE_TRANSLATION = graphql(`
+  fragment FragmentNodeTranslation on Translation {
+    __typename
+    path
+    langcode {
+      id
+    }
+  }
+`);
