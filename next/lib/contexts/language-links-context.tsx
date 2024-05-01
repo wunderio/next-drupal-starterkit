@@ -13,14 +13,20 @@ const LanguageLinksContext = createContext(siteConfig.locales);
  * From the site config and available node translations, create links to be used in the language switcher.
  */
 export function createLanguageLinks(
-  nodeTranslations?: FragmentNodeTranslationFragment[],
+  nodeTranslations: FragmentNodeTranslationFragment[],
 ): LanguageLinks {
-  const languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
+  const languageLinks = getStandardLanguageLinks();
   Object.values(nodeTranslations).forEach(({ langcode, path }) => {
     languageLinks[langcode.id].path = path;
   });
   return languageLinks;
 }
+
+/**
+ * Get the standard language links from the site config.
+ */
+export const getStandardLanguageLinks = () =>
+  JSON.parse(JSON.stringify(siteConfig.locales));
 
 /**
  * Generates a language links object for a page that is created in next only.
@@ -33,7 +39,7 @@ export function createLanguageLinksForNextOnlyPage(
   path: string,
   context: GetStaticPropsContext,
 ): LanguageLinks {
-  const languageLinks = JSON.parse(JSON.stringify(siteConfig.locales));
+  const languageLinks = getStandardLanguageLinks();
   context.locales.forEach((locale) => {
     languageLinks[locale].path =
       languageLinks[locale].path === "/"

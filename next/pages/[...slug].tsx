@@ -7,6 +7,7 @@ import {
   createLanguageLinks,
   LanguageLinks,
 } from "@/lib/contexts/language-links-context";
+import { getStandardLanguageLinks } from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal/drupal-client";
 import {
   CommonPageProps,
@@ -189,7 +190,14 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   }
 
   // Add information about possible other language versions of this node.
-  const languageLinks = createLanguageLinks(nodeEntity.translations);
+  let languageLinks;
+  // Not all node types necessarily have translations enabled,
+  // if so, only show the standard language links.
+  if ("translations" in nodeEntity) {
+    languageLinks = createLanguageLinks(nodeEntity.translations);
+  } else {
+    languageLinks = getStandardLanguageLinks();
+  }
 
   return {
     props: {
