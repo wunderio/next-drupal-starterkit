@@ -45,3 +45,11 @@ export type ArticleTeaserType = Extract<
   ArticleListingQuery["articlesView"]["results"][number],
   { __typename: "NodeArticle" }
 >;
+
+/**
+ * From TypedRouteEntity, create a type for Test Content data
+ */
+export type TestContentType = Extract<
+  TypedRouteEntity,
+  { __typename: "NodeTestContent" }
+>;

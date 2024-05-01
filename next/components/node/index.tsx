@@ -1,6 +1,7 @@
 import { NodeArticle } from "@/components/node/node--article";
 import { NodeFrontpage } from "@/components/node/node--frontpage";
 import { NodePage } from "@/components/node/node--page";
+import { NodeTestContent } from "@/components/node/node--test-content";
 import { TypedRouteEntity } from "@/types/graphql";
 
 export function Node({ node }: { node: TypedRouteEntity }) {
@@ -15,6 +16,9 @@ export function Node({ node }: { node: TypedRouteEntity }) {
     }
     case "NodeArticle": {
       return <NodeArticle article={node} />;
+    }
+    case "NodeTestContent": {
+      return <NodeTestContent testContent={node} />;
     }
     default: {
       console.log(

@@ -22,6 +22,7 @@ export const FRAGMENT_NODE_UNION = graphql(`
     ...FragmentNodeArticle
     ...FragmentNodeFrontpage
     ...FragmentNodePage
+    ...FragmentNodeTestcontent
   }
 `);
 
@@ -99,6 +100,15 @@ export const FRAGMENT_NODE_PAGE = graphql(`
     translations {
       ...FragmentNodeTranslation
     }
+  }
+`);
+
+export const FRAGMENT_NODE_TESTCONTENT = graphql(`
+  fragment FragmentNodeTestcontent on NodeTestContent {
+    body {
+      ...FragmentTextSummary
+    }
+    testfield
   }
 `);
 
