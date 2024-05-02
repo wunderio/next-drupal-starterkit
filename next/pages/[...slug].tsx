@@ -1,4 +1,4 @@
-import type { PreviewData } from "next";
+import type { PreviewData, Redirect } from "next";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 
 import { Meta } from "@/components/meta";
@@ -7,8 +7,8 @@ import {
   createLanguageLinks,
   LanguageLinks,
 } from "@/lib/contexts/language-links-context";
+import { getStandardLanguageLinks } from "@/lib/contexts/language-links-context";
 import { drupal } from "@/lib/drupal/drupal-client";
-import { getNodeTranslatedVersions } from "@/lib/drupal/get-node-translated-versions";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -121,11 +121,22 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
 
   // Get the entity from the response:
   let nodeEntity = extractEntityFromRouteQueryResult(data);
+
   // If there's no node, return 404:
   if (!nodeEntity) {
     return {
       notFound: true,
       revalidate: 60,
+    };
+  }
+
+  // If node is a frontpage, redirect to / for the current locale:
+  if (nodeEntity.__typename === "NodeFrontpage") {
+    return {
+      redirect: {
+        destination: `/${context.locale}`,
+        permanent: false,
+      } satisfies Redirect,
     };
   }
 
@@ -179,12 +190,14 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   }
 
   // Add information about possible other language versions of this node.
-  const nodeTranslations = await getNodeTranslatedVersions(
-    nodeEntity,
-    context,
-    drupal,
-  );
-  const languageLinks = createLanguageLinks(nodeTranslations);
+  let languageLinks;
+  // Not all node types necessarily have translations enabled,
+  // if so, only show the standard language links.
+  if ("translations" in nodeEntity) {
+    languageLinks = createLanguageLinks(nodeEntity.translations);
+  } else {
+    languageLinks = getStandardLanguageLinks();
+  }
 
   return {
     props: {

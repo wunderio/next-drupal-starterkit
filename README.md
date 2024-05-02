@@ -121,6 +121,7 @@ The site is set up to work with Elasticsearch to provide a complete search exper
 The Lando setup includes spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module, which in turn makes use of the [Elasticsearch helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
 On the frontend side, the search user uses the [Elastic UI library](https://elastic.github.io/eui/).
 The frontend site queries Elasticsearch via a simple proxy controller in Drupal, also provided by the included `wunder_search` custom Drupal module.
+The lando setup also includes [ElasticVue](https://elasticvue.com/), a tool to help you manage your Elasticsearch indexes.
 
 ### Importable demo content
 
