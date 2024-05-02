@@ -19,8 +19,6 @@ services:
       NEXT_PUBLIC_FRONTEND_URL: https://<|NEXT_DOMAIN|>
       NEXT_IMAGE_DOMAIN: <|DRUPAL_DOMAIN|>
       NEXTAUTH_URL: https://<|NEXT_DOMAIN|>
-      REDIS_HOST: redis
-      REDIS_PASS: "mypassword"
     # Autoscaling is enabled by default, because we want to test that the frontend
     # can work with redis.
     autoscaling:
