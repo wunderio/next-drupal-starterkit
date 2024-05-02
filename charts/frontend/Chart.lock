@@ -21,7 +21,7 @@ dependencies:
   repository: file://../silta-release
   version: 1.0.0
 - name: redis
-  repository: https://charts.bitnami.com/bitnami
-  version: 18.19.2
-digest: sha256:d30ca54c5789b9a601e7a2c30c8882e5c21475e0c0da58bf79daab978d82244f
-generated: "2024-03-13T14:19:26.173094653+01:00"
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 19.1.5
+digest: sha256:2b01644f455ef6bd5f94b1d7ee09c3bbb110dfe14061979527ab57ad7430fd34
+generated: "2024-05-02T08:33:50.387435314+03:00"
