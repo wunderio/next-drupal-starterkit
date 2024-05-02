@@ -5,12 +5,8 @@ import { createClient } from 'redis';
 
 CacheHandler.onCreation(async () => {
   let redisHandler;
-  // TEMPORARY: log the Redis environment variables
-  console.log('REDIS_HOST:', process.env.REDIS_HOST);
-  console.log('REDIS_PASS:', process.env.REDIS_PASS);
   // Check if the Redis environment variables are set:
   if (process.env.REDIS_HOST) {
-    console.log("going with Redis");
     // always create a Redis client inside the `onCreation` callback
     const client = createClient({
       password: process.env.REDIS_PASS,
