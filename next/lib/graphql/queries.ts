@@ -54,6 +54,55 @@ export const GET_STATIC_PATHS = graphql(`
   }
 `);
 
+/**
+ * This query is used get all node paths and fed to
+ * getStaticPaths when generating pages. By adjusting the query,
+ * we can decide which pages to generate. When creating a new content type,
+ * it should be added here.
+ */
+export const GET_SITEMAP_NODES = graphql(`
+  query getSitemapNodes($number: Int, $langcode: String) {
+    nodePages(
+      first: $number
+      langcode: $langcode
+      sortKey: UPDATED_AT
+      reverse: true
+    ) {
+      nodes {
+        path
+        changed {
+          timestamp
+        }
+        translations {
+          path
+          langcode {
+            id
+          }
+        }
+      }
+    }
+    nodeArticles(
+      first: $number
+      langcode: $langcode
+      sortKey: UPDATED_AT
+      reverse: true
+    ) {
+      nodes {
+        path
+        changed {
+          timestamp
+        }
+        translations {
+          path
+          langcode {
+            id
+          }
+        }
+      }
+    }
+  }
+`);
+
 export const GET_NODE_PATH_BY_ID_AND_LANGCODE = graphql(`
   query getNodePathByIdAndLangcode($id: ID!, $langcode: String!) {
     node(id: $id, langcode: $langcode) {
