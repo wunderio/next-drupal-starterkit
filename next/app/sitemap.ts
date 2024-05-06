@@ -16,10 +16,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Initialize the sitemap:
   let sitemap = [];
 
-  // For each language, do a GraphQL request to get all nodes:
+  // For each language, start fetching the nodes for the sitemap:
   for (const lang of languages) {
     let page = 0;
     let totalItems = 0;
+    // Initialize the page size to 0, we will get the actual value from the first request:
     let pageSize = 0;
 
     do {
@@ -52,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
       // Add the nodes to the sitemap:
       sitemap = [...sitemap, ...nodes];
+      // Increment the page number:
       page++;
     } while (page * pageSize < totalItems);
   }
