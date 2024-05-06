@@ -55,49 +55,65 @@ export const GET_STATIC_PATHS = graphql(`
 `);
 
 /**
- * This query is used get all node paths and fed to
- * getStaticPaths when generating pages. By adjusting the query,
- * we can decide which pages to generate. When creating a new content type,
- * it should be added here.
+ * This query is used to get all nodes for the sitemap.
+ * When a new node is created, it should be added here.
  */
 export const GET_SITEMAP_NODES = graphql(`
-  query getSitemapNodes($number: Int, $langcode: String) {
-    nodePages(
-      first: $number
-      langcode: $langcode
-      sortKey: UPDATED_AT
-      reverse: true
+  query getSitemapNodes(
+    $page: Int = 0
+    $langcode: String = "en"
+    $pageSize: Int = 10
+  ) {
+    sitemapNodes(
+      filter: { langcode: $langcode }
+      pageSize: $pageSize
+      page: $page
     ) {
-      nodes {
-        path
-        changed {
-          timestamp
-        }
-        translations {
+      results {
+        ... on NodePage {
+          __typename
           path
+          changed {
+            timestamp
+          }
           langcode {
             id
+          }
+          translations {
+            ...FragmentNodeTranslation
+          }
+        }
+        ... on NodeArticle {
+          __typename
+          path
+          changed {
+            timestamp
+          }
+          langcode {
+            id
+          }
+          translations {
+            ...FragmentNodeTranslation
+          }
+        }
+        ... on NodeFrontpage {
+          __typename
+          path
+          changed {
+            timestamp
+          }
+          langcode {
+            id
+          }
+          translations {
+            ...FragmentNodeTranslation
           }
         }
       }
-    }
-    nodeArticles(
-      first: $number
-      langcode: $langcode
-      sortKey: UPDATED_AT
-      reverse: true
-    ) {
-      nodes {
-        path
-        changed {
-          timestamp
-        }
-        translations {
-          path
-          langcode {
-            id
-          }
-        }
+      pageInfo {
+        page
+        pageSize
+        total
       }
     }
   }

@@ -2,51 +2,59 @@ import { MetadataRoute } from "next";
 
 import { drupal } from "@/lib/drupal/drupal-client";
 import { GET_SITEMAP_NODES } from "@/lib/graphql/queries";
+import {
+  addSitemapLanguageVersionsOfFrontpage,
+  addSitemapLanguageVersionsOfNode,
+  makePathAbsolute,
+} from "@/lib/utils";
 
 import siteConfig from "@/site.config";
-
-const makePathAbsolute = (path: string) =>
-  // eslint-disable-next-line n/no-process-env
-  process.env.NEXT_PUBLIC_FRONTEND_URL + path;
-
-const addLanguageVersionsOfNode = (translations: any) => {
-  const languages: Record<string, string> = {};
-  translations.forEach((translation: any) => {
-    languages[translation.langcode.id] = makePathAbsolute(translation.path);
-  });
-  return languages;
-};
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Get all languages from site config:
   const languages = Object.keys(siteConfig.locales);
+  // Initialize the sitemap:
   let sitemap = [];
 
   // For each language, do a GraphQL request to get all nodes:
   for (const lang of languages) {
-    const data = await drupal.doGraphQlRequest(GET_SITEMAP_NODES, {
-      number: 100,
-      langcode: lang,
-    });
+    // Set the page size and start at page 0:
+    const pageSize = 50; // this value needs to be one of the available values in the view defined in Drupal or the query will return an error.
+    let page = 0;
+    let totalItems = 0;
 
-    for (const key in data) {
-      if (Array.isArray(data[key].nodes)) {
-        const nodes = data[key].nodes.map(
-          (node: {
-            path: string;
-            changed: { timestamp: number };
-            translations: any;
-          }) => ({
-            url: makePathAbsolute(node.path),
-            lastModified: new Date(node.changed.timestamp * 1000),
-            alternates: {
-              languages: addLanguageVersionsOfNode(node.translations),
-            },
-          }),
-        );
-        sitemap = [...sitemap, ...nodes];
+    do {
+      const data = await drupal.doGraphQlRequest(GET_SITEMAP_NODES, {
+        page: page,
+        langcode: lang,
+        pagesize: pageSize,
+      });
+
+      // Get the total number of items on the first page:
+      if (page === 0) {
+        totalItems = data.sitemapNodes?.pageInfo?.total;
       }
-    }
+
+      // Prepare the nodes for the sitemap:
+      const nodes = data.sitemapNodes?.results?.map((node) => ({
+        url:
+          // Special case for the frontpage: instead of the node path, use the language path.
+          node.__typename === "NodeFrontpage"
+            ? makePathAbsolute(`/${node.langcode.id}`)
+            : makePathAbsolute(node.path),
+        lastModified: new Date(node.changed.timestamp * 1000),
+        alternates: {
+          languages:
+            node.__typename === "NodeFrontpage"
+              ? addSitemapLanguageVersionsOfFrontpage(node.translations)
+              : addSitemapLanguageVersionsOfNode(node.translations),
+        },
+      }));
+
+      // Add the nodes to the sitemap:
+      sitemap = [...sitemap, ...nodes];
+      page++;
+    } while (page * pageSize < totalItems);
   }
 
   return sitemap;
