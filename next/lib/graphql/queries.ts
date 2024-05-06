@@ -59,16 +59,8 @@ export const GET_STATIC_PATHS = graphql(`
  * When a new node is created, it should be added here.
  */
 export const GET_SITEMAP_NODES = graphql(`
-  query getSitemapNodes(
-    $page: Int = 0
-    $langcode: String = "en"
-    $pageSize: Int = 10
-  ) {
-    sitemapNodes(
-      filter: { langcode: $langcode }
-      pageSize: $pageSize
-      page: $page
-    ) {
+  query getSitemapNodes($page: Int = 0, $langcode: String = "en") {
+    sitemapNodes(filter: { langcode: $langcode }, page: $page) {
       results {
         ... on NodePage {
           __typename

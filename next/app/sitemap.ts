@@ -18,21 +18,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // For each language, do a GraphQL request to get all nodes:
   for (const lang of languages) {
-    // Set the page size and start at page 0:
-    const pageSize = 50; // this value needs to be one of the available values in the view defined in Drupal or the query will return an error.
     let page = 0;
     let totalItems = 0;
+    let pageSize = 0;
 
     do {
       const data = await drupal.doGraphQlRequest(GET_SITEMAP_NODES, {
         page: page,
         langcode: lang,
-        pagesize: pageSize,
       });
 
-      // Get the total number of items on the first page:
+      // Get the total number of items and the page size that is set for the view:
       if (page === 0) {
         totalItems = data.sitemapNodes?.pageInfo?.total;
+        pageSize = data.sitemapNodes?.pageInfo?.pageSize;
       }
 
       // Prepare the nodes for the sitemap:

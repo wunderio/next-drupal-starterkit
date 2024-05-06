@@ -9,9 +9,9 @@ dependencies:
 _core:
   default_config_hash: 1cWHKo1g3hcpd6sSkx7tBz3mUaYHil3R0TsIV6aB5l8
 id: sitemap
-label: sitemap
+label: 'Sitemap nodes'
 module: views
-description: ''
+description: 'Is used to get all nodes to populate the sitemap'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -213,7 +213,7 @@ display:
         type: full
         options:
           offset: 0
-          items_per_page: 10
+          items_per_page: 100
           total_pages: null
           id: 0
           tags:
@@ -222,9 +222,9 @@ display:
             first: '« First'
             last: 'Last »'
           expose:
-            items_per_page: true
+            items_per_page: false
             items_per_page_label: 'Items per page'
-            items_per_page_options: '3, 5, 10, 25, 50, 100'
+            items_per_page_options: '3,5,10,25,50,100'
             items_per_page_options_all: false
             items_per_page_options_all_label: '- All -'
             offset: true
