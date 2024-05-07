@@ -24,9 +24,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     let pageSize = 0;
 
     do {
-      const data = await drupal.doGraphQlRequest(GET_SITEMAP_NODES, {
-        page: page,
-        langcode: lang,
+      const data = await drupal.doGraphQlRequest(
+        GET_SITEMAP_NODES,
+        {
+          page: page,
+          langcode: lang,
         },
         false, // We only want published nodes, so we disable authentication.
       );
@@ -51,6 +53,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
               ? addSitemapLanguageVersionsOfFrontpage(node.translations)
               : addSitemapLanguageVersionsOfNode(node.translations),
         },
+        priority:
+          node.__typename === "NodeFrontpage" ? 1 : DEFAULT_SITEMAP_PRIORITY,
       }));
 
       // Add the nodes to the sitemap:
