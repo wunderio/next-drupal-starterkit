@@ -63,6 +63,7 @@ export const GET_SITEMAP_NODES = graphql(`
     sitemapNodes(filter: { langcode: $langcode }, page: $page) {
       results {
         ... on NodeInterface {
+          __typename
           path
           changed {
             timestamp
