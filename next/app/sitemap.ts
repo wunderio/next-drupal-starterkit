@@ -66,3 +66,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return sitemap;
 }
+
+export const revalidate = 3600; // Revalidate the sitemap every hour.
