@@ -114,7 +114,9 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     return {
       redirect: {
         destination: redirect.url,
-        permanent: false,
+        // Set to temporary redirect for 302 and 307 status codes,
+        // and permanent for all others.
+        permanent: !(redirect.status === 307 || redirect.status === 302),
       },
     };
   }
