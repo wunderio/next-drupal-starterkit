@@ -27,7 +27,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const data = await drupal.doGraphQlRequest(GET_SITEMAP_NODES, {
         page: page,
         langcode: lang,
-      });
+        },
+        false, // We only want published nodes, so we disable authentication.
+      );
 
       // Get the total number of items and the page size that is set for the view:
       if (page === 0) {
