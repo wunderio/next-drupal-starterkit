@@ -1,3 +1,5 @@
+import { env } from "@/env";
+
 export function formatDate(input: string, locale: string): string {
   const date = new Date(input);
   return date.toLocaleDateString(locale, {
@@ -58,8 +60,7 @@ export const getFileType = (file: string) => {
 };
 
 export const makePathAbsolute = (path: string) =>
-  // eslint-disable-next-line n/no-process-env
-  process.env.NEXT_PUBLIC_FRONTEND_URL + path;
+  env.NEXT_PUBLIC_FRONTEND_URL + path;
 
 export const addSitemapLanguageVersionsOfNode = (translations: any) => {
   const languages: Record<string, string> = {};
