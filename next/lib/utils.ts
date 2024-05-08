@@ -1,3 +1,5 @@
+import { env } from "@/env";
+
 export function formatDate(input: string, locale: string): string {
   const date = new Date(input);
   return date.toLocaleDateString(locale, {
@@ -55,4 +57,25 @@ export const getFileType = (file: string) => {
     return fileType;
   }
   return null;
+};
+
+export const makePathAbsolute = (path: string) =>
+  env.NEXT_PUBLIC_FRONTEND_URL + path;
+
+export const addSitemapLanguageVersionsOfNode = (translations: any) => {
+  const languages: Record<string, string> = {};
+  translations.forEach((translation: any) => {
+    languages[translation.langcode.id] = makePathAbsolute(translation.path);
+  });
+  return languages;
+};
+
+export const addSitemapLanguageVersionsOfFrontpage = (translations: any) => {
+  const languages: Record<string, string> = {};
+  translations.forEach((translation: any) => {
+    languages[translation.langcode.id] = makePathAbsolute(
+      "/" + translation.langcode.id,
+    );
+  });
+  return languages;
 };

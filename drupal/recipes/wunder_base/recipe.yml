@@ -34,8 +34,6 @@ install:
   - webform_ui
   - admin_toolbar
   - menu_link_attributes
-  - simple_sitemap
-  - wunder_sitemap
 
 config:
   import:
