@@ -100,6 +100,9 @@ services:
         DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
         # The client id, specified in the consumer on the Drupal side.
         DRUPAL_CLIENT_ID: drupal-client-id
+        # The client id for the unprivileged user, specified in the consumer on the Drupal side.
+        DRUPAL_CLIENT_VIEWER_ID: drupal-client-viewer-id
+        DRUPAL_CLIENT_VIEWER_SECRET: drupal_client_viewer_secret_not_secure_used_only_locally
 
         HASH_SALT: notsosecurehashnotsosecurehashnotsosecurehash
         ENVIRONMENT_NAME: lando
@@ -134,6 +137,8 @@ services:
         DRUPAL_REVALIDATE_SECRET: revalidate_secret_not_secure_used_only_locally
         DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
         DRUPAL_CLIENT_ID: drupal-client-id
+        DRUPAL_CLIENT_VIEWER_ID: drupal-client-viewer-id
+        DRUPAL_CLIENT_VIEWER_SECRET: drupal_client_viewer_secret_not_secure_used_only_locally
         NEXT_PUBLIC_DRUPAL_BASE_URL: https://next-drupal-starterkit.lndo.site
         NEXT_IMAGE_DOMAIN: next-drupal-starterkit.lndo.site
         NEXT_PUBLIC_FRONTEND_URL: https://frontend.lndo.site

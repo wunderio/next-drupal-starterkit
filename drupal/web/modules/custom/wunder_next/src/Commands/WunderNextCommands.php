@@ -15,115 +15,109 @@ class WunderNextCommands extends DrushCommands {
 
   const API_USER_NAME = 'next-api-user';
   const API_USER_ROLE = 'next_api_role';
+  const API_VIEWER_USER_NAME = 'next-viewer-user';
+  const API_VIEWER_USER_ROLE = 'next_api_viewer_role';
+
+  const API_USER_MAIL = 'next-api-user@domain.tld';
+  const API_VIEWER_USER_MAIL = 'next-api-viewer-user@domain.tld';
+
   // This role will be associated with users that can log via the frontend:
   const FRONTEND_LOGIN_ROLE = 'frontend_login';
-  const API_USER_MAIL = 'next-api-user@domain.tld';
   const CONSUMER_NAME = 'next-drupal-consumer';
 
   /**
-   * Generates a user and a consumer to be used to view next-drupal previews.
+   * Generates users and consumers needed for Next.js to speak to Drupal.
    *
-   * @param array $options
-   *   An associative array of options whose values come from cli, aliases,
-   *   config, etc.
-   *
-   * @option secret
-   *   The secret to assign to the consumer
-   * @option show_secrets
-   *   Choose if the secrets will be part of the output in plain text.
-   *
-   * @usage wunder_next-commandName --secret=somesecret --show_secrets=TRUE
-   *   Use the --secret option to set the secret for the consumer.
-   *   If you leave it blank, the env var DRUPAL_CLIENT_SECRET
-   *   will be used, if not available a random value will be generated.
-   *   Set the show_secrets to TRUE to have the secrets be part of
-   *   the output in plain text.
-   *
-   * @command wunder_next:setup-user-and-consumer
+   * @command wunder_next:setup-users-and-consumers
    * @aliases wnsuac
    */
-  public function setupUserAndConsumer(array $options = [
-    'secret' => '',
-    'show_secrets' => FALSE,
-  ]) {
+  public function setupUsersAndConsumers() {
 
-    // For the secret, use the env var if defined, otherwise
-    // generate a random value:
-    $secret = $_ENV['DRUPAL_CLIENT_SECRET'] ?: base64_encode(random_bytes('20'));
-
-    // But if a value was provided as parameter to the command,
-    // use that instead:
-    $secret = $options['secret'] ?: $secret;
-
-    // The option to show the secrets in plain text.
-    $show_secrets = $options['show_secrets'];
-
-    // Create a new user with the required role:
-    $new_user = [
-      'name' => self::API_USER_NAME,
-      'pass' => '',
-      'mail' => self::API_USER_MAIL,
-      'access' => '0',
-      'status' => 1,
-      'roles' => [self::API_USER_ROLE],
+    // We want to have two separate consumers:
+    $consumers_to_create = [
+      // This first consumer is the usual consumer that next-drupal expects,
+      // and it is associated with a role that has elevated permissions to
+      // access unpublished content. This is used when generating previews for
+      // example.
+      [
+        'username' => self::API_USER_NAME,
+        'mail' => self::API_USER_MAIL,
+        'role' => self::API_USER_ROLE,
+        'secret' => $_ENV['DRUPAL_CLIENT_SECRET'],
+        'client_id' => $_ENV['DRUPAL_CLIENT_ID'],
+      ],
+      // This second consumer is associated with a role with fewer permissions,
+      // and it is used when the frontend user does not need access to
+      // unpublished content.
+      [
+        'username' => self::API_VIEWER_USER_NAME,
+        'mail' => self::API_VIEWER_USER_MAIL,
+        'role' => self::API_VIEWER_USER_ROLE,
+        'secret' => $_ENV['DRUPAL_CLIENT_VIEWER_SECRET'],
+        'additional_roles' => [self::FRONTEND_LOGIN_ROLE],
+        'client_id' => $_ENV['DRUPAL_CLIENT_VIEWER_ID'],
+      ],
     ];
 
-    $account = User::create($new_user);
-    try {
-      $violations = $account->validate();
-      // Check if the account can be created:
-      if ($violations->count() > 0) {
-        foreach ($violations as $violation) {
-          $this->logger()->error($violation->getMessage());
-          return new CommandError("Could not create a new user account with the name " . self::API_USER_NAME . ".");
+    foreach ($consumers_to_create as $consumer) {
+      // Create a new user with the required role to be associated with
+      // the consumer:
+      $new_user = [
+        'name' => $consumer['username'],
+        'pass' => '',
+        'mail' => $consumer['mail'],
+        'access' => '0',
+        'status' => 1,
+        'roles' => [$consumer['role']],
+      ];
+
+      // Create the new account:
+      $account = User::create($new_user);
+      try {
+        $violations = $account->validate();
+        // Check if the account can be created:
+        if ($violations->count() > 0) {
+          foreach ($violations as $violation) {
+            $this->logger()->error($violation->getMessage());
+            return new CommandError("Could not create a new user account with the name " . $consumer['username'] . ".");
+          }
         }
+        $account->save();
       }
-      $account->save();
-    }
-    catch (EntityStorageException $e) {
-      return new CommandError("Could not create a new user account with the name " . self::API_USER_NAME . ".");
-    }
-
-    /** @var \Drupal\consumers\Entity\Consumer $consumer */
-    $consumer = Consumer::create([
-      'client_id' => $_ENV['DRUPAL_CLIENT_ID'] ?? self::CONSUMER_NAME,
-      'label' => 'Consumer for next-drupal',
-      'description' => 'This consumer was created by the wunder_next:create-user-and-consumer drush command.',
-      'is_default' => FALSE,
-      'user_id' => $account->id(),
-      'roles' => [self::API_USER_ROLE, self::FRONTEND_LOGIN_ROLE],
-      'secret' => $secret,
-    ]);
-
-    try {
-      $violations = $consumer->validate();
-      // Check if the consumer can be created:
-      if ($violations->count() > 0) {
-        foreach ($violations as $violation) {
-          $this->logger()->error($violation->getMessage());
-          return new CommandError('Could not create a new consumer.');
-        }
+      catch (EntityStorageException $e) {
+        return new CommandError("Could not create a new user account with the name " . $consumer['username'] . ".");
       }
 
-      $consumer->save();
-    }
-    catch (EntityStorageException $e) {
-      return new CommandError('Could not create a new consumer.');
-    }
+      /** @var \Drupal\consumers\Entity\Consumer $consumer */
+      $consumer = Consumer::create([
+        'client_id' => $consumer['client_id'],
+        'label' => 'Next-drupal consumer: ' . $consumer['role'],
+        'description' => 'This consumer was created by the wunder_next:create-user-and-consumer drush command.',
+        'is_default' => FALSE,
+        'user_id' => $account->id(),
+        'roles' => isset($consumer['additional_roles']) ? array_merge([$consumer['role']], $consumer['additional_roles']) : [$consumer['role']],
+        'secret' => $consumer['secret'],
+      ]);
 
-    $client_id = $consumer->getClientId();
+      try {
+        $violations = $consumer->validate();
+        // Check if the consumer can be created:
+        if ($violations->count() > 0) {
+          foreach ($violations as $violation) {
+            $this->logger()->error($violation->getMessage());
+            return new CommandError('Could not create a new consumer.');
+          }
+        }
 
+        $consumer->save();
+      }
+      catch (EntityStorageException $e) {
+        return new CommandError('Could not create a new consumer.');
+      }
+
+    }
     // Output instructions to the user:
-    $this->logger()->success(dt('User and consumer created. Add these two lines to the .env file for the
-    Next application. Note that the output is hidden by default, check drush command options for showing them. '));
-    if ($show_secrets) {
-      $this->output()->writeln("DRUPAL_CLIENT_ID=$client_id");
-      $this->output()->writeln("DRUPAL_CLIENT_SECRET=$secret");
-    }
-    else {
-      $this->output()->writeln("DRUPAL_CLIENT_ID=**REDACTED**");
-      $this->output()->writeln("DRUPAL_CLIENT_SECRET=**REDACTED**");
-    }
+    $this->logger()->success(dt('Consumers created successfully.'));
   }
 
 }
