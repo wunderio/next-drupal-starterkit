@@ -8,7 +8,7 @@ import {
   LanguageLinks,
 } from "@/lib/contexts/language-links-context";
 import { getStandardLanguageLinks } from "@/lib/contexts/language-links-context";
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupal, drupalPreviewer } from "@/lib/drupal/drupal-client";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -99,13 +99,14 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   // Are we in Next.js preview mode?
   const isPreview = context.preview || false;
 
-  // Get the page data with Graphql:
-  const data = await drupal.doGraphQlRequest(
-    GET_ENTITY_AT_DRUPAL_PATH,
-    variables,
-    // We want to use authentication only if this is a preview request:
-    isPreview ? true : false,
-  );
+  // Get the page data with Graphql.
+  // We want to use a different client if we are in preview mode:
+  const data = isPreview
+    ? await drupalPreviewer.doGraphQlRequest(
+        GET_ENTITY_AT_DRUPAL_PATH,
+        variables,
+      )
+    : await drupal.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, variables);
 
   // If the data contains a RedirectResponse, we redirect to the path:
   const redirect = extractRedirectFromRouteQueryResult(data);
@@ -165,11 +166,9 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     const revisionPath = `/node/${nodeId}/revisions/${revisionId}/view`;
 
     // Get the node at the specific data with Graphql:
-    const revisionRoutedata = await drupal.doGraphQlRequest(
+    const revisionRoutedata = await drupalPreviewer.doGraphQlRequest(
       GET_ENTITY_AT_DRUPAL_PATH,
       { path: revisionPath, langcode: context.locale },
-      // We need to do an authenticated request to get the revision:
-      true,
     );
 
     // Instead of the entity at the current revision, we want now to
