@@ -15,7 +15,7 @@ requirements:
   request_path:
     id: request_path
     negate: true
-    pages: "/subrequests/*\r\n/jsonapi\r\n/jsonapi/*\r\n/router/translate-path\r\n/next/preview-url\r\n/oauth/*\r\n/wunder_search/proxy\r\n/webform_rest/*\r\n/user/register\r\n/user/reset\r\n/user/reset/*\r\n/graphql"
+    pages: "/next/preview-url\r\n/oauth/*\r\n/wunder_search/proxy\r\n/webform_rest/*\r\n/user/register\r\n/user/reset\r\n/user/reset/*"
   webform:
     id: webform
     negate: false
