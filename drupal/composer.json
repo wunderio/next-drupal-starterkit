@@ -92,7 +92,12 @@
                 "web-root": "web/"
             },
             "file-mapping": {
-                "[web-root]/sites/development.services.yml": false
+                "[web-root]/sites/development.services.yml": false,
+                "[web-root]/robots.txt": {
+                    "mode": "replace",
+                    "path": "assets/robots.txt",
+                    "overwrite": true
+                }
             }
         },
         "installer-paths": {
