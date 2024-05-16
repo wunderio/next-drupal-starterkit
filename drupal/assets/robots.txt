@@ -1,3 +1,0 @@
-# For the Drupal backend, we want to disallow all robots:
-User-agent: *
-Disallow: /
