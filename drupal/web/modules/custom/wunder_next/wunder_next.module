@@ -208,8 +208,8 @@ function wunder_next_page_attachments_alter(array &$attachments) {
     [
       '#tag' => 'meta',
       '#attributes' => [
-        'rel' => 'robots',
-        'href' => 'noindex',
+        'name' => 'robots',
+        'content' => 'noindex',
       ],
     ],
     'noindex',
