@@ -202,3 +202,21 @@ function wunder_next_form_alter(&$form, FormStateInterface $form_state, $form_id
     $pathauto_checkbox['#description'] = t('Frontpage node paths are used only internally and cannot be changed. The content of the page will be displayed by the frontend at /[language] automatically.');
   }
 }
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function wunder_next_page_attachments_alter(array &$attachments) {
+  // We don't want the backend site to be indexed by search engines,
+  // so we add a noindex meta tag to the head of the site on all pages.
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#tag' => 'meta',
+      '#attributes' => [
+        'rel' => 'robots',
+        'href' => 'noindex',
+      ],
+    ],
+    'noindex',
+  ];
+}
