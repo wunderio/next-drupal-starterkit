@@ -87,5 +87,10 @@
     "storybook-react-i18next": "^2.0.9",
     "tailwindcss": "^3.3.5",
     "typescript": "~5.2.2"
+  },
+  "overrides": {
+    "next-drupal": {
+      "next": "$next"
+    }
   }
 }
