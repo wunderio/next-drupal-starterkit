@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.3.0] 18.5.2024
+
+- Override the next.js dependency for next-drupal to be the same as in package.json
+- Prevent the Drupal backend from being indexed by search engines
+- Return permanent or temporary redirect based on the redirect status code set on the Drupal side 
+- Move the generation of sitemap.xml to the frontend
+- Support rendering nodes that are not set up to be translatable
+- Use the new Translations GraphQL field to get translated versions of the node
+- TypeScript: Enable noErrorTruncation in TS config
+
 ## [2.2.0] 25.4.2024
 
 - Update Drupal to 10.2.5 and contrib modules to their latest versions
