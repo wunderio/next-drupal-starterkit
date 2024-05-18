@@ -9,7 +9,7 @@ config:
   php: "8.2"
   via: nginx
   webroot: drupal/web
-  database: "mariadb:10.3"
+  database: "mariadb:10.4"
   composer_version: 2
   xdebug: off
   config:
