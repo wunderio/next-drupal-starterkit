@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { jwtDecode } from "jwt-decode";
 
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 
 import { env } from "@/env";
 
@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
         formData.append("password", credentials.password);
 
         // Get access token from Drupal.
-        const response = await drupal.fetch(
+        const response = await drupalClientViewer.fetch(
           `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
           {
             method: "POST",

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 
 import { env } from "@/env";
 /**
@@ -14,7 +14,7 @@ const Search = async (req: NextApiRequest, res: NextApiResponse) => {
   const ProxyUrl = `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/${languagePrefix}/wunder_search/proxy`;
 
   try {
-    const result = await drupal.fetch(ProxyUrl, {
+    const result = await drupalClientViewer.fetch(ProxyUrl, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(req.body),

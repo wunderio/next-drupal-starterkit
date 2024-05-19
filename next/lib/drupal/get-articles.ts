@@ -1,4 +1,4 @@
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import type { ArticleTeaserType } from "@/types/graphql";
 
 import { LISTING_ARTICLES } from "../graphql/queries";
@@ -22,12 +22,15 @@ export const getArticles = async ({
   let nodes: ArticleTeaserType[] = [];
   let totalPages = 1;
   try {
-    const articlesViewResult = await drupal.doGraphQlRequest(LISTING_ARTICLES, {
-      langcode: locale,
-      page: 0,
-      pageSize: limit,
-      offset: offset,
-    });
+    const articlesViewResult = await drupalClientViewer.doGraphQlRequest(
+      LISTING_ARTICLES,
+      {
+        langcode: locale,
+        page: 0,
+        pageSize: limit,
+        offset: offset,
+      },
+    );
 
     if (articlesViewResult.articlesView?.results) {
       nodes = articlesViewResult.articlesView.results as ArticleTeaserType[];

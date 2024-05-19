@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { GET_SITEMAP_NODES } from "@/lib/graphql/queries";
 import {
   addSitemapLanguageVersionsOfFrontpage,
@@ -26,10 +26,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     let pageSize = 0;
 
     do {
-      const data = await drupal.doGraphQlRequest(GET_SITEMAP_NODES, {
-        page: page,
-        langcode: lang,
-      });
+      const data = await drupalClientViewer.doGraphQlRequest(
+        GET_SITEMAP_NODES,
+        {
+          page: page,
+          langcode: lang,
+        },
+      );
 
       // Get the total number of items and the page size that is set for the view:
       if (page === 0) {
