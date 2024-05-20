@@ -38,8 +38,8 @@ function wunder_next_next_site_load($entities) {
  * Implements hook_ENTITY_TYPE_load().
  */
 function wunder_next_consumer_load($entities) {
-  // We want to be able to vary the secret of the consumer
-  // entity based on our environment variable.
+  // We want to be able to vary the secret of the consumers
+  // entity based on our environment variables.
   // Get the settings for the module, that are set to
   // the corresponding environment variables in settings.php:
   $settings = Settings::get('wunder_next.settings');
@@ -50,14 +50,19 @@ function wunder_next_consumer_load($entities) {
   /** @var \Drupal\Core\Password\PhpassHashedPassword $password_service */
   $password_service = \Drupal::service('password');
 
+  // We have two consumers that we want to override the secret for
+  // based on environment variables:
   /** @var \Drupal\consumers\Entity\ConsumerInterface $consumer */
   foreach ($entities as $consumer) {
-    // Identify the consumer with the right client id.
-    if ($consumer->getClientId() == $settings['client_id']) {
-      // We set the consumer secret "on the fly" to the hashed
-      // value of our setting, which is turn is determined
-      // by the environment variable.
-      $consumer->set('secret', $password_service->hash($settings['client_secret']));
+
+    switch ($consumer->getClientId()) {
+      case $settings['client_id']:
+        $consumer->set('secret', $password_service->hash($settings['client_secret']));
+        break;
+
+      case $settings['client_viewer_id']:
+        $consumer->set('secret', $password_service->hash($settings['client_viewer_secret']));
+        break;
     }
   }
 }

@@ -8,7 +8,7 @@ import { useTranslation } from "next-i18next";
 import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
 import { redirectExpiredSessionToLoginPage } from "@/lib/auth/redirect-expired-login";
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -89,11 +89,11 @@ export const getServerSideProps: GetServerSideProps<
     return redirectExpiredSessionToLoginPage(locale, resolvedUrl);
   }
 
-  const url = drupal.buildUrl(
+  const url = drupalClientViewer.buildUrl(
     `/${locale}/rest/my-webform-submissions?_format=json`,
   );
 
-  const result = await drupal.fetch(url.toString(), {
+  const result = await drupalClientViewer.fetch(url.toString(), {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

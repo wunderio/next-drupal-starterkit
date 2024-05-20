@@ -3,17 +3,20 @@ langcode: en
 status: true
 dependencies:
   module:
+    - graphql
+    - media
     - node
     - subrequests
-    - graphql
 id: next_api_role
-label: next_api_role
+label: 'API Previewer'
 weight: 4
 is_admin: null
 permissions:
   - 'access user profiles'
-  - 'bypass node access'
-  - 'issue subrequests'
-  - 'view all revisions'
-  - 'view all media revisions'
   - 'bypass graphql access'
+  - 'bypass node access'
+  - 'execute graphql_compose_server arbitrary graphql requests'
+  - 'issue subrequests'
+  - 'view all media revisions'
+  - 'view all revisions'
+

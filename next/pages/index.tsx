@@ -8,7 +8,7 @@ import { LayoutProps } from "@/components/layout";
 import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
 import { Node } from "@/components/node";
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import {
@@ -60,7 +60,7 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
     langcode: context.locale,
   };
 
-  const data = await drupal.doGraphQlRequest(
+  const data = await drupalClientViewer.doGraphQlRequest(
     GET_ENTITY_AT_DRUPAL_PATH,
     variables,
   );
@@ -83,12 +83,15 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
   }
 
   // Get the last 3 sticky articles in the current language:
-  const stickyArticleTeasers = await drupal.doGraphQlRequest(LISTING_ARTICLES, {
-    langcode: context.locale,
-    sticky: true,
-    page: 0,
-    pageSize: 3,
-  });
+  const stickyArticleTeasers = await drupalClientViewer.doGraphQlRequest(
+    LISTING_ARTICLES,
+    {
+      langcode: context.locale,
+      sticky: true,
+      page: 0,
+      pageSize: 3,
+    },
+  );
 
   // We cast the results as the ListingArticle type to get type safety:
   const articles =

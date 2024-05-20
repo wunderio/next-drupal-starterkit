@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { LISTING_ARTICLES } from "@/lib/graphql/queries";
 
 import siteConfig from "@/site.config";
@@ -15,7 +15,7 @@ export default async function handler(
 
     const limit = Number(req.query.limit) || 10;
 
-    const articlesQueryResult = await drupal.doGraphQlRequest(
+    const articlesQueryResult = await drupalClientViewer.doGraphQlRequest(
       LISTING_ARTICLES,
       {
         langcode: languagePrefix,
