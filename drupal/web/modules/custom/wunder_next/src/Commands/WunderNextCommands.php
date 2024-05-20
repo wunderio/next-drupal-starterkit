@@ -23,7 +23,6 @@ class WunderNextCommands extends DrushCommands {
 
   // This role will be associated with users that can log via the frontend:
   const FRONTEND_LOGIN_ROLE = 'frontend_login';
-  const CONSUMER_NAME = 'next-drupal-consumer';
 
   /**
    * Generates users and consumers needed for Next.js to speak to Drupal.
