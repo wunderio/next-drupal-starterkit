@@ -105,18 +105,14 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
 
   // Are we in Next.js preview mode?
   const isPreview = context.preview || false;
+  const drupalClient = isPreview ? drupalClientPreviewer : drupalClientViewer;
 
   // Get the page data with Graphql.
   // We want to use a different client if we are in preview mode:
-  const data = isPreview
-    ? await drupalClientPreviewer.doGraphQlRequest(
-        GET_ENTITY_AT_DRUPAL_PATH,
-        variables,
-      )
-    : await drupalClientViewer.doGraphQlRequest(
-        GET_ENTITY_AT_DRUPAL_PATH,
-        variables,
-      );
+  const data = await drupalClient.doGraphQlRequest(
+    GET_ENTITY_AT_DRUPAL_PATH,
+    variables,
+  );
 
   // If the data contains a RedirectResponse, we redirect to the path:
   const redirect = extractRedirectFromRouteQueryResult(data);
@@ -176,7 +172,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     const revisionPath = `/node/${nodeId}/revisions/${revisionId}/view`;
 
     // Get the node at the specific data with Graphql:
-    const revisionRoutedata = await drupalClientPreviewer.doGraphQlRequest(
+    const revisionRoutedata = await drupalClient.doGraphQlRequest(
       GET_ENTITY_AT_DRUPAL_PATH,
       { path: revisionPath, langcode: context.locale },
     );
