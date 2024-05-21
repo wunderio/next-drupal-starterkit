@@ -15,7 +15,7 @@
     "build-storybook": "STORYBOOK=true storybook build",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "graphql-codegen": "graphql-codegen --watch"
+    "graphql-codegen": "ts-node ./codegen-access-token.ts && graphql-codegen --watch --config codegen.ts"
   },
   "dependencies": {
     "@elastic/react-search-ui": "^1.20.2",
@@ -54,6 +54,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/schema-ast": "^4.0.2",
     "@next/eslint-plugin-next": "^13.5.6",
     "@parcel/watcher": "^2.4.0",
     "@storybook/addon-essentials": "^7.5.3",
@@ -86,6 +87,7 @@
     "storybook": "^7.5.3",
     "storybook-react-i18next": "^2.0.9",
     "tailwindcss": "^3.3.5",
+    "ts-node": "^10.9.2",
     "typescript": "~5.2.2"
   },
   "overrides": {
