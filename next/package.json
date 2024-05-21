@@ -15,7 +15,7 @@
     "build-storybook": "STORYBOOK=true storybook build",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "graphql-codegen": "graphql-codegen --watch"
+    "graphql-codegen": "ts-node ./codegen-access-token.ts && graphql-codegen --watch --config codegen.ts"
   },
   "dependencies": {
     "@elastic/react-search-ui": "^1.20.2",
