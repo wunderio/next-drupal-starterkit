@@ -31,6 +31,12 @@ const config: CodegenConfig = {
         fragmentMasking: false,
       },
     },
+    "./lib/graphql/schema.graphql": {
+      plugins: ["schema-ast"],
+      config: {
+        includeDirectives: true,
+      },
+    },
   },
   verbose: true,
 };

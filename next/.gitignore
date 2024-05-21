@@ -41,3 +41,6 @@ lerna-debug.log*
 /storybook-static
 /cypress/screenshots/
 /cypress/videos/
+
+# graphql schema
+lib/graphql/schema.graphql
