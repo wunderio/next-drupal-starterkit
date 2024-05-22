@@ -1,7 +1,0 @@
-{{- if index (index .Values "silta-release") "branchName" }}
-{{- if eq (index (index .Values "silta-release") "branchName") "production" }}
-{{- if .Values.mailhog.enabled }}
-{{- fail "Mailhog should not be enabled in production" -}}
-{{- end }}
-{{- end }}
-{{- end }}

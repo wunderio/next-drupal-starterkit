@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-release
-  labels:
-    release: {{ .Release.Name }}
-    release.silta/config: release-configmap
-data:
-  branchName: {{ .Values.branchName | quote }}

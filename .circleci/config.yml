@@ -289,10 +289,6 @@ workflows:
       # silta/frontend-build-deploy is defined here https://github.com/wunderio/silta-circleci/blob/master/orb/jobs/%40frontend.yml
       # &frontend-build-deploy is a yaml anchor, so we can reference it later
       - silta/frontend-build-deploy: &frontend-build-deploy
-          # These two lines are only needed while working on the chart
-          chart_name: './charts/frontend'
-          chart_repository: ''
-          # end of temporary lines
           name: Next build & deploy
           context: silta_dev
           executor: cicd82
@@ -313,15 +309,6 @@ workflows:
                 path: "./next"
                 identifier: "node"
                 docker-hash-prefix: v1
-              # temporary lines, used to work with local chart, can be removed when changes
-              # are pushed to the chart repository
-            - run:
-                name: Add helm repositories and build local chart
-                command: |
-                  helm repo add elastic https://helm.elastic.co
-                  helm repo add codecentric https://codecentric.github.io/helm-charts
-                  helm dependency build ./charts/frontend
-              # end of temporary lines
           filters:
             branches:
               ignore:
