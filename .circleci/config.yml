@@ -138,6 +138,7 @@ commands:
             drupal_domain=$drupal_release_name.$project_name.$CLUSTER_DOMAIN
             next_domain=$next_release_name.$project_name.$CLUSTER_DOMAIN
             drupal_client_id=drupal-client-id
+            drupal_client_viewer_id=drupal-client-viewer-id
 
             if [ next_domain == "main-next" ]; then
               next_domain=$project_name.$CLUSTER_DOMAIN
@@ -148,6 +149,7 @@ commands:
             echo "export NEXT_PUBLIC_FRONTEND_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export NEXTAUTH_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export DRUPAL_CLIENT_ID=$drupal_client_id" >> "$BASH_ENV"
+            echo "export DRUPAL_CLIENT_VIEWER_ID=$drupal_client_viewer_id" >> "$BASH_ENV"
 
             echo "Expanding special variable DRUPAL_DOMAIN = $drupal_domain ..."
             sed -i -e "s/<|DRUPAL_DOMAIN|>/$drupal_domain/g" $envvars_file
@@ -157,13 +159,18 @@ commands:
 
             echo "Expanding special variable DRUPAL_CLIENT_ID = $drupal_client_id ..."
             sed -i -e "s/<|DRUPAL_CLIENT_ID|>/$drupal_client_id/g" $envvars_file
+            
+            echo "Expanding special variable DRUPAL_CLIENT_VIEWER_ID = $drupal_client_viewer_id ..."
+            sed -i -e "s/<|DRUPAL_CLIENT_VIEWER_ID|>/$drupal_client_viewer_id/g" $envvars_file
 
             echo "Expanding secrets DRUPAL_CLIENT_SECRET, DRUPAL_REVALIDATE_SECRET, NEXTAUTH_SECRET & HASHSALT = <redacted> ..."
             escaped_drupal_revalidate_secret=$(printf '%s\n' "$DRUPAL_REVALIDATE_SECRET" | sed -e 's/[\/&]/\\&/g')
             escaped_drupal_client_secret=$(printf '%s\n' "$DRUPAL_CLIENT_SECRET" | sed -e 's/[\/&]/\\&/g')
+            escaped_drupal_client_viewer_secret=$(printf '%s\n' "$DRUPAL_CLIENT_VIEWER_SECRET" | sed -e 's/[\/&]/\\&/g')
             escaped_nextauth_secret=$(printf '%s\n' "$NEXTAUTH_SECRET" | sed -e 's/[\/&]/\\&/g')
             escaped_hashsalt=$(printf '%s\n' "$HASHSALT" | sed -e 's/[\/&]/\\&/g')
             sed -i -e "s/\${DRUPAL_CLIENT_SECRET}/$escaped_drupal_client_secret/g" $envvars_file
+            sed -i -e "s/\${DRUPAL_CLIENT_VIEWER_SECRET}/$escaped_drupal_client_viewer_secret/g" $envvars_file
             sed -i -e "s/\${DRUPAL_REVALIDATE_SECRET}/$escaped_drupal_revalidate_secret/g" $envvars_file
             sed -i -e "s/\${NEXTAUTH_SECRET}/$escaped_nextauth_secret/g" $envvars_file
             sed -i -e "s/\${HASHSALT}/$escaped_hashsalt/g" $envvars_file

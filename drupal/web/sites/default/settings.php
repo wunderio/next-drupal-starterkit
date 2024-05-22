@@ -46,8 +46,10 @@ $settings['file_scan_ignore_directories'] = [
 // Get environment variables into settings:
 $settings['wunder_next.settings']['frontend_url'] = $_ENV['WUNDER_NEXT_FRONTEND_URL'];
 $settings['wunder_next.settings']['revalidate_secret'] = $_ENV['DRUPAL_REVALIDATE_SECRET'];
-$settings['wunder_next.settings']['client_secret'] = $_ENV['DRUPAL_CLIENT_SECRET'];
 $settings['wunder_next.settings']['client_id'] = $_ENV['DRUPAL_CLIENT_ID'];
+$settings['wunder_next.settings']['client_secret'] = $_ENV['DRUPAL_CLIENT_SECRET'];
+$settings['wunder_next.settings']['client_viewer_id'] = $_ENV['DRUPAL_CLIENT_VIEWER_ID'];
+$settings['wunder_next.settings']['client_viewer_secret'] = $_ENV['DRUPAL_CLIENT_VIEWER_SECRET'];
 
 // Use the frontend site URL to create links in the xml sitemap:
 $config['simple_sitemap.settings']['base_url'] = $_ENV['WUNDER_NEXT_FRONTEND_URL'];

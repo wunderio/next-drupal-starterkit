@@ -8,7 +8,10 @@ import {
   LanguageLinks,
 } from "@/lib/contexts/language-links-context";
 import { getStandardLanguageLinks } from "@/lib/contexts/language-links-context";
-import { drupal } from "@/lib/drupal/drupal-client";
+import {
+  drupalClientPreviewer,
+  drupalClientViewer,
+} from "@/lib/drupal/drupal-client";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -46,12 +49,13 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
   // We want to generate static paths for all locales:
   const locales = context.locales || [];
 
-  const staticPaths: ReturnType<typeof drupal.buildStaticPathsParamsFromPaths> =
-    [];
+  const staticPaths: ReturnType<
+    typeof drupalClientViewer.buildStaticPathsParamsFromPaths
+  > = [];
 
   for (const locale of locales) {
     // Get the defined paths via graphql for the current locale:
-    const data = await drupal.doGraphQlRequest(GET_STATIC_PATHS, {
+    const data = await drupalClientViewer.doGraphQlRequest(GET_STATIC_PATHS, {
       // We will query for the latest 10 items of each content type:
       number: 10,
       langcode: locale,
@@ -64,11 +68,14 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
     ].map(({ path }) => path);
 
     // Build static paths for the current locale.
-    const localePaths = drupal.buildStaticPathsParamsFromPaths(pathArray, {
-      locale,
-      // Because graphql returns the path with the language prefix, we strip it using the pathPrefix option:
-      pathPrefix: `/${locale}`,
-    });
+    const localePaths = drupalClientViewer.buildStaticPathsParamsFromPaths(
+      pathArray,
+      {
+        locale,
+        // Because graphql returns the path with the language prefix, we strip it using the pathPrefix option:
+        pathPrefix: `/${locale}`,
+      },
+    );
 
     // Add the paths to the static paths array:
     staticPaths.push(...localePaths);
@@ -98,13 +105,13 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
 
   // Are we in Next.js preview mode?
   const isPreview = context.preview || false;
+  const drupalClient = isPreview ? drupalClientPreviewer : drupalClientViewer;
 
-  // Get the page data with Graphql:
-  const data = await drupal.doGraphQlRequest(
+  // Get the page data with Graphql.
+  // We want to use a different client if we are in preview mode:
+  const data = await drupalClient.doGraphQlRequest(
     GET_ENTITY_AT_DRUPAL_PATH,
     variables,
-    // We want to use authentication only if this is a preview request:
-    isPreview ? true : false,
   );
 
   // If the data contains a RedirectResponse, we redirect to the path:
@@ -114,7 +121,9 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     return {
       redirect: {
         destination: redirect.url,
-        permanent: false,
+        // Set to temporary redirect for 302 and 307 status codes,
+        // and permanent for all others.
+        permanent: !(redirect.status === 307 || redirect.status === 302),
       },
     };
   }
@@ -163,11 +172,9 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     const revisionPath = `/node/${nodeId}/revisions/${revisionId}/view`;
 
     // Get the node at the specific data with Graphql:
-    const revisionRoutedata = await drupal.doGraphQlRequest(
+    const revisionRoutedata = await drupalClient.doGraphQlRequest(
       GET_ENTITY_AT_DRUPAL_PATH,
       { path: revisionPath, langcode: context.locale },
-      // We need to do an authenticated request to get the revision:
-      true,
     );
 
     // Instead of the entity at the current revision, we want now to

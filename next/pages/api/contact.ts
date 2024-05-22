@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
 
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(
@@ -21,11 +21,13 @@ export default async function handler(
 
   try {
     if (req.method === "POST") {
-      const url = drupal.buildUrl(`/${languagePrefix}/webform_rest/submit`);
+      const url = drupalClientViewer.buildUrl(
+        `/${languagePrefix}/webform_rest/submit`,
+      );
       const body = JSON.parse(req.body);
 
       // Submit to Drupal.
-      const result = await drupal.fetch(url.toString(), {
+      const result = await drupalClientViewer.fetch(url.toString(), {
         method: "POST",
         body: JSON.stringify({
           webform_id: "contact",

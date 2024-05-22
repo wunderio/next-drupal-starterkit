@@ -1,0 +1,14 @@
+uuid: f96e1f7b-4228-421c-8fca-442935315073
+langcode: en
+status: true
+dependencies:
+  module:
+    - graphql
+    - subrequests
+id: next_api_viewer_role
+label: 'API Viewer'
+weight: 7
+is_admin: null
+permissions:
+  - 'execute graphql_compose_server arbitrary graphql requests'
+  - 'issue subrequests'

@@ -54,6 +54,49 @@ export const GET_STATIC_PATHS = graphql(`
   }
 `);
 
+/**
+ * This query is used to get all nodes for the sitemap.
+ * When a new node is created, it should be added here.
+ */
+export const GET_SITEMAP_NODES = graphql(`
+  query getSitemapNodes($page: Int = 0, $langcode: String = "en") {
+    sitemapNodes(filter: { langcode: $langcode }, page: $page) {
+      results {
+        ... on NodeInterface {
+          __typename
+          path
+          changed {
+            timestamp
+          }
+          langcode {
+            id
+          }
+        }
+        ... on NodePage {
+          translations {
+            ...FragmentNodeTranslation
+          }
+        }
+        ... on NodeArticle {
+          translations {
+            ...FragmentNodeTranslation
+          }
+        }
+        ... on NodeFrontpage {
+          translations {
+            ...FragmentNodeTranslation
+          }
+        }
+      }
+      pageInfo {
+        page
+        pageSize
+        total
+      }
+    }
+  }
+`);
+
 export const GET_NODE_PATH_BY_ID_AND_LANGCODE = graphql(`
   query getNodePathByIdAndLangcode($id: ID!, $langcode: String!) {
     node(id: $id, langcode: $langcode) {

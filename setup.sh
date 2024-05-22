@@ -7,7 +7,7 @@ commands=(
   "lando generate-oauth-keys"
   "lando drush si minimal -y"
   "lando install-recipe wunder_next_setup"
-  "lando drush wunder_next:setup-user-and-consumer"
+  "lando drush wunder_next:setup-users-and-consumers"
   "lando drush eshd -y"
   "lando drush eshs"
   "lando drush en wunder_democontent -y"

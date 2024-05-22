@@ -42,7 +42,6 @@ config:
         label: 'Anonymous user'
       grantPermissions:
         - 'restful post user_registration'
-        - 'execute graphql_compose_server arbitrary graphql requests'
     # Set email messages for user registration:
     user.mail:
       simple_config_update:

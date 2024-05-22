@@ -179,7 +179,7 @@ The environment variables used by the frontend are also checked for type safety.
 
 #### XML sitemap
 
-The Drupal backend is responsible for generating the xml sitemap with the `simple_sitemap` module and exporting it to a file using a custom module. The frontend then reads this file and serves it at `/sitemap.xml` via proxying.
+The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` path that can be submitted to search engines.
 
 ### Testing with Cypress
 
@@ -211,31 +211,3 @@ You can then run your tests inside the Cypress application.
 
 The `ui/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects. The components are meant to be used as a starting point, and should be modified, added and removed as required to fit the needs of the project.
 
-## Updating Drupal core and modules
-
-Drupal core is managed with [`drupal/core-recommended`](https://github.com/drupal/core-recommended), [`drupal/core-composer-scaffold`](https://github.com/drupal/core-composer-scaffold) and [`drupal/core-dev`](https://github.com/drupal/core-dev). Perform core updates by running following command:
-
-```bash
-lando composer update drupal/core-composer-scaffold drupal/core-recommended drupal/core-dev --with-dependencies
-```
-
-After updating core with composer run also updb and if there are database updates export them with the second command
-```bash
-lando drush updb
-lando drush cex
-```
-
-Update separate modules by running the following command:
-```bash
-lando composer update 'drupal/twig_tweak' -W
-```
-
-And for major version updates:
-```bash
-lando composer require 'drupal/twig_tweak:^3.2' -W
-```
-
-### Things to consider when creating a project from this template
-
-- When setting up this project in Silta, please check that the Elasticsearch image (in silta.yml) corresponds to the one being generated for your project.
-- You should think about additional caching for the frontend. We have tested this template with Fastly CDN.

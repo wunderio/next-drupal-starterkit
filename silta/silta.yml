@@ -10,7 +10,9 @@ php:
   drupalCoreVersion: "10"
   env:
     DRUPAL_CLIENT_ID: <|DRUPAL_CLIENT_ID|>
+    DRUPAL_CLIENT_VIEWER_ID: <|DRUPAL_CLIENT_VIEWER_ID|>
     DRUPAL_CLIENT_SECRET: ${DRUPAL_CLIENT_SECRET}
+    DRUPAL_CLIENT_VIEWER_SECRET: ${DRUPAL_CLIENT_VIEWER_SECRET}
     DRUPAL_REVALIDATE_SECRET: ${DRUPAL_REVALIDATE_SECRET}
     WUNDER_NEXT_FRONTEND_URL: https://<|NEXT_DOMAIN|>
   hashsalt: ${HASHSALT}
@@ -25,7 +27,7 @@ php:
       chmod +x /app/web/core/scripts/drupal
       cd /app/web && php core/scripts/drupal recipe ../recipes/wunder_next_setup -vvv
       drush cr
-      drush wunder_next:setup-user-and-consumer
+      drush wunder_next:setup-users-and-consumers
       drush state:set wunder_democontent.disable_revalidation TRUE
       drush en wunder_democontent -y
       drush eshd -y

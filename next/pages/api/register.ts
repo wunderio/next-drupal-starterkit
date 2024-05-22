@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { drupal } from "@/lib/drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 
 import siteConfig from "@/site.config";
 
@@ -10,14 +10,14 @@ export default async function handler(
 ) {
   try {
     if (req.method === "POST") {
-      const url = drupal.buildUrl("/user/register?_format=json");
+      const url = drupalClientViewer.buildUrl("/user/register?_format=json");
       const body = JSON.parse(req.body);
 
       // The locale is passed in this header:
       const localeHeader = req.headers["accept-language"];
 
       // Do a call to drupal to register the user:
-      const result = await drupal.fetch(url.toString(), {
+      const result = await drupalClientViewer.fetch(url.toString(), {
         method: "POST",
         body: JSON.stringify({
           name: [{ value: body.name }],
