@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.4.0] 22.5.2024
+
+- Add separate consumer for previewing, prevent anonymous access to the GraphQL endpoint
+- Add authentication to grapqhl-codegen npm operations
+
 ## [2.3.0] 18.5.2024
 
 - Override the next.js dependency for next-drupal to be the same as in package.json
