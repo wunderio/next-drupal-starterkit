@@ -35,3 +35,8 @@ nginx:
     base-uri 'self';
     connect-src 'self';
     form-action 'self';
+
+ingress:
+  default:
+    extraAnnotations:
+      nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
