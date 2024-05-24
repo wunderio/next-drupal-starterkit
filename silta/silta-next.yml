@@ -47,3 +47,8 @@ redis:
   auth:
     # in a real project this has to be set via secrets file.
     password: "mypassword"
+
+ingress:
+  default:
+    extraAnnotations:
+      nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
