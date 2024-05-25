@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8a7ddc48df75f617541a64be8701a56",
+    "content-hash": "030713fff137b3dafe21cbfb4a40fd53",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2132,17 +2132,17 @@
         },
         {
             "name": "drupal/graphql_compose",
-            "version": "2.1.0-beta6",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/graphql_compose.git",
-                "reference": "2.1.0-beta6"
+                "reference": "2.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.1.0-beta6.zip",
-                "reference": "2.1.0-beta6",
-                "shasum": "c2f234c35c4746b44765c7320d18b11c8f2ae6b3"
+                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.1.1.zip",
+                "reference": "2.1.1",
+                "shasum": "d25434d2fad105494fef648e4d5cefa1b878660e"
             },
             "require": {
                 "doctrine/inflector": "^2",
@@ -2169,6 +2169,7 @@
                 "drupal/paragraphs": "^1",
                 "drupal/redirect": "^1",
                 "drupal/schema_metatag": "^3",
+                "drupal/search_api": "^1",
                 "drupal/svg_image": "^3",
                 "drupal/token": "^1",
                 "drupal/viewfield": "^3"
@@ -2176,11 +2177,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.1.0-beta6",
-                    "datestamp": "1713741251",
+                    "version": "2.1.1",
+                    "datestamp": "1716420512",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -16689,7 +16690,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/graphql_compose": 10,
         "drupal/monolog": 10,
         "drupal/simplei": 10
     },
@@ -16699,5 +16699,5 @@
         "php": ">=8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.2.0"
 }
