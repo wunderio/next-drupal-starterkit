@@ -57,6 +57,8 @@ export type ArticlesViewResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -105,7 +107,9 @@ export enum ConnectionSortKeys {
   /** Sort by entity title. */
   Title = 'TITLE',
   /** Sort by updated date */
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
+  /** Sort by term weight. */
+  Weight = 'WEIGHT'
 }
 
 /** A Date range has a start and an end. */
@@ -180,7 +184,7 @@ export type Image = {
   width: Scalars['Int']['output'];
 };
 
-/** Generic untyped input for key-value pairs. */
+/** Generic input for key-value pairs. */
 export type KeyValueInput = {
   key: Scalars['String']['input'];
   value?: InputMaybe<Scalars['String']['input']>;
@@ -611,10 +615,10 @@ export type MetaTagValueAttributes = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
-/** A GraphQL mutation is a request that changes data on the server. */
+/** The schema's entry-point for mutations. */
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Placeholder field to enable schema mutation extension. */
+  /** Placeholder for mutation extension. */
   _: Scalars['Boolean']['output'];
 };
 
@@ -1002,11 +1006,7 @@ export type ParagraphVideo = ParagraphInterface & {
 /** Video */
 export type ParagraphVideoVideoUnion = MediaRemoteVideo | MediaVideo;
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type Query = {
   __typename?: 'Query';
   /** Query for view articles display graphql_1. */
@@ -1042,11 +1042,7 @@ export type Query = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryArticlesViewArgs = {
   filter?: InputMaybe<ArticlesViewFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1056,22 +1052,14 @@ export type QueryArticlesViewArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMediaArgs = {
   id: Scalars['ID']['input'];
   langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMediaAudioItemsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1083,11 +1071,7 @@ export type QueryMediaAudioItemsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMediaDocumentsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1099,11 +1083,7 @@ export type QueryMediaDocumentsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMediaImagesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1115,11 +1095,7 @@ export type QueryMediaImagesArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMediaRemoteVideosArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1131,11 +1107,7 @@ export type QueryMediaRemoteVideosArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMediaVideosArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1147,33 +1119,21 @@ export type QueryMediaVideosArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMenuArgs = {
   langcode?: InputMaybe<Scalars['String']['input']>;
   name: MenuAvailable;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeArgs = {
   id: Scalars['ID']['input'];
   langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeArticlesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1185,11 +1145,7 @@ export type QueryNodeArticlesArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodePagesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1201,22 +1157,14 @@ export type QueryNodePagesArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryRouteArgs = {
   langcode?: InputMaybe<Scalars['String']['input']>;
   path: Scalars['String']['input'];
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QuerySitemapNodesArgs = {
   filter?: InputMaybe<SitemapNodesFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1298,6 +1246,8 @@ export type SitemapNodesResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -1319,6 +1269,13 @@ export enum SortDirection {
   /** Descending */
   Desc = 'DESC'
 }
+
+/** The schema's entry-point for subscriptions. */
+export type Subscription = {
+  __typename?: 'Subscription';
+  /** Placeholder for subscription extension. */
+  _: Scalars['Boolean']['output'];
+};
 
 /** A processed text format defined by the CMS. */
 export type Text = {
@@ -1443,6 +1400,31 @@ export type View = {
   view: Scalars['String']['output'];
 };
 
+/** An exposed filter option for the view. */
+export type ViewFilter = {
+  __typename?: 'ViewFilter';
+  /** The filter element attributes. */
+  attributes: Scalars['UntypedStructuredData']['output'];
+  /** The filter element description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The filter identifier. */
+  id: Scalars['ID']['output'];
+  /** The filter element label. */
+  label?: Maybe<Scalars['String']['output']>;
+  /** Whether the filter allows multiple values. */
+  multiple: Scalars['Boolean']['output'];
+  /** The filter element options if any are defined. */
+  options?: Maybe<Scalars['UntypedStructuredData']['output']>;
+  /** The filter plugin type. */
+  plugin: Scalars['String']['output'];
+  /** Whether the filter is required. */
+  required: Scalars['Boolean']['output'];
+  /** The filter field type. */
+  type: Scalars['String']['output'];
+  /** The value for the filter. Could be an array for multiple values. */
+  value?: Maybe<Scalars['UntypedStructuredData']['output']>;
+};
+
 /** Information about the page in a view. */
 export type ViewPageInfo = {
   __typename?: 'ViewPageInfo';
@@ -1459,11 +1441,15 @@ export type ViewPageInfo = {
 /** A reference to an embedded view */
 export type ViewReference = {
   __typename?: 'ViewReference';
+  /** The contextual filter values used. */
   contextualFilter?: Maybe<Array<Scalars['String']['output']>>;
+  /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** How many results per page. */
   pageSize?: Maybe<Scalars['Int']['output']>;
   /** The name of the query used to fetch the data, if the view is a GraphQL display. */
   query?: Maybe<Scalars['String']['output']>;
+  /** The machine name of the view. */
   view: Scalars['String']['output'];
 };
 
