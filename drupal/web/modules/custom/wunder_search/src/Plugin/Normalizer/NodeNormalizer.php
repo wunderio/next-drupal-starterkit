@@ -108,7 +108,7 @@ class NodeNormalizer extends ContentEntityNormalizer {
     ThemeManagerInterface $theme_manager,
     ThemeInitializationInterface $theme_initialization,
     AccountSwitcherInterface $account_switcher,
-    TranslationManager $translationManager
+    TranslationManager $translationManager,
   ) {
     parent::__construct($entity_type_manager, $entity_type_repository, $entity_field_manager);
     $this->configFactory = $config_factory;
