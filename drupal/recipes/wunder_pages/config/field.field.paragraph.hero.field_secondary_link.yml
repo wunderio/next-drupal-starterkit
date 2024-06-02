@@ -8,7 +8,7 @@ dependencies:
   module:
     - link
 _core:
-  default_config_hash: ooJBQRqAkJPHVrw95rhnNb8Qnrvq3lCiN9-h8nlnvaY
+  default_config_hash: SHGFZlwlG3yKhlc_t6EAcxAIC--AnN1yGpjRy9WSN2s
 id: paragraph.hero.field_secondary_link
 field_name: field_secondary_link
 entity_type: paragraph

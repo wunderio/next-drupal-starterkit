@@ -1,0 +1,30 @@
+uuid: bbe9fd45-80b5-4035-b667-6d31a365079f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.liftups_articles.field_articles
+    - field.field.paragraph.liftups_articles.field_heading
+    - paragraphs.paragraphs_type.liftups_articles
+id: paragraph.liftups_articles.default
+targetEntityType: paragraph
+bundle: liftups_articles
+mode: default
+content:
+  field_articles:
+    type: options_buttons
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_heading:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

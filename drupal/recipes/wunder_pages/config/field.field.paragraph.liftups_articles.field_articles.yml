@@ -1,0 +1,31 @@
+uuid: e0c9b28b-4a47-4d73-a093-037e64e84a6c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_articles
+    - node.type.article
+    - paragraphs.paragraphs_type.liftups_articles
+_core:
+  default_config_hash: _ndMsEWMiTc6r_TT9_HxFpbq77X5j22Jj3THul-DS-M
+id: paragraph.liftups_articles.field_articles
+field_name: field_articles
+entity_type: paragraph
+bundle: liftups_articles
+label: Articles
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      article: article
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

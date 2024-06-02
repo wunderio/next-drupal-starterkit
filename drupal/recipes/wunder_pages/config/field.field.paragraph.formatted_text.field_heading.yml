@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.paragraph.field_heading
     - paragraphs.paragraphs_type.formatted_text
+_core:
+  default_config_hash: enS3l96gdyeW8gjclo2gHL_7lDAO_k8AMuTcF2AgDmI
 id: paragraph.formatted_text.field_heading
 field_name: field_heading
 entity_type: paragraph

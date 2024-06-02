@@ -1,9 +1,9 @@
-uuid: 7a20f8a0-1537-4a46-9f7e-d8c953d0c676
+uuid: b5ed45b1-87bc-47d6-aecf-861f042e08d0
 langcode: en
 status: true
 dependencies:
   config:
-    - paragraphs.paragraphs_type.formatted_text
+    - paragraphs.paragraphs_type.accordion
   module:
     - content_translation
 third_party_settings:
@@ -12,9 +12,9 @@ third_party_settings:
     bundle_settings:
       untranslatable_fields_hide: '0'
 _core:
-  default_config_hash: 3RyZyCUWgF4gReLD7g6UMTYnnQPCwVfnZQKm2LnPljI
-id: paragraph.formatted_text
+  default_config_hash: EoDQy4iOxbU7ARIQjLirV40tX8SKF1xANLIqVFVvmvM
+id: paragraph.accordion
 target_entity_type_id: paragraph
-target_bundle: formatted_text
+target_bundle: accordion
 default_langcode: site_default
 language_alterable: true

@@ -1,18 +1,18 @@
-uuid: 2ad132d1-f210-4b4e-b277-bb3b3aad9a00
+uuid: ec96f0fd-0d78-4199-b409-0de2b30ff223
 langcode: en
 status: true
 dependencies:
   module:
-    - media
+    - node
     - paragraphs
 _core:
-  default_config_hash: mm8msxn4qrIY5b9SvPkehVDaKRBDpCHNFrHYGKaWNSc
-id: paragraph.field_file_attachments
-field_name: field_file_attachments
+  default_config_hash: XeIGj4XN5VO1DSAti4_BQPEYpQKnd56v_TZzEKqzr9U
+id: paragraph.field_articles
+field_name: field_articles
 entity_type: paragraph
 type: entity_reference
 settings:
-  target_type: media
+  target_type: node
 module: core
 locked: false
 cardinality: -1

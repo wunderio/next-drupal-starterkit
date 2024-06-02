@@ -1,9 +1,9 @@
-uuid: 7a20f8a0-1537-4a46-9f7e-d8c953d0c676
+uuid: 5c8fc480-626f-4e7e-a0e3-e44cd055805c
 langcode: en
 status: true
 dependencies:
   config:
-    - paragraphs.paragraphs_type.formatted_text
+    - paragraphs.paragraphs_type.liftups_articles
   module:
     - content_translation
 third_party_settings:
@@ -12,9 +12,9 @@ third_party_settings:
     bundle_settings:
       untranslatable_fields_hide: '0'
 _core:
-  default_config_hash: 3RyZyCUWgF4gReLD7g6UMTYnnQPCwVfnZQKm2LnPljI
-id: paragraph.formatted_text
+  default_config_hash: PVrZfIN4fllBafCmvt592Jpw4wUs6g5jxvhOSu_CmjA
+id: paragraph.liftups_articles
 target_entity_type_id: paragraph
-target_bundle: formatted_text
+target_bundle: liftups_articles
 default_langcode: site_default
 language_alterable: true

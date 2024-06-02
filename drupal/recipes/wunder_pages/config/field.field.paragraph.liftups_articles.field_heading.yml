@@ -1,19 +1,19 @@
-uuid: 989d5fca-488b-4e92-8a4a-7105a4b16327
+uuid: 422b2735-f213-4d8e-a64f-555ac411cd93
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_heading
-    - paragraphs.paragraphs_type.hero
+    - paragraphs.paragraphs_type.liftups_articles
 _core:
-  default_config_hash: 6si3U9M0f2mKpuPWJr56ymuwC3uaE9MjxDeYG_TbLpc
-id: paragraph.hero.field_heading
+  default_config_hash: dyH2H4fP1tIZvMsJR8qnbtxhJOxNWaY9g4ksfIFLRUM
+id: paragraph.liftups_articles.field_heading
 field_name: field_heading
 entity_type: paragraph
-bundle: hero
+bundle: liftups_articles
 label: Heading
 description: ''
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''

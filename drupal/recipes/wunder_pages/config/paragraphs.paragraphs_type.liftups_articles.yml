@@ -1,0 +1,12 @@
+uuid: 83ca5205-a332-4cd2-a90c-9d30358a69d0
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: kh0SDnV_ORueIx1iJUIB3Y86d17i1w4177pAUjGge1c
+id: liftups_articles
+label: 'Liftups: articles'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

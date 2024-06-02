@@ -3,18 +3,18 @@ langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: 7i12W-N-DwxT2_qZNsH7TdEcxwY-HmZGFrifXUy2YC4
+  default_config_hash: T3HZBFRHojWkC3xLaOnnmqy-alQmFemc-xsfb1OWc3k
 name: graphql_compose_server
 label: 'GraphQL Compose - Server'
+schema: graphql_compose
+schema_configuration:
+  graphql_compose:
+    enabled: true
+persisted_queries_settings: {  }
 endpoint: /graphql
 debug_flag: 0
-schema: graphql_compose
 caching: true
 batching: true
 disable_introspection: false
 query_depth: null
 query_complexity: null
-schema_configuration:
-  graphql_compose:
-    enabled: true
-persisted_queries_settings: {  }

@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.paragraph.field_heading
     - paragraphs.paragraphs_type.listing_articles
+_core:
+  default_config_hash: F_qBfLw5BYVh4pwqCJ3eE0cdwrCOCyZZb8AUSRcgmyQ
 id: paragraph.listing_articles.field_heading
 field_name: field_heading
 entity_type: paragraph
