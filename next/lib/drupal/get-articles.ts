@@ -1,5 +1,5 @@
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
-import type { ArticleTeaserType } from "@/types/graphql";
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 
 import { LISTING_ARTICLES } from "../graphql/queries";
 
@@ -17,9 +17,9 @@ export const getArticles = async ({
   locale = siteConfig.defaultLocale,
 }: GetArticlesArgs): Promise<{
   totalPages: number;
-  nodes: ArticleTeaserType[];
+  nodes: FragmentArticleTeaserFragment[];
 }> => {
-  let nodes: ArticleTeaserType[] = [];
+  let nodes: FragmentArticleTeaserFragment[] = [];
   let totalPages = 1;
   try {
     const articlesViewResult = await drupalClientViewer.doGraphQlRequest(
@@ -33,7 +33,8 @@ export const getArticles = async ({
     );
 
     if (articlesViewResult.articlesView?.results) {
-      nodes = articlesViewResult.articlesView.results as ArticleTeaserType[];
+      nodes = articlesViewResult.articlesView
+        .results as FragmentArticleTeaserFragment[];
       // To get to the total number of pages, we need to add the offset
       // to the "total" property, that is to be considered as the total "remaining"
       // articles to be displayed.
@@ -55,7 +56,7 @@ export const getLatestArticlesItems = async (
   args: GetArticlesArgs,
 ): Promise<{
   totalPages: number;
-  articles: ArticleTeaserType[];
+  articles: FragmentArticleTeaserFragment[];
 }> => {
   const { totalPages, nodes } = await getArticles(args);
 

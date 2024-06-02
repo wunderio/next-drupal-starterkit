@@ -10,20 +10,20 @@ import { Meta } from "@/components/meta";
 import { Node } from "@/components/node";
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import {
   GET_ENTITY_AT_DRUPAL_PATH,
   LISTING_ARTICLES,
 } from "@/lib/graphql/queries";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
-import type { ArticleTeaserType } from "@/types/graphql";
 import type { FrontpageType } from "@/types/graphql";
 
 import { Divider } from "@/ui/divider";
 
 interface HomepageProps extends LayoutProps {
   frontpage: FrontpageType | null;
-  stickyArticleTeasers: ArticleTeaserType[];
+  stickyArticleTeasers: FragmentArticleTeaserFragment[];
 }
 
 export default function IndexPage({
@@ -95,7 +95,8 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
 
   // We cast the results as the ListingArticle type to get type safety:
   const articles =
-    (stickyArticleTeasers.articlesView?.results as ArticleTeaserType[]) ?? [];
+    (stickyArticleTeasers.articlesView
+      ?.results as FragmentArticleTeaserFragment[]) ?? [];
 
   return {
     props: {

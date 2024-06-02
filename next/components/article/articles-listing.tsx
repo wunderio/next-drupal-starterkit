@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { ArticleTeaser } from "@/components/article/article-teaser";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import type { ArticleTeaserType } from "@/types/graphql";
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 
 export function ArticlesListing({
   listingId,
@@ -37,7 +37,7 @@ export function ArticlesListing({
       {isLoading && <LoadingSpinner />}
       <ul className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {!isLoading &&
-          data?.map((article: ArticleTeaserType) => (
+          data?.map((article: FragmentArticleTeaserFragment) => (
             <li key={article.id}>
               <ArticleTeaser article={article} />
             </li>

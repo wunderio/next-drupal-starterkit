@@ -13,10 +13,10 @@ import {
 } from "@/lib/contexts/language-links-context";
 import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
-import type { ArticleTeaserType } from "@/types/graphql";
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 
 interface AllArticlesPageProps extends LayoutProps {
-  articleTeasers: ArticleTeaserType[];
+  articleTeasers: FragmentArticleTeaserFragment[];
   paginationProps: PaginationProps;
   languageLinks: LanguageLinks;
 }

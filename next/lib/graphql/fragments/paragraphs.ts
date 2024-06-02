@@ -18,6 +18,18 @@ export const FRAGMENT_PARAGRAPH_UNION = graphql(`
     ...FragmentParagraphAccordion
     ...FragmentParagraphAccordionItem
     ...FragmentParagraphListingArticle
+    ...FragmentParagraphLiftupArticle
+  }
+`);
+
+export const FRAGMENT_PARAGRAPH_LIFTUP_ARTICLE = graphql(`
+  fragment FragmentParagraphLiftupArticle on ParagraphLiftupsArticle {
+    heading
+    articles {
+      ... on NodeArticle {
+        ...FragmentArticleTeaser
+      }
+    }
   }
 `);
 
