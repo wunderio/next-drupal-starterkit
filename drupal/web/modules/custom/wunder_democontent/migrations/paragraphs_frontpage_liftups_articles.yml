@@ -1,0 +1,44 @@
+id: paragraphs_frontpage_liftups_articles
+label: Frontpage paragraphs liftups articles
+migration_group: demo_content
+source:
+  plugin: csv
+  path: modules/custom/wunder_democontent/sources/frontpages.csv
+  ids: [id]
+  constants:
+    uid: 1
+    status: 1
+process:
+  # We are interested here only in nodes that are not translations:
+  skipped:
+    plugin: skip_on_value
+    method: row
+    not_equals: true
+    value:
+      - 1
+    source: 'Is source'
+  field_heading: Paragraph_0_liftups_articles_title
+  'field_articles/0/target_id':
+    plugin: migration_lookup
+    source: Paragraph_0_liftups_articles_articles_id_0
+    migration: nodes_articles
+  'field_articles/1/target_id':
+    plugin: migration_lookup
+    source: Paragraph_0_liftups_articles_articles_id_1
+    migration: nodes_articles
+  'field_articles/2/target_id':
+    plugin: migration_lookup
+    source: Paragraph_0_liftups_articles_articles_id_2
+    migration: nodes_articles
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: liftups_articles
+
+migration_dependencies:
+  required:
+    - nodes_articles
+
