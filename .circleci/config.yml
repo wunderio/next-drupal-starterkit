@@ -27,7 +27,7 @@ commands:
       cache-version:
         description: "CircleCI cache key prefix."
         type: string
-        default: "v1.2"
+        default: "v1.0"
       npm-config-platform:
         description: "Platform flag for npm install"
         type: string
@@ -36,7 +36,6 @@ commands:
       - restore_cache:
           keys:
             - <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
-            - <<parameters.cache-version>>-npm-
 
       - run:
           name: Install frontend dependencies
