@@ -19,7 +19,7 @@ commands:
         default: "."
       install-command:
         type: string
-        default: "npm install"
+        default: "npm ci"
       build-command:
         description: "NPM build command."
         type: string
