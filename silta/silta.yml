@@ -44,6 +44,7 @@ referenceData:
 
 nginx:
   basicauth:
+    # Basicauth must be disabled as otherwise Next.js can't access Drupal.
     enabled: false
   content_security_policy: >-
     upgrade-insecure-requests;
