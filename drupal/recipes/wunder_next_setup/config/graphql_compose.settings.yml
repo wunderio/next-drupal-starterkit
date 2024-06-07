@@ -59,6 +59,8 @@ entity_config:
       enabled: true
     image:
       enabled: true
+    liftups_articles:
+      enabled: true
     links:
       enabled: true
     listing_articles:
@@ -156,6 +158,11 @@ field_config:
         enabled: true
     image:
       field_image:
+        enabled: true
+    liftups_articles:
+      field_articles:
+        enabled: true
+      field_heading:
         enabled: true
     links:
       field_links:

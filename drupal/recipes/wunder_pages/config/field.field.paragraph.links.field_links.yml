@@ -7,6 +7,8 @@ dependencies:
     - paragraphs.paragraphs_type.links
   module:
     - link
+_core:
+  default_config_hash: x4C4dYqdHN-ysRjMkFyxmaw4tlGbUxDP4a730JfYHw8
 id: paragraph.links.field_links
 field_name: field_links
 entity_type: paragraph

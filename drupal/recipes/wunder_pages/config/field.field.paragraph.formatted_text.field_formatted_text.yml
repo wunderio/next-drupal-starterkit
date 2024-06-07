@@ -8,7 +8,7 @@ dependencies:
   module:
     - text
 _core:
-  default_config_hash: bDjpEPbOCFpgyR2-EYri2bRLtFN2-b8zXnqzxccmioc
+  default_config_hash: f4wR6uUi6XMN0McvQ6hIBchABKYvHPTCpdhhEc22xLA
 id: paragraph.formatted_text.field_formatted_text
 field_name: field_formatted_text
 entity_type: paragraph
@@ -19,5 +19,6 @@ required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long

@@ -1,0 +1,20 @@
+uuid: 4b184756-191c-4126-8bdd-8db7e303cda5
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.accordion_item
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+_core:
+  default_config_hash: Gz4lVayFRU3hDJjMk5BhjAFE6a2_HIoW6zeWjs5j-70
+id: paragraph.accordion_item
+target_entity_type_id: paragraph
+target_bundle: accordion_item
+default_langcode: site_default
+language_alterable: true

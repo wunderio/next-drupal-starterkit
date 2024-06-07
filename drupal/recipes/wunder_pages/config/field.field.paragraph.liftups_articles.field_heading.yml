@@ -1,0 +1,21 @@
+uuid: 422b2735-f213-4d8e-a64f-555ac411cd93
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_heading
+    - paragraphs.paragraphs_type.liftups_articles
+_core:
+  default_config_hash: dyH2H4fP1tIZvMsJR8qnbtxhJOxNWaY9g4ksfIFLRUM
+id: paragraph.liftups_articles.field_heading
+field_name: field_heading
+entity_type: paragraph
+bundle: liftups_articles
+label: Heading
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

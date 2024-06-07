@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import classNames from "classnames";
 
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 import { formatDateTimestamp } from "@/lib/utils";
-import type { ArticleTeaserType } from "@/types/graphql";
 
 interface ArticleListItemProps {
-  article: ArticleTeaserType;
+  article: FragmentArticleTeaserFragment;
 }
 
 export function ArticleListItem({ article }: ArticleListItemProps) {

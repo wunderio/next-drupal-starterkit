@@ -5,6 +5,8 @@ dependencies:
   module:
     - paragraphs
     - text
+_core:
+  default_config_hash: UIPDM4aLrUSMpuzUItwgEjSCDX_8ntiqC3elZQTo-2A
 id: paragraph.field_formatted_text
 field_name: field_formatted_text
 entity_type: paragraph

@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { ParagraphFileAttachments } from "@/components/paragraph/paragraph--file-attachments";
 import { ParagraphHero } from "@/components/paragraph/paragraph--hero";
 import { ParagraphImage } from "@/components/paragraph/paragraph--image";
+import { ParagraphLiftupArticle } from "@/components/paragraph/paragraph--liftup-article";
 import { ParagraphLinks } from "@/components/paragraph/paragraph--links";
 import { ParagraphListingArticles } from "@/components/paragraph/paragraph--listing-articles";
 import { ParagraphText } from "@/components/paragraph/paragraph--text";
@@ -49,6 +50,9 @@ export function Paragraph({
     }
     case "ParagraphListingArticle": {
       return <ParagraphListingArticles paragraph={paragraph} />;
+    }
+    case "ParagraphLiftupsArticle": {
+      return <ParagraphLiftupArticle paragraph={paragraph} />;
     }
     default: {
       console.log(

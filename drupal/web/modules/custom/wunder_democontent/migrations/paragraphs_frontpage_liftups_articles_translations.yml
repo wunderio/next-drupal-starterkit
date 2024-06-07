@@ -1,0 +1,65 @@
+id: paragraphs_frontpage_liftups_articles_translations
+label: Frontpage paragraphs liftups articles translations
+migration_group: demo_content
+source:
+  plugin: csv
+  path: modules/custom/wunder_democontent/sources/frontpages.csv
+  ids: [id]
+  constants:
+    uid: 1
+    status: 1
+process:
+  # We are interested here only in rows that are translations:
+  skipped:
+    - plugin: skip_on_value
+      method: row
+      not_equals: true
+      value:
+        - 0
+      source: 'Is source'
+  field_heading: Paragraph_0_liftups_articles_title
+  'field_articles/0/target_id':
+    plugin: migration_lookup
+    source: Paragraph_0_liftups_articles_articles_id_0
+    migration: nodes_articles
+  'field_articles/1/target_id':
+    plugin: migration_lookup
+    source: Paragraph_0_liftups_articles_articles_id_1
+    migration: nodes_articles
+  'field_articles/2/target_id':
+    plugin: migration_lookup
+    source: Paragraph_0_liftups_articles_articles_id_2
+    migration: nodes_articles
+  status: constants/status
+  uid: constants/uid
+  langcode: Langcode
+
+  pseudo_paragraph_field:
+    plugin: migration_lookup
+    migration: paragraphs_frontpage_liftups_articles
+    source: Tnid
+  id:
+    plugin: extract
+    source: '@pseudo_paragraph_field'
+    index:
+      - '0'
+  revision_id:
+    plugin: extract
+    source: '@pseudo_paragraph_field'
+    index:
+      - '1'
+  skip_if_no_source:
+    plugin: skip_on_empty
+    method: row
+    source: '@id'
+    message: 'Source paragraph was not found, so this translation was skipped.'
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: listing_articles
+  translations: true
+
+migration_dependencies:
+  required:
+    - paragraphs_frontpage_liftups_articles
+
