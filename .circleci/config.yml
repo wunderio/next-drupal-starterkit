@@ -158,7 +158,7 @@ commands:
 
             echo "Expanding special variable DRUPAL_CLIENT_ID = $drupal_client_id ..."
             sed -i -e "s/<|DRUPAL_CLIENT_ID|>/$drupal_client_id/g" $envvars_file
-            
+
             echo "Expanding special variable DRUPAL_CLIENT_VIEWER_ID = $drupal_client_viewer_id ..."
             sed -i -e "s/<|DRUPAL_CLIENT_VIEWER_ID|>/$drupal_client_viewer_id/g" $envvars_file
 

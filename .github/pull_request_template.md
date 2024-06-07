@@ -29,5 +29,6 @@ This project must support WCAG accessibility level AA <em>(edit this according t
 - If you have time, test with a screen reader such as VoiceOver (macOS), NVDA (Windows), or Orca (Linux).
 
 Use the [Accessibility Testing Cheat Sheet](https://intra.wunder.io/info/accessibility-group/accessibility-testing-cheat-sheet) for information on how to run these tests.
+
 </p>
 </details>
