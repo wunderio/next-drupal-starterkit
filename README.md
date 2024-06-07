@@ -85,9 +85,7 @@ Follow these steps to get started:
 
 All Next.js code is in the `next` directory.
 
-For frontend development, prefix npm commands with `lando`, so for example to start the
-local node server in development mode, you can use `lando npm run dev`. All needed environment variables are already
-set for backend and frontend in the Lando file, so you will not need to touch any .env files for the frontend to get up and running.
+For frontend development, prefix npm commands with `lando`, so for example to start the local node server in development mode, you can use `lando npm run dev`. All needed environment variables are already set for backend and frontend in the Lando file, so you will not need to touch any .env files for the frontend to get up and running.
 
 Follow these steps to get started, **after you have set up the backend**:
 
@@ -161,12 +159,11 @@ TypeScript is setup quite loosely by default to minimise friction and make it ac
 
 #### Working with GraphQL and TypeScript
 
-The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql/queries` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
+The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
 
-When adding or modifying queries and fragments, you will need to run `lando npm run graphql-codegen` to generate the corresponding types. The command will keep checking the files for changes.
+When adding or modifying queries and fragments, the codegen script needs to be run to generate the corresponding types from the schema. Though you can always run `lando npm run graphql-codegen` yourself if needed, you shouldn't normally need to: `lando npm run build` will run the codegen before the build, and `lando npm run dev` will start the codegen in watch mode alongside starting Next.js in development mode. The output of the codegen is gitignored, as the same step will be run on the CI server.
 
-When there are changes on the GraphQL server schema itself, you need to stop and start the command again to fetch the new schema definition. Also, you might need to `lando drush cr` to clear the Drupal cache.
-§
+Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `lando drush cr` to clear the Drupal cache.
 
 #### Typesafe environment variables
 
