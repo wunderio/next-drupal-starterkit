@@ -5,6 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   // Only generate standalone output in circle ci:
   output: process.env.CIRCLECI ? "standalone" : undefined,
+  poweredByHeader: false,
   images: {
     remotePatterns: [
       {
