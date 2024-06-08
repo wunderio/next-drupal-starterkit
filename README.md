@@ -17,9 +17,9 @@ The template includes all you need to have a working multi-language decoupled Dr
 
 This example is meant to be used together with the [Silta](https://wunderio.github.io/silta/) hosting system by [Wunder](https://www.wunder.io), but it can be used with any hosting system.
 
-## 🤓 Lando or Ddev? Your choice!
+## 🤓 Lando or DDEV? Your choice!
 
-This starterkit can be used either with [Lando](https://lando.dev/) or with [Ddev](https://www.ddev.com/). The only requirement is to have either one of those installed.
+This starterkit can be used either with [Lando](https://lando.dev/) or with [DDEV](https://www.DDEV.com/). The only requirement is to have either one of those installed.
 
 ### Lando minimum version
 
@@ -48,13 +48,14 @@ Follow this guide to get the backend and frontend up and running. You can either
 ### 🏎️ Quickstart
 
 1. Clone this repository
-2. Choose which local environment you want to use: Lando or Ddev.
+2. Choose which local environment you want to use: Lando or DDEV.
 3. Run the setup script corresponding to your chosen local environment:
 
 ```bash
 ./setup-lando.sh
 ```
 or 
+
 ```bash
 ./setup-ddev.sh
 ```
@@ -81,9 +82,9 @@ Lando has two separate containers for the backend and frontend, so the URLs are 
 |------------|  |
 | https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/ |
 
-### With Ddev
+### With DDEV
 
-Ddev has a single container for both the backend and frontend, so the URLs differ only by the port:
+DDEV has a single container for both the backend and frontend, so the URLs differ only by the port:
 
 | Backend | Frontend |
 |------------|  |
@@ -155,15 +156,15 @@ TypeScript is setup quite loosely by default to minimise friction and make it ac
 
 The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
 
-When adding or modifying queries and fragments, the codegen script needs to be run to generate the corresponding types from the schema. Though you can always run `lando npm run graphql-codegen` or `ddev npm run graphql-codegen` yourself if needed, you shouldn't normally need to: `lando npm run build` or `ddev npm run build` will run the codegen before the build, and `lando npm run dev` will start the codegen in watch mode alongside starting Next.js in development mode. The output of the codegen is gitignored, as the same step will be run on the CI server.
+When adding or modifying queries and fragments, the codegen script needs to be run to generate the corresponding types from the schema. Though you can always run `lando npm run graphql-codegen` or `ddev npm run graphql-codegen` yourself if needed, you shouldn't normally need to: `lando npm run build` or `ddev npm run build` will run the codegen before the build, and `lando npm run dev` or `ddev npm run dev` will start the codegen in watch mode alongside starting Next.js in development mode. The output of the codegen is gitignored, as the same step will be run on the CI server.
 
-Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `lando drush cr` to clear the Drupal cache.
+Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `lando drush cr` or `ddev drush cr` to clear the Drupal cache.
 
 #### Typesafe environment variables
 
 The environment variables used by the frontend are also checked for type safety. If used correctly, a Zod error will prevent the frontend from building if the environment variables are not set according to the schema defined in `next/env.ts`. To add a new environment variable:
 
-1. Add it to `.lando.yml`, under services > node > overrides > environment. or to `.ddev/config.yaml` for Ddev.
+1. Add it to `.lando.yml`, under services > node > overrides > environment. or to `.ddev/config.yaml` for DDEV.
 2. Add it to `next/env.ts`. Note that it must be added twice there - once under server/client to define its schema, and once under `runtimeEnv` to read the actual value.
 3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
 4. To ensure it also works in CircleCI and Silta, also add it to`.circleci/config.yml` and `silta-next.yml`.
