@@ -82,6 +82,11 @@ Lando has two separate containers for the backend and frontend, so the URLs are 
 |--|--|
 | https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/  |
 
+You can get a more detailed list of all the services and their urls with the command:
+
+```bash
+lando info
+
 ### With DDEV
 
 DDEV has a single container for both the backend and frontend, so the URLs differ only by the port:
@@ -90,6 +95,11 @@ DDEV has a single container for both the backend and frontend, so the URLs diffe
 |--|--|
 | https://next-drupal-starterkit.ddev.site| https://next-drupal-starterkit.ddev.site:9999  |
 
+You can get a more detailed list of all the services and their urls with the command:
+
+```bash
+ddev describe
+```
 
 ## 📦 What's included?
 
