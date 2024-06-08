@@ -2,7 +2,7 @@
 
 # List of commands to run:
 commands=(
-  "ddev delete -y"
+  "ddev delete -y -O"
   "ddev start"
   "ddev composer install"
   "ddev generate-oauth-keys"
