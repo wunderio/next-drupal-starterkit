@@ -68,6 +68,28 @@ If the script has failed on some step, and instead of continuing you want to sta
 ```
 
 > NOTE: the script will install the site from scratch. Export your database if you have started working with the template, and you have something valuable in it. :)
+
+## 👨‍💻Urls
+
+After the setup is complete, you can access the site at the following URLs:
+
+### With Lando
+
+Lando has two separate containers for the backend and frontend, so the URLs are different:
+
+| Backend | Frontend |
+|------------|  |
+| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/ |
+
+### With Ddev
+
+Ddev has a single container for both the backend and frontend, so the URLs differ only by the port:
+
+| Backend | Frontend |
+|------------|  |
+| https://next-drupal-starterkit.ddev.site| https://next-drupal-starterkit.ddev.site:9999 |
+
+
 ## 📦 What's included?
 
 We try to add to the template what we think are the most commonly requested features in website projects. Most of these are based on the features provided by [Next.js for Drupal](https://next-drupal.org/), but we have paid special attention to making these work in a multilanguage setup.
