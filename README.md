@@ -78,17 +78,17 @@ After the setup is complete, you can access the site at the following URLs:
 
 Lando has two separate containers for the backend and frontend, so the URLs are different:
 
-| Backend | Frontend |
-|------------|  |
-| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/ |
+| Backend | Frontend                     |
+|--|--|
+| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/  |
 
 ### With DDEV
 
 DDEV has a single container for both the backend and frontend, so the URLs differ only by the port:
 
-| Backend | Frontend |
-|------------|  |
-| https://next-drupal-starterkit.ddev.site| https://next-drupal-starterkit.ddev.site:9999 |
+| Backend | Frontend                                       |
+|--|--|
+| https://next-drupal-starterkit.ddev.site| https://next-drupal-starterkit.ddev.site:9999  |
 
 
 ## 📦 What's included?
