@@ -5,17 +5,19 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "concurrently --raw 'npm run graphql-codegen:watch' 'npm run dev:nocodegen'",
+    "dev:nocodegen": "next dev",
+    "build": "npm run graphql-codegen && next build",
     "start": "next start",
-    "preview": "next build && next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "storybook": "STORYBOOK=true storybook dev -p 6006",
     "build-storybook": "STORYBOOK=true storybook build",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "graphql-codegen": "ts-node ./codegen-access-token.ts && graphql-codegen --watch --config codegen.ts"
+    "codegen-access-token": "ts-node ./codegen-access-token.ts",
+    "graphql-codegen": "npm run codegen-access-token && graphql-codegen --config codegen.ts",
+    "graphql-codegen:watch": "npm run codegen-access-token && graphql-codegen  --config codegen.ts --watch"
   },
   "dependencies": {
     "@elastic/react-search-ui": "1.21.1",
@@ -73,6 +75,7 @@
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "@typescript-eslint/parser": "^7.11.0",
     "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
     "cypress": "^13.11.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.3",
