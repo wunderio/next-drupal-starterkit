@@ -85,9 +85,7 @@ Follow these steps to get started:
 
 All Next.js code is in the `next` directory.
 
-For frontend development, prefix npm commands with `lando`, so for example to start the
-local node server in development mode, you can use `lando npm run dev`. All needed environment variables are already
-set for backend and frontend in the Lando file, so you will not need to touch any .env files for the frontend to get up and running.
+For frontend development, prefix npm commands with `lando`, so for example to start the local node server in development mode, you can use `lando npm run dev`. All needed environment variables are already set for backend and frontend in the Lando file, so you will not need to touch any .env files for the frontend to get up and running.
 
 Follow these steps to get started, **after you have set up the backend**:
 
@@ -141,7 +139,6 @@ We decided to implement a static form, in the sense that the "hardcoded" fields 
 
 The `frontpage` and `page` content types are configured to use the popular [Paragraphs drupal module](https://www.drupal.org/project/paragraphs). The setup includes basic paragraph types to add images, videos, text, and also a nested paragraph type to demonstrate how to handle this in backend and frontend.
 
-
 ### Retrying of failed requests
 
 If the backend is not available momentarily, the frontend will try again to call it before returning an error.
@@ -150,9 +147,9 @@ If the backend is not available momentarily, the frontend will try again to call
 
 The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Next-Auth](https://next-auth.js.org/).
 
-* As an example, only registered users are allowed to post to the drupal `contact` webform, and parts of the interface in the frontend are available only for logged-in users.
-* Some test users are imported as part of the content migration (check the `users.csv' file for the credentials).
-* New users can be created on the frontend using a simple registration form. Drupal will assign them the correct role, and will send them an email with the link to set their password.
+- As an example, only registered users are allowed to post to the drupal `contact` webform, and parts of the interface in the frontend are available only for logged-in users.
+- Some test users are imported as part of the content migration (check the `users.csv' file for the credentials).
+- New users can be created on the frontend using a simple registration form. Drupal will assign them the correct role, and will send them an email with the link to set their password.
 
 ### Typescript
 
@@ -162,12 +159,12 @@ TypeScript is setup quite loosely by default to minimise friction and make it ac
 
 #### Working with GraphQL and TypeScript
 
-The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql/queries` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
+The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
 
-When adding or modifying queries and fragments, you will need to run `lando npm run graphql-codegen` to generate the corresponding types. The command will keep checking the files for changes. 
+When adding or modifying queries and fragments, the codegen script needs to be run to generate the corresponding types from the schema. Though you can always run `lando npm run graphql-codegen` yourself if needed, you shouldn't normally need to: `lando npm run build` will run the codegen before the build, and `lando npm run dev` will start the codegen in watch mode alongside starting Next.js in development mode. The output of the codegen is gitignored, as the same step will be run on the CI server.
 
-When there are changes on the GraphQL server schema itself, you need to stop and start the command again to fetch the new schema definition. Also, you might need to `lando drush cr` to clear the Drupal cache.
-§
+Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `lando drush cr` to clear the Drupal cache.
+
 #### Typesafe environment variables
 
 The environment variables used by the frontend are also checked for type safety. If used correctly, a Zod error will prevent the frontend from building if the environment variables are not set according to the schema defined in `next/env.ts`. To add a new environment variable:
@@ -187,7 +184,7 @@ The template includes example tests to be run with Cypress. The Lando setup incl
 
 #### Running tests locally inside Lando on the command line
 
-To run the Cypress tests inside Lando: 
+To run the Cypress tests inside Lando:
 
 1. make sure the backend is running
 2. run `lando npm run build` to build the frontend
@@ -198,7 +195,7 @@ A video of the run will be recorded, and it will be available at `next/cypress/v
 
 #### Using the Cypress application
 
-If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work: 
+If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work:
 
 1. ensure you are using the correct node version, matching what we use inside Lando (see the `.lando.yml` file for details)
 2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
@@ -210,4 +207,3 @@ You can then run your tests inside the Cypress application.
 ### UI library
 
 The `ui/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects. The components are meant to be used as a starting point, and should be modified, added and removed as required to fit the needs of the project.
-

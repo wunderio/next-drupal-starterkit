@@ -146,7 +146,7 @@ services:
         NEXTAUTH_SECRET: nextauth_secret_not_secure_used_only_locally
         NEXTAUTH_URL: https://frontend.lndo.site
     build:
-      - "cd next && npm install"
+      - "cd next && npm ci"
     scanner: false
 
   # This service adds elasticsearch, used by (you guessed it) the search part of

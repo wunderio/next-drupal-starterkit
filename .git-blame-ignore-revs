@@ -1,0 +1,7 @@
+# .git-blame-ignore-revs
+
+# For an explanation of what this file does, see:
+# https://docs.github.com/en/repositories/working-with-files/using-files/viewing-a-file#ignore-commits-in-the-blame-view
+
+# Format json/md/yml files with prettier
+dc0358b348ee27f2d3330b799c429aee15292fee
