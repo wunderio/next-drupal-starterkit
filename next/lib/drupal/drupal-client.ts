@@ -4,24 +4,21 @@ import { GraphQlDrupalClient } from "./graphql-drupal-client";
 
 import { env } from "@/env";
 
-const getFetcher =
-  () =>
-  async (input: RequestInfo, init: RequestInit = {}) => {
-    const wrappedFetch = async () => {
-      return await fetch(input, {
-        ...init,
-      });
-    };
-    // Return the pRetry wrapped fetch function:
-    return pRetry(wrappedFetch, {
-      retries: env.NODE_ENV === "development" ? 0 : 5,
-      onFailedAttempt: (error) => {
-        console.log(
-          `Drupal fetch: attempt ${error.attemptNumber} failed. There are ${error.retriesLeft} retries left.`,
-        );
-      },
-    });
-  };
+/**
+ * Specifies a custom fetcher function that wraps the fetch function in pRetry.
+ */
+const fetcher = (input: RequestInfo, init: RequestInit = {}) => {
+  const wrappedFetch = () => fetch(input, init);
+
+  return pRetry(wrappedFetch, {
+    retries: env.NODE_ENV === "development" ? 0 : 5,
+    onFailedAttempt: (error) => {
+      console.log(
+        `Drupal fetch: attempt ${error.attemptNumber} failed. There are ${error.retriesLeft} retries left.`,
+      );
+    },
+  });
+};
 
 // This instance of the client will connect to Drupal using a consumer that
 // is associated with a role with "regular" permissions. It should be used by
@@ -29,8 +26,7 @@ const getFetcher =
 export const drupalClientViewer = new GraphQlDrupalClient(
   env.NEXT_PUBLIC_DRUPAL_BASE_URL,
   {
-    // We specify our own fetcher to apply pRetry to it:
-    fetcher: getFetcher(),
+    fetcher,
     forceIframeSameSiteCookie: env.NODE_ENV === "development",
     auth: {
       clientId: env.DRUPAL_CLIENT_VIEWER_ID,
@@ -45,8 +41,7 @@ export const drupalClientViewer = new GraphQlDrupalClient(
 export const drupalClientPreviewer = new GraphQlDrupalClient(
   env.NEXT_PUBLIC_DRUPAL_BASE_URL,
   {
-    // We specify our own fetcher to apply pRetry to it:
-    fetcher: getFetcher(),
+    fetcher,
     forceIframeSameSiteCookie: env.NODE_ENV === "development",
     auth: {
       clientId: env.DRUPAL_CLIENT_ID,

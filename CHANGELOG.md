@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 - Override the next.js dependency for next-drupal to be the same as in package.json
 - Prevent the Drupal backend from being indexed by search engines
-- Return permanent or temporary redirect based on the redirect status code set on the Drupal side 
+- Return permanent or temporary redirect based on the redirect status code set on the Drupal side
 - Move the generation of sitemap.xml to the frontend
 - Support rendering nodes that are not set up to be translatable
 - Use the new Translations GraphQL field to get translated versions of the node
@@ -43,10 +43,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ## [2.0.1] 10.2.2024
 
 ### Changed
+
 - Updated Drupal core to 10.1.8 and contrib modules to latest versions
 - Updated the graphql_compose module to 2.1 beta1
 - Switched the graphql schema to use Drupal entity ids instead of UUIDs, to fix rendering of nodes at specific revisions.
-
 
 ## [2.0.0] 9.2.2024
 
@@ -60,13 +60,14 @@ All features are kept but have been re-implemented to use the new way of handlin
 - `graphql-codegen` for generating types from GraphQL schema, queries and fragments
 
 ### Removed
+
 - JSONAPI modules and related configuration
 - Manual definitions in `zod` for JSONAPI responses
 
 ### Changed
+
 - Reorganization of the components directory structure
 - Updated Readme with new instructions regarding GraphQL setup
-
 
 ## [1.0.0] - 09.02.2024
 

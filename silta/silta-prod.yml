@@ -1,4 +1,3 @@
-
 # Enable autoscaling for production.
 autoscaling:
   enabled: true
@@ -38,7 +37,6 @@ mariadb:
       # Database storage disk space allocation
       # Request assistance from ops team after changing this on existing deployment.
       size: 5Gi
-
 # Connect to an externally hosted database.
 #  env:
 #    DB_HOST: 'hosted.database.server.com'
