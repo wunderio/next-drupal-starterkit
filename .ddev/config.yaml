@@ -28,26 +28,25 @@ web_environment:
   # URL OF THE FRONTEND SITE:
   # This needs to match the proxy value for the node service
   # so if you change it, remember to change it here as well.
-  - WUNDER_NEXT_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:9999
+  - WUNDER_NEXT_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3001
   - ENVIRONMENT_NAME=ddev
   - HASH_SALT=notsosecurehashnotsosecurehashnotsosecurehash
   - NEXT_PUBLIC_DRUPAL_BASE_URL=https://next-drupal-starterkit.ddev.site
   - NEXT_IMAGE_DOMAIN=next-drupal-starterkit.ddev.site
-  - NEXT_PUBLIC_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:9999
+  - NEXT_PUBLIC_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3001
     # Environment variables for next_auth:
   - NEXTAUTH_SECRET=nextauth_secret_not_secure_used_only_locally
-  - NEXTAUTH_URL=https://next-drupal-starterkit.ddev.site:9999
-
+  - NEXTAUTH_URL=https://next-drupal-starterkit.ddev.site:3001
 
 corepack_enable: false
 web_extra_exposed_ports:
   - name: "Next.js"
     container_port: 3000
-    http_port: 9998
-    https_port: 9999
+    http_port: 3000
+    https_port: 3001
 
 hooks:
   post-start:
     - exec: "elasticsearch-plugin install analysis-icu"
       service: elasticsearch
-    - exec: "cd next && npm ci"
+    - exec: "cd next && npm i"

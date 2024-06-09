@@ -22,7 +22,7 @@ commands=(
 
 last_successful_command=0
 
-status_file=".last_successful_command"
+status_file=".last_successful_command_ddev"
 
 # Parse command-line arguments
 clean_run=false
@@ -67,11 +67,12 @@ run_commands() {
 
   # All commands were successful. Remove the status file, show messages to the user, and start the frontend site.
   rm -f "$status_file"
-  echo '🚀 All Done!'
+  echo '🚀 All done!'
+  ddev describe
   echo '↪️ Use this link to log into the backend as user 1:'
   ddev drush uli
   echo '🏎️ Starting the frontend site in production mode...'
-  echo '⚠️ Note: the site will be available at https://next-drupal-starterkit.ddev.site:9999'
+  echo '⚠️ Note: the site will be available at https://next-drupal-starterkit.ddev.site:3001, not localhost:3000'
   ddev npm run start
 }
 

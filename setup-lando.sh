@@ -22,7 +22,7 @@ commands=(
 
 last_successful_command=0
 
-status_file=".last_successful_command"
+status_file=".last_successful_command_lando"
 
 # Parse command-line arguments
 clean_run=false
@@ -66,6 +66,7 @@ run_commands() {
   done
 
   # All commands were successful. Remove the status file, show messages to the user, and start the frontend site.
+  echo "$status_file"
   rm -f "$status_file"
   echo '🚀 All Done!'
   echo '↪️ Use this link to log into the backend as user 1:'
