@@ -7,7 +7,7 @@ services:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: ${DDEV_APPROOT}
     environment:
-     - 'ELASTICVUE_CLUSTERS=[{"name": "dev cluster", "uri": "http://next-drupal-starterkit.ddev.site:9200/", "password": "", "user": ""}]'
+     - 'ELASTICVUE_CLUSTERS=[{"name": "dev cluster", "uri": "http://${DDEV_SITENAME}.ddev.site:9200/", "password": "", "user": ""}]'
      - VIRTUAL_HOST=$DDEV_HOSTNAME
      - HTTP_EXPOSE=9003:8080
   web:

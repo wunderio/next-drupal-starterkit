@@ -93,7 +93,7 @@ DDEV has a single container for both the backend and frontend, so the URLs diffe
 
 | Backend | Frontend                                       |
 |--|--|
-| https://next-drupal-starterkit.ddev.site| https://next-drupal-starterkit.ddev.site:9999  |
+| https://next-drupal-starterkit.ddev.site| https://next-drupal-starterkit.ddev.site:3000  |
 
 You can get a more detailed list of all the services and their urls with the command:
 
