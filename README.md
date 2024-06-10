@@ -29,7 +29,7 @@ The minimum version of lando required is 3.21.
 
 ### ⚠️⚠️ NOTE: Using npm
 
-Instead of running npm operations in your host machine, _this template requires you to use npm inside Lando or DDEV_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend.
+Instead of running npm operations in your host machine, _this template requires you to use npm inside Lando or DDEV_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend without the need of additional configuration steps.
 
 **Just prefix all npm operations with `lando` or `ddev`.**
 
@@ -48,7 +48,7 @@ Follow this guide to get the backend and frontend up and running. You can either
 ### 🏎️ Quickstart
 
 1. Clone this repository
-2. Choose which local environment you want to use: Lando or DDEV.
+2. Choose which local environment you want to use: **Lando** or **DDEV**.
 3. Run the setup script corresponding to your chosen local environment:
 
 ```bash
