@@ -72,7 +72,7 @@ run_commands() {
   echo '↪️ Use this link to log into the backend as user 1:'
   ddev drush uli
   echo '🏎️ Starting the frontend site in production mode...'
-  echo -e '\e[32m⚠️️️️⚠️️️️⚠️️️️ Note: the site will be available at https://next-drupal-starterkit.ddev.site:3000, not localhost:3000 as the output of next start suggests.\e[0m'
+  echo '⚠️️️️⚠️️️️⚠️️️️ Note: the site will be available at https://next-drupal-starterkit.ddev.site:3000, not localhost:3000 as the output of next start suggests.'
   ddev npm run start
 }
 
