@@ -2,6 +2,7 @@ name: next-drupal-starterkit
 type: drupal
 docroot: drupal/web
 composer_root: drupal
+nodejs_version: "20"
 php_version: "8.2"
 webserver_type: nginx-fpm
 xdebug_enabled: false
@@ -28,22 +29,22 @@ web_environment:
   # URL OF THE FRONTEND SITE:
   # This needs to match the proxy value for the node service
   # so if you change it, remember to change it here as well.
-  - WUNDER_NEXT_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3001
+  - WUNDER_NEXT_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3000
   - ENVIRONMENT_NAME=ddev
   - HASH_SALT=notsosecurehashnotsosecurehashnotsosecurehash
   - NEXT_PUBLIC_DRUPAL_BASE_URL=https://next-drupal-starterkit.ddev.site
   - NEXT_IMAGE_DOMAIN=next-drupal-starterkit.ddev.site
-  - NEXT_PUBLIC_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3001
+  - NEXT_PUBLIC_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3000
     # Environment variables for next_auth:
   - NEXTAUTH_SECRET=nextauth_secret_not_secure_used_only_locally
-  - NEXTAUTH_URL=https://next-drupal-starterkit.ddev.site:3001
+  - NEXTAUTH_URL=https://next-drupal-starterkit.ddev.site:3000
 
 corepack_enable: false
 web_extra_exposed_ports:
   - name: "Next.js"
     container_port: 3000
-    http_port: 3000
-    https_port: 3001
+    http_port: 2999
+    https_port: 3000
 
 hooks:
   post-start:
