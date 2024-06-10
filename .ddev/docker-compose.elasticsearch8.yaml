@@ -1,0 +1,6 @@
+#ddev-generated
+services:
+  elasticsearch:
+    image: elasticsearch:8.10.2
+    volumes:
+      - ./elasticsearch/config/elasticsearch8.yml:/usr/share/elasticsearch/config/elasticsearch.yml

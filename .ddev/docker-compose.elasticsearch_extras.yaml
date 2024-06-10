@@ -1,0 +1,9 @@
+#ddev-generated
+services:
+  elasticsearch:
+    environment:
+      http.cors.enabled: "true"
+      http.cors.allow-origin: "'*'"
+      # Disable authentication in local development
+      xpack.security.enabled: "false"
+      xpack.security.enrollment.enabled: "false"

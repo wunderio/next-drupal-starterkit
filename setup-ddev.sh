@@ -2,27 +2,27 @@
 
 # List of commands to run:
 commands=(
-  "lando rebuild -y"
-  "lando composer install"
-  "lando generate-oauth-keys"
-  "lando drush si minimal -y"
-  "lando install-recipe wunder_next_setup"
-  "lando drush wunder_next:setup-users-and-consumers"
-  "lando drush eshd -y"
-  "lando drush eshs"
-  "lando drush en wunder_democontent -y"
-  "lando drush state:set wunder_democontent.disable_revalidation TRUE"
-  "lando drush mim --group=demo_content --execute-dependencies"
-  "lando drush pm-uninstall wunder_democontent migrate migrate_tools migrate_plus -y"
-  "lando drush state:del wunder_democontent.disable_revalidation"
-  "lando drush cron"
-  "lando npm i"
-  "lando npm run build"
+  "ddev delete -y -O"
+  "ddev start"
+  "ddev composer install"
+  "ddev generate-oauth-keys"
+  "ddev drush si minimal -y"
+  "ddev install-recipe wunder_next_setup"
+  "ddev drush wunder_next:setup-users-and-consumers"
+  "ddev drush eshd -y"
+  "ddev drush eshs"
+  "ddev drush en wunder_democontent -y"
+  "ddev drush state:set wunder_democontent.disable_revalidation TRUE"
+  "ddev drush mim --group=demo_content --execute-dependencies"
+  "ddev drush pm-uninstall wunder_democontent migrate migrate_tools migrate_plus -y"
+  "ddev drush state:del wunder_democontent.disable_revalidation"
+  "ddev drush cron"
+  "cd next && ddev npm run build"
 )
 
 last_successful_command=0
 
-status_file=".last_successful_command"
+status_file=".last_successful_command_ddev"
 
 # Parse command-line arguments
 clean_run=false
@@ -67,12 +67,13 @@ run_commands() {
 
   # All commands were successful. Remove the status file, show messages to the user, and start the frontend site.
   rm -f "$status_file"
-  echo '🚀 All Done!'
+  echo '🚀 All done!'
+  ddev describe
   echo '↪️ Use this link to log into the backend as user 1:'
-  lando drush uli
+  ddev drush uli
   echo '🏎️ Starting the frontend site in production mode...'
-  echo '⚠️ Note: the site will be available at https://frontend.lndo.site/ in addition to the usual localhost:3000'
-  lando npm run start
+  echo '⚠️️️️⚠️️️️⚠️️️️ Note: the site will be available at https://next-drupal-starterkit.ddev.site:3000, not localhost:3000 as the output of next start suggests.'
+  ddev npm run start
 }
 
 # Check if the clean run option is set

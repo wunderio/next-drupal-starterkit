@@ -1,0 +1,16 @@
+services:
+  elasticvue:
+    image: "cars10/elasticvue:1.0.4"
+    #command: /docker-entrypoint.sh nginx -g 'daemon off;'
+    container_name: ddev-${DDEV_SITENAME}-elasticvue
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    environment:
+     - 'ELASTICVUE_CLUSTERS=[{"name": "dev cluster", "uri": "http://${DDEV_SITENAME}.ddev.site:9200/", "password": "", "user": ""}]'
+     - VIRTUAL_HOST=$DDEV_HOSTNAME
+     - HTTP_EXPOSE=9003:8080
+  web:
+    links:
+      - elasticvue:elasticvue
+      - elasticsearch:elasticsearch
