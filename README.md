@@ -86,6 +86,7 @@ You can get a more detailed list of all the services and their urls with the com
 
 ```bash
 lando info
+```
 
 ### With DDEV
 
