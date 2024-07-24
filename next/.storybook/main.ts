@@ -6,7 +6,6 @@ const config: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    "storybook-react-i18next",
   ],
   framework: {
     name: "@storybook/nextjs",
@@ -15,6 +14,7 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
+  staticDirs: ["../public"],
   webpackFinal: async (config) => {
     config.module!.rules = [
       ...config.module!.rules!.map((rule) => {
@@ -33,12 +33,6 @@ const config: StorybookConfig = {
         loader: "@svgr/webpack",
       },
     ];
-
-    // Since storybook does not need SSR, alias next-i18next to react-i18next:
-    config.resolve!.alias = {
-      ...config.resolve!.alias,
-      "next-i18next": "react-i18next",
-    };
 
     // Return the altered config
     return config;
