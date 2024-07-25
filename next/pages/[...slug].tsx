@@ -1,4 +1,4 @@
-import type { PreviewData, Redirect } from "next";
+import type { GetStaticPathsResult, Redirect } from "next";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 
 import { Meta } from "@/components/meta";
@@ -45,13 +45,8 @@ export default function CustomPage({
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async (context) => {
-  // We want to generate static paths for all locales:
-  const locales = context.locales || [];
-
-  const staticPaths: ReturnType<
-    typeof drupalClientViewer.buildStaticPathsParamsFromPaths
-  > = [];
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+  const staticPaths: GetStaticPathsResult["paths"] = [];
 
   for (const locale of locales) {
     // Get the defined paths via graphql for the current locale:
@@ -92,32 +87,27 @@ interface PageProps extends CommonPageProps {
   languageLinks: LanguageLinks;
 }
 
-export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
-  const commonPageProps = getCommonPageProps(context);
+export const getStaticProps: GetStaticProps<PageProps> = async ({
+  locale,
+  params,
+  preview,
+  previewData,
+}) => {
+  const commonPageProps = getCommonPageProps({ locale });
 
-  // Get the path from the context:
-  const path = Array.isArray(context.params.slug)
-    ? `/${context.params.slug?.join("/")}`
-    : context.params.slug;
+  const drupalClient = preview ? drupalClientPreviewer : drupalClientViewer;
+  const path = "/" + (params.slug as string[]).join("/");
 
-  const variables = {
-    path,
-    langcode: context.locale,
-  };
-
-  // Are we in Next.js preview mode?
-  const isPreview = context.preview || false;
-  const drupalClient = isPreview ? drupalClientPreviewer : drupalClientViewer;
-
-  // Get the page data with Graphql.
-  // We want to use a different client if we are in preview mode:
-  const data = await drupalClient.doGraphQlRequest(
+  const nodeByPathResult = await drupalClient.doGraphQlRequest(
     GET_ENTITY_AT_DRUPAL_PATH,
-    variables,
+    {
+      path,
+      langcode: locale,
+    },
   );
 
   // If the data contains a RedirectResponse, we redirect to the path:
-  const redirect = extractRedirectFromRouteQueryResult(data);
+  const redirect = extractRedirectFromRouteQueryResult(nodeByPathResult);
 
   if (redirect) {
     return {
@@ -130,11 +120,10 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     };
   }
 
-  // Get the entity from the response:
-  let nodeEntity = extractEntityFromRouteQueryResult(data);
+  let node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   // If there's no node, return 404:
-  if (!nodeEntity) {
+  if (!node) {
     return {
       notFound: true,
       revalidate: 60,
@@ -142,10 +131,10 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   }
 
   // If node is a frontpage, redirect to / for the current locale:
-  if (nodeEntity.__typename === "NodeFrontpage") {
+  if (node.__typename === "NodeFrontpage") {
     return {
       redirect: {
-        destination: `/${context.locale}`,
+        destination: `/${locale}`,
         permanent: false,
       } satisfies Redirect,
     };
@@ -155,34 +144,24 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   // In this case, the previewData will contain the resourceVersion property,
   // we can use that in combination with the node id to fetch the correct revision
   // This means that we will need to do a second request to Drupal.
-  const { previewData } = context as {
-    previewData: PreviewData & { resourceVersion?: string };
-  };
   if (
-    isPreview &&
-    previewData &&
+    preview &&
     typeof previewData === "object" &&
-    previewData.resourceVersion &&
-    // If the resourceVersion is "rel:latest-version", we don't need to fetch the revision:
+    "resourceVersion" in previewData &&
+    typeof previewData.resourceVersion === "string" &&
     previewData.resourceVersion !== "rel:latest-version"
   ) {
-    // Get the node id from the entity we already have:
-    const nodeId = nodeEntity.id;
-    // the revision will be in the format "id:[id]":
-    const revisionId = previewData.resourceVersion.split(":").slice(1);
-    // To fetch the entity at a specific revision, we need to call a specific path:
-    const revisionPath = `/node/${nodeId}/revisions/${revisionId}/view`;
-
-    // Get the node at the specific data with Graphql:
+    const [nodeId, revisionId] = previewData.resourceVersion.split(":");
+    const path = `/node/${nodeId}/revisions/${revisionId}/view`;
     const revisionRoutedata = await drupalClient.doGraphQlRequest(
       GET_ENTITY_AT_DRUPAL_PATH,
-      { path: revisionPath, langcode: context.locale },
+      { path, langcode: locale },
     );
 
     // Instead of the entity at the current revision, we want now to
     // display the entity at the requested revision:
-    nodeEntity = extractEntityFromRouteQueryResult(revisionRoutedata);
-    if (!nodeEntity) {
+    node = extractEntityFromRouteQueryResult(revisionRoutedata);
+    if (!node) {
       return {
         notFound: true,
         revalidate: 60,
@@ -191,7 +170,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   }
 
   // Unless we are in preview, return 404 if the node is set to unpublished:
-  if (!isPreview && nodeEntity.status !== true) {
+  if (!preview && node.status !== true) {
     return {
       notFound: true,
       revalidate: 60,
@@ -202,8 +181,8 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   let languageLinks;
   // Not all node types necessarily have translations enabled,
   // if so, only show the standard language links.
-  if ("translations" in nodeEntity) {
-    languageLinks = createLanguageLinks(nodeEntity.translations);
+  if ("translations" in node) {
+    languageLinks = createLanguageLinks(node.translations);
   } else {
     languageLinks = getStandardLanguageLinks();
   }
@@ -211,7 +190,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   return {
     props: {
       ...(await commonPageProps),
-      node: nodeEntity,
+      node: node,
       languageLinks,
     },
     revalidate: 60,

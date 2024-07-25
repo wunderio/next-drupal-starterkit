@@ -59,13 +59,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
-  context,
-) => {
-  const commonPageProps = getCommonPageProps(context);
+export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async ({
+  locale,
+  locales,
+  params,
+}) => {
+  const commonPageProps = getCommonPageProps({ locale });
 
   // Get the page parameter:
-  const page = context.params.page;
+  const page = params.page;
   const currentPage = parseInt(Array.isArray(page) ? page[0] : page || "1");
   // This has to match one of the allowed values in the article listing view
   // in Drupal.
@@ -74,7 +76,7 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
   const { totalPages, articles } = await getLatestArticlesItems({
     limit: PAGE_SIZE,
     offset: currentPage ? PAGE_SIZE * (currentPage - 1) : 0,
-    locale: context.locale,
+    locale,
   });
 
   // Create pagination props.
@@ -94,7 +96,7 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
   // Create language links for this page.
   // Note: the links will always point to the first page, because we cannot guarantee that
   // the other pages will exist in all languages.
-  const languageLinks = createLanguageLinksForNextOnlyPage(pageRoot, context);
+  const languageLinks = createLanguageLinksForNextOnlyPage(pageRoot, locales);
 
   return {
     props: {

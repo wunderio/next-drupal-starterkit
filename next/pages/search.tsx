@@ -136,12 +136,12 @@ export default function SearchPage() {
   );
 }
 
-export const getStaticProps: GetStaticProps<CommonPageProps> = async (
-  context,
-) => {
+export const getStaticProps: GetStaticProps<CommonPageProps> = async ({
+  locale,
+}) => {
   return {
     props: {
-      ...(await getCommonPageProps(context)),
+      ...(await getCommonPageProps({ locale })),
     },
     revalidate: 60,
   };

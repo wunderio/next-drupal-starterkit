@@ -57,11 +57,10 @@ export const getServerSideProps: GetServerSideProps<
   CommonPageProps & {
     submission: WebformSubmission;
   }
-> = async (context) => {
-  const commonPageProps = getCommonPageProps(context);
+> = async ({ locale, params, resolvedUrl, req, res }) => {
+  const commonPageProps = getCommonPageProps({ locale });
 
-  const { locale, params, resolvedUrl } = context;
-  const session = await getServerSession(context.req, context.res, authOptions);
+  const session = await getServerSession(req, res, authOptions);
 
   if (!session) {
     return redirectExpiredSessionToLoginPage(locale, resolvedUrl);

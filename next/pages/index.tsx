@@ -51,28 +51,27 @@ export default function IndexPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<HomepageProps> = async (
-  context,
-) => {
-  const commonPageProps = getCommonPageProps(context);
+export const getStaticProps: GetStaticProps<HomepageProps> = async ({
+  locale,
+  preview,
+}) => {
+  const commonPageProps = getCommonPageProps({ locale });
 
-  const variables = {
-    // This works because it matches the pathauto pattern for the Frontpage content type defined in Drupal:
-    path: `frontpage-${context.locale}`,
-    langcode: context.locale,
-  };
-
-  const [frontpageData, stickyArticleTeasers] = await Promise.all([
-    drupalClientViewer.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, variables),
+  const [nodeByPathResult, stickyArticleTeasers] = await Promise.all([
+    drupalClientViewer.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
+      // This works because it matches the pathauto pattern for the Frontpage content type defined in Drupal:
+      path: `frontpage-${locale}`,
+      langcode: locale,
+    }),
     drupalClientViewer.doGraphQlRequest(LISTING_ARTICLES, {
-      langcode: context.locale,
+      langcode: locale,
       sticky: true,
       page: 0,
       pageSize: 3,
     }),
   ]);
 
-  const frontpage = extractEntityFromRouteQueryResult(frontpageData);
+  const frontpage = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   if (!frontpage || frontpage.__typename !== "NodeFrontpage") {
     return {
@@ -82,7 +81,7 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
   }
 
   // Unless we are in preview, return 404 if the node is set to unpublished:
-  if (!context.preview && frontpage.status !== true) {
+  if (!preview && frontpage.status !== true) {
     return {
       notFound: true,
       revalidate: 10,

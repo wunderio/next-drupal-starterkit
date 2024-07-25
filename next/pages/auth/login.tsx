@@ -133,10 +133,10 @@ export default function LogIn() {
   );
 }
 
-export async function getStaticProps(context: GetStaticPropsContext) {
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
-      ...(await getCommonPageProps(context)),
+      ...(await getCommonPageProps({ locale })),
     },
   };
 }
