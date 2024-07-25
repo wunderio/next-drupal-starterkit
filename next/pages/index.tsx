@@ -54,6 +54,8 @@ export default function IndexPage({
 export const getStaticProps: GetStaticProps<HomepageProps> = async (
   context,
 ) => {
+  const commonPageProps = getCommonPageProps(context);
+
   const variables = {
     // This works because it matches the pathauto pattern for the Frontpage content type defined in Drupal:
     path: `frontpage-${context.locale}`,
@@ -100,7 +102,7 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
 
   return {
     props: {
-      ...(await getCommonPageProps(context)),
+      ...(await commonPageProps),
       frontpage,
       stickyArticleTeasers: articles,
     },

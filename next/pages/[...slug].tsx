@@ -93,13 +93,15 @@ interface PageProps extends CommonPageProps {
 }
 
 export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
+  const commonPageProps = getCommonPageProps(context);
+
   // Get the path from the context:
   const path = Array.isArray(context.params.slug)
     ? `/${context.params.slug?.join("/")}`
     : context.params.slug;
 
   const variables = {
-    path: path,
+    path,
     langcode: context.locale,
   };
 
@@ -208,7 +210,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
 
   return {
     props: {
-      ...(await getCommonPageProps(context)),
+      ...(await commonPageProps),
       node: nodeEntity,
       languageLinks,
     },

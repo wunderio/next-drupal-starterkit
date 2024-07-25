@@ -82,6 +82,8 @@ export const getServerSideProps: GetServerSideProps<
     submissions: WebformSubmissionsListItem[];
   }
 > = async (context) => {
+  const commonPageProps = getCommonPageProps(context);
+
   const { locale, resolvedUrl } = context;
   const session = await getServerSession(context.req, context.res, authOptions);
 
@@ -112,7 +114,7 @@ export const getServerSideProps: GetServerSideProps<
 
   return {
     props: {
-      ...(await getCommonPageProps(context)),
+      ...(await commonPageProps),
       submissions,
       session,
     },
