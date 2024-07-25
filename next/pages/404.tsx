@@ -4,6 +4,7 @@ import { useTranslation } from "next-i18next";
 
 import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
+import { REVALIDATE_LONG } from "@/lib/constants";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -32,6 +33,6 @@ export const getStaticProps: GetStaticProps<CommonPageProps> = async ({
     props: {
       ...(await getCommonPageProps({ locale })),
     },
-    revalidate: 60,
+    revalidate: REVALIDATE_LONG,
   };
 };

@@ -7,6 +7,7 @@ import { HeadingPage } from "@/components/heading--page";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
 import { Pagination, PaginationProps } from "@/components/pagination";
+import { REVALIDATE_LONG } from "@/lib/constants";
 import {
   createLanguageLinksForNextOnlyPage,
   LanguageLinks,
@@ -112,6 +113,6 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async ({
       },
       languageLinks,
     },
-    revalidate: 60,
+    revalidate: REVALIDATE_LONG,
   };
 };

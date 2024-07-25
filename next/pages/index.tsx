@@ -8,6 +8,7 @@ import { LayoutProps } from "@/components/layout";
 import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
 import { Node } from "@/components/node";
+import { REVALIDATE_LONG, REVALIDATE_SHORT } from "@/lib/constants";
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
@@ -76,7 +77,7 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async ({
   if (!frontpage || frontpage.__typename !== "NodeFrontpage") {
     return {
       notFound: true,
-      revalidate: 10,
+      revalidate: REVALIDATE_SHORT,
     };
   }
 
@@ -84,7 +85,7 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async ({
   if (!preview && frontpage.status !== true) {
     return {
       notFound: true,
-      revalidate: 10,
+      revalidate: REVALIDATE_SHORT,
     };
   }
 
@@ -99,6 +100,6 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async ({
       frontpage,
       stickyArticleTeasers: articles,
     },
-    revalidate: 60,
+    revalidate: REVALIDATE_LONG,
   };
 };

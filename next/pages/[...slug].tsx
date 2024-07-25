@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 
 import { Meta } from "@/components/meta";
 import { Node } from "@/components/node";
+import { REVALIDATE_LONG } from "@/lib/constants";
 import {
   createLanguageLinks,
   LanguageLinks,
@@ -126,7 +127,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
   if (!node) {
     return {
       notFound: true,
-      revalidate: 60,
+      revalidate: REVALIDATE_LONG,
     };
   }
 
@@ -164,7 +165,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
     if (!node) {
       return {
         notFound: true,
-        revalidate: 60,
+        revalidate: REVALIDATE_LONG,
       };
     }
   }
@@ -173,7 +174,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
   if (!preview && node.status !== true) {
     return {
       notFound: true,
-      revalidate: 60,
+      revalidate: REVALIDATE_LONG,
     };
   }
 
@@ -193,6 +194,6 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
       node: node,
       languageLinks,
     },
-    revalidate: 60,
+    revalidate: REVALIDATE_LONG,
   };
 };
