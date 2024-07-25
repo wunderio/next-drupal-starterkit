@@ -62,14 +62,19 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
     langcode: context.locale,
   };
 
-  const data = await drupalClientViewer.doGraphQlRequest(
-    GET_ENTITY_AT_DRUPAL_PATH,
-    variables,
-  );
+  const [frontpageData, stickyArticleTeasers] = await Promise.all([
+    drupalClientViewer.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, variables),
+    drupalClientViewer.doGraphQlRequest(LISTING_ARTICLES, {
+      langcode: context.locale,
+      sticky: true,
+      page: 0,
+      pageSize: 3,
+    }),
+  ]);
 
-  const frontpage = extractEntityFromRouteQueryResult(data);
+  const frontpage = extractEntityFromRouteQueryResult(frontpageData);
 
-  if (!frontpage || !(frontpage.__typename === "NodeFrontpage")) {
+  if (!frontpage || frontpage.__typename !== "NodeFrontpage") {
     return {
       notFound: true,
       revalidate: 10,
@@ -83,17 +88,6 @@ export const getStaticProps: GetStaticProps<HomepageProps> = async (
       revalidate: 10,
     };
   }
-
-  // Get the last 3 sticky articles in the current language:
-  const stickyArticleTeasers = await drupalClientViewer.doGraphQlRequest(
-    LISTING_ARTICLES,
-    {
-      langcode: context.locale,
-      sticky: true,
-      page: 0,
-      pageSize: 3,
-    },
-  );
 
   // We cast the results as the ListingArticle type to get type safety:
   const articles =
