@@ -1,9 +1,10 @@
 import type { GetStaticPathsResult, Redirect } from "next";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import { AbortError } from "p-retry";
 
 import { Meta } from "@/components/meta";
 import { Node } from "@/components/node";
-import { REVALIDATE_LONG } from "@/lib/constants";
+import { REVALIDATE_LONG, REVALIDATE_SHORT } from "@/lib/constants";
 import {
   createLanguageLinks,
   LanguageLinks,
@@ -27,6 +28,8 @@ import {
   extractRedirectFromRouteQueryResult,
 } from "@/lib/graphql/utils";
 import { TypedRouteEntity } from "@/types/graphql";
+
+import { env } from "@/env";
 
 export default function CustomPage({
   node,
@@ -90,26 +93,43 @@ interface PageProps extends CommonPageProps {
 
 export const getStaticProps: GetStaticProps<PageProps> = async ({
   locale,
+  defaultLocale,
   params,
   preview,
   previewData,
+  revalidateReason,
 }) => {
   const commonPageProps = getCommonPageProps({ locale });
 
   const drupalClient = preview ? drupalClientPreviewer : drupalClientViewer;
   const path = "/" + (params.slug as string[]).join("/");
 
-  const nodeByPathResult = await drupalClient.doGraphQlRequest(
-    GET_ENTITY_AT_DRUPAL_PATH,
-    {
+  const nodeByPathResult = await drupalClient
+    .doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
       path,
       langcode: locale,
-    },
-  );
+    })
+    .catch((error: unknown) => {
+      const type =
+        error instanceof AbortError
+          ? "GraphQL"
+          : error instanceof TypeError
+            ? "Network"
+            : "Unknown";
 
-  // If the data contains a RedirectResponse, we redirect to the path:
+      const moreInfo =
+        type === "GraphQL"
+          ? `Check graphql_compose logs: ${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/admin/reports`
+          : "";
+
+      throw new Error(
+        `${type} Error during GetNodeByPath query with $path: "${path}" and $langcode: "${locale}". ${moreInfo}`,
+      );
+    });
+
+  // The response will contain either a redirect or node data.
+  // If it's a redirect, redirect to the new path:
   const redirect = extractRedirectFromRouteQueryResult(nodeByPathResult);
-
   if (redirect) {
     return {
       redirect: {
@@ -123,28 +143,47 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
 
   let node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
-  // If there's no node, return 404:
+  // Node not found:
   if (!node) {
+    switch (revalidateReason) {
+      case "build":
+        // Pages returned from getStaticPaths should always exist. Abort the build:
+        throw new Error(
+          `Node not found in GetNodeByPath query response with $path: "${path}" and $langcode: "${locale}".`,
+        );
+      case "stale":
+      case "on-demand":
+      default:
+        // Not an error, the requested node just doesn't exist. Return 404:
+        return {
+          notFound: true,
+          revalidate: REVALIDATE_LONG,
+        };
+    }
+  }
+
+  // Node is not published:
+  if (!preview && node.status !== true) {
     return {
       notFound: true,
       revalidate: REVALIDATE_LONG,
     };
   }
 
-  // If node is a frontpage, redirect to / for the current locale:
-  if (node.__typename === "NodeFrontpage") {
+  // Node is actually a frontpage:
+  if (!preview && node.__typename === "NodeFrontpage") {
     return {
       redirect: {
-        destination: `/${locale}`,
+        destination: locale === defaultLocale ? "/" : `/${locale}`,
         permanent: false,
       } satisfies Redirect,
+      revalidate: REVALIDATE_LONG,
     };
   }
 
   // When in preview, we could be requesting a specific revision.
   // In this case, the previewData will contain the resourceVersion property,
-  // we can use that in combination with the node id to fetch the correct revision
-  // This means that we will need to do a second request to Drupal.
+  // which we can use to fetch the correct revision:
   if (
     preview &&
     typeof previewData === "object" &&
@@ -165,17 +204,9 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
     if (!node) {
       return {
         notFound: true,
-        revalidate: REVALIDATE_LONG,
+        revalidate: REVALIDATE_SHORT,
       };
     }
-  }
-
-  // Unless we are in preview, return 404 if the node is set to unpublished:
-  if (!preview && node.status !== true) {
-    return {
-      notFound: true,
-      revalidate: REVALIDATE_LONG,
-    };
   }
 
   // Add information about possible other language versions of this node.
@@ -191,7 +222,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
   return {
     props: {
       ...(await commonPageProps),
-      node: node,
+      node,
       languageLinks,
     },
     revalidate: REVALIDATE_LONG,
