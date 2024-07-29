@@ -97,7 +97,10 @@ async function generateSitemap(locale: Locale) {
       const isLandingpage = isFrontpage
         ? false
         : // Matches e.g. "/about-us", but not "/about-us/our-team":
-          node.path.split("/").filter(Boolean).length < 2;
+          node.path
+            .split("/")
+            .filter(Boolean)
+            .filter((pathPart) => pathPart !== locale).length < 2;
 
       const url = makePathAbsolute(
         getLanguagePathFragment(locale) + (isFrontpage ? "" : node.path),
