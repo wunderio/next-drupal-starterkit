@@ -1,4 +1,5 @@
 import { env } from "@/env";
+import { defaultLocale } from "@/site.config";
 
 export function formatDate(input: string, locale: string): string {
   const date = new Date(input);
@@ -58,6 +59,14 @@ export const getFileType = (file: string) => {
   }
   return null;
 };
+
+/**
+ * Get the path fragment for the given locale.
+ * @returns "" for the default locale, "/locale" for other locales.
+ */
+export function getLanguagePathFragment(locale?: string) {
+  return !locale || locale === defaultLocale ? "" : `/${locale}`;
+}
 
 export const makePathAbsolute = (path: string) =>
   env.NEXT_PUBLIC_FRONTEND_URL + path;

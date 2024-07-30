@@ -1,73 +1,156 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { AbortError } from "p-retry";
 
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { GET_SITEMAP_NODES } from "@/lib/graphql/queries";
 import {
   addSitemapLanguageVersionsOfFrontpage,
   addSitemapLanguageVersionsOfNode,
+  getLanguagePathFragment,
   makePathAbsolute,
 } from "@/lib/utils";
 
-import siteConfig from "@/site.config";
+import { env } from "@/env";
+import { i18n } from "@/next-i18next.config";
 
-const DEFAULT_SITEMAP_PRIORITY = 0.7;
+const locales = i18n.locales;
+type Locale = (typeof locales)[number];
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Get all languages from site config:
-  const languages = Object.keys(siteConfig.locales);
-  // Initialize the sitemap:
-  let sitemap = [];
+const SITEMAP_PRIORITY_FRONT = 1;
+const SITEMAP_PRIORITY_LANDING = 0.8;
+const SITEMAP_PRIORITY_DEFAULT = 0.5;
 
-  // For each language, start fetching the nodes for the sitemap:
-  for (const lang of languages) {
-    let page = 0;
-    let totalItems = 0;
-    // Initialize the page size to 0, we will get the actual value from the first request:
-    let pageSize = 0;
+async function getSitemapNodes({
+  locale,
+  page,
+}: {
+  locale: Locale;
+  page: number;
+}) {
+  const response = await drupalClientViewer
+    .doGraphQlRequest(GET_SITEMAP_NODES, {
+      langcode: locale,
+      page,
+    })
+    .catch((error) => {
+      const type =
+        error instanceof AbortError
+          ? "GraphQL"
+          : error instanceof TypeError
+            ? "Network"
+            : "Unknown";
 
-    do {
-      const data = await drupalClientViewer.doGraphQlRequest(
-        GET_SITEMAP_NODES,
-        {
-          page: page,
-          langcode: lang,
-        },
+      const moreInfo =
+        type === "GraphQL"
+          ? `Check graphql_compose logs: ${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/admin/reports`
+          : "";
+
+      throw new Error(
+        `${type} Error during GET_SITEMAP_NODES query for locale "${locale}" at page ${page}. ${moreInfo}`,
       );
+    });
 
-      // Get the total number of items and the page size that is set for the view:
-      if (page === 0) {
-        totalItems = data.sitemapNodes?.pageInfo?.total;
-        pageSize = data.sitemapNodes?.pageInfo?.pageSize;
-      }
-
-      // Prepare the nodes for the sitemap:
-      const nodes = data.sitemapNodes?.results?.map((node) => ({
-        url:
-          // Special case for the frontpage: instead of the node path, use the language path.
-          node.__typename === "NodeFrontpage"
-            ? makePathAbsolute(`/${node.langcode.id}`)
-            : makePathAbsolute(node.path),
-        lastModified: new Date(node.changed.timestamp * 1000),
-        alternates: {
-          languages:
-            node.__typename === "NodeFrontpage"
-              ? addSitemapLanguageVersionsOfFrontpage(node.translations)
-              : addSitemapLanguageVersionsOfNode(node.translations),
-        },
-        priority:
-          node.__typename === "NodeFrontpage" ? 1 : DEFAULT_SITEMAP_PRIORITY,
-      }));
-
-      // Add the nodes to the sitemap:
-      sitemap = [...sitemap, ...nodes];
-      // Increment the page number:
-      page++;
-    } while (page * pageSize < totalItems);
+  if (!response?.sitemapNodes?.results || !response?.sitemapNodes?.pageInfo) {
+    throw new Error(
+      `Sitemap: GET_SITEMAP_NODES returned missing data for locale "${locale}" at page ${page}.`,
+    );
   }
 
-  return sitemap;
+  const { results, pageInfo } = response.sitemapNodes;
+
+  return {
+    results,
+    pageInfo,
+  };
 }
 
-export const revalidate = 3600; // Revalidate the sitemap every hour.
+async function generateSitemap(locale: Locale) {
+  // Fetch the first page of nodes along with the necessary info to fetch the rest:
+  const {
+    results: firstPageNodes,
+    pageInfo: { total, pageSize },
+  } = await getSitemapNodes({
+    locale,
+    page: 0,
+  });
 
-export const fetchCache = "force-no-store";
+  // Create an array containing the remaining pages we need to fetch.
+  // e.g. if pageSize is 100 and total is 350, we still need to fetch pages [1, 2, 3]:
+  const pagesToFetch = Array.from({
+    length: Math.floor(total / pageSize),
+  }).map((_, i) => i + 1);
+
+  // Fetch the remaining pages in parallel:
+  const otherNodes = await Promise.all(
+    pagesToFetch.map((page) =>
+      getSitemapNodes({ locale, page }).then(({ results }) => results),
+    ),
+  );
+
+  // Combine the nodes into a single array:
+  const nodes = [firstPageNodes, ...otherNodes].flat();
+
+  // We can now generate the sitemap for this locale:
+  return nodes
+    .map((node) => {
+      const isFrontpage = node.__typename === "NodeFrontpage";
+      const isLandingpage = isFrontpage
+        ? false
+        : // Matches e.g. "/about-us", but not "/about-us/our-team":
+          node.path
+            .split("/")
+            .filter(Boolean)
+            .filter((pathPart) => pathPart !== locale).length < 2;
+
+      const url = makePathAbsolute(
+        getLanguagePathFragment(locale) + (isFrontpage ? "" : node.path),
+      );
+
+      const priority =
+        (isFrontpage && SITEMAP_PRIORITY_FRONT) ||
+        (isLandingpage && SITEMAP_PRIORITY_LANDING) ||
+        SITEMAP_PRIORITY_DEFAULT;
+
+      const lastModified = new Date(
+        node.changed.timestamp * 1000,
+      ).toISOString();
+
+      const alternates = {
+        languages:
+          node.__typename === "NodeFrontpage"
+            ? addSitemapLanguageVersionsOfFrontpage(node.translations)
+            : addSitemapLanguageVersionsOfNode(node.translations),
+      };
+
+      return {
+        url,
+        priority,
+        lastModified,
+        alternates,
+      };
+    })
+    .sort((a, b) => {
+      // First sort by priority:
+      const priorityDiff = Number(b.priority) - Number(a.priority);
+      if (priorityDiff) return priorityDiff;
+
+      // Then by last modified date:
+      const lastModifiedDiff = Number(b.lastModified) - Number(a.lastModified);
+      if (lastModifiedDiff) return lastModifiedDiff;
+
+      // Then by url:
+      return a.url.localeCompare(b.url);
+    });
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Generate a sitemap for each locale in parallel:
+  const sitemaps: MetadataRoute.Sitemap[] = await Promise.all(
+    locales.map(generateSitemap),
+  );
+
+  // Return the combined sitemap for the site:
+  return sitemaps.flat();
+}
+
+export const revalidate = 3600; // Revalidate the sitemap at most once an hour.
