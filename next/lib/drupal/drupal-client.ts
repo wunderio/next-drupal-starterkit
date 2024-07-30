@@ -1,56 +1,65 @@
-import pRetry from "p-retry";
-
-import { GraphQlDrupalClient } from "./graphql-drupal-client";
+import { DrupalClient } from "next-drupal";
+import { type TypedDocumentNode } from "@graphql-typed-document-node/core";
+import { request, type RequestDocument, type Variables } from "graphql-request";
+import pRetry, { AbortError, type Options } from "p-retry";
 
 import { env } from "@/env";
 
-const getFetcher =
-  () =>
-  async (input: RequestInfo, init: RequestInit = {}) => {
-    const wrappedFetch = async () => {
-      return await fetch(input, {
-        ...init,
-      });
-    };
-    // Return the pRetry wrapped fetch function:
-    return pRetry(wrappedFetch, {
-      retries: env.NODE_ENV === "development" ? 0 : 5,
-      onFailedAttempt: (error) => {
-        console.log(
-          `Drupal fetch: attempt ${error.attemptNumber} failed. There are ${error.retriesLeft} retries left.`,
-        );
-      },
-    });
-  };
+const RETRY_OPTIONS: Options = {
+  retries: env.NODE_ENV === "development" ? 1 : 5,
+  onFailedAttempt: ({ attemptNumber, retriesLeft, message }) => {
+    // Don't retry GraphQL errors:
+    if (message.startsWith("GraphQL Error")) {
+      // Throw the relevant part of the error message (e.g. "GraphQL Error (Code: 500)")
+      throw new AbortError(message.slice(0, 25));
+    }
 
-// This instance of the client will connect to Drupal using a consumer that
-// is associated with a role with "regular" permissions. It should be used by
-// default.
-export const drupalClientViewer = new GraphQlDrupalClient(
-  env.NEXT_PUBLIC_DRUPAL_BASE_URL,
-  {
-    // We specify our own fetcher to apply pRetry to it:
-    fetcher: getFetcher(),
+    console.log(
+      `Fetch ${attemptNumber} failed (${retriesLeft} retries remaining)`,
+    );
+  },
+} as const;
+
+const createGraphQlDrupalClient = (clientId: string, clientSecret: string) => {
+  class GraphQlDrupalClient extends DrupalClient {
+    async doGraphQlRequest<T>(
+      query: TypedDocumentNode<T> | RequestDocument,
+      variables?: Variables,
+    ): Promise<ReturnType<typeof request<T, Variables>>> {
+      const url = this.buildUrl("/graphql").toString();
+
+      const headers = {
+        authorization: `Bearer ${(await this.getAccessToken()).access_token}`,
+      };
+
+      return pRetry(
+        () => request(url, query, variables, headers),
+        RETRY_OPTIONS,
+      );
+    }
+  }
+
+  return new GraphQlDrupalClient(env.NEXT_PUBLIC_DRUPAL_BASE_URL, {
+    fetcher: (input, init) => pRetry(() => fetch(input, init), RETRY_OPTIONS),
     forceIframeSameSiteCookie: env.NODE_ENV === "development",
     auth: {
-      clientId: env.DRUPAL_CLIENT_VIEWER_ID,
-      clientSecret: env.DRUPAL_CLIENT_VIEWER_SECRET,
+      clientId,
+      clientSecret,
     },
-  },
+  });
+};
+
+// This instance of the client will connect to the Drupal API using a consumer that
+// is associated with a role with "regular" permissions. It should be used by default.
+export const drupalClientViewer = createGraphQlDrupalClient(
+  env.DRUPAL_CLIENT_VIEWER_ID,
+  env.DRUPAL_CLIENT_VIEWER_SECRET,
 );
 
 // This instance of the client will connect to the Drupal API using a consumer
 // which is associated with a role with additional permissions. Use this instance
 // when you need to get data for unpublished nodes, like in previews.
-export const drupalClientPreviewer = new GraphQlDrupalClient(
-  env.NEXT_PUBLIC_DRUPAL_BASE_URL,
-  {
-    // We specify our own fetcher to apply pRetry to it:
-    fetcher: getFetcher(),
-    forceIframeSameSiteCookie: env.NODE_ENV === "development",
-    auth: {
-      clientId: env.DRUPAL_CLIENT_ID,
-      clientSecret: env.DRUPAL_CLIENT_SECRET,
-    },
-  },
+export const drupalClientPreviewer = createGraphQlDrupalClient(
+  env.DRUPAL_CLIENT_ID,
+  env.DRUPAL_CLIENT_SECRET,
 );

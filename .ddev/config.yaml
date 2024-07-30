@@ -1,0 +1,53 @@
+name: next-drupal-starterkit
+type: drupal
+docroot: drupal/web
+composer_root: drupal
+nodejs_version: "20"
+php_version: "8.2"
+webserver_type: nginx-fpm
+xdebug_enabled: false
+additional_hostnames: []
+additional_fqdns: []
+database:
+    type: mariadb
+    version: "10.11"
+use_dns_when_possible: true
+composer_version: "2"
+web_environment:
+  # This is the secret that is used by the backend to tell the frontend
+  # to revalidate specific paths. The values need to match both in frontend
+  # and backend.
+  - DRUPAL_REVALIDATE_SECRET=revalidate_secret_not_secure_used_only_locally
+  # This is the secret that is used by the frontend to issue calls to Drupal.
+  # The values need to match both in frontend and backend.
+  - DRUPAL_CLIENT_SECRET=drupal_client_secret_not_secure_used_only_locally
+  # The client id, specified in the consumer on the Drupal side.
+  - DRUPAL_CLIENT_ID=drupal-client-id
+  # The client id for the unprivileged user, specified in the consumer on the Drupal side.
+  - DRUPAL_CLIENT_VIEWER_ID=drupal-client-viewer-id
+  - DRUPAL_CLIENT_VIEWER_SECRET=drupal_client_viewer_secret_not_secure_used_only_locally
+  # URL OF THE FRONTEND SITE:
+  # This needs to match the proxy value for the node service
+  # so if you change it, remember to change it here as well.
+  - WUNDER_NEXT_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3000
+  - ENVIRONMENT_NAME=ddev
+  - HASH_SALT=notsosecurehashnotsosecurehashnotsosecurehash
+  - NEXT_PUBLIC_DRUPAL_BASE_URL=https://next-drupal-starterkit.ddev.site
+  - NEXT_IMAGE_DOMAIN=next-drupal-starterkit.ddev.site
+  - NEXT_PUBLIC_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3000
+    # Environment variables for next_auth:
+  - NEXTAUTH_SECRET=nextauth_secret_not_secure_used_only_locally
+  - NEXTAUTH_URL=https://next-drupal-starterkit.ddev.site:3000
+
+corepack_enable: false
+web_extra_exposed_ports:
+  - name: "Next.js"
+    container_port: 3000
+    http_port: 2999
+    https_port: 3000
+
+hooks:
+  post-start:
+    - exec: "elasticsearch-plugin install analysis-icu"
+      service: elasticsearch
+    - exec: "cd next && npm i"

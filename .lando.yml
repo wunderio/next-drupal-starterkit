@@ -152,7 +152,7 @@ services:
         REDIS_HOST: redis
         REDIS_PASS: "mypassword"
     build:
-      - "cd next && npm install"
+      - "cd next && npm ci"
     scanner: false
 
   # This service adds elasticsearch, used by (you guessed it) the search part of

@@ -7,6 +7,8 @@ dependencies:
     - paragraphs.paragraphs_type.accordion
   module:
     - link
+_core:
+  default_config_hash: qlQL87eibq0e8E8nM03-46cMj6MbpEwxA6mmGnjgtz4
 id: paragraph.accordion.field_primary_link
 field_name: field_primary_link
 entity_type: paragraph

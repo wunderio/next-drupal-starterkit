@@ -7,6 +7,8 @@ dependencies:
     - paragraphs.paragraphs_type.accordion
   module:
     - text
+_core:
+  default_config_hash: maslF_S8qQzWdQR0tmqOuCUniF919aMr_8FPORgrBCY
 id: paragraph.accordion.field_formatted_text
 field_name: field_formatted_text
 entity_type: paragraph
@@ -17,5 +19,6 @@ required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long

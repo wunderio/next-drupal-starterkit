@@ -19,7 +19,7 @@ commands:
         default: "."
       install-command:
         type: string
-        default: "npm install"
+        default: "npm ci"
       build-command:
         description: "NPM build command."
         type: string
@@ -27,7 +27,7 @@ commands:
       cache-version:
         description: "CircleCI cache key prefix."
         type: string
-        default: "v1.2"
+        default: "v1.0"
       npm-config-platform:
         description: "Platform flag for npm install"
         type: string
@@ -36,7 +36,6 @@ commands:
       - restore_cache:
           keys:
             - <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
-            - <<parameters.cache-version>>-npm-
 
       - run:
           name: Install frontend dependencies
@@ -159,7 +158,7 @@ commands:
 
             echo "Expanding special variable DRUPAL_CLIENT_ID = $drupal_client_id ..."
             sed -i -e "s/<|DRUPAL_CLIENT_ID|>/$drupal_client_id/g" $envvars_file
-            
+
             echo "Expanding special variable DRUPAL_CLIENT_VIEWER_ID = $drupal_client_viewer_id ..."
             sed -i -e "s/<|DRUPAL_CLIENT_VIEWER_ID|>/$drupal_client_viewer_id/g" $envvars_file
 

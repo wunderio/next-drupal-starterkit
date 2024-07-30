@@ -2,6 +2,8 @@ uuid: edcfa9e8-d529-4626-bdd5-64e4399ee080
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: FXQAevpvVeRREsSS3A52NH7DPqByQbj_C9x9ffWZavU
 id: video
 label: Video
 icon_uuid: null

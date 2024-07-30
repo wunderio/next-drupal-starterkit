@@ -1,4 +1,3 @@
-
 # Values in this file override the default values of our helm chart.
 #
 # See https://github.com/wunderio/charts/blob/master/drupal/values.yaml
@@ -40,10 +39,11 @@ php:
 referenceData:
   enabled: false
   # The name of the environment from which reference data will be copied.
-  referenceEnvironment: 'main'
+  referenceEnvironment: "main"
 
 nginx:
   basicauth:
+    # Basicauth must be disabled as otherwise Next.js can't access Drupal.
     enabled: false
   content_security_policy: >-
     upgrade-insecure-requests;
@@ -57,7 +57,7 @@ nginx:
 elasticsearch:
   enabled: true
   image: europe-north1-docker.pkg.dev/silta-dev/images/next-drupal-starterkit-elasticsearch
-  imageTag: 'with-icu-analysis'
+  imageTag: "with-icu-analysis"
   imagePullPolicy: Always
   esConfig:
     elasticsearch.yml: |

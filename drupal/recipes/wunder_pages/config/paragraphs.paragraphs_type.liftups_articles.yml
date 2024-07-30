@@ -1,0 +1,10 @@
+uuid: 83ca5205-a332-4cd2-a90c-9d30358a69d0
+langcode: en
+status: true
+dependencies: {  }
+id: liftups_articles
+label: 'Liftups: articles'
+icon_uuid: null
+icon_default: null
+description: 'A paragraph used to display a hand-picked list of articles.'
+behavior_plugins: {  }

@@ -8,16 +8,20 @@
 // Database settings, overridden per environment.
 // Also, check the override at the end of the file for the init_commands.
 $databases = [];
-$databases['default']['default'] = [
-  'database' => $_ENV['DB_NAME_DRUPAL'],
-  'username' => $_ENV['DB_USER_DRUPAL'],
-  'password' => $_ENV['DB_PASS_DRUPAL'],
-  'prefix' => '',
-  'host' => $_ENV['DB_HOST_DRUPAL'],
-  'port' => '3306',
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysql',
-];
+
+// These settings do not apply to ddev
+if (getenv('IS_DDEV_PROJECT') !== 'true') {
+  $databases['default']['default'] = [
+    'database' => $_ENV['DB_NAME_DRUPAL'],
+    'username' => $_ENV['DB_USER_DRUPAL'],
+    'password' => $_ENV['DB_PASS_DRUPAL'],
+    'prefix' => '',
+    'host' => $_ENV['DB_HOST_DRUPAL'],
+    'port' => '3306',
+    'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+    'driver' => 'mysql',
+  ];
+}
 
 // Salt for one-time login links, cancel links, form tokens, etc.
 $settings['hash_salt'] = $_ENV['HASH_SALT'];
@@ -69,6 +73,7 @@ switch ($env) {
 
   case 'local':
   case 'lando':
+  case 'ddev':
     $settings['simple_environment_indicator'] = 'DarkGreen Local';
     // Skip file system permissions hardening.
     $settings['skip_permissions_hardening'] = TRUE;
@@ -121,3 +126,9 @@ $databases['default']['default']['init_commands'] = [
   // See https://www.drupal.org/project/drupal/issues/3022864
   'optimizer_search_depth' => 'SET SESSION optimizer_search_depth = 0',
 ];
+
+// Automatically generated include for settings managed by ddev.
+$ddev_settings = dirname(__FILE__) . '/settings.ddev.php';
+if (getenv('IS_DDEV_PROJECT') == 'true' && is_readable($ddev_settings)) {
+  require $ddev_settings;
+}

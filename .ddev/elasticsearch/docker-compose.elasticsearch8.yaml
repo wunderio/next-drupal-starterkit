@@ -1,0 +1,15 @@
+#ddev-generated
+services:
+  elasticsearch:
+    image: elasticsearch:8.10.2ss
+    environment:
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      discovery.type: "single-node"
+      bootstrap.memory_lock: "true"
+      http.cors.enabled: "true"
+      http.cors.allow-origin: "'*'"
+      # Disable authentication in local development
+      xpack.security.enabled: "false"
+      xpack.security.enrollment.enabled: "false"
+    volumes:
+      - ./elasticsearch/config/elasticsearch8.yml:/usr/share/elasticsearch/config/elasticsearch.yml

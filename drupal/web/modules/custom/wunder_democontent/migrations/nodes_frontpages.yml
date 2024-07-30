@@ -42,12 +42,18 @@ process:
       migration: paragraphs_frontpage_listing_articles
       source: id
     - plugin: null_as_array
+  paragraph_liftups_articles:
+    - plugin: migration_lookup
+      migration: paragraphs_frontpage_liftups_articles
+      source: id
+    - plugin: null_as_array
   field_content_elements:
     plugin: sub_process
     source:
       - '@paragraph_hero'
       - '@paragraph_formatted_text'
       - '@paragraph_listing_articles'
+      - '@paragraph_liftups_articles'
     process:
       target_id:
         -
@@ -70,3 +76,4 @@ migration_dependencies:
     - paragraphs_frontpage_formatted_text
     - paragraphs_frontpage_hero
     - paragraphs_frontpage_listing_articles
+    - paragraphs_frontpage_liftups_articles

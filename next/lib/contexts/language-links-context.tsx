@@ -37,10 +37,10 @@ export const getStandardLanguageLinks = () =>
  */
 export function createLanguageLinksForNextOnlyPage(
   path: string,
-  context: GetStaticPropsContext,
+  locales: GetStaticPropsContext["locales"],
 ): LanguageLinks {
   const languageLinks = getStandardLanguageLinks();
-  context.locales.forEach((locale) => {
+  locales.forEach((locale) => {
     languageLinks[locale].path =
       languageLinks[locale].path === "/"
         ? path

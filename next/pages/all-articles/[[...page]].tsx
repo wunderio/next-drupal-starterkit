@@ -7,16 +7,17 @@ import { HeadingPage } from "@/components/heading--page";
 import { LayoutProps } from "@/components/layout";
 import { Meta } from "@/components/meta";
 import { Pagination, PaginationProps } from "@/components/pagination";
+import { REVALIDATE_LONG } from "@/lib/constants";
 import {
   createLanguageLinksForNextOnlyPage,
   LanguageLinks,
 } from "@/lib/contexts/language-links-context";
 import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
-import type { ArticleTeaserType } from "@/types/graphql";
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 
 interface AllArticlesPageProps extends LayoutProps {
-  articleTeasers: ArticleTeaserType[];
+  articleTeasers: FragmentArticleTeaserFragment[];
   paginationProps: PaginationProps;
   languageLinks: LanguageLinks;
 }
@@ -59,11 +60,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
-  context,
-) => {
+export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async ({
+  locale,
+  locales,
+  params,
+}) => {
+  const commonPageProps = getCommonPageProps({ locale });
+
   // Get the page parameter:
-  const page = context.params.page;
+  const page = params.page;
   const currentPage = parseInt(Array.isArray(page) ? page[0] : page || "1");
   // This has to match one of the allowed values in the article listing view
   // in Drupal.
@@ -72,7 +77,7 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
   const { totalPages, articles } = await getLatestArticlesItems({
     limit: PAGE_SIZE,
     offset: currentPage ? PAGE_SIZE * (currentPage - 1) : 0,
-    locale: context.locale,
+    locale,
   });
 
   // Create pagination props.
@@ -92,11 +97,11 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
   // Create language links for this page.
   // Note: the links will always point to the first page, because we cannot guarantee that
   // the other pages will exist in all languages.
-  const languageLinks = createLanguageLinksForNextOnlyPage(pageRoot, context);
+  const languageLinks = createLanguageLinksForNextOnlyPage(pageRoot, locales);
 
   return {
     props: {
-      ...(await getCommonPageProps(context)),
+      ...(await commonPageProps),
       articleTeasers: articles,
       paginationProps: {
         currentPage,
@@ -108,6 +113,6 @@ export const getStaticProps: GetStaticProps<AllArticlesPageProps> = async (
       },
       languageLinks,
     },
-    revalidate: 60,
+    revalidate: REVALIDATE_LONG,
   };
 };

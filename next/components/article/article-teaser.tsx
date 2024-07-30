@@ -3,11 +3,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 import { formatDateTimestamp } from "@/lib/utils";
-import type { ArticleTeaserType } from "@/types/graphql";
-
 interface ArticleTeaserProps {
-  article: ArticleTeaserType;
+  article: FragmentArticleTeaserFragment;
 }
 
 export function ArticleTeaser({ article }: ArticleTeaserProps) {

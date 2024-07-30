@@ -8,7 +8,7 @@ projectName: next-drupal-starterkit
 
 services:
   node:
-    exposedRoute: '/'
+    exposedRoute: "/"
     port: 3000
     env:
       DRUPAL_CLIENT_ID: <|DRUPAL_CLIENT_ID|>
@@ -21,12 +21,13 @@ services:
       NEXT_PUBLIC_FRONTEND_URL: https://<|NEXT_DOMAIN|>
       NEXT_IMAGE_DOMAIN: <|DRUPAL_DOMAIN|>
       NEXTAUTH_URL: https://<|NEXT_DOMAIN|>
+      NEXT_TELEMETRY_DISABLED: 1
     # Autoscaling is enabled by default, because we want to test that the frontend
     # can work with redis.
     autoscaling:
       enabled: true
       minReplicas: 2
-      maxReplicas: 3
+      maxReplicas: 3      
 
 nginx:
   content_security_policy: >- # Lines below are joined without line breaks.

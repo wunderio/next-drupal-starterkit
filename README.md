@@ -17,10 +17,9 @@ The template includes all you need to have a working multi-language decoupled Dr
 
 This example is meant to be used together with the [Silta](https://wunderio.github.io/silta/) hosting system by [Wunder](https://www.wunder.io), but it can be used with any hosting system.
 
-## 🤓 The only requirement: local development with Lando
+## 🤓 Lando or DDEV? Your choice!
 
-Local development is handled by [Lando](https://lando.dev/). Both frontend and backend are covered by the Lando setup, so that is the only real requirement. The frontend site can be run in either dev or prod mode,
-and it will be proxied by Lando. The default URL for the frontend is [https://frontend.lndo.site](https://frontend.lndo.site), but it can be changed by editing the `.lando.yml` file.
+This starterkit can be used either with [Lando](https://lando.dev/) or with [DDEV](https://www.DDEV.com/). The only requirement is to have either one of those installed.
 
 ### Lando minimum version
 
@@ -28,13 +27,15 @@ The minimum version of lando required is 3.21.
 
 > Check the `version` property in the `.lando.yml` file to see which version of Lando is currently supported.
 
-### ⚠️⚠️ NOTE: Use npm inside Lando!
+### ⚠️⚠️ NOTE: Using npm
 
-Instead of running npm operations in your host machine, _this template requires you to use npm inside Lando_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend (these are defined in the `.lando.yml` file in the root of the project).
+Instead of running npm operations in your host machine, _this template requires you to use npm inside Lando or DDEV_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend without the need of additional configuration steps.
 
-**Just prefix all npm operations with `lando`.**
+**Just prefix all npm operations with `lando` or `ddev`.**
 
-So instead of `npm install`, run `lando npm install`, instead of `npm run dev` run `lando npm run dev`, etc.
+So instead of `npm install`, run `lando npm install` or `ddev npm install`, instead of `npm run dev` run `lando npm run dev` or `ddev npm run dev`, etc.
+
+> ⚠️⚠️ For DDEV, when using npm commands you have to make sure that you are in the `next` directory.
 
 #### Stopping a running npm operation running inside the Lando node container
 
@@ -44,12 +45,19 @@ If you have closed the terminal window where you were running the server with `l
 
 Follow this guide to get the backend and frontend up and running. You can either do it all in one go, or step by step to understand better what's going on.
 
-### 🏎️ Option 1: Quick one command setup
+### 🏎️ Quickstart
 
-All you need to do is run the setup script like this:
+1. Clone this repository
+2. Choose which local environment you want to use: **Lando** or **DDEV**.
+3. Run the setup script corresponding to your chosen local environment:
 
 ```bash
-./setup.sh
+./setup-lando.sh
+```
+or 
+
+```bash
+./setup-ddev.sh
 ```
 
 The script will execute a series of commands in sequence. If an error occurs, you can run the script again, and it will pick up where it left off.
@@ -57,46 +65,42 @@ The script will execute a series of commands in sequence. If an error occurs, yo
 If the script has failed on some step, and instead of continuing you want to start from scratch, you can run the script with the `-c` flag:
 
 ```bash
-./setup.sh -c
+./setup-[lando/ddev].sh -c
 ```
 
 > NOTE: the script will install the site from scratch. Export your database if you have started working with the template, and you have something valuable in it. :)
 
-## 🪜 Option 2: Step-by-step setup
+## 👨‍💻Urls
 
-### Backend Drupal setup
+After the setup is complete, you can access the site at the following URLs:
 
-All Drupal code and configuration is in the `drupal` directory.
-All needed module dependencies have been added to the `composer.json` file.
-Part of the setup process is automated using [Drupal recipes](https://www.drupal.org/project/distributions_recipes).
-You will need to have a recent installation of [Lando](https://lando.dev/) running on your development machine.
+### With Lando
 
-Follow these steps to get started:
+Lando has two separate containers for the backend and frontend, so the URLs are different:
 
-1. `lando start` (this will create the environment, and run `composer install` for you.)
-2. Generate the needed oauth keys using the command `lando generate-oauth-keys`. The keys will be created in the `drupal/oauth` directory.
-3. Install Drupal as usual. You will have to **use the minimal installation profile**. You can do it via the UI or using this command: `lando drush si minimal`.
-4. Run the `lando install-recipe wunder_next_setup` command to set up all necessary modules, content types and configuration.
-5. Run `lando drush eshs` to set up elasticsearch indexes.
-6. Execute the command: `lando drush wunder_next:setup-user-and-consumer`
-7. If you are starting your own project, and not just testing the template, you can now export your Drupal configuration the usual way: `lando drush cex`.
+| Backend | Frontend                     |
+|--|--|
+| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/  |
 
-### Next.js setup
+You can get a more detailed list of all the services and their urls with the command:
 
-All Next.js code is in the `next` directory.
+```bash
+lando info
+```
 
-For frontend development, prefix npm commands with `lando`, so for example to start the
-local node server in development mode, you can use `lando npm run dev`. All needed environment variables are already
-set for backend and frontend in the Lando file, so you will not need to touch any .env files for the frontend to get up and running.
+### With DDEV
 
-Follow these steps to get started, **after you have set up the backend**:
+DDEV has a single container for both the backend and frontend, so the URLs differ only by the port:
 
-1. Run `lando npm install`
-2. Run `lando npm run dev`
-3. If you want to populate the backend site with the provided example content, you can now run (in another terminal window): `lando drush en wunder_democontent && lando drush mim --group=demo_content --execute-dependencies`, otherwise you can log into the backend with `lando drush uli` and create some content.
-4. Visit `https://frontend.lndo.site` and you should see your content displayed by the frontend.
-5. When viewing a piece of content inside Drupal, you should be able to preview it in the frontend, including unpublished content and revisions.
-6. The template includes automatic setup of [On demand revalidation](https://next-drupal.org/learn/on-demand-revalidation), so saving a piece of content will automatically revalidate the corresponding path in Next.js.
+| Backend | Frontend                                       |
+|--|--|
+| https://next-drupal-starterkit.ddev.site| https://next-drupal-starterkit.ddev.site:3000  |
+
+You can get a more detailed list of all the services and their urls with the command:
+
+```bash
+ddev describe
+```
 
 ## 📦 What's included?
 
@@ -141,7 +145,6 @@ We decided to implement a static form, in the sense that the "hardcoded" fields 
 
 The `frontpage` and `page` content types are configured to use the popular [Paragraphs drupal module](https://www.drupal.org/project/paragraphs). The setup includes basic paragraph types to add images, videos, text, and also a nested paragraph type to demonstrate how to handle this in backend and frontend.
 
-
 ### Retrying of failed requests
 
 If the backend is not available momentarily, the frontend will try again to call it before returning an error.
@@ -150,9 +153,9 @@ If the backend is not available momentarily, the frontend will try again to call
 
 The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Next-Auth](https://next-auth.js.org/).
 
-* As an example, only registered users are allowed to post to the drupal `contact` webform, and parts of the interface in the frontend are available only for logged-in users.
-* Some test users are imported as part of the content migration (check the `users.csv' file for the credentials).
-* New users can be created on the frontend using a simple registration form. Drupal will assign them the correct role, and will send them an email with the link to set their password.
+- As an example, only registered users are allowed to post to the drupal `contact` webform, and parts of the interface in the frontend are available only for logged-in users.
+- Some test users are imported as part of the content migration (check the `users.csv' file for the credentials).
+- New users can be created on the frontend using a simple registration form. Drupal will assign them the correct role, and will send them an email with the link to set their password.
 
 ### Typescript
 
@@ -162,17 +165,17 @@ TypeScript is setup quite loosely by default to minimise friction and make it ac
 
 #### Working with GraphQL and TypeScript
 
-The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql/queries` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
+The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
 
-When adding or modifying queries and fragments, you will need to run `lando npm run graphql-codegen` to generate the corresponding types. The command will keep checking the files for changes. 
+When adding or modifying queries and fragments, the codegen script needs to be run to generate the corresponding types from the schema. Though you can always run `lando npm run graphql-codegen` or `ddev npm run graphql-codegen` yourself if needed, you shouldn't normally need to: `lando npm run build` or `ddev npm run build` will run the codegen before the build, and `lando npm run dev` or `ddev npm run dev` will start the codegen in watch mode alongside starting Next.js in development mode. The output of the codegen is gitignored, as the same step will be run on the CI server.
 
-When there are changes on the GraphQL server schema itself, you need to stop and start the command again to fetch the new schema definition. Also, you might need to `lando drush cr` to clear the Drupal cache.
-§
+Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `lando drush cr` or `ddev drush cr` to clear the Drupal cache.
+
 #### Typesafe environment variables
 
 The environment variables used by the frontend are also checked for type safety. If used correctly, a Zod error will prevent the frontend from building if the environment variables are not set according to the schema defined in `next/env.ts`. To add a new environment variable:
 
-1. Add it to `.lando.yml`, under services > node > overrides > environment.
+1. Add it to `.lando.yml`, under services > node > overrides > environment. or to `.ddev/config.yaml` for DDEV.
 2. Add it to `next/env.ts`. Note that it must be added twice there - once under server/client to define its schema, and once under `runtimeEnv` to read the actual value.
 3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
 4. To ensure it also works in CircleCI and Silta, also add it to`.circleci/config.yml` and `silta-next.yml`.
@@ -187,7 +190,7 @@ The template includes example tests to be run with Cypress. The Lando setup incl
 
 #### Running tests locally inside Lando on the command line
 
-To run the Cypress tests inside Lando: 
+To run the Cypress tests inside Lando:
 
 1. make sure the backend is running
 2. run `lando npm run build` to build the frontend
@@ -198,7 +201,7 @@ A video of the run will be recorded, and it will be available at `next/cypress/v
 
 #### Using the Cypress application
 
-If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work: 
+If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work:
 
 1. ensure you are using the correct node version, matching what we use inside Lando (see the `.lando.yml` file for details)
 2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
@@ -210,4 +213,3 @@ You can then run your tests inside the Cypress application.
 ### UI library
 
 The `ui/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects. The components are meant to be used as a starting point, and should be modified, added and removed as required to fit the needs of the project.
-

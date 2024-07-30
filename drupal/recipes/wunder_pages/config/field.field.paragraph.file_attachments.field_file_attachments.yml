@@ -7,7 +7,7 @@ dependencies:
     - media.type.document
     - paragraphs.paragraphs_type.file_attachments
 _core:
-  default_config_hash: tIUTtFL153y2lVb-Yp4Kou2urFYhlual2rYo4nw2zdQ
+  default_config_hash: vOnCmghcuWRg1OgQL99p92UidMUM2yQt93sylXPRXEY
 id: paragraph.file_attachments.field_file_attachments
 field_name: field_file_attachments
 entity_type: paragraph

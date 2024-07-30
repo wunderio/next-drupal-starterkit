@@ -65,6 +65,7 @@ export const FRAGMENT_NODE_FRONTPAGE = graphql(`
           ...FragmentParagraphHero
           ...FragmentParagraphAccordion
           ...FragmentParagraphListingArticle
+          ...FragmentParagraphLiftupArticle
         }
       }
     }
@@ -93,6 +94,7 @@ export const FRAGMENT_NODE_PAGE = graphql(`
           ...FragmentParagraphAccordion
           ...FragmentParagraphListingArticle
           ...FragmentParagraphAccordion
+          ...FragmentParagraphLiftupArticle
         }
       }
     }

@@ -2,6 +2,8 @@ uuid: f796b11e-aa74-4bcd-ad8c-db3b2bbd8894
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: ZWkRRJsLWKJAHdeluZ5tlq9zUJk2ql-ABnpSZsnuyA0
 id: links
 label: Links
 icon_uuid: null

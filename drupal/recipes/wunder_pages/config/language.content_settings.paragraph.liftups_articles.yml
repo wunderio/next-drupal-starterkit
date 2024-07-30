@@ -1,0 +1,20 @@
+uuid: 5c8fc480-626f-4e7e-a0e3-e44cd055805c
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.liftups_articles
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+_core:
+  default_config_hash: PVrZfIN4fllBafCmvt592Jpw4wUs6g5jxvhOSu_CmjA
+id: paragraph.liftups_articles
+target_entity_type_id: paragraph
+target_bundle: liftups_articles
+default_langcode: site_default
+language_alterable: true

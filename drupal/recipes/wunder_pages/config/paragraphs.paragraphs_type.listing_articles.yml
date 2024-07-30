@@ -2,6 +2,8 @@ uuid: 27969c04-2b7c-4b1c-a0b7-2fba36bc01e7
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: kXuPuzGEPfBMbvvZJswx7p4gsOHiEDwFX_V_hicEYkE
 id: listing_articles
 label: 'Listing: articles'
 icon_uuid: null

@@ -19,6 +19,7 @@ const nextConfig = {
     process.env.NODE_ENV === "production"
       ? require.resolve("./cache-handler.mjs")
       : undefined,
+  poweredByHeader: false,
   images: {
     remotePatterns: [
       {

@@ -3,13 +3,13 @@ import { useTranslation } from "next-i18next";
 import clsx from "clsx";
 
 import { ArticleTeaser } from "@/components/article/article-teaser";
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
-import type { ArticleTeaserType } from "@/types/graphql";
 
 import { buttonVariants } from "@/ui/button";
 
 interface LatestArticlesProps {
-  articles?: ArticleTeaserType[];
+  articles?: FragmentArticleTeaserFragment[];
   heading: string;
 }
 

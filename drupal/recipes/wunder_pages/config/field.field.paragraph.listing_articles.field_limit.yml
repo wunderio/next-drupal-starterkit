@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.paragraph.field_limit
     - paragraphs.paragraphs_type.listing_articles
+_core:
+  default_config_hash: m70mPpN3tSig87EoIHr31FAesPnaGcatQC0b82PHIs4
 id: paragraph.listing_articles.field_limit
 field_name: field_limit
 entity_type: paragraph

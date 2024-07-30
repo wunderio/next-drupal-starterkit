@@ -10,6 +10,7 @@ dependencies:
     - paragraphs.paragraphs_type.formatted_text
     - paragraphs.paragraphs_type.hero
     - paragraphs.paragraphs_type.image
+    - paragraphs.paragraphs_type.liftups_articles
     - paragraphs.paragraphs_type.links
     - paragraphs.paragraphs_type.listing_articles
     - paragraphs.paragraphs_type.video
@@ -39,6 +40,7 @@ settings:
       video: video
       listing_articles: listing_articles
       file_attachments: file_attachments
+      liftups_articles: liftups_articles
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -58,6 +60,9 @@ settings:
         enabled: true
       image:
         weight: -13
+        enabled: true
+      liftups_articles:
+        weight: 17
         enabled: true
       links:
         weight: -11

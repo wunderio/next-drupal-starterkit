@@ -11,6 +11,7 @@ import {
   WithSearch,
 } from "@elastic/react-search-ui";
 import { SearchDriverOptions } from "@elastic/search-ui";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { HeadingPage } from "@/components/heading--page";
 import { Meta } from "@/components/meta";
@@ -19,6 +20,7 @@ import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-fac
 import { Pagination } from "@/components/search/search-pagination";
 import { PagingInfoView } from "@/components/search/search-paging-info";
 import { SearchResult } from "@/components/search/search-result";
+import { REVALIDATE_LONG } from "@/lib/constants";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -29,19 +31,40 @@ import { runRequest } from "@/lib/search-ui-helpers/runRequest";
 import { useNextRouting } from "@/lib/search-ui-helpers/useNextRouting";
 
 export default function SearchPage() {
-  const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const router = useRouter();
+  const { t } = useTranslation();
+
+  const fetchSearchResults = async (state) => {
+    // Prepare the query key to cache results based on search inputs:
+    const queryKey = [
+      "search",
+      state.searchTerm,
+      { ...state, results: undefined },
+    ];
+
+    // If the search results are already cached, return the cached results:
+    const cachedSearchState = queryClient.getQueryData<any>(queryKey);
+    if (cachedSearchState) {
+      return cachedSearchState;
+    }
+
+    // If the search results are not cached, fetch the results:
+    const { resultsPerPage } = state;
+    const requestBody = buildRequest(state);
+    const responseJson = await runRequest(requestBody, router.locale);
+    const builtSearchState = buildState(responseJson, resultsPerPage, state);
+
+    // Update the cache with the new search results:
+    queryClient.setQueryData(queryKey, builtSearchState);
+    return builtSearchState;
+  };
 
   const config: SearchDriverOptions = {
     debug: false,
     hasA11yNotifications: true,
     apiConnector: null,
-    onSearch: async (state) => {
-      const { resultsPerPage } = state;
-      const requestBody = buildRequest(state);
-      const responseJson = await runRequest(requestBody, router.locale);
-      return buildState(responseJson, resultsPerPage, state);
-    },
+    onSearch: fetchSearchResults,
   };
 
   // useNextRouting is a custom hook that will integrate with Next Router with Search UI config
@@ -52,9 +75,7 @@ export default function SearchPage() {
   return (
     <>
       <Meta title={t("search")} metatags={[]} />
-
       <HeadingPage>{t("search")}</HeadingPage>
-
       <SearchProvider config={combinedConfig}>
         <WithSearch
           mapContextToProps={({ wasSearched, results }) => ({
@@ -116,13 +137,13 @@ export default function SearchPage() {
   );
 }
 
-export const getStaticProps: GetStaticProps<CommonPageProps> = async (
-  context,
-) => {
+export const getStaticProps: GetStaticProps<CommonPageProps> = async ({
+  locale,
+}) => {
   return {
     props: {
-      ...(await getCommonPageProps(context)),
+      ...(await getCommonPageProps({ locale })),
     },
-    revalidate: 60,
+    revalidate: REVALIDATE_LONG,
   };
 };
