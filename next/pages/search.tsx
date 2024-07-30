@@ -20,6 +20,7 @@ import { MultiCheckboxFacet } from "@/components/search/search-multicheckbox-fac
 import { Pagination } from "@/components/search/search-pagination";
 import { PagingInfoView } from "@/components/search/search-paging-info";
 import { SearchResult } from "@/components/search/search-result";
+import { REVALIDATE_LONG } from "@/lib/constants";
 import {
   CommonPageProps,
   getCommonPageProps,
@@ -136,13 +137,13 @@ export default function SearchPage() {
   );
 }
 
-export const getStaticProps: GetStaticProps<CommonPageProps> = async (
-  context,
-) => {
+export const getStaticProps: GetStaticProps<CommonPageProps> = async ({
+  locale,
+}) => {
   return {
     props: {
-      ...(await getCommonPageProps(context)),
+      ...(await getCommonPageProps({ locale })),
     },
-    revalidate: 60,
+    revalidate: REVALIDATE_LONG,
   };
 };

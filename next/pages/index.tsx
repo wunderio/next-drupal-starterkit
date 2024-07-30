@@ -1,5 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useTranslation } from "next-i18next";
+import { AbortError } from "p-retry";
 
 import { ArticleTeasers } from "@/components/article/article-teasers";
 import { ContactList } from "@/components/contact-list";
@@ -8,7 +9,11 @@ import { LayoutProps } from "@/components/layout";
 import { LogoStrip } from "@/components/logo-strip";
 import { Meta } from "@/components/meta";
 import { Node } from "@/components/node";
-import { drupalClientViewer } from "@/lib/drupal/drupal-client";
+import { REVALIDATE_LONG } from "@/lib/constants";
+import {
+  drupalClientPreviewer,
+  drupalClientViewer,
+} from "@/lib/drupal/drupal-client";
 import { getCommonPageProps } from "@/lib/get-common-page-props";
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
@@ -19,6 +24,7 @@ import {
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 import type { FrontpageType } from "@/types/graphql";
 
+import { env } from "@/env";
 import { Divider } from "@/ui/divider";
 
 interface HomepageProps extends LayoutProps {
@@ -51,59 +57,65 @@ export default function IndexPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<HomepageProps> = async (
-  context,
-) => {
-  const variables = {
-    // This works because it matches the pathauto pattern for the Frontpage content type defined in Drupal:
-    path: `frontpage-${context.locale}`,
-    langcode: context.locale,
-  };
+export const getStaticProps: GetStaticProps<HomepageProps> = async ({
+  locale,
+  preview,
+}) => {
+  const commonPageProps = getCommonPageProps({ locale });
 
-  const data = await drupalClientViewer.doGraphQlRequest(
-    GET_ENTITY_AT_DRUPAL_PATH,
-    variables,
-  );
+  const drupalClient = preview ? drupalClientPreviewer : drupalClientViewer;
 
-  const frontpage = extractEntityFromRouteQueryResult(data);
+  // This works because it matches the pathauto pattern for the Frontpage content type defined in Drupal:
+  const path = `frontpage-${locale}`;
 
-  if (!frontpage || !(frontpage.__typename === "NodeFrontpage")) {
-    return {
-      notFound: true,
-      revalidate: 10,
-    };
-  }
-
-  // Unless we are in preview, return 404 if the node is set to unpublished:
-  if (!context.preview && frontpage.status !== true) {
-    return {
-      notFound: true,
-      revalidate: 10,
-    };
-  }
-
-  // Get the last 3 sticky articles in the current language:
-  const stickyArticleTeasers = await drupalClientViewer.doGraphQlRequest(
-    LISTING_ARTICLES,
-    {
-      langcode: context.locale,
+  const [nodeByPathResult, stickyArticleTeasers] = await Promise.all([
+    drupalClient.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
+      path,
+      langcode: locale,
+    }),
+    drupalClient.doGraphQlRequest(LISTING_ARTICLES, {
+      langcode: locale,
       sticky: true,
       page: 0,
       pageSize: 3,
-    },
-  );
+    }),
+  ]).catch((error: unknown) => {
+    const type =
+      error instanceof AbortError
+        ? "GraphQL"
+        : error instanceof TypeError
+          ? "Network"
+          : "Unknown";
 
-  // We cast the results as the ListingArticle type to get type safety:
-  const articles =
-    (stickyArticleTeasers.articlesView
-      ?.results as FragmentArticleTeaserFragment[]) ?? [];
+    const moreInfo =
+      type === "GraphQL"
+        ? `Check graphql_compose logs: ${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/admin/reports`
+        : "";
+
+    throw new Error(
+      `${type} Error during GetNodeByPath query with $path: "${path}" and $langcode: "${locale}". ${moreInfo}`,
+    );
+  });
+
+  const frontpage = extractEntityFromRouteQueryResult(nodeByPathResult);
+
+  if (!frontpage || frontpage.__typename !== "NodeFrontpage") {
+    throw new Error("Frontpage not found for locale " + locale);
+  }
+
+  // Unless we are in preview, return 404 if the node is set to unpublished:
+  if (!preview && frontpage.status !== true) {
+    throw new Error("Frontpage not published for locale " + locale);
+  }
 
   return {
     props: {
-      ...(await getCommonPageProps(context)),
+      ...(await commonPageProps),
       frontpage,
-      stickyArticleTeasers: articles,
+      stickyArticleTeasers:
+        (stickyArticleTeasers.articlesView
+          ?.results as FragmentArticleTeaserFragment[]) ?? [],
     },
-    revalidate: 60,
+    revalidate: REVALIDATE_LONG,
   };
 };
