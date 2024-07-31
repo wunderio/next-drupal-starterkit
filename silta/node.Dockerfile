@@ -15,7 +15,7 @@ WORKDIR /app
 
 ENV PORT 3000
 # Fix for next.js not being able to find sharp: https://nextjs.org/docs/messages/sharp-missing-in-production 
-ENV NEXT_SHARP_PATH /app/.next/node_modules/sharp
+ENV NEXT_SHARP_PATH /app/node_modules/sharp
 
 # server.js is created by next build from the standalone output:
 CMD ["node", "server.js"]
