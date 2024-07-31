@@ -184,6 +184,29 @@ The environment variables used by the frontend are also checked for type safety.
 
 The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` path that can be submitted to search engines.
 
+#### Redis caching
+
+The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. Both the ddev and lando setup include redis by default.
+The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package. We added custom logic to our cache handler
+to handle prepopulating the cache from builds for ISR. Checl the `cache-handler.mjs` file in the `next` directory for more information.
+
+### Connecting to Redis in the local environment
+
+You can connect to Redis and interact with it using the [redis cli](https://redis.io/docs/latest/develop/connect/cli/) in the local environment by running the following command:
+
+If you are using Lando:
+
+```bash
+lando redis-cli
+```
+
+If you are using DDEV:
+
+```bash
+ddev redis
+```
+
+
 ### Testing with Cypress
 
 The template includes example tests to be run with Cypress. The Lando setup includes a headless browser and Cypress, so you can run the tests locally without the need to install anything else, but it won't be able to use the visual Cypress application. See below for more details.
