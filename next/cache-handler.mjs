@@ -19,8 +19,14 @@ const REDIS_CACHE_PREPOPULATE_STATUS__VALUE_ERRORED = "ERRORED";
 CacheHandler.onCreation(async (context) => {
   let redisHandler;
 
-  // Check if the Redis environment variables are set:
-  if (process.env.REDIS_HOST) {
+  if (
+    // Ensure redis env vars are set:
+    process.env.REDIS_HOST &&
+    process.env.REDIS_PASS &&
+    // Do not create the Redis handler during the build phase.
+    // It has little benefit and can cause issues: https://github.com/caching-tools/next-shared-cache/issues/284
+    process.env.NEXT_PHASE !== "phase-production-build"
+  ) {
     // always create a Redis client inside the `onCreation` callback
     const client = createClient({
       password: process.env.REDIS_PASS,
