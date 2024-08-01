@@ -11,7 +11,10 @@ const defaultStaleAge = 3600 * 24 * 7;
 // This should be set to the same value of the constant of the same name in lib/constants.ts.
 const REVALIDATE_LONG = 60 * 10;
 
-const REDIS_CACHE_PREPOPULATE_STATUS = "CACHE_PREPOPULATE_STATUS-";
+const REDIS_CACHE_PREPOPULATE_STATUS_KEY = "CACHE_PREPOPULATE_STATUS_";
+const REDIS_CACHE_PREPOPULATE_STATUS__VALUE_STARTED = "STARTED";
+const REDIS_CACHE_PREPOPULATE_STATUS__VALUE_COMPLETED = "COMPLETED";
+const REDIS_CACHE_PREPOPULATE_STATUS__VALUE_ERRORED = "ERRORED";
 
 CacheHandler.onCreation(async (context) => {
   let redisHandler;
@@ -49,7 +52,7 @@ CacheHandler.onCreation(async (context) => {
 
     // Get the status of the initial cache population from Redis:
     const prepopulateCacheStatus = await client
-      .get(REDIS_CACHE_PREPOPULATE_STATUS + context.buildId)
+      .get(REDIS_CACHE_PREPOPULATE_STATUS_KEY + context.buildId)
       .catch((error) => {
         console.error(
           "Redis handler: error while reading from Redis. error:",
@@ -66,8 +69,8 @@ CacheHandler.onCreation(async (context) => {
       try {
         // Set Redis switch to indicate that the initial cache population has started:
         await client.set(
-          REDIS_CACHE_PREPOPULATE_STATUS + context.buildId,
-          "started",
+          REDIS_CACHE_PREPOPULATE_STATUS_KEY + context.buildId,
+          REDIS_CACHE_PREPOPULATE_STATUS__VALUE_STARTED,
         );
 
         // Pages files are stored in the `pages` folder in the build cache:
@@ -128,13 +131,16 @@ CacheHandler.onCreation(async (context) => {
 
         // Set a switch in Redis to indicate that the initial cache population was completed:
         await client.set(
-          REDIS_CACHE_PREPOPULATE_STATUS + context.buildId,
-          "completed",
+          REDIS_CACHE_PREPOPULATE_STATUS_KEY + context.buildId,
+          REDIS_CACHE_PREPOPULATE_STATUS__VALUE_COMPLETED,
         );
       } catch (error) {
         // Set a switch in Redis to indicate that the initial cache population got an error:
         await client
-          .set(REDIS_CACHE_PREPOPULATE_STATUS + context.buildId, "error")
+          .set(
+            REDIS_CACHE_PREPOPULATE_STATUS_KEY + context.buildId,
+            REDIS_CACHE_PREPOPULATE_STATUS__VALUE_ERRORED,
+          )
           .catch((error) => {
             console.error(
               "Error while writing to redis. error:",
