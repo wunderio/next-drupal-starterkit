@@ -155,7 +155,7 @@ CacheHandler.onCreation(async ({ buildId, serverDistDir }) => {
             }
 
             const path = file.replace(".html", "");
-            // the JSON file has the same path as the HTML file, but with a .json extension:
+            // The JSON file has the same path as the HTML file, but with a .json extension:
             const jsonPath = path + ".json";
             console.log(
               `Redis handler: creating a redis cache key for ${path}`,
@@ -166,16 +166,22 @@ CacheHandler.onCreation(async ({ buildId, serverDistDir }) => {
               value: {
                 kind: "PAGE", // hard coded value
                 html,
-                // For PageData, we need to fetch the content of the JSON file as an object:
+                // For pageData, we need to read the contents of the JSON file to an object:
                 pageData: JSON.parse(
                   await fs.readFile(pagesDir + jsonPath, "utf8"),
                 ),
+                // We do not need to override these here, but they are required according to the types:
+                postponed: undefined,
+                headers: undefined,
+                status: undefined,
               },
-              tags: [], // no tags in pages
+              tags: [], // No tags in pages
+              lastModified: htmlFileLastModifiedTime * 1000, // Unlike values below, this should be in milliseconds
               lifespan: {
                 lastModifiedAt: htmlFileLastModifiedTime,
                 staleAge: defaultStaleAge,
                 expireAge: defaultStaleAge,
+                staleAt: htmlFileLastModifiedTime + defaultStaleAge,
                 expireAt: htmlFileLastModifiedTime + defaultStaleAge,
                 revalidate: REVALIDATE_LONG,
               },
