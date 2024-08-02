@@ -200,16 +200,18 @@ CacheHandler.onCreation(async ({ buildId, serverDistDir }) => {
         );
       }
     }
-  } else {
-    /**
-     * Fallback to LRU handler if Redis client is not available.
-     *
-     * The application will "work", but the cache will be in memory only and not shared.
-     * If this happens in an environment with multiple containers, it will result
-     * in various issues such as 404s during clientside navigation due to missing page data.
-     *
-     * It's recommended to set up an automated alert here, so it can be fixed as soon as possible.
-     */
+  }
+
+  /**
+   * Fallback to LRU handler if Redis is not available.
+   *
+   * The application will "work", but the cache will be in memory only and not shared.
+   * If this happens in an environment with multiple containers, it will result
+   * in various issues such as 404s during clientside navigation due to missing page data.
+   *
+   * It's recommended to set up an automated alert here, so it can be fixed as soon as possible.
+   */
+  if (!client?.isReady || !handler) {
     handler = createLruHandler();
     console.warn(
       "Falling back to LRU handler because Redis client is not available.",
