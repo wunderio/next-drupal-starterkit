@@ -1,3 +1,5 @@
+// @ts-check
+
 import { CacheHandler } from "@neshca/cache-handler";
 import createLruHandler from "@neshca/cache-handler/local-lru";
 import createRedisHandler from "@neshca/cache-handler/redis-strings";
@@ -73,19 +75,22 @@ CacheHandler.onCreation(async ({ buildId, serverDistDir }) => {
     }
   }
 
-  /** @type {import("@neshca/cache-handler").Handler | null} */
+  /** @type {import("@neshca/cache-handler").Handler | undefined} */
   let handler;
 
   if (client?.isReady) {
-    // Create the Redis Handler if the client is available and connected.
-    handler = await createRedisHandler({
+    /** @type {import("@neshca/cache-handler/redis-strings").CreateRedisStringsHandlerOptions} */
+    const redisHandlerOptions = {
       client,
       keyPrefix: `cache-${buildId}:`,
       sharedTagsKey: "_sharedTags_",
       // timeout for the Redis client operations like `get` and `set`
       // after this timeout, the operation will be considered failed and the `localHandler` will be used
       timeoutMs: 3000,
-    });
+    };
+
+    // Create the Redis Handler if the client is available and connected.
+    handler = await createRedisHandler(redisHandlerOptions);
 
     /**
      * This code will run only when the cache handler is created, so it's a good place to populate the cache.
