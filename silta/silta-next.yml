@@ -22,6 +22,12 @@ services:
       NEXT_IMAGE_DOMAIN: <|DRUPAL_DOMAIN|>
       NEXTAUTH_URL: https://<|NEXT_DOMAIN|>
       NEXT_TELEMETRY_DISABLED: 1
+    # Autoscaling is enabled by default, because we want to test that the frontend
+    # can work with redis.
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 3      
 
 nginx:
   content_security_policy: >- # Lines below are joined without line breaks.
@@ -36,6 +42,12 @@ nginx:
     base-uri 'self';
     connect-src 'self';
     form-action 'self';
+
+redis:
+  enabled: true
+  auth:
+    # in a real project this has to be set via secrets file.
+    password: "mypassword"
 
 ingress:
   default:

@@ -72,6 +72,10 @@ tooling:
     dir: /app/drupal/oauth
     user: www-data
 
+  redis-cli:
+    cmd:
+      - cache: redis-cli -h cache -p 6379 -a mypassword
+
 services:
   database:
     # This is the port you can use to connect to mysql from your host.
@@ -145,6 +149,8 @@ services:
         # Environment variables for next_auth:
         NEXTAUTH_SECRET: nextauth_secret_not_secure_used_only_locally
         NEXTAUTH_URL: https://frontend.lndo.site
+        REDIS_HOST: redis
+        REDIS_PASS: "mypassword"
     build:
       - "cd next && npm ci"
     scanner: false
@@ -210,6 +216,12 @@ services:
     hogfrom:
       - appserver
 
+  # This service adds redis, used by the frontend application for caching.
+  redis:
+    type: redis:7
+    persist: true
+    password: mypassword
+    portforward: 6379
 # This section specifies at which urls each service is available. Adjust as necessary
 # for your project.
 proxy:

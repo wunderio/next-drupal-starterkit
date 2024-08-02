@@ -1,0 +1,34 @@
+#ddev-generated
+volumes:
+  redis:
+    name: ddev-${DDEV_SITENAME}-redis
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+
+services:
+  redis:
+    container_name: ddev-${DDEV_SITENAME}-redis
+    hostname: ddev-${DDEV_SITENAME}-minio
+    image: redis:7.2-alpine
+    command: /etc/redis/conf/redis.conf
+    volumes:
+      - ".:/mnt/ddev_config"
+      - "ddev-global-cache:/mnt/ddev-global-cache"
+      - "./redis:/etc/redis/conf"
+      - "redis:/data"
+    expose:
+      - 6379
+    networks:
+      - default
+    deploy:
+      resources:
+        limits:
+          cpus: "2.5"
+          memory: "768M"
+        reservations:
+          cpus: "1.5"
+          memory: "512M"
+    restart: "no"
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
