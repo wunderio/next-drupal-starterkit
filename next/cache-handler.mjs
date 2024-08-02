@@ -162,7 +162,7 @@ CacheHandler.onCreation(async ({ buildId, serverDistDir }) => {
             );
 
             // The redis key is the path of the page, with a leading slash:
-            await handler.set("/" + path, {
+            await handler?.set("/" + path, {
               value: {
                 kind: "PAGE", // hard coded value
                 html,
