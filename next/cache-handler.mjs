@@ -12,12 +12,12 @@ const defaultStaleAge = 3600 * 24 * 7;
 const REVALIDATE_LONG = 60 * 10;
 
 const REDIS_CACHE_PREPOPULATE_STATUS_KEY = "CACHE_PREPOPULATE_STATUS_";
-const REDIS_CACHE_PREPOPULATE_STATUS__VALUE_STARTED = "STARTED";
-const REDIS_CACHE_PREPOPULATE_STATUS__VALUE_COMPLETED = "COMPLETED";
-const REDIS_CACHE_PREPOPULATE_STATUS__VALUE_ERRORED = "ERRORED";
+const REDIS_CACHE_PREPOPULATE_STATUS_VALUE_STARTED = "STARTED";
+const REDIS_CACHE_PREPOPULATE_STATUS_VALUE_COMPLETED = "COMPLETED";
+const REDIS_CACHE_PREPOPULATE_STATUS_VALUE_ERRORED = "ERRORED";
 
-CacheHandler.onCreation(async (context) => {
-  let redisHandler;
+CacheHandler.onCreation(async ({ buildId, serverDistDir }) => {
+  let client;
 
   if (
     // Ensure redis env vars are set:
@@ -27,38 +27,77 @@ CacheHandler.onCreation(async (context) => {
     // It has little benefit and can cause issues: https://github.com/caching-tools/next-shared-cache/issues/284
     process.env.NEXT_PHASE !== "phase-production-build"
   ) {
-    // always create a Redis client inside the `onCreation` callback
-    const client = createClient({
-      password: process.env.REDIS_PASS,
-      socket: {
-        port: 6379,
-        host: process.env.REDIS_HOST,
-      },
-    });
+    try {
+      // Create a Redis client.
+      client = createClient({
+        socket: {
+          port: 6379,
+          host: process.env.REDIS_HOST,
+        },
+        password: process.env.REDIS_PASS,
+      });
 
-    client.on("error", (error) => {
-      console.error("Redis error:", error.message);
-    });
+      // Redis won't work without error handling.
+      client.on("error", (e) => {
+        throw e;
+      });
+    } catch (error) {
+      console.warn("Failed to create Redis client:", error);
+    }
+  }
 
-    await client.connect();
+  if (client) {
+    try {
+      console.info("Connecting Redis client...");
 
-    redisHandler = await createRedisHandler({
+      // Wait for the client to connect.
+      // Caveat: This will block the server from starting until the client is connected.
+      // And there is no timeout. Make your own timeout if needed.
+      await client.connect();
+      console.info("Redis client connected.");
+    } catch (error) {
+      console.warn("Failed to connect Redis client:", error);
+
+      console.warn("Disconnecting the Redis client...");
+      // Try to disconnect the client to stop it from reconnecting.
+      client
+        .disconnect()
+        .then(() => {
+          console.info("Redis client disconnected.");
+        })
+        .catch(() => {
+          console.warn(
+            "Failed to quit the Redis client after failing to connect.",
+          );
+        });
+    }
+  }
+
+  /** @type {import("@neshca/cache-handler").Handler | null} */
+  let handler;
+
+  if (client?.isReady) {
+    // Create the Redis Handler if the client is available and connected.
+    handler = await createRedisHandler({
       client,
-      keyPrefix: `nextjs-cache-${context.buildId}:`,
+      keyPrefix: `cache-${buildId}:`,
       sharedTagsKey: "_sharedTags_",
       // timeout for the Redis client operations like `get` and `set`
       // after this timeout, the operation will be considered failed and the `localHandler` will be used
       timeoutMs: 3000,
     });
 
-    // This code will run only when the cache handler is created, so it's a good place to populate the cache.
-    // We want to do this only once per deployment even if there are more than one nodejs container running, unless
-    // a previous attempt failed. For this reason we store in Redis a special key that stores the status of the cache population process,
-    // and use it to determine if the operation should be skipped.
+    /**
+     * This code will run only when the cache handler is created, so it's a good place to populate the cache.
+     * We want to do this only once per deployment even if there are more than one nodejs container running, unless
+     * a previous attempt failed. For this reason we store in Redis a special key that stores the status of the cache population process,
+     * and use it to determine if the operation should be skipped.
+     */
 
     // Get the status of the initial cache population from Redis:
+    const statusKey = REDIS_CACHE_PREPOPULATE_STATUS_KEY + buildId;
     const prepopulateCacheStatus = await client
-      .get(REDIS_CACHE_PREPOPULATE_STATUS_KEY + context.buildId)
+      .get(REDIS_CACHE_PREPOPULATE_STATUS_KEY + buildId)
       .catch((error) => {
         console.error(
           "Redis handler: error while reading from Redis. error:",
@@ -67,7 +106,10 @@ CacheHandler.onCreation(async (context) => {
       });
 
     // If the cache population was already started or completed, we skip the operation altogether:
-    if (prepopulateCacheStatus && prepopulateCacheStatus !== "error") {
+    if (
+      prepopulateCacheStatus &&
+      prepopulateCacheStatus !== REDIS_CACHE_PREPOPULATE_STATUS_VALUE_ERRORED
+    ) {
       console.log(
         `Redis handler: Skipping initial cache population, because status is: ${prepopulateCacheStatus}`,
       );
@@ -75,12 +117,12 @@ CacheHandler.onCreation(async (context) => {
       try {
         // Set Redis switch to indicate that the initial cache population has started:
         await client.set(
-          REDIS_CACHE_PREPOPULATE_STATUS_KEY + context.buildId,
-          REDIS_CACHE_PREPOPULATE_STATUS__VALUE_STARTED,
+          statusKey,
+          REDIS_CACHE_PREPOPULATE_STATUS_VALUE_STARTED,
         );
 
         // Pages files are stored in the `pages` folder in the build cache:
-        const pagesDir = context.serverDistDir + "/pages/";
+        const pagesDir = serverDistDir + "/pages/";
         // Find all HTML files in the pages folder:
         const pageHtmlFiles = await findAllHtmlFilesInFolder(pagesDir);
 
@@ -113,8 +155,9 @@ CacheHandler.onCreation(async (context) => {
             console.log(
               `Redis handler: creating a redis cache key for ${path}`,
             );
-            // The redis jey is the path of the page, with a leading slash:
-            await redisHandler.set("/" + path, {
+
+            // The redis key is the path of the page, with a leading slash:
+            await handler.set("/" + path, {
               value: {
                 kind: "PAGE", // hard coded value
                 html,
@@ -135,18 +178,15 @@ CacheHandler.onCreation(async (context) => {
           });
         });
 
-        // Set a switch in Redis to indicate that the initial cache population was completed:
+        // Set a switch in Redis to indicate that the initial cache population completed successfully:
         await client.set(
-          REDIS_CACHE_PREPOPULATE_STATUS_KEY + context.buildId,
-          REDIS_CACHE_PREPOPULATE_STATUS__VALUE_COMPLETED,
+          statusKey,
+          REDIS_CACHE_PREPOPULATE_STATUS_VALUE_COMPLETED,
         );
       } catch (error) {
-        // Set a switch in Redis to indicate that the initial cache population got an error:
+        // Set a switch in Redis to indicate that the initial cache population errored:
         await client
-          .set(
-            REDIS_CACHE_PREPOPULATE_STATUS_KEY + context.buildId,
-            REDIS_CACHE_PREPOPULATE_STATUS__VALUE_ERRORED,
-          )
+          .set(statusKey, REDIS_CACHE_PREPOPULATE_STATUS_VALUE_ERRORED)
           .catch((error) => {
             console.error(
               "Error while writing to redis. error:",
@@ -160,12 +200,24 @@ CacheHandler.onCreation(async (context) => {
         );
       }
     }
+  } else {
+    /**
+     * Fallback to LRU handler if Redis client is not available.
+     *
+     * The application will "work", but the cache will be in memory only and not shared.
+     * If this happens in an environment with multiple containers, it will result
+     * in various issues such as 404s during clientside navigation due to missing page data.
+     *
+     * It's recommended to set up an automated alert here, so it can be fixed as soon as possible.
+     */
+    handler = createLruHandler();
+    console.warn(
+      "Falling back to LRU handler because Redis client is not available.",
+    );
   }
 
-  const localHandler = createLruHandler();
-
   return {
-    handlers: [redisHandler, localHandler],
+    handlers: [handler],
     ttl: {
       defaultStaleAge,
       estimateExpireAge: () => defaultStaleAge,
