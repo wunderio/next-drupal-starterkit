@@ -139,6 +139,9 @@
             "drupal/graphql" : {
                 "drupal-graphql#1323: Add check for translation (from Github)": "https://patch-diff.githubusercontent.com/raw/drupal-graphql/graphql/pull/1388.patch"
             },
+            "drupal/graphql_compose" : {
+                "Querying for translations of a node with one or more unpublished translations causes fatal error (d.org issue #3464624)": "./patches/graphql_compose_unpublished_translations.patch"
+            },
             "drupal/core": {
                 "Add support for the experimental recipes functionality (local patch)": "./patches/recipe-10.2.x.patch",
                 "Fix error when enabling the language module via recipe": "https://www.drupal.org/files/issues/2019-11-19/drupal.8.8.x-3002532-20.patch",
