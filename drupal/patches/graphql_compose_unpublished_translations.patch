@@ -1,0 +1,13 @@
+diff --git a/src/Plugin/GraphQLCompose/SchemaType/TranslationType.php b/src/Plugin/GraphQLCompose/SchemaType/TranslationType.php
+index b9db00fe647fbda8b371c9fa4dafa644bb87e0a9..4a6d967c38ed8b82c5723115fef00c1722054636 100644
+--- a/src/Plugin/GraphQLCompose/SchemaType/TranslationType.php
++++ b/src/Plugin/GraphQLCompose/SchemaType/TranslationType.php
+@@ -71,7 +71,7 @@ class TranslationType extends GraphQLComposeSchemaTypeBase {
+           'fields' => function () {
+             return [
+               'translations' => [
+-                'type' => Type::nonNull(Type::listOf(Type::nonNull(static::type($this->getPluginId())))),
++                'type' => Type::nonNull(Type::listOf(static::type($this->getPluginId()))),
+                 'description' => (string) $this->t('Available translations for content.'),
+               ],
+             ];
