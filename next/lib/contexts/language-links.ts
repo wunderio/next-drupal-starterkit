@@ -1,9 +1,8 @@
 import { FragmentNodeTranslationFragment } from "@/lib/gql/graphql";
 
-import { locales } from "@/i18n";
-import siteConfig from "@/site.config";
+import { i18nConfig } from "@/i18n";
 
-export type LanguageLinks = typeof siteConfig.locales;
+export type LanguageLinks = (typeof i18nConfig)["languageLinks"];
 
 /**
  * From the site config and available node translations, create links to be used in the language switcher.
@@ -22,7 +21,7 @@ export function createLanguageLinks(
  * Get the standard language links from the site config.
  */
 export const getStandardLanguageLinks = () =>
-  JSON.parse(JSON.stringify(siteConfig.locales));
+  JSON.parse(JSON.stringify(i18nConfig.languageLinks));
 
 /**
  * Generates a language links object for a page that is created in next only.
@@ -35,7 +34,7 @@ export function createLanguageLinksForNextOnlyPage(
   path: string,
 ): LanguageLinks {
   const languageLinks = getStandardLanguageLinks();
-  locales.forEach((locale) => {
+  i18nConfig.locales.forEach((locale) => {
     languageLinks[locale].path =
       languageLinks[locale].path === "/"
         ? path

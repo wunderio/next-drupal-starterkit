@@ -1,6 +1,6 @@
 import { createSharedPathnamesNavigation } from "next-intl/navigation";
 
-import { locales } from "@/i18n";
+import { i18nConfig } from "@/i18n";
 
 export const {
   Link: LinkWithLocale,
@@ -9,5 +9,5 @@ export const {
   usePathname: usePathnameWithoutLocale,
   useRouter: useRouterWithoutLocale,
 } = createSharedPathnamesNavigation({
-  locales,
+  locales: i18nConfig.locales,
 });

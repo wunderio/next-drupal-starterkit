@@ -8,12 +8,12 @@ import { inter, overpass } from "@/styles/fonts";
 
 import AuthProvider from "@/components/auth-provider";
 import { Footer } from "@/components/footer/footer";
-import { locales } from "@/i18n";
+import { i18nConfig } from "@/i18n";
 import { getMenu } from "@/lib/drupal/get-menus";
 import { MenuAvailable } from "@/lib/gql/graphql";
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return i18nConfig.locales.map((locale) => ({ locale }));
 }
 export const viewport: Viewport = {
   width: "device-width, shrink-to-fit=no",

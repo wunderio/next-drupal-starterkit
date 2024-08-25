@@ -9,7 +9,7 @@ import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import { cn, removeLocaleFromPath } from "@/lib/utils";
 import LanguageIcon from "@/styles/icons/language.svg";
 
-import { locales } from "@/i18n";
+import { i18nConfig } from "@/i18n";
 import { LinkWithLocale } from "@/navigation";
 
 export function LanguageSwitcher() {
@@ -50,7 +50,7 @@ export function LanguageSwitcher() {
           !isOpen && "hidden",
         )}
       >
-        {locales
+        {i18nConfig.locales
           .filter((locale) => locale !== activeLocale)
           .map((locale) => {
             const { name, path } = languageLinks[locale];

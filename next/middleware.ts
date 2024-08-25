@@ -8,7 +8,12 @@ interface AppRouteHandlerFnContext {
   params?: Record<string, string | string[]>;
 }
 
-const intlMiddleware = createMiddleware(i18nConfig);
+const intlMiddleware = createMiddleware({
+  locales: i18nConfig.locales,
+  defaultLocale: i18nConfig.defaultLocale,
+  localePrefix: "as-needed",
+  alternateLinks: false,
+});
 
 const authMiddleware = (request: NextRequest, ctx: AppRouteHandlerFnContext) =>
   auth((req) => {

@@ -1,5 +1,5 @@
 import { env } from "@/env";
-import { defaultLocale } from "@/site.config";
+import { i18nConfig } from "@/i18n";
 
 import clsx from "clsx";
 import { ClassValue } from "cva/types";
@@ -73,7 +73,7 @@ export const getFileType = (file: string) => {
  * @returns "" for the default locale, "/locale" for other locales.
  */
 export function getLanguagePathFragment(locale?: string) {
-  return !locale || locale === defaultLocale ? "" : `/${locale}`;
+  return !locale || locale === i18nConfig.defaultLocale ? "" : `/${locale}`;
 }
 
 export const makePathAbsolute = (path: string) =>

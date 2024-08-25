@@ -1,9 +1,9 @@
-const config = require("./site.config");
+const { i18nConfig } = require("./i18n");
 
 module.exports = {
   i18n: {
-    defaultLocale: config.defaultLocale,
-    locales: Object.keys(config.locales),
+    defaultLocale: i18nConfig.defaultLocale,
+    locales: Object.keys(i18nConfig.locales),
   },
   ns: "common",
   defaultNS: "common",

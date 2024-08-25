@@ -4,12 +4,14 @@ import { createContext, useContext } from "react";
 
 import { createLanguageLinksForNextOnlyPage } from "./language-links";
 
+import { i18nConfig } from "@/i18n";
 import { usePathnameWithoutLocale } from "@/navigation";
-import siteConfig from "@/site.config";
 
-export type LanguageLinks = typeof siteConfig.locales;
+export type LanguageLinks = (typeof i18nConfig)["languageLinks"];
 
-const LanguageLinksContext = createContext(siteConfig.locales);
+const LanguageLinksContext = createContext<LanguageLinks>(
+  i18nConfig.languageLinks,
+);
 
 /**
  * Provide the language links context.
@@ -18,7 +20,7 @@ export function LanguageLinksProvider({
   languageLinks,
   children,
 }: {
-  languageLinks?: typeof siteConfig.locales;
+  languageLinks?: LanguageLinks;
   children: React.ReactNode;
 }) {
   const pathname = usePathnameWithoutLocale();

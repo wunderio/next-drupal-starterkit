@@ -9,6 +9,5 @@ export default async function AuthProvider({
 }) {
   const session = await auth();
 
-  console.log("AuthProvider", session);
   return <SessionProvider session={session}>{children}</SessionProvider>;
 }
