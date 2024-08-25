@@ -8,7 +8,6 @@ import { inter, overpass } from "@/styles/fonts";
 
 import AuthProvider from "@/components/auth-provider";
 import { Footer } from "@/components/footer/footer";
-import { Header } from "@/components/header/header";
 import { locales } from "@/i18n";
 import { getMenu } from "@/lib/drupal/get-menus";
 import { MenuAvailable } from "@/lib/gql/graphql";
@@ -44,7 +43,6 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages}>
             <Fonts>
               <div className="flex flex-col min-h-screen">
-                <Header />
                 {children}
                 <Footer menu={menu} />
               </div>
