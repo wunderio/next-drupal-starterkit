@@ -1,6 +1,6 @@
-import { DrupalClient } from "next-drupal";
 import { type TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { request, type RequestDocument, type Variables } from "graphql-request";
+import { DrupalClient } from "next-drupal";
 import pRetry, { AbortError, type Options } from "p-retry";
 
 import { env } from "@/env";
@@ -41,7 +41,6 @@ const createGraphQlDrupalClient = (clientId: string, clientSecret: string) => {
 
   return new GraphQlDrupalClient(env.NEXT_PUBLIC_DRUPAL_BASE_URL, {
     fetcher: (input, init) => pRetry(() => fetch(input, init), RETRY_OPTIONS),
-    forceIframeSameSiteCookie: env.NODE_ENV === "development",
     auth: {
       clientId,
       clientSecret,
