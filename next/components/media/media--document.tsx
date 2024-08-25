@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { getTranslations } from "next-intl/server";
 
 import type { FragmentMediaDocumentFragment } from "@/lib/gql/graphql";
 import { formatFileSizeInBytes } from "@/lib/utils";
@@ -42,12 +42,12 @@ const getIcon = (fileType: string) => {
   }
 };
 
-export function MediaDocument({
+export async function MediaDocument({
   media,
 }: {
   media: FragmentMediaDocumentFragment;
 }) {
-  const { t } = useTranslation();
+  const t = await getTranslations();
   if (!media) {
     return null;
   }
@@ -60,8 +60,8 @@ export function MediaDocument({
     >
       {getIcon(media.mediaDocumentFile.mime)}
       <span className="sr-only">{t("download")}</span>
-      <span className="text-xs mr-2">{media.mediaDocumentFile.name}</span>
-      <span className="text-xs mr-2">
+      <span className="mr-2 text-xs">{media.mediaDocumentFile.name}</span>
+      <span className="mr-2 text-xs">
         {formatFileSizeInBytes(media.mediaDocumentFile.size)}
       </span>
       <span className="text-xs">({media.mediaDocumentFile.mime})</span>

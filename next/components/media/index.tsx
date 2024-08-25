@@ -1,5 +1,3 @@
-import React from "react";
-
 import { MediaDocument } from "@/components/media/media--document";
 import { MediaImage } from "@/components/media/media--image";
 import { MediaVideo } from "@/components/media/media--video";

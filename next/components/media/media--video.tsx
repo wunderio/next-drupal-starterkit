@@ -1,3 +1,5 @@
+"use client";
+
 import YouTube from "react-youtube";
 
 import type { FragmentMediaRemoteVideoFragment } from "@/lib/gql/graphql";
