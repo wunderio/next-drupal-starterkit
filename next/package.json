@@ -42,6 +42,7 @@
     "next-auth": "^4.24.7",
     "next-drupal": "^2.0.0-beta.0",
     "next-i18next": "^15.3.0",
+    "next-intl": "^3.17.6",
     "next-seo": "^6.5.0",
     "p-retry": "^6.2.0",
     "react": "^18.3.1",

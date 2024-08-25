@@ -1,6 +1,9 @@
 const { i18n } = require("./next-i18next.config");
 const crypto = require("crypto");
 
+const createNextIntlPlugin = require("next-intl/plugin");
+const withNextIntl = createNextIntlPlugin();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -29,7 +32,6 @@ const nextConfig = {
       },
     ],
   },
-  i18n,
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
@@ -40,4 +42,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);
