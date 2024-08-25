@@ -4,6 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "./auth";
 import { i18nConfig } from "./i18n";
 
+const DEFAULT_LOGIN_URL = "/auth/login";
+const PROTECTED_ROUTES = [
+  "/dashboard",
+  "/fi/hallintapaneeli",
+  "/sv/instrumentpanel",
+];
+
 interface AppRouteHandlerFnContext {
   params?: Record<string, string | string[]>;
 }
@@ -17,12 +24,9 @@ const intlMiddleware = createMiddleware({
 
 const authMiddleware = (request: NextRequest, ctx: AppRouteHandlerFnContext) =>
   auth((req) => {
-    // Redirects here example:
-    /*
     const isLoggedIn = req.auth?.user;
 
- 
-    const isProtectedRoute = ["/dashboard", "/whatever"].some((route) =>
+    const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
       req.nextUrl.pathname.startsWith(route),
     );
 
@@ -36,7 +40,7 @@ const authMiddleware = (request: NextRequest, ctx: AppRouteHandlerFnContext) =>
         );
       }
     }
-    */
+
     return intlMiddleware(request);
   })(request, ctx);
 
