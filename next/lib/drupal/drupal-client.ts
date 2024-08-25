@@ -1,3 +1,5 @@
+import "server-only";
+
 import { type TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { request, type RequestDocument, type Variables } from "graphql-request";
 import { NextDrupalBase } from "next-drupal";
