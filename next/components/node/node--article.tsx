@@ -1,6 +1,5 @@
+import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
 
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingPage } from "@/components/heading--page";
@@ -12,8 +11,8 @@ interface ArticleProps {
 }
 
 export function NodeArticle({ article, ...props }: ArticleProps) {
-  const { t } = useTranslation();
-  const router = useRouter();
+  const t = useTranslations();
+
   return (
     <article {...props}>
       <HeadingPage>{article.title}</HeadingPage>
@@ -22,9 +21,7 @@ export function NodeArticle({ article, ...props }: ArticleProps) {
         {article.author?.name && (
           <span>{t("posted-by", { author: article.author.name })} - </span>
         )}
-        <span>
-          {formatDateTimestamp(article.created.timestamp, router.locale)}
-        </span>
+        <span>{formatDateTimestamp(article.created.timestamp, "en")}</span>
       </div>
       {article.image && (
         <figure>
@@ -38,7 +35,7 @@ export function NodeArticle({ article, ...props }: ArticleProps) {
             priority
           />
           {article.image.title && (
-            <figcaption className="py-2 text-center text-sm text-scapaflow">
+            <figcaption className="py-2 text-sm text-center text-scapaflow">
               {article.image.title}
             </figcaption>
           )}
