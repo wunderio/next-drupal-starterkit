@@ -20,3 +20,12 @@ export async function getMenus({ locale }: GetStaticPropsContext) {
     footer: footer.menu,
   };
 }
+
+export async function getMenu(menu: MenuAvailable, locale: string) {
+  const menus = await drupalClientViewer.doGraphQlRequest(GET_MENU, {
+    name: menu,
+    langcode: locale,
+  });
+
+  return menus.menu;
+}
