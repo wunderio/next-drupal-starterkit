@@ -11,20 +11,21 @@ import {
 } from "@/lib/utils";
 
 import { env } from "@/env";
-import { i18n } from "@/next-i18next.config";
+import { i18nConfig } from "@/i18n";
 
-const locales = i18n.locales;
-type Locale = (typeof locales)[number];
+const locales = i18nConfig.locales;
 
 const SITEMAP_PRIORITY_FRONT = 1;
 const SITEMAP_PRIORITY_LANDING = 0.8;
 const SITEMAP_PRIORITY_DEFAULT = 0.5;
 
+// TODO: Add sitemap support for next only pages.
+
 async function getSitemapNodes({
   locale,
   page,
 }: {
-  locale: Locale;
+  locale: string;
   page: number;
 }) {
   const response = await drupalClientViewer
@@ -64,7 +65,7 @@ async function getSitemapNodes({
   };
 }
 
-async function generateSitemap(locale: Locale) {
+async function generateSitemap(locale: string) {
   // Fetch the first page of nodes along with the necessary info to fetch the rest:
   const {
     results: firstPageNodes,
