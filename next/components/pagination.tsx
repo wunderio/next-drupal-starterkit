@@ -1,12 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
+import { LinkWithLocale } from "@/navigation";
 import { Button } from "@/ui/button";
 
 export type PaginationProps = {
@@ -27,9 +27,9 @@ type PaginationComponentProps = {
 
 const MaybeLink = ({ href, children }) =>
   href ? (
-    <Link passHref scroll={false} href={href}>
+    <LinkWithLocale passHref scroll={false} href={href}>
       {children}
-    </Link>
+    </LinkWithLocale>
   ) : (
     children
   );
@@ -68,8 +68,6 @@ export function Pagination({
     }
   }, [focusRestoreRef]);
 
-  // Having these methods in the handlers didnt work with app router
-  // these happend before the router change
   useEffect(() => {
     setIsLoading(false);
     restoreScroll();
