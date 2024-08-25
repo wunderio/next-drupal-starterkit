@@ -16,7 +16,8 @@ use Drupal\user\Entity\User;
 /**
  * Implements hook_ENTITY_TYPE_load().
  */
-function wunder_next_next_site_load($entities) {
+function wunder_next_next_site_load($entities)
+{
   // We want to override the configuration entity for the next site
   // to set the frontend path based on our setting.
   // The setting is then set according to an environment variable in
@@ -27,7 +28,7 @@ function wunder_next_next_site_load($entities) {
   foreach ($entities as $next_site) {
     if ($next_site->id() == 'frontend') {
       $next_site->setBaseUrl($settings['frontend_url']);
-      $next_site->setPreviewUrl($settings['frontend_url'] . '/api/preview');
+      $next_site->setPreviewUrl($settings['frontend_url'] . '/api/draft');
       $next_site->setRevalidateUrl($settings['frontend_url'] . '/api/revalidate');
       $next_site->setRevalidateSecret($settings['revalidate_secret']);
     }
@@ -37,7 +38,8 @@ function wunder_next_next_site_load($entities) {
 /**
  * Implements hook_ENTITY_TYPE_load().
  */
-function wunder_next_consumer_load($entities) {
+function wunder_next_consumer_load($entities)
+{
   // We want to be able to vary the secret of the consumers
   // entity based on our environment variables.
   // Get the settings for the module, that are set to
@@ -70,7 +72,8 @@ function wunder_next_consumer_load($entities) {
 /**
  * Implements hook_entity_type_alter().
  */
-function wunder_next_entity_type_alter(array &$entity_types) {
+function wunder_next_entity_type_alter(array &$entity_types)
+{
   // Add our custom validation constraint that makes sure
   // that there is only one frontpage node per translation:
   $entity_types['node']->addConstraint('UniqueFrontpage');
@@ -79,7 +82,8 @@ function wunder_next_entity_type_alter(array &$entity_types) {
 /**
  * Implements hook_ckeditor5_plugin_info_alter().
  */
-function wunder_next_ckeditor5_plugin_info_alter(array &$plugin_definitions): void {
+function wunder_next_ckeditor5_plugin_info_alter(array &$plugin_definitions): void
+{
   // The frontend expects images with pixel dimensions, so we have to alter the
   // image resize plugin configuration to set it to pixels instead of
   // percentages  More info at:
@@ -88,13 +92,15 @@ function wunder_next_ckeditor5_plugin_info_alter(array &$plugin_definitions): vo
     $image_resize_plugin_definition = $plugin_definitions['ckeditor5_imageResize']->toArray();
     $image_resize_plugin_definition["ckeditor5"]["config"]["image"]["resizeUnit"] = "px";
     $plugin_definitions['ckeditor5_imageResize'] = new CKEditor5PluginDefinition($image_resize_plugin_definition);
-  };
+  }
+  ;
 }
 
 /**
  * Implements hook_simple_oauth_private_claims_alter().
  */
-function wunder_next_simple_oauth_private_claims_alter(&$private_claims, AccessTokenEntity $access_token_entity) {
+function wunder_next_simple_oauth_private_claims_alter(&$private_claims, AccessTokenEntity $access_token_entity)
+{
   // Get the user id:
   $user_id = $access_token_entity->getUserIdentifier();
   $user = User::load($user_id);
@@ -110,7 +116,8 @@ function wunder_next_simple_oauth_private_claims_alter(&$private_claims, AccessT
 /**
  * Implements hook_form_BASE_FORM_ID_alter().
  */
-function wunder_next_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function wunder_next_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
   $account = Drupal::currentUser();
   if ($account->hasRole('frontend_login')) {
     // Do not allow the user to change the email address.
@@ -131,7 +138,8 @@ function wunder_next_form_user_form_alter(&$form, FormStateInterface $form_state
  * This function will redirect the user to the frontend login page after they
  * have updated their password.
  */
-function wunder_next_form_user_edited_form_submit(array $form, FormStateInterface $form_state) {
+function wunder_next_form_user_edited_form_submit(array $form, FormStateInterface $form_state)
+{
   // We don't want the user to keep being logged into Drupal after this
   // operation goes through, because they will be taken to the frontend anyway:
   user_logout();
@@ -154,7 +162,8 @@ function wunder_next_form_user_edited_form_submit(array $form, FormStateInterfac
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function wunder_next_form_user_pass_alter(&$form, FormStateInterface $form_state, $form_id) {
+function wunder_next_form_user_pass_alter(&$form, FormStateInterface $form_state, $form_id)
+{
   // We add our own submit function that will redirect the user to
   // the frontend after they asked for a new password:
   $form['#submit'][] = 'wunder_next_form_user_reset_password_form_submit';
@@ -166,7 +175,8 @@ function wunder_next_form_user_pass_alter(&$form, FormStateInterface $form_state
  * This function will redirect the user to the frontend login page after they
  * have requested a new password.
  */
-function wunder_next_form_user_reset_password_form_submit(array $form, FormStateInterface $form_state) {
+function wunder_next_form_user_reset_password_form_submit(array $form, FormStateInterface $form_state)
+{
   $settings = Settings::get('wunder_next.settings');
   $current_language = Drupal::languageManager()->getCurrentLanguage()->getId();
   // We will pass two query parameters to the login page in the frontend:
@@ -186,7 +196,8 @@ function wunder_next_form_user_reset_password_form_submit(array $form, FormState
 /**
  * Implements hook_form_alter().
  */
-function wunder_next_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function wunder_next_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
   // We want to force the pathauto checkbox to be checked and disabled for nodes
   // of type "frontpage". We have restraints in place to make sure that there
   // can be only one node for each language of type frontpage, and next.js will
@@ -206,7 +217,8 @@ function wunder_next_form_alter(&$form, FormStateInterface $form_state, $form_id
 /**
  * Implements hook_page_attachments_alter().
  */
-function wunder_next_page_attachments_alter(array &$attachments) {
+function wunder_next_page_attachments_alter(array &$attachments)
+{
   // We don't want the backend site to be indexed by search engines,
   // so we add a noindex meta tag to the head of the site on all pages.
   $attachments['#attached']['html_head'][] = [
