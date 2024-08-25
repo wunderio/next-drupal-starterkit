@@ -9,8 +9,6 @@ import { inter, overpass } from "@/styles/fonts";
 import AuthProvider from "@/components/auth-provider";
 import { Footer } from "@/components/footer/footer";
 import { i18nConfig } from "@/i18n";
-import { getMenu } from "@/lib/drupal/get-menus";
-import { MenuAvailable } from "@/lib/gql/graphql";
 
 export function generateStaticParams() {
   return i18nConfig.locales.map((locale) => ({ locale }));
@@ -34,7 +32,6 @@ export default async function RootLayout({
   unstable_setRequestLocale(locale);
 
   const messages = await getMessages();
-  const menu = await getMenu(MenuAvailable.Footer, locale);
 
   return (
     <html lang={locale}>
@@ -44,7 +41,7 @@ export default async function RootLayout({
             <Fonts>
               <div className="flex flex-col min-h-screen">
                 {children}
-                <Footer menu={menu} />
+                <Footer />
               </div>
             </Fonts>
           </NextIntlClientProvider>

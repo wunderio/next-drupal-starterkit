@@ -1,4 +1,3 @@
-import { useLocale } from "next-intl";
 import Link from "next/link";
 
 import FacebookIcon from "@/styles/icons/facebook.svg";
@@ -7,14 +6,19 @@ import TwitterIcon from "@/styles/icons/twitter.svg";
 import WunderCarrotIcon from "@/styles/icons/wunder-carrot.svg";
 import type { MenuItemType, MenuType } from "@/types/graphql";
 
+import { getMenu } from "@/lib/drupal/get-menus";
+import { MenuAvailable } from "@/lib/gql/graphql";
+import { getLocale } from "next-intl/server";
 import { SocialShare } from "./social-share";
 
 interface FooterProps {
   menu: MenuType;
 }
 
-export function Footer({ menu }: FooterProps) {
-  const locale = useLocale();
+export async function Footer() {
+  const locale = await getLocale();
+  const menu = await getMenu(MenuAvailable.Footer, locale);
+
   // Only show the menu items that match the current locale:,S FOR APP ROUTER
   const filteredItems = menu?.items?.filter(
     (link) => link.langcode?.id == locale,
