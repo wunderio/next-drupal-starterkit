@@ -1,14 +1,10 @@
-import { draftMode } from "next/headers";
-import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getDraftData } from "next-drupal/draft";
 import { unstable_setRequestLocale } from "next-intl/server";
+import { draftMode } from "next/headers";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
 
 import { Node } from "@/components/node";
-import {
-  drupalClientPreviewer,
-  drupalClientViewer,
-} from "@/lib/drupal/drupal-client";
-import { GET_ENTITY_AT_DRUPAL_PATH } from "@/lib/graphql/queries";
+import { getNodeQueryResult } from "@/lib/drupal/get-node";
 import {
   extractEntityFromRouteQueryResult,
   extractRedirectFromRouteQueryResult,
@@ -33,13 +29,8 @@ export default async function NodePage({
 
   // Get the node entity from Drupal. We tell the function if we are in draft mode so it can use the correct client
   // in the getNodeQueryResult function.
-  const data = await drupalClientViewer.doGraphQlRequest(
-    GET_ENTITY_AT_DRUPAL_PATH,
-    {
-      path,
-      langcode: locale,
-    },
-  );
+  const data = await getNodeQueryResult(path, locale, isDraftMode);
+
   // If the data contains a RedirectResponse, we redirect to the path:
   const redirectResult = extractRedirectFromRouteQueryResult(data);
 
@@ -84,9 +75,10 @@ export default async function NodePage({
       const revisionId = draftData.resourceVersion.split(":").slice(1);
       const revisionPath = `/node/${nodeEntity.id}/revisions/${revisionId}/view`;
 
-      const revisionData = await drupalClientPreviewer.doGraphQlRequest(
-        GET_ENTITY_AT_DRUPAL_PATH,
-        { path: revisionPath, langcode: locale },
+      const revisionData = await getNodeQueryResult(
+        revisionPath,
+        locale,
+        isDraftMode,
       );
 
       const revisedNodeEntity = extractEntityFromRouteQueryResult(revisionData);

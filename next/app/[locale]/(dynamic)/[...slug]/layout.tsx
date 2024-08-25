@@ -5,8 +5,7 @@ import {
   createLanguageLinks,
   getStandardLanguageLinks,
 } from "@/lib/contexts/language-links";
-import { drupalClientViewer } from "@/lib/drupal/drupal-client";
-import { GET_ENTITY_AT_DRUPAL_PATH } from "@/lib/graphql/queries";
+import { getNodeQueryResult } from "@/lib/drupal/get-node";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
 export default async function DynamicLayout({
@@ -20,14 +19,7 @@ export default async function DynamicLayout({
 
   const path = Array.isArray(slug) ? `/${slug?.join("/")}` : slug;
 
-  const data = await drupalClientViewer.doGraphQlRequest(
-    GET_ENTITY_AT_DRUPAL_PATH,
-    {
-      path,
-      langcode: locale,
-    },
-  );
-
+  const data = await getNodeQueryResult(path, locale);
   const nodeEntity = extractEntityFromRouteQueryResult(data);
 
   // Add information about possible other language versions of this node.
