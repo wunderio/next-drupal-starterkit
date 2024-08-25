@@ -6,6 +6,7 @@ import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 
 import { inter, overpass } from "@/styles/fonts";
 
+import AuthProvider from "@/components/auth-provider";
 import { locales } from "@/i18n";
 
 export function generateStaticParams() {
@@ -34,11 +35,13 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <Fonts>
-            <div className="flex flex-col min-h-screen">{children}</div>
-          </Fonts>
-        </NextIntlClientProvider>
+        <AuthProvider>
+          <NextIntlClientProvider messages={messages}>
+            <Fonts>
+              <div className="flex flex-col min-h-screen">{children}</div>
+            </Fonts>
+          </NextIntlClientProvider>
+        </AuthProvider>
       </body>
     </html>
   );
