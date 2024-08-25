@@ -4,7 +4,7 @@ import { draftMode } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 
 import { Node } from "@/components/node";
-import { getNodeQueryResult } from "@/lib/drupal/get-node";
+import { getNodeQueryResult, getNodeStaticPaths } from "@/lib/drupal/get-node";
 import {
   extractEntityFromRouteQueryResult,
   extractRedirectFromRouteQueryResult,
@@ -13,6 +13,32 @@ import {
 type NodePageParams = {
   params: { slug: string[]; locale: string };
 };
+
+export async function generateStaticParams({
+  params: { locale },
+}: NodePageParams) {
+  // Get the first 10 paths for all node types.
+  const paths = await getNodeStaticPaths({
+    limit: 10,
+    locale,
+  });
+
+  // Combine all the paths into a single array.
+  // TODO: When adding more node types, make sure to add them here!
+  const pathsArray = [
+    ...(paths?.nodePages?.nodes || []),
+    ...(paths?.nodeArticles?.nodes || []),
+  ];
+
+  // Drupal returns the paths with the locale prefix, e.g. "/en/about".
+  // We need to remove the locale prefix and split the path into an array of slugs.
+  // e.g. "/en/articles/article-1" -> { slug: ["articles", "article-1"] }
+  const params = pathsArray.map(({ path }) => ({
+    slug: path.replace(`/${locale}/`, "").split("/"),
+  }));
+
+  return params;
+}
 
 // Revalidate the page every 60 seconds.
 export const revalidate = 60;

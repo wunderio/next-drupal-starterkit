@@ -1,6 +1,9 @@
 import { cache } from "react";
 
-import { GET_ENTITY_AT_DRUPAL_PATH } from "../graphql/queries";
+import {
+  GET_ENTITY_AT_DRUPAL_PATH,
+  GET_STATIC_PATHS,
+} from "../graphql/queries";
 import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
 
 /**
@@ -39,4 +42,22 @@ export async function getNodeQueryResult(
 ) {
   const data = await fetchNodeQueryResult(path, locale, isDraftMode);
   return data;
+}
+
+/**
+ * Function to get the static paths for the next.js static site generation.
+ */
+export async function getNodeStaticPaths({
+  limit,
+  locale,
+}: {
+  limit: number;
+  locale: string;
+}) {
+  const paths = await drupalClientViewer.doGraphQlRequest(GET_STATIC_PATHS, {
+    number: limit,
+    langcode: locale,
+  });
+
+  return paths;
 }
