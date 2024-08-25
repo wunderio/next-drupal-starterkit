@@ -148,6 +148,7 @@ services:
         # Environment variables for next_auth:
         # Environment variables for next_auth:
         AUTH_SECRET: nextauth_secret_not_secure_used_only_locally
+        AUTH_TRUST_HOST: true
         AUTH_URL: https://frontend.lndo.site
         REDIS_HOST: redis
         REDIS_PASS: "mypassword"
