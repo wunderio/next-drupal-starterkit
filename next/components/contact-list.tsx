@@ -1,5 +1,5 @@
+import { getTranslations } from "next-intl/server";
 import NextImage from "next/image";
-import { useTranslation } from "next-i18next";
 
 interface Contact {
   image: string;
@@ -37,16 +37,16 @@ const contacts: Contact[] = [
   },
 ];
 
-export function ContactList() {
-  const { t } = useTranslation();
+export async function ContactList() {
+  const t = await getTranslations();
   return (
     <section className="py-8">
-      <h2 className="text-heading-sm font-bold md:text-heading-md">
+      <h2 className="font-bold text-heading-sm md:text-heading-md">
         {t("contact")}
       </h2>
-      <ul className="grid auto-rows-max grid-cols-1 justify-items-center gap-4 py-4 sm:grid-cols-2 md:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-4 py-4 auto-rows-max justify-items-center sm:grid-cols-2 md:grid-cols-3">
         {contacts?.map(({ id, image, name, title, phoneNumber, email }) => (
-          <li key={id} className="grid justify-items-center p-4">
+          <li key={id} className="grid p-4 justify-items-center">
             <div className="mb-6 flex h-[100px] items-center justify-center overflow-hidden">
               <NextImage
                 src={image}
@@ -62,7 +62,7 @@ export function ContactList() {
               href={`tel:${phoneNumber}`}
               target="_blank"
               rel="noreferrer"
-              className="hyperlink no-underline hover:underline"
+              className="no-underline hyperlink hover:underline"
             >
               {phoneNumber}
             </a>
@@ -70,7 +70,7 @@ export function ContactList() {
               href={`mailto:${email}`}
               target="_blank"
               rel="noreferrer"
-              className="hyperlink no-underline hover:underline"
+              className="no-underline hyperlink hover:underline"
             >
               {email}
             </a>

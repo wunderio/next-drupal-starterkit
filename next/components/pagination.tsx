@@ -1,9 +1,11 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
-import { useState } from "react";
+"use client";
 
-import Arrow from "@/styles/icons/arrow-down.svg";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+
+import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
 import { Button } from "@/ui/button";
 
@@ -47,13 +49,13 @@ export function Pagination({
     prevPageHref,
     nextPageHref,
   } = paginationProps;
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<"forward" | "back" | false>(false);
   const numbers = [currentPage, totalPages].filter((n) => !isNaN(n));
 
-  const restoreScroll = () => {
+  const restoreScroll = useCallback(() => {
     focusRestoreRef?.current.scrollIntoView({
       behavior: "smooth",
       block: "start",
@@ -64,17 +66,21 @@ export function Pagination({
     if (focusable) {
       (focusable as HTMLElement).focus({ preventScroll: true });
     }
-  };
+  }, [focusRestoreRef]);
+
+  // Having these methods in the handlers didnt work with app router
+  // these happend before the router change
+  useEffect(() => {
+    setIsLoading(false);
+    restoreScroll();
+  }, [currentPage, restoreScroll]);
 
   const handlePrevClick = (e) => {
     setPrevPage && setPrevPage();
     if (prevPageHref && focusRestoreRef) {
       e.preventDefault();
       setIsLoading("back");
-      void router.push(prevPageHref, null, { scroll: false }).then(() => {
-        setIsLoading(false);
-        restoreScroll();
-      });
+      void router.push(prevPageHref, { scroll: false });
     } else if (focusRestoreRef) {
       restoreScroll();
     }
@@ -85,17 +91,14 @@ export function Pagination({
     if (nextPageHref && focusRestoreRef) {
       e.preventDefault();
       setIsLoading("forward");
-      void router.push(nextPageHref, null, { scroll: false }).then(() => {
-        setIsLoading(false);
-        restoreScroll();
-      });
+      void router.push(nextPageHref, { scroll: false });
     } else if (focusRestoreRef) {
       restoreScroll();
     }
   };
 
   return (
-    <div className="flex w-full items-center justify-between">
+    <div className="flex items-center justify-between w-full">
       <MaybeLink href={prevPageHref}>
         <Button
           variant="tertiary"
@@ -103,7 +106,7 @@ export function Pagination({
           onClick={handlePrevClick}
           tabIndex={props["aria-hidden"] ? -1 : undefined}
         >
-          <Arrow className="mr-4 h-6 w-6 rotate-90" aria-hidden />
+          <ArrowIcon className="w-6 h-6 mr-4 rotate-90" aria-hidden />
           {t("search-previous")}
         </Button>
       </MaybeLink>
@@ -116,7 +119,7 @@ export function Pagination({
           tabIndex={props["aria-hidden"] ? -1 : undefined}
         >
           {t("search-next")}
-          <Arrow className="ml-4 h-6 w-6 -rotate-90" aria-hidden />
+          <ArrowIcon className="w-6 h-6 ml-4 -rotate-90" aria-hidden />
         </Button>
       </MaybeLink>
     </div>

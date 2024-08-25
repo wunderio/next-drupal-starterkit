@@ -1,13 +1,13 @@
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 export function LoadingSpinner() {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   return (
     <div className="grid place-items-center" role="status">
       <svg
         aria-hidden="true"
-        className="mr-2 h-8 w-8 animate-spin fill-primary-700 text-white"
+        className="w-8 h-8 mr-2 text-white animate-spin fill-primary-700"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

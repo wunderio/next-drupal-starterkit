@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { ReactElement } from "react";
 
 import Drupal from "@/styles/icons/drupal-icon.svg";
@@ -43,14 +43,17 @@ const logos: Logo[] = [
     id: "drupal-logo",
   },
   {
-    image: <Lando className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem]" />,
+    image: (
+      <Lando className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+    ),
     label: "Lando logo",
     id: "lando-logo",
   },
 ];
 
 export function LogoStrip() {
-  const { t } = useTranslation();
+  const t = useTranslations();
+
   return (
     <section>
       <span className="sr-only">{t("brand-logos")}</span>

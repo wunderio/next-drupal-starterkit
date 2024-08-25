@@ -1,13 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
-import { HTMLAttributes } from "react";
-import {
+import parse, {
   DOMNode,
   domToReact,
   Element,
   HTMLReactParserOptions,
 } from "html-react-parser";
-import parse from "html-react-parser";
+import Image from "next/image";
+import Link from "next/link";
+import { HTMLAttributes } from "react";
 
 import { isRelative } from "@/lib/utils";
 
@@ -39,7 +38,7 @@ const options: HTMLReactParserOptions = {
               width={numberWidth}
               height={numberHeight}
               alt={alt}
-              className="max-w-full object-cover"
+              className="object-cover max-w-full"
             />
           );
         }
@@ -51,7 +50,7 @@ const options: HTMLReactParserOptions = {
 
         if (href && isRelative(href)) {
           return (
-            <Link href={href} className="hyperlink underline">
+            <Link href={href} className="underline hyperlink">
               {domToReact(domNode.children as DOMNode[], options)}
             </Link>
           );
