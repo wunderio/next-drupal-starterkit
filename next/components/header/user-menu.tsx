@@ -1,25 +1,36 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
+"use client";
+
 import { signOut, useSession } from "next-auth/react";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import clsx from "clsx";
 
 import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
+import { cn } from "@/lib/utils";
 import AccountIcon from "@/styles/icons/account-circle.svg";
 
+import { LinkWithLocale } from "@/navigation";
+
 export function UserMenu() {
-  const { locale, asPath, query } = useRouter();
-  const { t } = useTranslation();
+  const t = useTranslations();
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const { data, status } = useSession();
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen((o) => !o);
   const close = () => setIsOpen(false);
 
-  const loginUrl = `/auth/login?callbackUrl=${encodeURIComponent(
-    query.callbackUrl?.toString() || `/${locale}${asPath}`,
-  )}`;
+  const loginUrl = {
+    pathname: "/auth/login",
+    query: {
+      callbackUrl:
+        searchParams.get("callbackUrl") ||
+        `${pathname}${searchParams.size ? `?${searchParams}` : ""}`,
+    },
+  };
 
   const ref = useOnClickOutside<HTMLDivElement>(close);
 
@@ -33,25 +44,25 @@ export function UserMenu() {
           onClick={toggle}
           aria-expanded={isOpen}
         >
-          <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
+          <span className="capitalize sr-only sm:not-sr-only sm:mr-2 sm:inline">
             {data.user.name}
           </span>
-          <AccountIcon className="inline-block h-6 w-6" />
+          <AccountIcon className="inline-block w-6 h-6" />
         </button>
         <ul
-          className={clsx(
+          className={cn(
             "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
             !isOpen && "hidden",
           )}
         >
           <li>
-            <Link
+            <LinkWithLocale
               className="block p-2 hover:bg-primary-50"
               href="/dashboard"
               onClick={close}
             >
               {t("user-dashboard")}
-            </Link>
+            </LinkWithLocale>
           </li>
           <li>
             <button
@@ -71,34 +82,34 @@ export function UserMenu() {
     <div ref={ref}>
       <span className="sr-only">{t("user-menu")}</span>
       <button type="button" className="hover:underline" onClick={toggle}>
-        <span className="sr-only capitalize sm:not-sr-only sm:mr-2 sm:inline">
+        <span className="capitalize sr-only sm:not-sr-only sm:mr-2 sm:inline">
           {t("user-menu-account")}
         </span>
-        <AccountIcon className="inline-block h-6 w-6" />
+        <AccountIcon className="inline-block w-6 h-6" />
       </button>
       <ul
-        className={clsx(
+        className={cn(
           "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
           !isOpen && "hidden",
         )}
       >
         <li>
-          <Link
+          <LinkWithLocale
             className="block p-2 hover:bg-primary-50"
             href={loginUrl}
             onClick={close}
           >
             {t("log-in")}
-          </Link>
+          </LinkWithLocale>
         </li>
         <li>
-          <Link
+          <LinkWithLocale
             className="block p-2 hover:bg-primary-50"
             href="/auth/register"
             onClick={close}
           >
             {t("register")}
-          </Link>
+          </LinkWithLocale>
         </li>
       </ul>
     </div>
