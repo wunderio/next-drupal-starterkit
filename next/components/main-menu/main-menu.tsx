@@ -1,7 +1,8 @@
-import { useRouter } from "next/router";
+"use client";
+
+import { useLocale } from "next-intl";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import { useEffectOnce } from "@/lib/hooks/use-effect-once";
 import { useEventListener } from "@/lib/hooks/use-event-listener";
 import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import type { MenuItemType, MenuType } from "@/types/graphql";
@@ -21,14 +22,17 @@ import {
 } from "./main-menu.components";
 import { isMenuItemActive } from "./main-menu.utils";
 
+import { usePathnameWithoutLocale } from "@/navigation";
+
 interface MainMenuProps {
-  menu: MenuType;
+  menu?: MenuType;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
-  const router = useRouter();
+  const locale = useLocale();
+  const pathname = usePathnameWithoutLocale();
 
   const [didInit, setDidInit] = useState(false);
 
@@ -55,13 +59,10 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
   // Close on click outside
   const ref = useOnClickOutside<HTMLUListElement>(close);
 
-  // Close when route changes
-  useEffectOnce(() => {
-    router.events.on("routeChangeComplete", close);
-    return () => {
-      router.events.off("routeChangeComplete", close);
-    };
-  });
+  useEffect(() => {
+    close();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, locale]);
 
   useEffect(() => {
     // Prevent body scroll when menu is open
@@ -73,10 +74,10 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
       setActiveSubmenu(null);
     } else {
       // Set active menu and submenu when menu opens
-      const didSetMenuAndSubmenu = menu.items?.some((item) =>
+      const didSetMenuAndSubmenu = menu?.items?.some((item) =>
         item.children?.some((subItem) =>
           subItem.children?.some((subSubItem) => {
-            if (isMenuItemActive(router, subSubItem.url)) {
+            if (isMenuItemActive(locale, pathname, subSubItem.url)) {
               setActiveMenu(item.id);
               setActiveSubmenu(subItem.id);
               return true;
@@ -92,9 +93,9 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
       }
 
       // User is not on a page matching a submenu item, so try to find a matching top-level menu item
-      menu.items?.some((item) =>
+      menu?.items?.some((item) =>
         item.children?.some((subItem) => {
-          if (isMenuItemActive(router, subItem.url)) {
+          if (isMenuItemActive(locale, pathname, subItem.url)) {
             setActiveMenu(item.id);
             setActiveSubmenu(null);
             return true;
@@ -104,10 +105,10 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
 
       setDidInit(true);
     }
-  }, [isOpen, menu, router]);
+  }, [isOpen, menu, locale, pathname]);
 
-  const activeMenuTitle = menu.items?.find((i) => i.id === activeMenu)?.title;
-  const activeSubmenuTitle = menu.items
+  const activeMenuTitle = menu?.items?.find((i) => i.id === activeMenu)?.title;
+  const activeSubmenuTitle = menu?.items
     ?.find((i) => i.id === activeMenu)
     ?.children?.find((i) => i.id === activeSubmenu)?.title;
 
@@ -120,7 +121,7 @@ export function MainMenu({ menu, isOpen, setIsOpen }: MainMenuProps) {
         ref={ref}
       >
         <MenuList level={0}>
-          {menu.items?.map((item) => (
+          {menu?.items?.map((item) => (
             <MenuItem key={item.id} value={item.id} isTopLevel>
               <MenuLink href={item.url} isTopLevel>
                 {item.title}

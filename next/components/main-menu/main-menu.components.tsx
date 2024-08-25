@@ -1,10 +1,10 @@
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
 import { Dispatch, forwardRef, ReactNode, SetStateAction } from "react";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import clsx from "clsx";
 
+import { cn, removeLocaleFromPath } from "@/lib/utils";
 import Chevron from "@/styles/icons/chevron-down.svg";
 import CloseIcon from "@/styles/icons/close.svg";
 import MenuIcon from "@/styles/icons/menu.svg";
@@ -12,6 +12,8 @@ import type { MenuItemType } from "@/types/graphql";
 
 import css from "./main-menu.module.css";
 import { disableHoverEvents, isMenuItemActive } from "./main-menu.utils";
+
+import { LinkWithLocale, usePathnameWithoutLocale } from "@/navigation";
 
 export function MenuContainer({
   isOpen,
@@ -22,7 +24,7 @@ export function MenuContainer({
 }) {
   return (
     <div
-      className={clsx(
+      className={cn(
         css.mainMenu,
         "relative mx-auto max-w-6xl font-inter tracking-wide",
         !isOpen && "hidden",
@@ -45,7 +47,7 @@ export const MenuRoot = forwardRef<
     <NavigationMenu.Root
       ref={ref}
       {...props}
-      className={clsx(
+      className={cn(
         "absolute inset-0 z-40 overflow-y-auto overflow-x-hidden border-finnishwinter lg:bottom-auto lg:min-h-[75vh]",
         isOpen && "border-t bg-white lg:border",
         isOpen &&
@@ -63,7 +65,7 @@ export function MenuToggle({
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<typeof isOpen>>;
 }) {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const ToggleIcon = isOpen ? CloseIcon : MenuIcon;
   return (
     <button
@@ -72,7 +74,7 @@ export function MenuToggle({
       aria-label={t("toggle-menu")}
       aria-expanded={isOpen ? "true" : "false"}
     >
-      <ToggleIcon className="inline h-6 w-6" aria-hidden="true" />
+      <ToggleIcon className="inline w-6 h-6" aria-hidden="true" />
     </button>
   );
 }
@@ -80,7 +82,7 @@ export function MenuToggle({
 export function MenuList({ children, level }) {
   return (
     <NavigationMenu.List
-      className={clsx(
+      className={cn(
         "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r border-white bg-white lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
         level === 0 &&
           "z-10 h-full lg:left-0 lg:z-auto lg:border-primary-600 lg:bg-primary-600",
@@ -101,7 +103,7 @@ export function MenuListTitle({
   children: ReactNode;
 }) {
   return (
-    <h2 className="border-b border-finnishwinter p-6 pt-0 text-heading-xs font-bold text-steelgray hover:underline lg:hidden">
+    <h2 className="p-6 pt-0 font-bold border-b border-finnishwinter text-heading-xs text-steelgray hover:underline lg:hidden">
       <MenuLink href={href} isTitle={true}>
         {children}
       </MenuLink>
@@ -110,13 +112,13 @@ export function MenuListTitle({
 }
 
 export function MenuBack({ onClick }: { onClick: () => void }) {
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <button
-      className="m-6 inline-flex items-center justify-center pr-2 hover:underline lg:hidden"
+      className="inline-flex items-center justify-center pr-2 m-6 hover:underline lg:hidden"
       onClick={onClick}
     >
-      <Chevron className="h-6 w-6 rotate-90" aria-hidden="true" />
+      <Chevron className="w-6 h-6 rotate-90" aria-hidden="true" />
       <span className="pl-4">{t("menu-back")}</span>
     </button>
   );
@@ -133,7 +135,7 @@ export function MenuItem({
 }) {
   return (
     <NavigationMenu.Item
-      className={clsx(
+      className={cn(
         "flex items-stretch border-b border-finnishwinter bg-white font-bold tracking-widest text-primary-600 underline-offset-4 lg:border-b-0",
         isTopLevel && "lg:bg-primary-600 lg:text-mischka",
       )}
@@ -155,19 +157,32 @@ export function MenuLink({
   isTopLevel?: boolean;
   children: ReactNode;
 }) {
-  const router = useRouter();
-  const isActive = isMenuItemActive(router, href);
+  const pathname = usePathnameWithoutLocale();
+  const locale = useLocale();
+
+  // TODO: Rethink this...
+
+  /**
+   * Drupal node menu  path comes with locale
+   * Drupal Next.js menu routes path comes without locale
+   * LinkWithLocale expects path without locale
+   */
+
+  const isActive = isMenuItemActive(locale, pathname, href);
+
+  const hrefWithoutLocale = removeLocaleFromPath(locale, href);
+
   return (
     <NavigationMenu.Link
       asChild
       active={isActive}
-      className={clsx(
+      className={cn(
         !isTitle &&
           "aria-current:underline block h-full grow p-6 hover:underline data-[active]:underline",
         isTopLevel && "lg:ring-white",
       )}
     >
-      <NextLink href={href}>{children}</NextLink>
+      <LinkWithLocale href={hrefWithoutLocale}>{children}</LinkWithLocale>
     </NavigationMenu.Link>
   );
 }
@@ -179,11 +194,11 @@ export function MenuTrigger({
   isTopLevel?: boolean;
   parent?: string;
 }) {
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <NavigationMenu.Trigger
       {...disableHoverEvents}
-      className={clsx(
+      className={cn(
         "flex w-20 shrink-0 items-center justify-center ring-inset ring-primary-700 hover:ring-2 lg:border-none",
         isTopLevel
           ? "lg:ring-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600"
@@ -191,7 +206,7 @@ export function MenuTrigger({
       )}
       aria-label={`${t("show-submenu", { parent })}`}
     >
-      <Chevron className="h-9 w-9 -rotate-90" />
+      <Chevron className="-rotate-90 h-9 w-9" />
     </NavigationMenu.Trigger>
   );
 }
