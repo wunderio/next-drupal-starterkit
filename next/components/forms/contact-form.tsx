@@ -1,16 +1,18 @@
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+"use client";
+
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
-import { AuthGate } from "@/components/auth-gate";
+import { AuthGate } from "../auth-gate";
 
+import { createContactSubmissionAction } from "@/lib/actions/contact";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
 import { StatusMessage } from "@/ui/status-message";
 import { Textarea } from "@/ui/textarea";
 
-type Inputs = {
+export type ContactFormInputs = {
   name: string;
   email: string;
   subject: string;
@@ -18,32 +20,19 @@ type Inputs = {
 };
 
 export function ContactForm() {
-  const router = useRouter();
-  const { t } = useTranslation();
+  const t = useTranslations();
+
   const {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitSuccessful },
-  } = useForm<Inputs>();
+    formState: { isSubmitSuccessful, isSubmitting },
+  } = useForm<ContactFormInputs>();
 
-  const onSubmit = async (data: Inputs) => {
-    const response = await fetch(`/api/contact`, {
-      method: "POST",
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        message: data.message,
-        subject: data.subject,
-      }),
-      // This will record the submission with the right language:
-      headers: {
-        "accept-language": router.locale,
-      },
-    });
-
-    if (!response.ok) {
-      alert("Error!");
+  const onSubmit = async (data: ContactFormInputs) => {
+    const response = await createContactSubmissionAction(data);
+    if (!response.success) {
+      alert(t("there-was-an-error"));
     }
   };
 
@@ -51,7 +40,7 @@ export function ContactForm() {
 
   if (isSubmitSuccessful) {
     return (
-      <StatusMessage level="success" className="mx-auto w-full max-w-3xl">
+      <StatusMessage level="success" className="w-full max-w-3xl mx-auto">
         <p className="mb-4">{t("form-thank-you-message")}</p>
         <Button type="button" onClick={() => reset()}>
           {t("form-send-another-message")}
@@ -63,9 +52,9 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit, onErrors)}
-      className="mx-auto mb-4 flex max-w-3xl flex-col gap-5 rounded border border-finnishwinter bg-white p-4 shadow-md transition-all hover:shadow-md"
+      className="flex flex-col max-w-3xl gap-5 p-4 mx-auto mb-4 transition-all bg-white border rounded shadow-md border-finnishwinter hover:shadow-md"
     >
-      <h2 className="text-heading-sm font-bold md:text-heading-md">
+      <h2 className="font-bold text-heading-sm md:text-heading-md">
         {t("form-title")}
       </h2>
       <AuthGate text={t("login-to-fill-form")}>
@@ -111,7 +100,9 @@ export function ContactForm() {
             />
           </div>
 
-          <Button type="submit">{t("form-submit")}</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {t("form-submit")}
+          </Button>
         </>
       </AuthGate>
     </form>
