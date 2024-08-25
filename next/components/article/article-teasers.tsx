@@ -1,11 +1,12 @@
-import Link from "next/link";
-import { useTranslation } from "next-i18next";
-import clsx from "clsx";
+import { useTranslations } from "next-intl";
 
-import { ArticleTeaser } from "@/components/article/article-teaser";
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
+import { cn } from "@/lib/utils";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
+import { ArticleTeaser } from "./article-teaser";
+
+import { LinkWithLocale } from "@/navigation";
 import { buttonVariants } from "@/ui/button";
 
 interface LatestArticlesProps {
@@ -14,13 +15,14 @@ interface LatestArticlesProps {
 }
 
 export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
-  const { t } = useTranslation();
+  const t = useTranslations();
+
   return (
     <>
-      <h2 className="text-heading-sm font-bold md:text-heading-md">
+      <h2 className="font-bold text-heading-sm md:text-heading-md">
         {heading}
       </h2>
-      <ul className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
         {articles?.map((article) => (
           <li key={article.id}>
             <ArticleTeaser article={article} />
@@ -30,16 +32,17 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
       <div className="flex items-center justify-center">
         {!articles?.length && <p className="py-4">{t("no-content-found")}</p>}
         {articles?.length && (
-          <Link
+          <LinkWithLocale
             href="/all-articles"
-            className={clsx(
+            className={cn(
               buttonVariants({ variant: "primary" }),
               "text-base mr-4 mt-4 inline-flex px-5 py-3",
             )}
           >
             {t("all-articles")}
-            <ArrowIcon aria-hidden className="ml-3 h-6 w-6 -rotate-90" />
-          </Link>
+
+            <ArrowIcon className="w-6 h-6 ml-3 -rotate-90" aria-hidden />
+          </LinkWithLocale>
         )}
       </div>
     </>

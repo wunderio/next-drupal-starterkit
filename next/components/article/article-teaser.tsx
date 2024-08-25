@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+import { useLocale, useTranslations } from "next-intl";
 
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 import { formatDateTimestamp } from "@/lib/utils";
@@ -10,16 +9,17 @@ interface ArticleTeaserProps {
 }
 
 export function ArticleTeaser({ article }: ArticleTeaserProps) {
-  const { t } = useTranslation();
+  const t = useTranslations();
+  const locale = useLocale();
+  const date = formatDateTimestamp(article.created.timestamp, locale);
   const author = article.author?.name;
-  const router = useRouter();
-  const date = formatDateTimestamp(article.created.timestamp, router.locale);
+
   return (
     <Link
       href={article.path}
-      className="relative grid h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md"
+      className="relative grid h-full p-4 transition-all bg-white border rounded border-finnishwinter hover:shadow-md"
     >
-      <h3 className="mb-2 line-clamp-2 text-heading-xs font-bold">
+      <h3 className="mb-2 font-bold line-clamp-2 text-heading-xs">
         {article.title}
       </h3>
       <div className="mb-4 line-clamp-2 text-md text-scapaflow">
@@ -32,7 +32,8 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
           width={384}
           height={240}
           alt={article.image.alt}
-          className="max-w-full object-cover"
+          className="object-cover max-w-full"
+          priority
         />
       )}
     </Link>
