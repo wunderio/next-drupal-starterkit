@@ -13,8 +13,6 @@
     "lint:fix": "eslint --fix .",
     "storybook": "STORYBOOK=true storybook dev -p 6006",
     "build-storybook": "STORYBOOK=true storybook build",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
     "codegen-access-token": "ts-node ./codegen-access-token.ts",
     "graphql-codegen": "npm run codegen-access-token && graphql-codegen --config codegen.ts",
     "graphql-codegen:watch": "npm run codegen-access-token && graphql-codegen  --config codegen.ts --watch"
@@ -78,7 +76,6 @@
     "@typescript-eslint/parser": "^7.16.1",
     "autoprefixer": "^10.4.19",
     "concurrently": "^8.2.2",
-    "cypress": "^13.13.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.5",
     "eslint-config-prettier": "^9.1.0",
