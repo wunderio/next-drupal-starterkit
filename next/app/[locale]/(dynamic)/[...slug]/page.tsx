@@ -1,6 +1,7 @@
 import { unstable_setRequestLocale } from "next-intl/server";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 
+import { Node } from "@/components/node";
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { GET_ENTITY_AT_DRUPAL_PATH } from "@/lib/graphql/queries";
 import {
@@ -57,7 +58,5 @@ export default async function NodePage({
     redirect(locale);
   }
 
-  console.log("Node entity", nodeEntity);
-
-  return <h1>NodePage</h1>;
+  return <Node node={nodeEntity} />;
 }

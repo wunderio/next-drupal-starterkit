@@ -1,5 +1,7 @@
+import { Node } from "@/components/node";
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { GET_ENTITY_AT_DRUPAL_PATH } from "@/lib/graphql/queries";
+import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 type FrontpageParams = {
@@ -25,7 +27,7 @@ export default async function FrontPage({
     },
   );
 
-  console.log(data);
+  const nodeEntity = extractEntityFromRouteQueryResult(data);
 
-  return <h1>{t("homepage-link")}</h1>;
+  return <Node node={nodeEntity} />;
 }
