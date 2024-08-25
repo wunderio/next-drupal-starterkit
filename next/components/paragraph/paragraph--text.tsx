@@ -1,8 +1,7 @@
-import clsx from "clsx";
-
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingParagraph } from "@/components/heading--paragraph";
 import type { FragmentParagraphFormattedTextFragment } from "@/lib/gql/graphql";
+import { cn } from "@/lib/utils";
 
 export function ParagraphText({
   paragraph,
@@ -16,7 +15,7 @@ export function ParagraphText({
       )}
       <FormattedText
         html={paragraph.formattedTextText.processed}
-        className={clsx(
+        className={cn(
           "text-left text-md/xl text-scapaflow sm:text-lg",
           paragraph.formattedTextHeading && "mt-4",
         )}

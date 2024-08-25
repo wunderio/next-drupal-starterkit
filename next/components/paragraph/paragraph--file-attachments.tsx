@@ -1,18 +1,17 @@
-import { useTranslation } from "next-i18next";
-import clsx from "clsx";
-
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingParagraph } from "@/components/heading--paragraph";
 import { Media } from "@/components/media";
 import type { FragmentParagraphFileAttachmentsFragment } from "@/lib/gql/graphql";
+import { cn } from "@/lib/utils";
+
+// TODO: Translations
 export function ParagraphFileAttachments({
   paragraph,
 }: {
   paragraph: FragmentParagraphFileAttachmentsFragment;
 }) {
-  const { t } = useTranslation();
   return (
-    <section className="relative h-full rounded border border-finnishwinter bg-white p-4 transition-all hover:shadow-md">
+    <section className="relative h-full p-4 transition-all bg-white border rounded border-finnishwinter hover:shadow-md">
       {paragraph.fileAttachmentsParagraphHeading && (
         <HeadingParagraph>
           {paragraph.fileAttachmentsParagraphHeading}
@@ -21,21 +20,18 @@ export function ParagraphFileAttachments({
       {paragraph.fileAttachmentsParagraphFormattedText && (
         <FormattedText
           html={paragraph.fileAttachmentsParagraphFormattedText.processed}
-          className={clsx(
+          className={cn(
             "text-left text-md/xl text-scapaflow sm:text-lg",
             paragraph.fileAttachmentsParagraphHeading && "mt-4",
           )}
         />
       )}
 
-      <ul
-        className="list-inside space-y-2"
-        aria-label={t("downloadable-files")}
-      >
+      <ul className="space-y-2 list-inside" aria-label={"downloadable-files"}>
         {paragraph.fileAttachments.map((attachment) => (
           <li
             key={attachment.id}
-            className="gap-1 w-full hover:text-primary-600"
+            className="w-full gap-1 hover:text-primary-600"
           >
             <Media media={attachment} />
           </li>

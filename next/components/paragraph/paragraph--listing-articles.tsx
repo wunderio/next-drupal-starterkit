@@ -1,6 +1,6 @@
-import { ArticlesListing } from "@/components/article/articles-listing";
 import { HeadingParagraph } from "@/components/heading--paragraph";
 import type { FragmentParagraphListingArticleFragment } from "@/lib/gql/graphql";
+import { ArticlesListing } from "../article/articles-listing";
 
 export function ParagraphListingArticles({
   paragraph,
@@ -14,7 +14,7 @@ export function ParagraphListingArticles({
           {paragraph.paragraphListingArticleHeading}
         </HeadingParagraph>
       )}
-      <ArticlesListing listingId={paragraph.id} limit={paragraph.limit} />
+      <ArticlesListing key={paragraph.id} limit={paragraph.limit} />
     </>
   );
 }
