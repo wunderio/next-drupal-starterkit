@@ -1,6 +1,5 @@
-import { createSharedPathnamesNavigation } from "next-intl/navigation";
-
-import { i18nConfig } from "@/i18n";
+import { createLocalizedPathnamesNavigation } from "next-intl/navigation";
+import { i18nConfig, pathnames } from "./i18n";
 
 export const {
   Link: LinkWithLocale,
@@ -8,6 +7,8 @@ export const {
   permanentRedirect: permanentRedirectWithLocale,
   usePathname: usePathnameWithoutLocale,
   useRouter: useRouterWithoutLocale,
-} = createSharedPathnamesNavigation({
+} = createLocalizedPathnamesNavigation({
   locales: i18nConfig.locales,
+  // eslint-disable-next-line
+  pathnames: pathnames as typeof pathnames & Record<string & {}, string>,
 });

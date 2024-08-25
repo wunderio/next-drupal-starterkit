@@ -2,7 +2,7 @@ import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "./auth";
-import { i18nConfig } from "./i18n";
+import { i18nConfig, pathnames } from "./i18n";
 
 const DEFAULT_LOGIN_URL = "/auth/login";
 const PROTECTED_ROUTES = [
@@ -20,6 +20,7 @@ const intlMiddleware = createMiddleware({
   defaultLocale: i18nConfig.defaultLocale,
   localePrefix: "as-needed",
   alternateLinks: false,
+  pathnames,
 });
 
 const authMiddleware = (request: NextRequest, ctx: AppRouteHandlerFnContext) =>
