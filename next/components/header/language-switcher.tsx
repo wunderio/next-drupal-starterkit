@@ -1,27 +1,34 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import clsx from "clsx";
 
 import { useLanguageLinks } from "@/lib/contexts/language-links-context";
 import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
+import { cn, removeLocaleFromPath } from "@/lib/utils";
 import LanguageIcon from "@/styles/icons/language.svg";
 
+import { locales } from "@/i18n";
+import { LinkWithLocale } from "@/navigation";
+
 export function LanguageSwitcher() {
+  const t = useTranslations();
   const languageLinks = useLanguageLinks();
-  const { locale, locales } = useRouter();
+  const activeLocale = useLocale();
+  const params = useParams();
+  // const [isLoading, startTransition] = useTransition();
+  // const router = useRouterWithoutLocale();
 
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen((o) => !o);
+  const toggle = () => setIsOpen((open) => !open);
   const close = () => setIsOpen(false);
 
-  // Close on locale change
-  useEffect(close, [locale]);
+  // Close on activeLocale change
+  useEffect(close, [activeLocale]);
 
   // Close on click outside
   const ref = useOnClickOutside<HTMLDivElement>(close);
-  const { t } = useTranslation();
 
   return (
     <div ref={ref}>
@@ -33,29 +40,34 @@ export function LanguageSwitcher() {
         aria-expanded={isOpen}
       >
         <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
-          {languageLinks[locale].name}
+          {languageLinks[activeLocale].name}
         </span>
-        <LanguageIcon className="inline-block h-6 w-6" aria-hidden="true" />
+        <LanguageIcon className="inline-block w-6 h-6" aria-hidden="true" />
       </button>
       <ul
-        className={clsx(
+        className={cn(
           "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
           !isOpen && "hidden",
         )}
       >
         {locales
-          .filter((l) => l !== locale)
-          .map((l) => {
-            const { name, path } = languageLinks[l];
+          .filter((locale) => locale !== activeLocale)
+          .map((locale) => {
+            const { name, path } = languageLinks[locale];
+            const href = removeLocaleFromPath(locale, path);
             return (
-              <li key={l}>
-                <Link
+              <li key={locale}>
+                <LinkWithLocale
                   className="block p-2 hover:bg-primary-50"
-                  locale={l}
-                  href={path}
+                  locale={locale}
+                  href={{
+                    pathname: href || "/",
+                    // @ts-expect-error
+                    params: params,
+                  }}
                 >
                   {name}
-                </Link>
+                </LinkWithLocale>
               </li>
             );
           })}
