@@ -96,3 +96,7 @@ export const addSitemapLanguageVersionsOfFrontpage = (translations: any) => {
   });
   return languages;
 };
+
+export function removeLocaleFromPath(locale: string, path: string) {
+  return path.replace(`/${locale}`, "");
+}
