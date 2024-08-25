@@ -4,6 +4,7 @@ import { getLocale } from "next-intl/server";
 
 import { auth } from "@/auth";
 import { ContactFormInputs } from "@/components/forms/contact-form";
+import { revalidatePath } from "next/cache";
 import { drupalClientViewer } from "../drupal/drupal-client";
 
 export async function createContactSubmissionAction(values: ContactFormInputs) {
@@ -45,6 +46,8 @@ export async function createContactSubmissionAction(values: ContactFormInputs) {
     if (!result.ok) {
       throw new Error();
     }
+
+    revalidatePath("/dashboard");
 
     return {
       success: true,
