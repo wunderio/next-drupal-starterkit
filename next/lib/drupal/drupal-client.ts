@@ -1,27 +1,24 @@
 import { type TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { request, type RequestDocument, type Variables } from "graphql-request";
-import { DrupalClient } from "next-drupal";
-import pRetry, { AbortError, type Options } from "p-retry";
+import { NextDrupalBase } from "next-drupal";
+import pRetry, { type Options } from "p-retry";
 
 import { env } from "@/env";
 
 const RETRY_OPTIONS: Options = {
   retries: env.NODE_ENV === "development" ? 1 : 5,
-  onFailedAttempt: ({ attemptNumber, retriesLeft, message }) => {
-    // Don't retry GraphQL errors:
-    if (message.startsWith("GraphQL Error")) {
-      // Throw the relevant part of the error message (e.g. "GraphQL Error (Code: 500)")
-      throw new AbortError(message.slice(0, 25));
-    }
-
+  onFailedAttempt: ({ attemptNumber, retriesLeft }) => {
     console.log(
       `Fetch ${attemptNumber} failed (${retriesLeft} retries remaining)`,
     );
   },
 } as const;
 
-const createGraphQlDrupalClient = (clientId: string, clientSecret: string) => {
-  class GraphQlDrupalClient extends DrupalClient {
+export const createGraphQlDrupalClient = (
+  clientId: string,
+  clientSecret: string,
+) => {
+  class GraphQlDrupalClient extends NextDrupalBase {
     async doGraphQlRequest<T>(
       query: TypedDocumentNode<T> | RequestDocument,
       variables?: Variables,
