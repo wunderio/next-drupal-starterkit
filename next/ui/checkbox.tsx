@@ -1,7 +1,7 @@
-import React from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import clsx from "clsx";
+import React from "react";
 
+import { cn } from "@/lib/utils";
 import Checkmark from "@/styles/icons/checkmark.svg";
 
 import css from "./checkbox.module.css";
@@ -16,7 +16,7 @@ export const Checkbox = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CheckboxPrimitive.Root
     ref={ref}
-    className={clsx(
+    className={cn(
       css.checkbox,
       "peer h-5 w-5 shrink-0 rounded border border-scapaflow",
       "disabled:cursor-not-allowed disabled:border-graysuit",

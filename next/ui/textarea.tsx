@@ -1,5 +1,6 @@
 import React from "react";
-import clsx from "clsx";
+
+import { cn } from "@/lib/utils";
 
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
@@ -7,7 +8,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
     return (
       <textarea
-        className={clsx(
+        className={cn(
           "flex w-full items-center rounded border-2 border-stone bg-white px-2 py-1.5 text-md text-steelgray",
           "placeholder:text-stone",
           "hover:enabled:border-steelgray",

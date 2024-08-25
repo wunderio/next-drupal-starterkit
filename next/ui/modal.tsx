@@ -1,8 +1,10 @@
-import { useTranslation } from "next-i18next";
-import React from "react";
-import * as ModalPrimitive from "@radix-ui/react-dialog";
-import clsx from "clsx";
+"use client";
 
+import * as ModalPrimitive from "@radix-ui/react-dialog";
+import { useTranslations } from "next-intl";
+import React from "react";
+
+import { cn } from "@/lib/utils";
 import CloseIcon from "@/styles/icons/close.svg";
 
 const Modal = ModalPrimitive.Root;
@@ -27,7 +29,7 @@ const ModalOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ModalPrimitive.Overlay
     ref={ref}
-    className={clsx("fixed inset-0 z-50 backdrop-blur-sm", className)}
+    className={cn("fixed inset-0 z-50 backdrop-blur-sm", className)}
     {...props}
   />
 ));
@@ -37,22 +39,23 @@ const ModalContent = React.forwardRef<
   React.ElementRef<typeof ModalPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof ModalPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
-  const { t } = useTranslation();
+  const t = useTranslations();
+
   return (
     <ModalPortal>
       <ModalOverlay />
       <ModalPrimitive.Content
         ref={ref}
-        className={clsx(
+        className={cn(
           "fixed z-50 grid max-h-[95vh] w-[95vw] max-w-xl gap-4 overflow-y-auto rounded border border-graysuit bg-white px-6 pb-10 pt-12 text-scapaflow shadow-long",
           className,
         )}
         {...props}
       >
         {children}
-        <ModalPrimitive.Close className="absolute right-0 top-0 flex items-center bg-mischka px-3 py-2 text-sm font-bold text-steelgray disabled:pointer-events-none">
+        <ModalPrimitive.Close className="absolute top-0 right-0 flex items-center px-3 py-2 text-sm font-bold bg-mischka text-steelgray disabled:pointer-events-none">
           {t("modal-close")}
-          <CloseIcon className="ml-2 inline-block h-8 w-8" aria-hidden />
+          <CloseIcon className="inline-block w-8 h-8 ml-2" aria-hidden />
         </ModalPrimitive.Close>
       </ModalPrimitive.Content>
     </ModalPortal>
@@ -64,7 +67,7 @@ const ModalHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={clsx("flex flex-col space-y-4", className)} {...props} />
+  <div className={cn("flex flex-col space-y-4", className)} {...props} />
 );
 ModalHeader.displayName = "ModalHeader";
 
@@ -74,7 +77,7 @@ const ModalTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ModalPrimitive.Title
     ref={ref}
-    className={clsx(
+    className={cn(
       "leading-none text-2xl font-semibold tracking-tight text-steelgray",
       className,
     )}
@@ -89,7 +92,7 @@ const ModalDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ModalPrimitive.Description
     ref={ref}
-    className={clsx("text-md text-scapaflow", className)}
+    className={cn("text-md text-scapaflow", className)}
     {...props}
   />
 ));
@@ -97,11 +100,11 @@ ModalDescription.displayName = "ModalDescription";
 
 export {
   Modal,
-  ModalTrigger,
-  ModalPortal,
-  ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalTitle,
   ModalDescription,
+  ModalHeader,
+  ModalOverlay,
+  ModalPortal,
+  ModalTitle,
+  ModalTrigger,
 };
