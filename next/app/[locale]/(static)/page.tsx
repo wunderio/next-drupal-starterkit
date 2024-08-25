@@ -3,12 +3,35 @@ import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { Node } from "@/components/node";
+import { getMetadata } from "@/lib/drupal/get-metadata";
 import { getNodeQueryResult } from "@/lib/drupal/get-node";
+import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
+import { Metadata } from "next";
 
 type FrontpageParams = {
   params: { locale: string };
 };
+
+export async function generateMetadata({
+  params: { locale },
+}: FrontpageParams): Promise<Metadata> {
+  const path = `/frontpage-${locale}`;
+
+  const data = await getNodeQueryResult(path, locale);
+  const nodeEntity = extractEntityFromRouteQueryResult(data);
+
+  const metadata = await getMetadata({
+    title: nodeEntity.title,
+    metatags: nodeEntity.metatag as FragmentMetaTagFragment[],
+    context: {
+      path,
+      locale,
+    },
+  });
+
+  return metadata;
+}
 
 export const revalidate = 10;
 

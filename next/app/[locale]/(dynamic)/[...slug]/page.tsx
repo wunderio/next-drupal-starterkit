@@ -4,15 +4,43 @@ import { draftMode } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 
 import { Node } from "@/components/node";
+import { getMetadata } from "@/lib/drupal/get-metadata";
 import { getNodeQueryResult, getNodeStaticPaths } from "@/lib/drupal/get-node";
+import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import {
   extractEntityFromRouteQueryResult,
   extractRedirectFromRouteQueryResult,
 } from "@/lib/graphql/utils";
+import { Metadata } from "next";
 
 type NodePageParams = {
   params: { slug: string[]; locale: string };
 };
+
+export async function generateMetadata({
+  params: { locale, slug },
+}: NodePageParams): Promise<Metadata> {
+  const path = Array.isArray(slug) ? `/${slug?.join("/")}` : slug;
+
+  // Fetch the node entity from Drupal used to generate metadata.
+  // Here we need to pass false as the third argument match the parameters
+  // sent to the function in the page.tsx This ensures the react cache() is used
+  // and only one request is made for the node across the page and layout components when not in draft mode.
+  const data = await getNodeQueryResult(path, locale);
+  const nodeEntity = extractEntityFromRouteQueryResult(data);
+
+  // Generate metadata for the node entity.:
+  const metadata = await getMetadata({
+    title: nodeEntity.title,
+    metatags: nodeEntity.metatag as FragmentMetaTagFragment[],
+    context: {
+      path,
+      locale,
+    },
+  });
+
+  return metadata;
+}
 
 export async function generateStaticParams({
   params: { locale },
