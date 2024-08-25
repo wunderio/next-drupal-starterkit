@@ -1,6 +1,6 @@
-import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 import { cn, formatDateTimestamp } from "@/lib/utils";

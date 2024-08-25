@@ -1,6 +1,7 @@
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import { ArticleTeasers } from "@/components/article/article-teasers";
 import { ContactList } from "@/components/contact-list";
@@ -12,8 +13,8 @@ import { getMetadata } from "@/lib/drupal/get-metadata";
 import { getNodeQueryResult } from "@/lib/drupal/get-node";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
+
 import { Divider } from "@/ui/divider";
-import { Metadata } from "next";
 
 type FrontpageParams = {
   params: { locale: string };

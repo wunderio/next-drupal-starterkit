@@ -1,7 +1,8 @@
-import { getDraftData } from "next-drupal/draft";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { getDraftData } from "next-drupal/draft";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 import { Node } from "@/components/node";
 import { getMetadata } from "@/lib/drupal/get-metadata";
@@ -11,7 +12,6 @@ import {
   extractEntityFromRouteQueryResult,
   extractRedirectFromRouteQueryResult,
 } from "@/lib/graphql/utils";
-import { Metadata } from "next";
 
 type NodePageParams = {
   params: { slug: string[]; locale: string };

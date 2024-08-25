@@ -1,6 +1,6 @@
-import { cva } from "cva";
 import { useTranslations } from "next-intl";
 import React from "react";
+import { cva } from "cva";
 
 import { cn } from "@/lib/utils";
 import Success from "@/styles/icons/checkmark.svg";

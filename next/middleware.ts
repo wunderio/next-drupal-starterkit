@@ -1,5 +1,5 @@
-import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
 
 import { auth } from "./auth";
 import { i18nConfig, pathnames } from "./i18n";

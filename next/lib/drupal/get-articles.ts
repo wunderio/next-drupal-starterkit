@@ -3,7 +3,7 @@ import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 
 import { LISTING_ARTICLES } from "../graphql/queries";
 
-import i18nConfig from "@/i18n";
+import { i18nConfig } from "@/i18n";
 
 type GetArticlesArgs = {
   limit?: number;

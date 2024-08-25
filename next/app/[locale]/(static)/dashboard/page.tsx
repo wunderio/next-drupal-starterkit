@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import { HeadingPage } from "@/components/heading--page";
-
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { formatDate } from "@/lib/utils";
 import {
   isWebformSubmissionsListEmpty,
@@ -12,7 +12,6 @@ import {
 } from "@/lib/zod/webform-submission-list";
 
 import { auth } from "@/auth";
-import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { LinkWithLocale } from "@/navigation";
 
 export async function generateMetadata(): Promise<Metadata> {

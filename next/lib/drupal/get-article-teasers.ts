@@ -1,8 +1,9 @@
 import { FragmentArticleTeaserFragment } from "../gql/graphql";
 import { LISTING_ARTICLES } from "../graphql/queries";
 
-import { i18nConfig } from "@/i18n";
 import { drupalClientViewer } from "./drupal-client";
+
+import { i18nConfig } from "@/i18n";
 
 export async function getArticleTeasers({
   limit = 10,

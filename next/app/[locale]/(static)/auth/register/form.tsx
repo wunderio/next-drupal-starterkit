@@ -5,8 +5,8 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 
 import { ErrorRequired } from "@/components/forms/error-required";
-
 import { registerAction } from "@/lib/actions/register";
+
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";

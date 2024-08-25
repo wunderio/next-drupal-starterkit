@@ -1,19 +1,15 @@
 import Link from "next/link";
+import { getLocale } from "next-intl/server";
 
+import { getMenu } from "@/lib/drupal/get-menus";
+import { MenuAvailable } from "@/lib/gql/graphql";
 import FacebookIcon from "@/styles/icons/facebook.svg";
 import LinkedInIcon from "@/styles/icons/linkedin.svg";
 import TwitterIcon from "@/styles/icons/twitter.svg";
 import WunderCarrotIcon from "@/styles/icons/wunder-carrot.svg";
-import type { MenuItemType, MenuType } from "@/types/graphql";
+import type { MenuItemType } from "@/types/graphql";
 
-import { getMenu } from "@/lib/drupal/get-menus";
-import { MenuAvailable } from "@/lib/gql/graphql";
-import { getLocale } from "next-intl/server";
 import { SocialShare } from "./social-share";
-
-interface FooterProps {
-  menu: MenuType;
-}
 
 export async function Footer() {
   const locale = await getLocale();

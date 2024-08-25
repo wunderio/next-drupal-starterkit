@@ -1,15 +1,15 @@
 import "styles/globals.css";
 
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, unstable_setRequestLocale } from "next-intl/server";
-
-import { inter, overpass } from "@/styles/fonts";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import AuthProvider from "@/components/auth-provider";
 import { Footer } from "@/components/footer/footer";
 import ReactQueryClientProvider from "@/components/query-client-provider";
+import { inter, overpass } from "@/styles/fonts";
+
 import { i18nConfig } from "@/i18n";
 
 export function generateStaticParams() {

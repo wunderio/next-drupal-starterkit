@@ -3,9 +3,10 @@
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
+import { createContactSubmissionAction } from "@/lib/actions/contact";
+
 import { AuthGate } from "../auth-gate";
 
-import { createContactSubmissionAction } from "@/lib/actions/contact";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";

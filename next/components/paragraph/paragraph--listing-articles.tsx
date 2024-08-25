@@ -1,5 +1,6 @@
 import { HeadingParagraph } from "@/components/heading--paragraph";
 import type { FragmentParagraphListingArticleFragment } from "@/lib/gql/graphql";
+
 import { ArticlesListing } from "../article/articles-listing";
 
 export function ParagraphListingArticles({

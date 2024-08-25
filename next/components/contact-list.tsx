@@ -1,5 +1,5 @@
-import { getTranslations } from "next-intl/server";
 import NextImage from "next/image";
+import { getTranslations } from "next-intl/server";
 
 interface Contact {
   image: string;

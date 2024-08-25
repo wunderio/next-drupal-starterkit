@@ -1,9 +1,9 @@
-import { env } from "@/env";
-import { i18nConfig } from "@/i18n";
-
 import clsx from "clsx";
 import { ClassValue } from "cva/types";
 import { twMerge } from "tailwind-merge";
+
+import { env } from "@/env";
+import { i18nConfig } from "@/i18n";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

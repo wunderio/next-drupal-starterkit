@@ -1,8 +1,8 @@
 import "server-only";
 
+import { NextDrupalBase } from "next-drupal";
 import { type TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { request, type RequestDocument, type Variables } from "graphql-request";
-import { NextDrupalBase } from "next-drupal";
 import pRetry, { type Options } from "p-retry";
 
 import { env } from "@/env";

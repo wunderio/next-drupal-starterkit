@@ -1,6 +1,6 @@
+import { notFound } from "next/navigation";
 import { Pathnames } from "next-intl/routing";
 import { getRequestConfig } from "next-intl/server";
-import { notFound } from "next/navigation";
 
 export const i18nConfig = {
   locales: ["en", "fi", "sv"],

@@ -1,5 +1,5 @@
-import { cva } from "cva";
 import * as React from "react";
+import { cva } from "cva";
 
 import { cn } from "@/lib/utils";
 

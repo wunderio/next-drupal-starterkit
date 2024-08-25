@@ -1,8 +1,8 @@
 "use client";
 
+import { usePathname, useSearchParams } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";

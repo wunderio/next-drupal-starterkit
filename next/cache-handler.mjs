@@ -3,8 +3,8 @@
 import { CacheHandler } from "@neshca/cache-handler";
 import createLruHandler from "@neshca/cache-handler/local-lru";
 import createRedisHandler from "@neshca/cache-handler/redis-strings";
-import { createClient } from "redis";
 import fs from "fs/promises";
+import { createClient } from "redis";
 
 // We set this to a high value so redis will not automatically delete data on expiration, but keep it
 // as stale for a long period. This way, Next will be able to use it for its stale-while-revalidate logic.

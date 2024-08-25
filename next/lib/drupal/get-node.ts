@@ -4,6 +4,7 @@ import {
   GET_ENTITY_AT_DRUPAL_PATH,
   GET_STATIC_PATHS,
 } from "../graphql/queries";
+
 import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
 
 /**
