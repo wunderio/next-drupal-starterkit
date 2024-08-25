@@ -1,6 +1,14 @@
 import { env } from "@/env";
 import { defaultLocale } from "@/site.config";
 
+import clsx from "clsx";
+import { ClassValue } from "cva/types";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
 export function formatDate(input: string, locale: string): string {
   const date = new Date(input);
   return date.toLocaleDateString(locale, {
