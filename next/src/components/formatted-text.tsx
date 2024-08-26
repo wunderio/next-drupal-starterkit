@@ -1,12 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
-import { HTMLAttributes } from "react";
 import parse, {
   DOMNode,
   domToReact,
   Element,
   HTMLReactParserOptions,
 } from "html-react-parser";
+import Image from "next/image";
+import Link from "next/link";
+import { HTMLAttributes } from "react";
 
 import { isRelative } from "@/lib/utils";
 

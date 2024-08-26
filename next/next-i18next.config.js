@@ -1,4 +1,4 @@
-const { i18nConfig } = require("./i18n");
+const { i18nConfig } = require("./src/i18n");
 
 module.exports = {
   i18n: {
