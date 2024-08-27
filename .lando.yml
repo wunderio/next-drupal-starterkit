@@ -127,6 +127,7 @@ services:
     ssl: true
     sslExpose: true
     overrides:
+      image: "cypress/included:cypress-13.6.4-node-20.11.0-chrome-121.0.6167.85-1-ff-120.0-edge-121.0.2277.83-1"
       ports:
         - "3000:3000"
         - "6006:6006"
