@@ -4,8 +4,6 @@ import { type Preview } from "@storybook/react";
 
 import nextIntl from "./next-intl";
 
-// TODO: Centralize internationalization configuration somewhere else
-
 const preview: Preview = {
   parameters: {
     backgrounds: {
@@ -23,9 +21,9 @@ const preview: Preview = {
   initialGlobals: {
     locale: "en",
     locales: {
-      en: "English",
-      fi: "Finnish",
-      sv: "Swedish",
+      en: { icon: "🇺🇸", title: "English", right: "EN" },
+      fi: { icon: "🇫🇮", title: "Finnish", right: "FI" },
+      sv: { icon: "🇸🇪", title: "Swedish", right: "SV" },
     },
   },
 };

@@ -1,5 +1,5 @@
-import type { CodegenConfig } from "@graphql-codegen/cli";
 import { loadEnvConfig } from "@next/env";
+import type { CodegenConfig } from "@graphql-codegen/cli";
 import fs from "fs";
 import os from "os";
 import path from "path";
