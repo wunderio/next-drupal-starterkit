@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { AbortError } from "p-retry";
 
 import {
   GET_ENTITY_AT_DRUPAL_PATH,
@@ -6,6 +7,8 @@ import {
 } from "../graphql/queries";
 
 import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
+
+import { env } from "@/env";
 
 /**
  * Fetches the node entity at the given path.
@@ -19,20 +22,15 @@ export const fetchNodeQueryResult = cache(
       ? drupalClientPreviewer
       : drupalClientViewer;
 
-    try {
-      const data = await drupalClient.doGraphQlRequest(
-        GET_ENTITY_AT_DRUPAL_PATH,
-        {
-          path,
-          langcode: locale,
-        },
-      );
+    const data = await drupalClient.doGraphQlRequest(
+      GET_ENTITY_AT_DRUPAL_PATH,
+      {
+        path,
+        langcode: locale,
+      },
+    );
 
-      return data;
-    } catch (error) {
-      console.error("Error fetching node.");
-      return null;
-    }
+    return data;
   },
 );
 
@@ -41,8 +39,26 @@ export async function getNodeQueryResult(
   locale: string,
   isDraftMode: boolean = false,
 ) {
-  const data = await fetchNodeQueryResult(path, locale, isDraftMode);
-  return data;
+  try {
+    const data = await fetchNodeQueryResult(path, locale, isDraftMode);
+    return data;
+  } catch (error) {
+    const type =
+      error instanceof AbortError
+        ? "GraphQL"
+        : error instanceof TypeError
+          ? "Network"
+          : "Unknown";
+
+    const moreInfo =
+      type === "GraphQL"
+        ? `Check graphql_compose logs: ${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/admin/reports`
+        : "";
+
+    throw new Error(
+      `${type} Error during GetNodeByPath query with $path: "${path}" and $langcode: "${locale}". ${moreInfo}`,
+    );
+  }
 }
 
 /**
