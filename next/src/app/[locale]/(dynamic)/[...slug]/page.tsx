@@ -18,19 +18,20 @@ type NodePageParams = {
   params: { slug: string[]; locale: string };
 };
 
+// The metadata for the page is generated here.
 export async function generateMetadata({
   params: { locale, slug },
 }: NodePageParams): Promise<Metadata> {
-  const path = Array.isArray(slug) ? `/${slug?.join("/")}` : slug;
+  const path = "/" + slug.join("/");
 
   // Fetch the node entity from Drupal used to generate metadata.
-  const data = await getNodeQueryResult(path, locale);
-  const nodeEntity = extractEntityFromRouteQueryResult(data);
+  const nodeByPathResult = await getNodeQueryResult(path, locale);
+  const node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   // Generate metadata for the node entity.:
   const metadata = await getMetadata({
-    title: nodeEntity.title,
-    metatags: nodeEntity.metatag as FragmentMetaTagFragment[],
+    title: node.title,
+    metatags: node.metatag as FragmentMetaTagFragment[],
     context: {
       path,
       locale,
@@ -40,6 +41,7 @@ export async function generateMetadata({
   return metadata;
 }
 
+// Generate the static paths for all node types.
 export async function generateStaticParams({
   params: { locale },
 }: NodePageParams) {
@@ -74,18 +76,18 @@ export default async function NodePage({
 }: NodePageParams) {
   unstable_setRequestLocale(locale);
 
-  const path = Array.isArray(slug) ? `/${slug?.join("/")}` : slug;
+  const path = "/" + slug.join("/");
 
   // Are we in Next.js draft mode?
   const isDraftMode = draftMode().isEnabled;
 
   // Get the node entity from Drupal. We tell the function if we are in draft mode so it can use the correct client
   // in the getNodeQueryResult function.
-  const data = await getNodeQueryResult(path, locale, isDraftMode);
+  const nodeByPathResult = await getNodeQueryResult(path, locale, isDraftMode);
 
-  // If the data contains a RedirectResponse, we redirect to the path:
-  const redirectResult = extractRedirectFromRouteQueryResult(data);
-
+  // The response will contain either a redirect or node data.
+  // If it's a redirect, redirect to the new path:
+  const redirectResult = extractRedirectFromRouteQueryResult(nodeByPathResult);
   if (redirectResult) {
     // Set to temporary redirect for 302 and 307 status codes,
     // and permanent for all others.
@@ -96,59 +98,75 @@ export default async function NodePage({
     }
   }
 
-  // Get the entity from the response:
-  let nodeEntity = extractEntityFromRouteQueryResult(data);
+  // Extract the node entity from the query result:
+  let node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
-  // If there's no node, return 404:
-  if (!nodeEntity) {
+  // Node not found:
+  if (!node) {
     notFound();
   }
 
-  // If node is a frontpage, redirect to / for the current locale:
-  if (nodeEntity.__typename === "NodeFrontpage") {
+  /*
+  TODO: App router doesnt have revalidateReason😞
+  if (!node) {
+    switch (revalidateReason) {
+      case "build":
+        // Pages returned from getStaticPaths should always exist. Abort the build:
+        throw new Error(
+          `Node not found in GetNodeByPath query response with $path: "${path}" and $langcode: "${locale}".`,
+        );
+      case "stale":
+      case "on-demand":
+      default:
+        // Not an error, the requested node just doesn't exist. Return 404:
+        return {
+          notFound: true,
+          revalidate: REVALIDATE_LONG,
+        };
+    }
+  }
+  */
+
+  // Node is not published:
+  if (!isDraftMode && node.status !== true) {
+    notFound();
+  }
+
+  // Node is actually a frontpage:
+  if (!isDraftMode && node.__typename === "NodeFrontpage") {
     redirect(locale);
   }
 
-  // When in draft mode, we could be requesting a specific revision.
+  // When in draftMode, we could be requesting a specific revision.
   // In this case, the draftData will contain the resourceVersion property,
-  // we can use that in combination with the node id to fetch the correct revision
-  // This means that we will need to do a second request to Drupal.
+  // which we can use to fetch the correct revision:
   if (isDraftMode) {
     const draftData = getDraftData();
 
     if (
       draftData &&
       typeof draftData === "object" &&
-      draftData.resourceVersion &&
-      // If the resourceVersion is "rel:latest-version", we don't need to fetch the revision:
+      "resourceVersion" in draftData &&
+      typeof draftData.resourceVersion === "string" &&
       draftData.resourceVersion !== "rel:latest-version"
     ) {
       // Get the node id from the entity we already have:
       const revisionId = draftData.resourceVersion.split(":").slice(1);
-      const revisionPath = `/node/${nodeEntity.id}/revisions/${revisionId}/view`;
-
+      const revisionPath = `/node/${node.id}/revisions/${revisionId}/view`;
       const revisionData = await getNodeQueryResult(
         revisionPath,
         locale,
         isDraftMode,
       );
 
-      const revisedNodeEntity = extractEntityFromRouteQueryResult(revisionData);
-
-      // If we can't find the revision, return 404:
-      if (!revisedNodeEntity) {
-        notFound();
+      // Instead of the entity at the current revision, we want now to
+      // display the entity at the requested revision:
+      node = extractEntityFromRouteQueryResult(revisionData);
+      if (!node) {
+        notFound;
       }
-
-      // Use the revised node entity for the rest of the page:
-      nodeEntity = revisedNodeEntity;
     }
   }
 
-  // Unless we are in draft mode, return 404 if the node is set to unpublished:
-  if (!isDraftMode && nodeEntity.status !== true) {
-    notFound();
-  }
-
-  return <Node node={nodeEntity} />;
+  return <Node node={node} />;
 }
