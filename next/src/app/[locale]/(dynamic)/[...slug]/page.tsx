@@ -5,6 +5,7 @@ import { getDraftData } from "next-drupal/draft";
 import { unstable_setRequestLocale } from "next-intl/server";
 
 import { Node } from "@/components/node";
+import { REVALIDATE_LONG } from "@/lib/constants";
 import { getMetadata } from "@/lib/drupal/get-metadata";
 import { getNodeQueryResult, getNodeStaticPaths } from "@/lib/drupal/get-node";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
@@ -65,8 +66,8 @@ export async function generateStaticParams({
   return params;
 }
 
-// Revalidate the page every 60 seconds.
-export const revalidate = 60;
+// We set the revalidate time to a long period because the content is not expected to change frequently.
+export const revalidate = REVALIDATE_LONG;
 
 export default async function NodePage({
   params: { locale, slug },

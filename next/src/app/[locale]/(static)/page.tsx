@@ -8,6 +8,7 @@ import { ContactList } from "@/components/contact-list";
 import { ContactForm } from "@/components/forms/contact-form";
 import { LogoStrip } from "@/components/logo-strip";
 import { Node } from "@/components/node";
+import { REVALIDATE_LONG } from "@/lib/constants";
 import { getArticleTeasers } from "@/lib/drupal/get-article-teasers";
 import { getMetadata } from "@/lib/drupal/get-metadata";
 import { getNodeQueryResult } from "@/lib/drupal/get-node";
@@ -42,7 +43,7 @@ export async function generateMetadata({
   return metadata;
 }
 
-export const revalidate = 10;
+export const revalidate = REVALIDATE_LONG;
 
 export default async function FrontPage({
   params: { locale },
@@ -65,7 +66,7 @@ export default async function FrontPage({
 
   // If the node does not exist or is not a frontpage, return 404
   if (!frontpage || !(frontpage.__typename === "NodeFrontpage")) {
-    return notFound();
+    notFound();
   }
 
   // Unless we are in draftMode, return 404 if the node is set to unpublished:
