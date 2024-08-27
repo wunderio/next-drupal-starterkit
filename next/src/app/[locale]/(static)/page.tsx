@@ -1,7 +1,6 @@
 import { Metadata } from "next";
-import { draftMode } from "next/headers";
-import { notFound } from "next/navigation";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { draftMode } from "next/headers";
 
 import { ArticleTeasers } from "@/components/article/article-teasers";
 import { ContactList } from "@/components/contact-list";
@@ -64,14 +63,14 @@ export default async function FrontPage({
   // Extract the frontpage node from the query result
   const frontpage = extractEntityFromRouteQueryResult(node);
 
-  // If the node does not exist or is not a frontpage, return 404
+  // If the node does not exist or is not a frontpage, we throw an error
   if (!frontpage || !(frontpage.__typename === "NodeFrontpage")) {
-    notFound();
+    throw new Error("Frontpage not found for locale " + locale);
   }
 
-  // Unless we are in draftMode, return 404 if the node is set to unpublished:
+  // Unless we are in draftMode, we throw an error if the node is set to unpublished:
   if (!draftMode().isEnabled && frontpage.status !== true) {
-    notFound();
+    throw new Error("Frontpage not published for locale " + locale);
   }
 
   return (
