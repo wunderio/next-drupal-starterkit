@@ -1,9 +1,11 @@
 import { useTranslations } from "next-intl";
 
+import { TranslationKey } from "@/types/next-intl";
+
 export function ErrorRequired({
   fieldTranslatedLabelKey,
 }: {
-  fieldTranslatedLabelKey: string;
+  fieldTranslatedLabelKey: TranslationKey;
 }) {
   const t = useTranslations();
   const translatedFieldLabel = t(fieldTranslatedLabelKey);

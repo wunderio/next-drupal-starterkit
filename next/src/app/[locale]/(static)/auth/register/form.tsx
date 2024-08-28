@@ -103,7 +103,7 @@ export default function RegisterForm() {
               className="inset-0 w-full h-12 p-2 border rounded border-neu-200 text-body-sm text-neu-400 ring-offset-4 focus:ring-4"
             />
             {errors.name && errors.name.type === "required" && (
-              <ErrorRequired fieldTranslatedLabelKey={"name"} />
+              <ErrorRequired fieldTranslatedLabelKey={"username"} />
             )}
           </div>
           <Button type="submit" disabled={isSubmitting}>
