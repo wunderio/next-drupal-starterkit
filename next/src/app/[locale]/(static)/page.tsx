@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { draftMode } from "next/headers";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import { ArticleTeasers } from "@/components/article/article-teasers";
 import { ContactList } from "@/components/contact-list";

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
-import { LinkWithLocale } from "@/navigation";
+import { LinkWithLocale } from "@/routing";
 import { Button } from "@/ui/button";
 
 export type PaginationProps = {

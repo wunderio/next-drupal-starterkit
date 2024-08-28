@@ -3,11 +3,11 @@ import { LISTING_ARTICLES } from "../graphql/queries";
 
 import { drupalClientViewer } from "./drupal-client";
 
-import { i18nConfig } from "@/i18n";
+import { routing } from "@/routing";
 
 export async function getArticleTeasers({
   limit = 10,
-  locale = i18nConfig.defaultLocale,
+  locale = routing.defaultLocale,
   sticky = false,
 }: {
   limit: number;

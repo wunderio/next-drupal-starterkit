@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 
 import { HeadingPage } from "@/components/heading--page";
 
-import { LinkWithLocale } from "@/navigation";
+import { LinkWithLocale } from "@/routing";
 
 export default function ErrorPage() {
   const t = useTranslations("Error");

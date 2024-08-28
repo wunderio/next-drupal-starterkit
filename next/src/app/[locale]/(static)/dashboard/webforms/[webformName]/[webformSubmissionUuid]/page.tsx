@@ -10,7 +10,7 @@ import {
 } from "@/lib/zod/webform-submission";
 
 import { auth } from "@/auth";
-import { LinkWithLocale } from "@/navigation";
+import { LinkWithLocale } from "@/routing";
 
 type DashboardPageParams = {
   params: {

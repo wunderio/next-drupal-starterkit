@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 
 import { env } from "@/env";
-import { i18nConfig } from "@/i18n";
+import { routing } from "@/routing";
 
 interface MetaProps {
   title?: string;
@@ -30,7 +30,7 @@ export async function getMetadata({
   // We want to determine if we need to add the language path
   // to create the canonical link for this page:
   const languagePathFragment =
-    locale === i18nConfig.defaultLocale ? "" : `/${locale}`;
+    locale === routing.defaultLocale ? "" : `/${locale}`;
 
   const data = {
     title: getTag("title")?.content ?? title,

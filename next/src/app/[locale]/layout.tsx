@@ -10,10 +10,10 @@ import { Footer } from "@/components/footer/footer";
 import ReactQueryClientProvider from "@/components/query-client-provider";
 import { inter, overpass } from "@/styles/fonts";
 
-import { i18nConfig } from "@/i18n";
+import { routing } from "@/routing";
 
 export function generateStaticParams() {
-  return i18nConfig.locales.map((locale) => ({ locale }));
+  return routing.locales.map((locale) => ({ locale }));
 }
 export const viewport: Viewport = {
   width: "device-width, shrink-to-fit=no",

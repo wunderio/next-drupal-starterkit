@@ -3,7 +3,7 @@ import { ClassValue } from "cva/types";
 import { twMerge } from "tailwind-merge";
 
 import { env } from "@/env";
-import { i18nConfig } from "@/i18n";
+import { routing } from "@/routing";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -73,7 +73,7 @@ export const getFileType = (file: string) => {
  * @returns "" for the default locale, "/locale" for other locales.
  */
 export function getLanguagePathFragment(locale?: string) {
-  return !locale || locale === i18nConfig.defaultLocale ? "" : `/${locale}`;
+  return !locale || locale === routing.defaultLocale ? "" : `/${locale}`;
 }
 
 export const makePathAbsolute = (path: string) =>

@@ -13,7 +13,7 @@ import type { MenuItemType } from "@/types/graphql";
 import css from "./main-menu.module.css";
 import { disableHoverEvents, isMenuItemActive } from "./main-menu.utils";
 
-import { LinkWithLocale, usePathnameWithoutLocale } from "@/navigation";
+import { LinkWithLocale, usePathnameWithoutLocale } from "@/routing";
 
 export function MenuContainer({
   isOpen,

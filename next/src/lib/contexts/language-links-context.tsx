@@ -2,16 +2,15 @@
 
 import { createContext, useContext } from "react";
 
-import { createLanguageLinksForNextOnlyPage } from "./language-links";
+import {
+  createLanguageLinksForNextOnlyPage,
+  LanguageLinks,
+  languageLinks,
+} from "./language-links";
 
-import { i18nConfig } from "@/i18n";
-import { usePathnameWithoutLocale } from "@/navigation";
+import { usePathnameWithoutLocale } from "@/routing";
 
-export type LanguageLinks = (typeof i18nConfig)["languageLinks"];
-
-const LanguageLinksContext = createContext<LanguageLinks>(
-  i18nConfig.languageLinks,
-);
+const LanguageLinksContext = createContext<LanguageLinks>(languageLinks);
 
 /**
  * Provide the language links context.

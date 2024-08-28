@@ -11,9 +11,9 @@ import {
 } from "@/lib/utils";
 
 import { env } from "@/env";
-import { i18nConfig } from "@/i18n";
+import { routing } from "@/routing";
 
-const locales = i18nConfig.locales;
+const locales = routing.locales;
 
 const SITEMAP_PRIORITY_FRONT = 1;
 const SITEMAP_PRIORITY_LANDING = 0.8;

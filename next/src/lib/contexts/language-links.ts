@@ -1,8 +1,23 @@
 import { FragmentNodeTranslationFragment } from "@/lib/gql/graphql";
 
-import { i18nConfig } from "@/i18n";
+import { routing } from "@/routing";
 
-export type LanguageLinks = (typeof i18nConfig)["languageLinks"];
+export const languageLinks = {
+  en: {
+    name: "English",
+    path: "/en",
+  },
+  fi: {
+    name: "Suomi",
+    path: "/fi",
+  },
+  sv: {
+    name: "Svenska",
+    path: "/sv",
+  },
+};
+
+export type LanguageLinks = typeof languageLinks;
 
 /**
  * From the site config and available node translations, create links to be used in the language switcher.
@@ -21,7 +36,7 @@ export function createLanguageLinks(
  * Get the standard language links from the site config.
  */
 export const getStandardLanguageLinks = () =>
-  JSON.parse(JSON.stringify(i18nConfig.languageLinks));
+  JSON.parse(JSON.stringify(languageLinks));
 
 /**
  * Generates a language links object for a page that is created in next only.
@@ -34,7 +49,7 @@ export function createLanguageLinksForNextOnlyPage(
   path: string,
 ): LanguageLinks {
   const languageLinks = getStandardLanguageLinks();
-  i18nConfig.locales.forEach((locale) => {
+  routing.locales.forEach((locale) => {
     languageLinks[locale].path =
       languageLinks[locale].path === "/"
         ? path

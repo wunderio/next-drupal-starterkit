@@ -22,7 +22,7 @@ import {
 } from "./main-menu.components";
 import { isMenuItemActive } from "./main-menu.utils";
 
-import { usePathnameWithoutLocale } from "@/navigation";
+import { usePathnameWithoutLocale } from "@/routing";
 
 interface MainMenuProps {
   menu?: MenuType;

@@ -3,7 +3,7 @@ import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 
 import { LISTING_ARTICLES } from "../graphql/queries";
 
-import { i18nConfig } from "@/i18n";
+import { routing } from "@/routing";
 
 type GetArticlesArgs = {
   limit?: number;
@@ -14,7 +14,7 @@ type GetArticlesArgs = {
 export const getArticles = async ({
   limit = 5,
   offset = 0,
-  locale = i18nConfig.defaultLocale,
+  locale = routing.defaultLocale,
 }: GetArticlesArgs): Promise<{
   totalPages: number;
   nodes: FragmentArticleTeaserFragment[];

@@ -12,7 +12,7 @@ import {
 } from "@/lib/zod/webform-submission-list";
 
 import { auth } from "@/auth";
-import { LinkWithLocale } from "@/navigation";
+import { LinkWithLocale } from "@/routing";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
