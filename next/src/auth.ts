@@ -6,6 +6,9 @@ import { drupalClientViewer } from "./lib/drupal/drupal-client";
 
 import { env } from "@/env";
 
+export const DEFAULT_LOGIN_URL = "/auth/login";
+export const DEFAULT_LOGIN_REDIRECT_URL = "/";
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -13,8 +16,8 @@ export const {
   signOut,
 } = NextAuth({
   pages: {
-    signIn: "/auth/login",
-    error: "/auth/login",
+    signIn: DEFAULT_LOGIN_URL,
+    error: DEFAULT_LOGIN_URL,
   },
   // We set the maxAge of the session to the same value as the token expiration
   // with the idea that the user will be logged out automatically when the token

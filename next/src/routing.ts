@@ -39,6 +39,7 @@ export const routing = defineRouting({
     },
   },
 });
+
 export const {
   Link: LinkWithLocale,
   redirect: redirectWithLocale,

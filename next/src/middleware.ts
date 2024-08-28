@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 
-import { auth } from "./auth";
+import { auth, DEFAULT_LOGIN_REDIRECT_URL, DEFAULT_LOGIN_URL } from "./auth";
 import { routing } from "./routing";
-
-const DEFAULT_LOGIN_URL = "/auth/login";
 
 // Auth routes & protected routes
 // Add more routes as needed.
@@ -41,8 +39,7 @@ const authMiddleware = (request: NextRequest, ctx: AppRouteHandlerFnContext) =>
       req.nextUrl.pathname.startsWith(route),
     );
 
-    // Redirect to default login page with requested URL as callbackUrl if accessing a protected route
-    // without being logged in
+    // Redirect to default login page with requested URL as callbackUrl if unauthenticated
     if (isProtectedRoute) {
       if (!isLoggedIn) {
         return NextResponse.redirect(
@@ -57,7 +54,9 @@ const authMiddleware = (request: NextRequest, ctx: AppRouteHandlerFnContext) =>
     // Redirect to frontpage if accessing an auth route while being logged in
     if (isAuthRoute) {
       if (isLoggedIn) {
-        return NextResponse.redirect(new URL("/", req.nextUrl));
+        return NextResponse.redirect(
+          new URL(DEFAULT_LOGIN_REDIRECT_URL, req.nextUrl),
+        );
       }
     }
 
