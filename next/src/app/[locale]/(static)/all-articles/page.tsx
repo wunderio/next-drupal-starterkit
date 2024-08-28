@@ -6,6 +6,8 @@ import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
 
 import ArticlesPagination from "./_components/articles-pagination";
 
+import { getPathname } from "@/routing";
+
 type ArticlesListingPageParams = {
   params: {
     locale: string;
@@ -16,11 +18,27 @@ type ArticlesListingPageParams = {
   };
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params: { locale },
+}: ArticlesListingPageParams): Promise<Metadata> {
   const t = await getTranslations();
+
+  // Example: This page accepts search params like `?page=1`.
+  // A canonical link informs search engines that only the
+  // version without search params should be indexed.
+  const pathname = getPathname({
+    //@ts-expect-error
+    locale,
+    href: {
+      pathname: "/all-articles",
+    },
+  });
 
   return {
     title: t("all-articles"),
+    alternates: {
+      canonical: "/" + locale + pathname,
+    },
   };
 }
 
