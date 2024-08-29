@@ -185,6 +185,32 @@ The environment variables used by the frontend are also checked for type safety.
 
 The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` path that can be submitted to search engines.
 
+### Testing with Cypress
+
+The template includes example tests to be run with Cypress. The Lando setup includes a headless browser and Cypress, so you can run the tests locally without the need to install anything else, but it won't be able to use the visual Cypress application. See below for more details.
+
+#### Running tests locally inside Lando on the command line
+
+To run the Cypress tests inside Lando:
+
+1. make sure the backend is running
+2. run `lando npm run build` to build the frontend
+3. run `lando npm run start` to start serving the frontend
+4. open another terminal and run `lando npm run cypress:run` to start the Cypress test runner
+
+A video of the run will be recorded, and it will be available at `next/cypress/videos`.
+
+#### Using the Cypress application
+
+If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work:
+
+1. ensure you are using the correct node version, matching what we use inside Lando (see the `.lando.yml` file for details)
+2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
+3. check which version of Cypress is specified in `next/package.json` and install the same version on your host computer globally with `npm install -g cypress@<version>`
+4. while in the `/next` directory, run `npm run cypress:open` (notice that there's no `lando` at the beginning of the command).
+
+You can then run your tests inside the Cypress application.
+
 #### Redis caching
 
 The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. Both the ddev and lando setup include redis by default.
