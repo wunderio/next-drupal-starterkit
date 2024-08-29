@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { InputHTMLAttributes, useId } from "react";
 import { InputViewProps } from "@elastic/react-search-ui-views";
 
@@ -11,13 +11,13 @@ export function SearchBoxInput({
   getInputProps,
   getButtonProps,
 }: InputViewProps) {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const buttonId = useId();
   return (
-    <div className="relative mx-auto h-14 w-full max-w-xl bg-primary-200">
+    <div className="relative w-full max-w-xl mx-auto h-14 bg-primary-200">
       <SearchIcon
         aria-hidden
-        className="pointer-events-none absolute left-3 top-3 z-10 h-8 w-8 text-graysuit"
+        className="absolute z-10 w-8 h-8 pointer-events-none left-3 top-3 text-graysuit"
       />
       <Input
         {...getInputProps({

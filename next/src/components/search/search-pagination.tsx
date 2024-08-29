@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { Paging } from "@elastic/react-search-ui";
 import clsx from "clsx";
 
@@ -10,17 +10,17 @@ import { Button } from "@/ui/button";
  * Pagination component. To be used within the context of @elastic/react-search-ui.
  */
 export function Pagination() {
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <Paging
       view={({ current, totalPages, onChange }) => (
-        <div className="flex w-full items-center justify-between">
+        <div className="flex items-center justify-between w-full">
           <Button
             variant="tertiary"
             onClick={() => onChange(current - 1)}
             disabled={current === 1}
           >
-            <Arrow className="mr-4 h-6 w-6 rotate-90" aria-hidden />
+            <Arrow className="w-6 h-6 mr-4 rotate-90" aria-hidden />
             {t("search-previous")}
           </Button>
 
@@ -49,7 +49,7 @@ export function Pagination() {
             disabled={current === totalPages}
           >
             {t("search-next")}
-            <Arrow className="ml-4 h-6 w-6 -rotate-90" aria-hidden />
+            <Arrow className="w-6 h-6 ml-4 -rotate-90" aria-hidden />
           </Button>
         </div>
       )}

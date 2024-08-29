@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import {
   BaseContainerProps,
   Rename,
@@ -27,7 +27,7 @@ export function PagingInfoView({
   totalResults,
   ...rest
 }: PagingInfoViewProps & React.HTMLAttributes<HTMLDivElement>) {
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <div className={clsx(className, "text-sm")} {...rest}>
       {t("search-showing")} <strong>{end}</strong> {t("search-out-of")}{" "}

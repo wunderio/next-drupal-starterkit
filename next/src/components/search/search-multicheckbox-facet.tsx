@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { FacetViewProps } from "@elastic/react-search-ui-views";
 import type { FieldValue } from "@elastic/search-ui";
@@ -15,7 +15,7 @@ export function MultiCheckboxFacet({
   options,
   showMore,
 }: FacetViewProps) {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const id = useId();
 
   if (!options.length) {
@@ -24,7 +24,7 @@ export function MultiCheckboxFacet({
 
   return (
     <section className="mb-4">
-      <div className="mb-5 text-heading-xs font-bold text-steelgray">
+      <div className="mb-5 font-bold text-heading-xs text-steelgray">
         {t("filter-by", { label })}
       </div>
       <ul className="mb-2">
@@ -54,7 +54,7 @@ export function MultiCheckboxFacet({
       {showMore && (
         <button
           type="button"
-          className="rounded border border-primary-500 bg-transparent px-4 py-2 text-sm font-bold text-primary-600 hover:border-transparent hover:bg-primary-500 hover:text-white"
+          className="px-4 py-2 text-sm font-bold bg-transparent border rounded border-primary-500 text-primary-600 hover:border-transparent hover:bg-primary-500 hover:text-white"
           onClick={onMoreClick}
           aria-label={t("search-show-more-options")}
         >
