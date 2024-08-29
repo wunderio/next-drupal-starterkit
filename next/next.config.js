@@ -16,11 +16,11 @@ const nextConfig = {
       : // If no build number is available, we generate a random build ID.
         crypto.randomBytes(20).toString("hex");
   },
-  // cacheHandler:
-  //   // If the environment has a redis host set, we use a cache handler:
-  //   process.env.NODE_ENV === "production"
-  //     ? require.resolve("./cache-handler.mjs")
-  //     : undefined,
+  cacheHandler:
+    // If the environment has a redis host set, we use a cache handler:
+    process.env.NODE_ENV === "production"
+      ? require.resolve("./cache-handler.mjs")
+      : undefined,
   poweredByHeader: false,
   images: {
     remotePatterns: [
