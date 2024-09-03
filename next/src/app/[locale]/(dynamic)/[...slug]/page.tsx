@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import { draftMode } from "next/headers";
-import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getDraftData } from "next-drupal/draft";
 import { unstable_setRequestLocale } from "next-intl/server";
+import { draftMode } from "next/headers";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
 
 import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
@@ -22,6 +22,7 @@ type NodePageParams = {
 export async function generateMetadata({
   params: { locale, slug },
 }: NodePageParams): Promise<Metadata> {
+  // Construct the path from the slug array.
   const path = "/" + slug.join("/");
 
   // Fetch the node entity from Drupal used to generate metadata.
@@ -41,7 +42,7 @@ export async function generateMetadata({
   return metadata;
 }
 
-// Generate the static paths for all node types.
+// Generates static paths for all node types.
 export async function generateStaticParams({
   params: { locale },
 }: NodePageParams) {
@@ -76,6 +77,7 @@ export default async function NodePage({
 }: NodePageParams) {
   unstable_setRequestLocale(locale);
 
+  // Construct the path from the slug array.
   const path = "/" + slug.join("/");
 
   // Are we in Next.js draft mode?
@@ -101,40 +103,14 @@ export default async function NodePage({
   // Extract the node entity from the query result:
   let node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
-  // Node not found:
-  if (!node) {
-    notFound();
-  }
-
-  /*
-  TODO: App router doesnt have revalidateReason😞
-  if (!node) {
-    switch (revalidateReason) {
-      case "build":
-        // Pages returned from getStaticPaths should always exist. Abort the build:
-        throw new Error(
-          `Node not found in GetNodeByPath query response with $path: "${path}" and $langcode: "${locale}".`,
-        );
-      case "stale":
-      case "on-demand":
-      default:
-        // Not an error, the requested node just doesn't exist. Return 404:
-        return {
-          notFound: true,
-          revalidate: REVALIDATE_LONG,
-        };
-    }
-  }
-  */
-
-  // Node is not published:
-  if (!isDraftMode && node.status !== true) {
+  // Node not found or is not published:
+  if (!node || (!isDraftMode && node.status !== true)) {
     notFound();
   }
 
   // Node is actually a frontpage:
   if (!isDraftMode && node.__typename === "NodeFrontpage") {
-    redirect(locale);
+    redirect(`/${locale}`);
   }
 
   // When in draftMode, we could be requesting a specific revision.
@@ -150,7 +126,6 @@ export default async function NodePage({
       typeof draftData.resourceVersion === "string" &&
       draftData.resourceVersion !== "rel:latest-version"
     ) {
-      // Get the node id from the entity we already have:
       const revisionId = draftData.resourceVersion.split(":").slice(1);
       const revisionPath = `/node/${node.id}/revisions/${revisionId}/view`;
       const revisionData = await getNodeQueryResult(
@@ -163,7 +138,7 @@ export default async function NodePage({
       // display the entity at the requested revision:
       node = extractEntityFromRouteQueryResult(revisionData);
       if (!node) {
-        notFound;
+        notFound();
       }
     }
   }
