@@ -1,4 +1,4 @@
 storybook-static
 node_modules
 .next
-lib/gql
+/src/lib/gql
