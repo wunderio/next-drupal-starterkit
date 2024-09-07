@@ -1,6 +1,6 @@
 import { FragmentNodeTranslationFragment } from "@/lib/gql/graphql";
 
-import { routing } from "@/routing";
+import { routing } from "@/i18n/routing";
 
 export const languageLinks = {
   en: {

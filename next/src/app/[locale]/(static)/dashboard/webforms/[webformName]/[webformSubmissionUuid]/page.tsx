@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 import { HeadingPage } from "@/components/heading--page";
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
@@ -10,7 +10,7 @@ import {
 } from "@/lib/zod/webform-submission";
 
 import { auth } from "@/auth";
-import { LinkWithLocale } from "@/routing";
+import { LinkWithLocale } from "@/i18n/routing";
 
 type DashboardPageParams = {
   params: {
@@ -32,7 +32,6 @@ export default async function DashboardPage({
   params: { locale, webformName, webformSubmissionUuid },
 }: DashboardPageParams) {
   unstable_setRequestLocale(locale);
-
   const t = await getTranslations();
 
   const session = await auth();

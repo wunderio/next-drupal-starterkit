@@ -3,7 +3,7 @@ import { LISTING_ARTICLES } from "../graphql/queries";
 
 import { drupalClientViewer } from "./drupal-client";
 
-import { routing } from "@/routing";
+import { routing } from "@/i18n/routing";
 
 export async function getArticleTeasers({
   limit = 10,

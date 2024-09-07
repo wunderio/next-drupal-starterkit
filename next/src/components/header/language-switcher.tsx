@@ -1,7 +1,7 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useLanguageLinks } from "@/lib/contexts/language-links-context";
@@ -9,7 +9,7 @@ import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import { cn, removeLocaleFromPath } from "@/lib/utils";
 import LanguageIcon from "@/styles/icons/language.svg";
 
-import { LinkWithLocale, routing } from "@/routing";
+import { LinkWithLocale, routing } from "@/i18n/routing";
 
 export function LanguageSwitcher() {
   const t = useTranslations();

@@ -3,7 +3,7 @@ import { ClassValue } from "cva/types";
 import { twMerge } from "tailwind-merge";
 
 import { env } from "@/env";
-import { routing } from "@/routing";
+import { routing } from "@/i18n/routing";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

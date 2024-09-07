@@ -6,7 +6,7 @@ import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
 
 import ArticlesPagination from "./_components/articles-pagination";
 
-import { getPathname } from "@/routing";
+import { getPathname } from "@/i18n/routing";
 
 type ArticlesListingPageParams = {
   params: {

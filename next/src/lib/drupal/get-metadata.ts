@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 
 import { env } from "@/env";
-import { routing } from "@/routing";
+import { routing } from "@/i18n/routing";
 
 interface MetaProps {
   title?: string;

@@ -11,7 +11,7 @@ import {
 } from "@/lib/utils";
 
 import { env } from "@/env";
-import { routing } from "@/routing";
+import { routing } from "@/i18n/routing";
 
 const locales = routing.locales;
 

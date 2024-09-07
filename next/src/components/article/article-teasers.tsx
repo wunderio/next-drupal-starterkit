@@ -6,7 +6,7 @@ import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
 import { ArticleTeaser } from "./article-teaser";
 
-import { LinkWithLocale } from "@/routing";
+import { LinkWithLocale } from "@/i18n/routing";
 import { buttonVariants } from "@/ui/button";
 
 interface LatestArticlesProps {
