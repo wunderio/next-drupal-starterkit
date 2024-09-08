@@ -20,9 +20,6 @@
     "graphql-codegen:watch": "npm run codegen-access-token && graphql-codegen  --config codegen.ts --watch"
   },
   "dependencies": {
-    "@elastic/react-search-ui": "1.21.1",
-    "@elastic/react-search-ui-views": "1.21.1",
-    "@elastic/search-ui": "1.21.1",
     "@neshca/cache-handler": "^1.5.1",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-checkbox": "^1.1.1",
