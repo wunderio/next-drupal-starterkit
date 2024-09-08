@@ -14,8 +14,12 @@ import {
 import { auth } from "@/auth";
 import { LinkWithLocale } from "@/i18n/routing";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations();
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  const t = await getTranslations({ locale });
 
   return {
     title: t("user-dashboard"),

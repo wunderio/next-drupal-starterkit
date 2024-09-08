@@ -97,6 +97,21 @@ export const addSitemapLanguageVersionsOfFrontpage = (translations: any) => {
   return languages;
 };
 
+/**
+ * Removes the specified locale from the beginning of the path if present.
+ *
+ * This function is useful when you want to standardize URLs by removing
+ * the locale prefix, particularly for default or non-localized paths.
+ *
+ * @param {string} locale - The locale to remove (e.g., "en", "fi").
+ * @param {string} path - The full path from which to remove the locale (e.g., "/en/about").
+ *
+ * @returns {string} - The path with the locale removed if it was present.
+ *                     If the locale is not at the start of the path, the original path is returned.
+ *
+ * @example
+ * removeLocaleFromPath("en", "/en/about"); // Returns: "/about"
+ */
 export function removeLocaleFromPath(locale: string, path: string) {
   return path.replace(`/${locale}`, "");
 }

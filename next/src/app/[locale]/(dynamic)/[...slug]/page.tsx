@@ -1,12 +1,12 @@
 import { Metadata } from "next";
-import { getDraftData } from "next-drupal/draft";
-import { unstable_setRequestLocale } from "next-intl/server";
 import { draftMode } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { getDraftData } from "next-drupal/draft";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
-import { getMetadata } from "@/lib/drupal/get-metadata";
+import { generateNodeMetadata } from "@/lib/drupal/generate-node-metadata";
 import { getNodeQueryResult, getNodeStaticPaths } from "@/lib/drupal/get-node";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import {
@@ -30,13 +30,12 @@ export async function generateMetadata({
   const node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   // Generate metadata for the node entity.:
-  const metadata = await getMetadata({
+  const metadata = await generateNodeMetadata({
     title: node.title,
     metatags: node.metatag as FragmentMetaTagFragment[],
-    context: {
-      path,
-      locale,
-    },
+    translations: node.translations,
+    path,
+    locale,
   });
 
   return metadata;

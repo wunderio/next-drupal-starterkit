@@ -4,12 +4,12 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import { ArticleTeasers } from "@/components/article/article-teasers";
 import { ContactList } from "@/components/contact-list";
-import { ContactForm } from "@/components/forms/contact-form";
+import { ContactFormContainer } from "@/components/forms/contact-form-container";
 import { LogoStrip } from "@/components/logo-strip";
 import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
+import { generateNodeMetadata } from "@/lib/drupal/generate-node-metadata";
 import { getArticleTeasers } from "@/lib/drupal/get-article-teasers";
-import { getMetadata } from "@/lib/drupal/get-metadata";
 import { getNodeQueryResult } from "@/lib/drupal/get-node";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
@@ -29,14 +29,13 @@ export async function generateMetadata({
   const data = await getNodeQueryResult(path, locale);
   const nodeEntity = extractEntityFromRouteQueryResult(data);
 
-  // get metadata for the frontpage node.
-  const metadata = await getMetadata({
+  // Get metadata for the frontpage node.
+  const metadata = await generateNodeMetadata({
     title: nodeEntity.title,
     metatags: nodeEntity.metatag as FragmentMetaTagFragment[],
-    context: {
-      path,
-      locale,
-    },
+    path: "/",
+    locale,
+    translations: nodeEntity.translations,
   });
 
   return metadata;
@@ -77,7 +76,7 @@ export default async function FrontPage({
     <>
       <Node node={frontpage} />
       <Divider className="max-w-4xl" />
-      <ContactForm />
+      <ContactFormContainer />
       <Divider className="max-w-4xl" />
       <ArticleTeasers
         heading={t("promoted-articles")}

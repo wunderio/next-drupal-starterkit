@@ -2,23 +2,30 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
+import { TypedRouteEntity } from "@/types/graphql";
+
+import { removeLocaleFromPath } from "../utils";
 
 import { env } from "@/env";
 import { routing } from "@/i18n/routing";
 
 interface MetaProps {
   title?: string;
-  context: { path: string; locale: string };
+  path: string;
+  locale: string;
+  translations?: TypedRouteEntity["translations"];
   metatags?: FragmentMetaTagFragment[];
 }
 
 type AttributeKey = keyof NonNullable<FragmentMetaTagFragment>["attributes"];
 
 // todo: this should handle more meta tags, e.g. location, keywords, etc (and maybe generally arbitrary meta tags?)
-export async function getMetadata({
+export async function generateNodeMetadata({
   title,
   metatags,
-  context: { path, locale },
+  translations,
+  locale,
+  path,
 }: MetaProps): Promise<Metadata> {
   const t = await getTranslations();
 
@@ -35,26 +42,37 @@ export async function getMetadata({
   const data = {
     title: getTag("title")?.content ?? title,
     description: getTag("description")?.content ?? t("meta-site-description"),
-    canonical: `${env.NEXT_PUBLIC_FRONTEND_URL}${languagePathFragment}${
-      path !== "/" ? path : ""
-    }`,
+    canonical: `${languagePathFragment}${path}`,
     // imageSrc:
     //   getTag("image_src", "rel")?.href ||
     //   `${env.NEXT_PUBLIC_FRONTEND_URL}/metatags_default_image.png`,
   };
 
-  const computedTitle = data.title
-    ? data.title.concat(` | ${t("meta-site-name")}`)
-    : t("meta-site-name");
+  const alternateLanguages = Object.fromEntries(
+    translations?.map((t) => {
+      const locale = t.langcode.id;
+      const href = removeLocaleFromPath(
+        routing.defaultLocale,
+        path === "/" ? `/${locale}` : t.path,
+      );
+
+      return [locale, href || "/"];
+    }),
+  );
 
   const metadata = {
-    title: computedTitle,
+    metadataBase: new URL(env.NEXT_PUBLIC_FRONTEND_URL),
+    title: data.title,
     description: data.description,
+    alternates: {
+      canonical: data.canonical,
+      languages: alternateLanguages,
+    },
     openGraph: {
-      title: computedTitle,
+      title: data.title,
       description: data.description,
-      type: "website",
       url: data.canonical,
+      type: "website",
       siteName: t("meta-site-name"),
       //   images: [
       //     {

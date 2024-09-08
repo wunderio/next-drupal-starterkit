@@ -21,7 +21,7 @@ type ArticlesListingPageParams = {
 export async function generateMetadata({
   params: { locale },
 }: ArticlesListingPageParams): Promise<Metadata> {
-  const t = await getTranslations();
+  const t = await getTranslations({ locale });
 
   // Example: This page accepts search params like `?page=1`.
   // A canonical link informs search engines that only the

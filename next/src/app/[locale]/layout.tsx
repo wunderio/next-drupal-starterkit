@@ -1,16 +1,20 @@
 import "@/styles/globals.css";
 
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Viewport } from "next";
+import { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, unstable_setRequestLocale } from "next-intl/server";
+import {
+  getMessages,
+  getTranslations,
+  unstable_setRequestLocale,
+} from "next-intl/server";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import AuthProvider from "@/components/auth-provider";
+import DraftAlert from "@/components/draft-alert";
 import { Footer } from "@/components/footer/footer";
 import ReactQueryClientProvider from "@/components/query-client-provider";
 import { inter, overpass } from "@/styles/fonts";
 
-import DraftAlert from "@/components/draft-alert";
 import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -24,6 +28,21 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
 };
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  const t = await getTranslations({ locale });
+
+  return {
+    title: {
+      template: `%s | ${t("meta-site-name")}`,
+      default: t("meta-site-name"),
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
