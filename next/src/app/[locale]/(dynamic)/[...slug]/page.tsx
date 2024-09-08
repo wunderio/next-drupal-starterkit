@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import { getDraftData } from "next-drupal/draft";
-import { unstable_setRequestLocale } from "next-intl/server";
 import { draftMode } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { getDraftData } from "next-drupal/draft";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";

@@ -1,16 +1,17 @@
 import "@/styles/globals.css";
+import "instantsearch.css/themes/satellite-min.css";
 
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, unstable_setRequestLocale } from "next-intl/server";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import AuthProvider from "@/components/auth-provider";
+import DraftAlert from "@/components/draft-alert";
 import { Footer } from "@/components/footer/footer";
 import ReactQueryClientProvider from "@/components/query-client-provider";
 import { inter, overpass } from "@/styles/fonts";
 
-import DraftAlert from "@/components/draft-alert";
 import { routing } from "@/routing";
 
 export function generateStaticParams() {
