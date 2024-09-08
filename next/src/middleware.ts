@@ -1,8 +1,8 @@
-import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
 
-import { auth, DEFAULT_LOGIN_REDIRECT_URL, DEFAULT_LOGIN_URL } from "./auth";
 import { routing } from "./i18n/routing";
+import { auth, DEFAULT_LOGIN_REDIRECT_URL, DEFAULT_LOGIN_URL } from "./auth";
 
 // Auth routes & protected routes
 // Add more routes as needed.

@@ -1,8 +1,8 @@
 "use client";
 
-import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { useLocale, useTranslations } from "next-intl";
 import { Dispatch, forwardRef, ReactNode, SetStateAction } from "react";
+import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 
 import { cn, removeLocaleFromPath } from "@/lib/utils";
 import Chevron from "@/styles/icons/chevron-down.svg";

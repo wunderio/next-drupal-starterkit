@@ -2,7 +2,7 @@
 
 import { getLocale } from "next-intl/server";
 
-import { drupalClientViewer } from "../drupal/drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 
 export async function registerAction(values: { name: string; email: string }) {
   const locale = await getLocale();
@@ -10,7 +10,7 @@ export async function registerAction(values: { name: string; email: string }) {
   const { name, email } = values;
 
   if (!name || !email) {
-    return { error: "Name and mail are required" };
+    return { success: false, error: "Name and mail are required" };
   }
 
   try {
@@ -38,11 +38,12 @@ export async function registerAction(values: { name: string; email: string }) {
 
     if (!result.ok) {
       return {
+        success: false,
         error: result.statusText,
       };
     }
 
-    return { success: true };
+    return { success: true, error: undefined };
   } catch (error) {
     console.error("Fetch error:", JSON.stringify(error.message, null, 2));
     return { error: error.message };
