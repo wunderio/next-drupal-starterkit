@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { AbortError } from "p-retry";
 
+import { GetNodeByPathQuery } from "../gql/graphql";
 import {
   GET_ENTITY_AT_DRUPAL_PATH,
   GET_STATIC_PATHS,
@@ -11,12 +12,11 @@ import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
 import { env } from "@/env";
 
 /**
- * Fetches the node entity at the given path.
- * Uses the react cache() function to cache the result during the request lifecycle.
- * Instead of using this on the pages, use the getNodeQueryResult() instead,
- * so dont need to pass the isDraftMode argument
+ * Fetches a node from Drupal.
+ * Uses react cache to avoid fetching the same node multiple times during the same render cycle.
+ *
  */
-export const fetchNodeQueryResult = cache(
+export const fetchNode = cache(
   async (path: string, locale: string, isDraftMode: boolean) => {
     const drupalClient = isDraftMode
       ? drupalClientPreviewer
@@ -34,13 +34,16 @@ export const fetchNodeQueryResult = cache(
   },
 );
 
-export async function getNodeQueryResult(
+/**
+ * Retrieves a node by path and locale.
+ */
+export async function getNodeByPathQuery(
   path: string,
   locale: string,
   isDraftMode: boolean = false,
-) {
+): Promise<GetNodeByPathQuery> {
   try {
-    const data = await fetchNodeQueryResult(path, locale, isDraftMode);
+    const data = await fetchNode(path, locale, isDraftMode);
     return data;
   } catch (error) {
     const type =
@@ -62,7 +65,7 @@ export async function getNodeQueryResult(
 }
 
 /**
- * Function to get the static paths for the next.js static site generation.
+ * Fetches static paths for SSG.
  */
 export async function getNodeStaticPaths({
   limit,

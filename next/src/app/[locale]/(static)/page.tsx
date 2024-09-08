@@ -10,7 +10,7 @@ import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
 import { generateNodeMetadata } from "@/lib/drupal/generate-node-metadata";
 import { getArticleTeasers } from "@/lib/drupal/get-article-teasers";
-import { getNodeQueryResult } from "@/lib/drupal/get-node";
+import { getNodeByPathQuery } from "@/lib/drupal/get-node";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
@@ -26,7 +26,7 @@ export async function generateMetadata({
   const path = `/frontpage-${locale}`;
 
   // Fetch the frontpage node from Drupal used to generate metadata.
-  const data = await getNodeQueryResult(path, locale);
+  const data = await getNodeByPathQuery(path, locale);
   const nodeEntity = extractEntityFromRouteQueryResult(data);
 
   // Get metadata for the frontpage node.
@@ -55,7 +55,7 @@ export default async function FrontPage({
   // Here we fetch the frontpage node and the latest 3 promoted articles in parallel to
   // avoid unnecessary delays in rendering
   const [node, articleTeasers] = await Promise.all([
-    getNodeQueryResult(path, locale),
+    getNodeByPathQuery(path, locale),
     getArticleTeasers({ limit: 3, locale, sticky: true }),
   ]);
 

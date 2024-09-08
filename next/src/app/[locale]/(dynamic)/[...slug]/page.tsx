@@ -7,7 +7,7 @@ import { unstable_setRequestLocale } from "next-intl/server";
 import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
 import { generateNodeMetadata } from "@/lib/drupal/generate-node-metadata";
-import { getNodeQueryResult, getNodeStaticPaths } from "@/lib/drupal/get-node";
+import { getNodeByPathQuery, getNodeStaticPaths } from "@/lib/drupal/get-node";
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import {
   extractEntityFromRouteQueryResult,
@@ -26,7 +26,7 @@ export async function generateMetadata({
   const path = "/" + slug.join("/");
 
   // Fetch the node entity from Drupal used to generate metadata.
-  const nodeByPathResult = await getNodeQueryResult(path, locale);
+  const nodeByPathResult = await getNodeByPathQuery(path, locale);
   const node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   // Generate metadata for the node entity.:
@@ -83,8 +83,8 @@ export default async function NodePage({
   const isDraftMode = draftMode().isEnabled;
 
   // Get the node entity from Drupal. We tell the function if we are in draft mode so it can use the correct client
-  // in the getNodeQueryResult function.
-  const nodeByPathResult = await getNodeQueryResult(path, locale, isDraftMode);
+  // in the getNodeByPathQuery function.
+  const nodeByPathResult = await getNodeByPathQuery(path, locale, isDraftMode);
 
   // The response will contain either a redirect or node data.
   // If it's a redirect, redirect to the new path:
@@ -127,7 +127,7 @@ export default async function NodePage({
     ) {
       const revisionId = draftData.resourceVersion.split(":").slice(1);
       const revisionPath = `/node/${node.id}/revisions/${revisionId}/view`;
-      const revisionData = await getNodeQueryResult(
+      const revisionData = await getNodeByPathQuery(
         revisionPath,
         locale,
         isDraftMode,
