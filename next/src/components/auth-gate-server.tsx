@@ -1,8 +1,6 @@
-"use client";
+import { getTranslations } from "next-intl/server";
 
-import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
-
+import { auth } from "@/auth";
 import { StatusMessage } from "@/ui/status-message";
 
 type AuthGateProps = {
@@ -11,13 +9,18 @@ type AuthGateProps = {
   className?: string;
 };
 
-export function AuthGate({ children, text, className }: AuthGateProps) {
-  const t = useTranslations();
-  const { status } = useSession();
+export async function AuthGateServer({
+  children,
+  text,
+  className,
+}: AuthGateProps) {
+  const session = await auth();
 
-  if (status === "authenticated") {
+  if (session) {
     return <>{children}</>;
   }
+
+  const t = await getTranslations();
 
   return (
     <StatusMessage
