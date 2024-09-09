@@ -10,7 +10,7 @@ export const env = createEnv({
     DRUPAL_CLIENT_VIEWER_SECRET: zod.string(),
     DRUPAL_REVALIDATE_SECRET: zod.string(),
     NEXT_IMAGE_DOMAIN: zod.string(),
-    ELASTICSEARCH_HOST: zod.string(),
+    ES_HOST: zod.string(),
   },
   client: {
     NEXT_PUBLIC_DRUPAL_BASE_URL: zod.string().url(),
@@ -28,7 +28,7 @@ export const env = createEnv({
     NEXT_IMAGE_DOMAIN: process.env.NEXT_IMAGE_DOMAIN,
     NEXT_PUBLIC_DRUPAL_BASE_URL: process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
     NEXT_PUBLIC_FRONTEND_URL: process.env.NEXT_PUBLIC_FRONTEND_URL,
-    ELASTICSEARCH_HOST: process.env.ELASTICSEARCH_HOST,
+    ES_HOST: process.env.ES_HOST,
   },
   skipValidation: process.env.STORYBOOK === "true",
   /* eslint-enable n/no-process-env */

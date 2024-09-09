@@ -14,7 +14,6 @@ php:
     DRUPAL_CLIENT_VIEWER_SECRET: ${DRUPAL_CLIENT_VIEWER_SECRET}
     DRUPAL_REVALIDATE_SECRET: ${DRUPAL_REVALIDATE_SECRET}
     WUNDER_NEXT_FRONTEND_URL: https://<|NEXT_DOMAIN|>
-    ELASTICSEARCH_HOST: ${ELASTICSEARCH_HOST}
   hashsalt: ${HASHSALT}
 
   # This section is used in the template only, it will reinstall the site and apply

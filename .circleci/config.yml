@@ -150,7 +150,7 @@ commands:
             echo "export AUTH_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export DRUPAL_CLIENT_ID=$drupal_client_id" >> "$BASH_ENV"
             echo "export DRUPAL_CLIENT_VIEWER_ID=$drupal_client_viewer_id" >> "$BASH_ENV"
-            echo "export ELASTICSEARCH_HOST=$elasticsearch_host" >> "$BASH_ENV"
+            echo "export ES_HOST=$elasticsearch_host" >> "$BASH_ENV"
 
             echo "Expanding special variable DRUPAL_DOMAIN = $drupal_domain ..."
             sed -i -e "s/<|DRUPAL_DOMAIN|>/$drupal_domain/g" $envvars_file
@@ -161,8 +161,8 @@ commands:
             echo "Expanding special variable DRUPAL_CLIENT_ID = $drupal_client_id ..."
             sed -i -e "s/<|DRUPAL_CLIENT_ID|>/$drupal_client_id/g" $envvars_file
             
-            echo "Expanding special variable ELASTICSEARCH_HOST = $elasticsearch_host ..."
-            sed -i -e "s/<|ELASTICSEARCH_HOST|>/$elasticsearch_host/g" $envvars_file
+            echo "Expanding special variable ES_HOST = $elasticsearch_host ..."
+            sed -i -e "s/<|ES_HOST|>/$elasticsearch_host/g" $envvars_file
 
             echo "Expanding special variable DRUPAL_CLIENT_VIEWER_ID = $drupal_client_viewer_id ..."
             sed -i -e "s/<|DRUPAL_CLIENT_VIEWER_ID|>/$drupal_client_viewer_id/g" $envvars_file

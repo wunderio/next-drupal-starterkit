@@ -23,7 +23,7 @@ services:
       AUTH_URL: https://<|NEXT_DOMAIN|>
       NEXT_TELEMETRY_DISABLED: 1
       AUTH_TRUST_HOST: true
-      ELASTICSEARCH_HOST: <|ELASTICSEARCH_HOST|>
+      ES_HOST: <|ES_HOST|>
     # Autoscaling is enabled by default, because we want to test that the frontend
     # can work with redis.
     autoscaling:

@@ -43,7 +43,7 @@ web_environment:
   - REDIS_HOST=redis
   - REDIS_PASS=redis
    # Environment variables for elasticsearch
-  - ELASTICSEARCH_HOST=elasticsearch
+  - ES_HOST=elasticsearch
 
 corepack_enable: false
 web_extra_exposed_ports:

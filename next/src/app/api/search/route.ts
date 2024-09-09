@@ -5,7 +5,7 @@ import { env } from "@/env";
 
 const apiClient = API({
   connection: {
-    host: `http://${env.ELASTICSEARCH_HOST}:9200`,
+    host: `http://${env.ES_HOST}:9200`,
   },
   search_settings: {
     highlight_attributes: ["title"],
