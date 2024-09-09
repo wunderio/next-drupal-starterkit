@@ -153,6 +153,7 @@ services:
         AUTH_URL: https://frontend.lndo.site
         REDIS_HOST: redis
         REDIS_PASS: "mypassword"
+        ELASTICSEARCH_HOST: elasticsearch
     build:
       - "cd next && npm ci"
     scanner: false

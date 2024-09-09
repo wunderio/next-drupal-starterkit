@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import API from "@searchkit/api";
 
+import { env } from "@/env";
+
 const apiClient = API({
   connection: {
-    host: "http://elasticsearch:9200",
+    host: `http://${env.ELASTICSEARCH_HOST}:9200`,
   },
   search_settings: {
     highlight_attributes: ["title"],
