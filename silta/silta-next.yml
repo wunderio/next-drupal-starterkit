@@ -33,7 +33,7 @@ nginx:
   content_security_policy: >- # Lines below are joined without line breaks.
     upgrade-insecure-requests;
     default-src 'none';
-    script-src 'self' youtube.com https://www.youtube.com;
+    script-src 'unsafe-inline' 'self' youtube.com https://www.youtube.com;
     frame-src youtube.com https://www.youtube.com;
     style-src 'self' 'unsafe-inline';
     img-src 'self' data: *.wdr.io https://i.ytimg.com;
