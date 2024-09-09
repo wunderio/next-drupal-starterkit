@@ -12,7 +12,7 @@ services:
   node:
     env:
       NEXT_PUBLIC_FRONTEND_URL: https://next-drupal-starterkit.dev.wdr.io
-      NEXTAUTH_URL: https://next-drupal-starterkit.dev.wdr.io
+      AUTH_URL: https://next-drupal-starterkit.dev.wdr.io
 
 nginx:
   basicauth:
