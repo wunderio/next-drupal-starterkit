@@ -22,6 +22,7 @@ services:
       NEXT_IMAGE_DOMAIN: <|DRUPAL_DOMAIN|>
       NEXTAUTH_URL: https://<|NEXT_DOMAIN|>
       NEXT_TELEMETRY_DISABLED: 1
+      AUTH_TRUST_HOST: true
     # Autoscaling is enabled by default, because we want to test that the frontend
     # can work with redis.
     autoscaling:

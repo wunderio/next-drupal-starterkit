@@ -95,7 +95,7 @@ commands:
             if [[ $DRUPAL_ADMIN_PWD == *"not_secure_used_only_locally"* ]] \
             || [[ $DRUPAL_CLIENT_SECRET == *"not_secure_used_only_locally"* ]] \
             || [[ $DRUPAL_REVALIDATE_SECRET == *"not_secure_used_only_locally"* ]] \
-            || [[ $NEXTAUTH_SECRET == *"not_secure_used_only_locally"* ]]; then
+            || [[ $AUTH_SECRET == *"not_secure_used_only_locally"* ]]; then
               echo
               echo "Example secrets detected in configuration, failing build."
               echo
@@ -146,7 +146,7 @@ commands:
             echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=https://$drupal_domain" >> "$BASH_ENV"
             echo "export NEXT_IMAGE_DOMAIN=$drupal_domain" >> "$BASH_ENV"
             echo "export NEXT_PUBLIC_FRONTEND_URL=https://$next_domain" >> "$BASH_ENV"
-            echo "export NEXTAUTH_URL=https://$next_domain" >> "$BASH_ENV"
+            echo "export AUTH_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export DRUPAL_CLIENT_ID=$drupal_client_id" >> "$BASH_ENV"
             echo "export DRUPAL_CLIENT_VIEWER_ID=$drupal_client_viewer_id" >> "$BASH_ENV"
 
@@ -162,16 +162,16 @@ commands:
             echo "Expanding special variable DRUPAL_CLIENT_VIEWER_ID = $drupal_client_viewer_id ..."
             sed -i -e "s/<|DRUPAL_CLIENT_VIEWER_ID|>/$drupal_client_viewer_id/g" $envvars_file
 
-            echo "Expanding secrets DRUPAL_CLIENT_SECRET, DRUPAL_REVALIDATE_SECRET, NEXTAUTH_SECRET & HASHSALT = <redacted> ..."
+            echo "Expanding secrets DRUPAL_CLIENT_SECRET, DRUPAL_REVALIDATE_SECRET, AUTH_SECRET & HASHSALT = <redacted> ..."
             escaped_drupal_revalidate_secret=$(printf '%s\n' "$DRUPAL_REVALIDATE_SECRET" | sed -e 's/[\/&]/\\&/g')
             escaped_drupal_client_secret=$(printf '%s\n' "$DRUPAL_CLIENT_SECRET" | sed -e 's/[\/&]/\\&/g')
             escaped_drupal_client_viewer_secret=$(printf '%s\n' "$DRUPAL_CLIENT_VIEWER_SECRET" | sed -e 's/[\/&]/\\&/g')
-            escaped_nextauth_secret=$(printf '%s\n' "$NEXTAUTH_SECRET" | sed -e 's/[\/&]/\\&/g')
+            escaped_nextauth_secret=$(printf '%s\n' "$AUTH_SECRET" | sed -e 's/[\/&]/\\&/g')
             escaped_hashsalt=$(printf '%s\n' "$HASHSALT" | sed -e 's/[\/&]/\\&/g')
             sed -i -e "s/\${DRUPAL_CLIENT_SECRET}/$escaped_drupal_client_secret/g" $envvars_file
             sed -i -e "s/\${DRUPAL_CLIENT_VIEWER_SECRET}/$escaped_drupal_client_viewer_secret/g" $envvars_file
             sed -i -e "s/\${DRUPAL_REVALIDATE_SECRET}/$escaped_drupal_revalidate_secret/g" $envvars_file
-            sed -i -e "s/\${NEXTAUTH_SECRET}/$escaped_nextauth_secret/g" $envvars_file
+            sed -i -e "s/\${AUTH_SECRET}/$escaped_nextauth_secret/g" $envvars_file
             sed -i -e "s/\${HASHSALT}/$escaped_hashsalt/g" $envvars_file
 
             echo "Expanding special variable DRUPAL_ADMIN_PWD = <redacted> ..."
