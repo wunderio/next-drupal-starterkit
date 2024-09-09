@@ -138,7 +138,7 @@ commands:
             next_domain=$next_release_name.$project_name.$CLUSTER_DOMAIN
             drupal_client_id=drupal-client-id
             drupal_client_viewer_id=drupal-client-viewer-id
-            elasticsearch_host=$drupal_release_name-es.$project_name
+            elasticsearch_host=$drupal_release_name.-es.$project_name
 
             if [ next_domain == "main-next" ]; then
               next_domain=$project_name.$CLUSTER_DOMAIN
