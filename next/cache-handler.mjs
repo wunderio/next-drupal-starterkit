@@ -5,9 +5,8 @@ import createLruHandler from "@neshca/cache-handler/local-lru";
 import createRedisHandler from "@neshca/cache-handler/redis-strings";
 import { createClient } from "redis";
 
-// We set this to a high value so redis will not automatically delete data on expiration, but keep it
-// as stale for a long period. This way, Next will be able to use it for its stale-while-revalidate logic.
-const defaultStaleAge = 3600 * 24 * 7;
+// This should match the REVALIDATE_LONG value in src/lib/constants.ts
+const defaultStaleAge = 60 * 10;
 
 CacheHandler.onCreation(async ({ buildId }) => {
   /** @type {import("redis").RedisClientType | undefined} */
@@ -96,7 +95,7 @@ CacheHandler.onCreation(async ({ buildId }) => {
     handlers: [handler],
     ttl: {
       defaultStaleAge,
-      estimateExpireAge: () => defaultStaleAge,
+      estimateExpireAge: (staleAge) => staleAge * 2,
     },
   };
 });
