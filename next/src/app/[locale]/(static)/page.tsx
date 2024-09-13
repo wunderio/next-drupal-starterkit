@@ -15,6 +15,7 @@ import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
 import { Divider } from "@/ui/divider";
+import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
 
 type FrontpageParams = {
   params: { locale: string };
@@ -24,20 +25,7 @@ export async function generateMetadata({
   params: { locale },
 }: FrontpageParams): Promise<Metadata> {
   const path = `/frontpage-${locale}`;
-
-  // Fetch the frontpage node from Drupal used to generate metadata.
-  const data = await getNodeByPathQuery(path, locale);
-  const nodeEntity = extractEntityFromRouteQueryResult(data);
-
-  // Get metadata for the frontpage node.
-  const metadata = await generateNodeMetadata({
-    title: nodeEntity.title,
-    metatags: nodeEntity.metatag as FragmentMetaTagFragment[],
-    path: "/",
-    locale,
-    translations: nodeEntity.translations,
-  });
-
+  const metadata = await getNodeMetadata(path, locale);
   return metadata;
 }
 
@@ -54,13 +42,17 @@ export default async function FrontPage({
 
   // Here we fetch the frontpage node and the latest 3 promoted articles in parallel to
   // avoid unnecessary delays in rendering
-  const [node, articleTeasers] = await Promise.all([
+  const [nodeByPathResult, articleTeasers] = await Promise.all([
     getNodeByPathQuery(path, locale),
     getArticleTeasers({ limit: 3, locale, sticky: true }),
   ]);
 
+  if (nodeByPathResult.error) {
+    throw new Error(nodeByPathResult.error);
+  }
+
   // Extract the frontpage node from the query result
-  const frontpage = extractEntityFromRouteQueryResult(node);
+  const frontpage = extractEntityFromRouteQueryResult(nodeByPathResult.data);
 
   // If the node does not exist or is not a frontpage, we throw an error
   if (!frontpage || !(frontpage.__typename === "NodeFrontpage")) {
