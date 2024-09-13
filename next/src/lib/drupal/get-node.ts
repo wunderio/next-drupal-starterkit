@@ -41,10 +41,13 @@ export async function getNodeByPathQuery(
   path: string,
   locale: string,
   isDraftMode: boolean = false,
-): Promise<GetNodeByPathQuery> {
+): Promise<{
+  data: GetNodeByPathQuery | null;
+  error: string | null;
+}> {
   try {
     const data = await fetchNode(path, locale, isDraftMode);
-    return data;
+    return { data: data, error: null };
   } catch (error) {
     const type =
       error instanceof AbortError
@@ -58,9 +61,9 @@ export async function getNodeByPathQuery(
         ? `Check graphql_compose logs: ${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/admin/reports`
         : "";
 
-    throw new Error(
-      `${type} Error during GetNodeByPath query with $path: "${path}" and $langcode: "${locale}". ${moreInfo}`,
-    );
+    const errorMessage = `${type} Error during GetNodeByPath query with $path: "${path}" and $langcode: "${locale}". ${moreInfo}`;
+    console.log(JSON.stringify(errorMessage, null, 2));
+    return { data: null, error: errorMessage };
   }
 }
 

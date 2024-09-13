@@ -48,17 +48,20 @@ export async function generateNodeMetadata({
     //   `${env.NEXT_PUBLIC_FRONTEND_URL}/metatags_default_image.png`,
   };
 
-  const alternateLanguages = Object.fromEntries(
-    translations?.map((t) => {
-      const locale = t.langcode.id;
-      const href = removeLocaleFromPath(
-        routing.defaultLocale,
-        path === "/" ? `/${locale}` : t.path,
-      );
+  // Generate alternate language links for the page:
+  const alternateLanguages =
+    translations &&
+    Object.fromEntries(
+      translations?.map((t) => {
+        const locale = t.langcode.id;
+        const href = removeLocaleFromPath(
+          routing.defaultLocale,
+          path === "/" ? `/${locale}` : t.path,
+        );
 
-      return [locale, href || "/"];
-    }),
-  );
+        return [locale, href || "/"];
+      }),
+    );
 
   const metadata = {
     metadataBase: new URL(env.NEXT_PUBLIC_FRONTEND_URL),
