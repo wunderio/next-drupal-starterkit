@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
-import { auth } from "@/auth";
+import { getAuth } from "@/lib/auth/get-auth";
+
 import { StatusMessage } from "@/ui/status-message";
 
 type AuthGateProps = {
@@ -14,7 +15,7 @@ export async function AuthGateServer({
   text,
   className,
 }: AuthGateProps) {
-  const session = await auth();
+  const session = await getAuth();
 
   if (session) {
     return <>{children}</>;

@@ -1,13 +1,13 @@
 import { SessionProvider } from "next-auth/react";
 
-import { auth } from "@/auth";
+import { getAuth } from "@/lib/auth/get-auth";
 
 export default async function AuthProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  const session = await getAuth();
 
   return <SessionProvider session={session}>{children}</SessionProvider>;
 }

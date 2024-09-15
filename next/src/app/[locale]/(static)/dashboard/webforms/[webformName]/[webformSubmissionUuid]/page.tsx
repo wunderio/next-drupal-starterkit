@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import { HeadingPage } from "@/components/heading--page";
+import { getAuth } from "@/lib/auth/get-auth";
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import {
   validateAndCleanupWebformSubmission,
   WebformSubmissionRaw,
 } from "@/lib/zod/webform-submission";
 
-import { auth } from "@/auth";
 import { LinkWithLocale } from "@/i18n/routing";
 
 type DashboardPageParams = {
@@ -34,7 +34,7 @@ export default async function DashboardPage({
   unstable_setRequestLocale(locale);
   const t = await getTranslations();
 
-  const session = await auth();
+  const session = await getAuth();
 
   const url = drupalClientViewer.buildUrl(
     `/${locale}/webform_rest/${webformName}/complete_submission/${webformSubmissionUuid}`,
