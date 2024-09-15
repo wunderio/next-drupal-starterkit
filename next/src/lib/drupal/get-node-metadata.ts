@@ -1,8 +1,10 @@
 import { Metadata } from "next";
-import { getNodeByPathQuery } from "./get-node";
-import { extractEntityFromRouteQueryResult } from "../graphql/utils";
-import { generateNodeMetadata } from "./generate-node-metadata";
+
 import { FragmentMetaTagFragment } from "../gql/graphql";
+import { extractEntityFromRouteQueryResult } from "../graphql/utils";
+
+import { generateNodeMetadata } from "./generate-node-metadata";
+import { getNodeByPathQuery } from "./get-node";
 
 export async function getNodeMetadata(
   path: string,

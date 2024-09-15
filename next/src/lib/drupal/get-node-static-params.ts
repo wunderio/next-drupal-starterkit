@@ -1,22 +1,30 @@
-import { getNodeStaticPaths } from "./get-node";
+import { GET_STATIC_PATHS } from "../graphql/queries";
+
+import { drupalClientViewer } from "./drupal-client";
 
 export async function getNodeStaticParams(
   nodeTypes: string[],
   locale: string,
   limit = 10,
 ) {
-  const paths = await getNodeStaticPaths({
-    limit,
-    locale,
+  // Fetch static paths for nodes.
+  const paths = await drupalClientViewer.doGraphQlRequest(GET_STATIC_PATHS, {
+    number: limit,
+    langcode: locale,
   });
 
-  // Dynamically gather paths based on the node types passed in.
-  const pathsArray = nodeTypes.reduce((acc, nodeType) => {
-    return [...acc, ...(paths?.[nodeType]?.nodes || [])];
-  }, []);
+  // Extract slugs from paths. We need to remove the locale prefix.
+  // For example, if the locale is "en", the path will be "/en/node/1" and we need to extract "node/1".
+  // We also need to split the path into an array of slugs. For example, "node/1" will be ["node", "1"].
+  const params = nodeTypes.reduce(
+    (acc, nodeType) => [
+      ...acc,
+      ...(paths?.[nodeType]?.nodes || []).map(({ path }) => ({
+        slug: path.replace(`/${locale}/`, "").split("/"),
+      })),
+    ],
+    [],
+  );
 
-  // Remove locale prefix and split the paths into an array of slugs.
-  return pathsArray.map(({ path }) => ({
-    slug: path.replace(`/${locale}/`, "").split("/"),
-  }));
+  return params;
 }
