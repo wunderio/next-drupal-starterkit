@@ -1,5 +1,5 @@
 module.exports = {
-  project: "next",
+  // project: "next",
   root: true,
   parserOptions: {
     ecmaVersion: "latest",

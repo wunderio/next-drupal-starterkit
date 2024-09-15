@@ -6,15 +6,13 @@ import { unstable_setRequestLocale } from "next-intl/server";
 
 import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
-import { generateNodeMetadata } from "@/lib/drupal/generate-node-metadata";
-import { getNodeByPathQuery, getNodeStaticPaths } from "@/lib/drupal/get-node";
-import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
+import { getNodeByPathQuery } from "@/lib/drupal/get-node";
+import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
+import { getNodeStaticParams } from "@/lib/drupal/get-node-static-params";
 import {
   extractEntityFromRouteQueryResult,
   extractRedirectFromRouteQueryResult,
 } from "@/lib/graphql/utils";
-import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
-import { getNodeStaticParams } from "@/lib/drupal/get-node-static-params";
 
 type NodePageParams = {
   params: { slug: string[]; locale: string };

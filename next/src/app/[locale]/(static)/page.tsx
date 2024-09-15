@@ -8,14 +8,12 @@ import { ContactFormContainer } from "@/components/forms/contact-form-container"
 import { LogoStrip } from "@/components/logo-strip";
 import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
-import { generateNodeMetadata } from "@/lib/drupal/generate-node-metadata";
 import { getArticleTeasers } from "@/lib/drupal/get-article-teasers";
 import { getNodeByPathQuery } from "@/lib/drupal/get-node";
-import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
+import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
 import { Divider } from "@/ui/divider";
-import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
 
 type FrontpageParams = {
   params: { locale: string };
