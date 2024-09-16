@@ -9,7 +9,7 @@ import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import { cn } from "@/lib/utils";
 import AccountIcon from "@/styles/icons/account-circle.svg";
 
-import { LinkWithLocale } from "@/routing";
+import { LinkWithLocale } from "@/i18n/routing";
 
 export function UserMenu() {
   const t = useTranslations();

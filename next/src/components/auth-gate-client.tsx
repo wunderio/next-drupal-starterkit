@@ -11,7 +11,7 @@ type AuthGateProps = {
   className?: string;
 };
 
-export function AuthGate({ children, text, className }: AuthGateProps) {
+export function AuthGateClient({ children, text, className }: AuthGateProps) {
   const t = useTranslations();
   const { status } = useSession();
 

@@ -5,7 +5,7 @@ import {
   createLanguageLinks,
   getStandardLanguageLinks,
 } from "@/lib/contexts/language-links";
-import { getNodeQueryResult } from "@/lib/drupal/get-node";
+import { getNodeByPathQuery } from "@/lib/drupal/get-node";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
 export default async function DynamicLayout({
@@ -16,11 +16,10 @@ export default async function DynamicLayout({
   params: { locale: string; slug: string[] };
 }) {
   unstable_setRequestLocale(locale);
-
   const path = Array.isArray(slug) ? `/${slug?.join("/")}` : slug;
 
-  const data = await getNodeQueryResult(path, locale);
-  const nodeEntity = extractEntityFromRouteQueryResult(data);
+  const nodeByPathResult = await getNodeByPathQuery(path, locale);
+  const nodeEntity = extractEntityFromRouteQueryResult(nodeByPathResult.data);
 
   // Add information about possible other language versions of this node.
   // Not all node types necessarily have translations enabled,

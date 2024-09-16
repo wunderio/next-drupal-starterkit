@@ -3,10 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
-import { createContactSubmissionAction } from "@/lib/actions/contact";
-
-import { AuthGate } from "../auth-gate";
-
+import { createContactSubmissionAction } from "@/app/_actions/contact";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
@@ -51,61 +48,50 @@ export function ContactForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit, onErrors)}
-      className="flex flex-col max-w-3xl gap-5 p-4 mx-auto mb-4 transition-all bg-white border rounded shadow-md border-finnishwinter hover:shadow-md"
-    >
-      <h2 className="font-bold text-heading-sm md:text-heading-md">
-        {t("form-title")}
-      </h2>
-      <AuthGate text={t("login-to-fill-form")}>
-        <>
-          <p>{t("form-description")}</p>
-          <div>
-            <Label htmlFor="name">{t("form-label-name")}</Label>
-            <Input
-              type="text"
-              id="name"
-              {...register("name", {
-                required: true,
-              })}
-            />
-          </div>
-          <div>
-            <Label htmlFor="email">{t("form-label-email")}</Label>
-            <Input
-              type="email"
-              id="email"
-              {...register("email", {
-                required: true,
-              })}
-            />
-          </div>
-          <div>
-            <Label htmlFor="subject">{t("form-label-subject")}</Label>
-            <Input
-              type="text"
-              id="subject"
-              {...register("subject", {
-                required: true,
-              })}
-            />
-          </div>
-          <div>
-            <Label htmlFor="message">{t("form-label-message")}</Label>
-            <Textarea
-              id="message"
-              {...register("message", {
-                required: true,
-              })}
-            />
-          </div>
+    <form onSubmit={handleSubmit(onSubmit, onErrors)}>
+      <div>
+        <Label htmlFor="name">{t("form-label-name")}</Label>
+        <Input
+          type="text"
+          id="name"
+          {...register("name", {
+            required: true,
+          })}
+        />
+      </div>
+      <div>
+        <Label htmlFor="email">{t("form-label-email")}</Label>
+        <Input
+          type="email"
+          id="email"
+          {...register("email", {
+            required: true,
+          })}
+        />
+      </div>
+      <div>
+        <Label htmlFor="subject">{t("form-label-subject")}</Label>
+        <Input
+          type="text"
+          id="subject"
+          {...register("subject", {
+            required: true,
+          })}
+        />
+      </div>
+      <div>
+        <Label htmlFor="message">{t("form-label-message")}</Label>
+        <Textarea
+          id="message"
+          {...register("message", {
+            required: true,
+          })}
+        />
+      </div>
 
-          <Button type="submit" disabled={isSubmitting}>
-            {t("form-submit")}
-          </Button>
-        </>
-      </AuthGate>
+      <Button type="submit" disabled={isSubmitting}>
+        {t("form-submit")}
+      </Button>
     </form>
   );
 }

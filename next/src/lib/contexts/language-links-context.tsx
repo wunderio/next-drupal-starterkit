@@ -8,7 +8,7 @@ import {
   languageLinks,
 } from "./language-links";
 
-import { usePathnameWithoutLocale } from "@/routing";
+import { usePathnameWithoutLocale } from "@/i18n/routing";
 
 const LanguageLinksContext = createContext<LanguageLinks>(languageLinks);
 

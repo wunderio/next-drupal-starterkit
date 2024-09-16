@@ -6,9 +6,9 @@ import { unstable_setRequestLocale } from "next-intl/server";
 
 import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
-import { getMetadata } from "@/lib/drupal/get-metadata";
-import { getNodeQueryResult, getNodeStaticPaths } from "@/lib/drupal/get-node";
-import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
+import { getNodeByPathQuery } from "@/lib/drupal/get-node";
+import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
+import { getNodeStaticParams } from "@/lib/drupal/get-node-static-params";
 import {
   extractEntityFromRouteQueryResult,
   extractRedirectFromRouteQueryResult,
@@ -22,23 +22,8 @@ type NodePageParams = {
 export async function generateMetadata({
   params: { locale, slug },
 }: NodePageParams): Promise<Metadata> {
-  // Construct the path from the slug array.
   const path = "/" + slug.join("/");
-
-  // Fetch the node entity from Drupal used to generate metadata.
-  const nodeByPathResult = await getNodeQueryResult(path, locale);
-  const node = extractEntityFromRouteQueryResult(nodeByPathResult);
-
-  // Generate metadata for the node entity.:
-  const metadata = await getMetadata({
-    title: node.title,
-    metatags: node.metatag as FragmentMetaTagFragment[],
-    context: {
-      path,
-      locale,
-    },
-  });
-
+  const metadata = await getNodeMetadata(path, locale);
   return metadata;
 }
 
@@ -46,26 +31,9 @@ export async function generateMetadata({
 export async function generateStaticParams({
   params: { locale },
 }: NodePageParams) {
-  // Get the first 10 paths for all node types.
-  const paths = await getNodeStaticPaths({
-    limit: 10,
-    locale,
-  });
-
-  // Combine all the paths into a single array.
-  // TODO: When adding more node types, make sure to add them here!
-  const pathsArray = [
-    ...(paths?.nodePages?.nodes || []),
-    ...(paths?.nodeArticles?.nodes || []),
-  ];
-
-  // Drupal returns the paths with the locale prefix, e.g. "/en/about".
-  // We need to remove the locale prefix and split the path into an array of slugs.
-  // e.g. "/en/articles/article-1" -> { slug: ["articles", "article-1"] }
-  const params = pathsArray.map(({ path }) => ({
-    slug: path.replace(`/${locale}/`, "").split("/"),
-  }));
-
+  // TODO: Add the node types you want to generate static paths in the array below.
+  const nodeTypes = ["nodePages", "nodeArticles"];
+  const params = await getNodeStaticParams(nodeTypes, locale, 10);
   return params;
 }
 
@@ -84,12 +52,19 @@ export default async function NodePage({
   const isDraftMode = draftMode().isEnabled;
 
   // Get the node entity from Drupal. We tell the function if we are in draft mode so it can use the correct client
-  // in the getNodeQueryResult function.
-  const nodeByPathResult = await getNodeQueryResult(path, locale, isDraftMode);
+  // in the getNodeByPathQuery function.
+  const nodeByPathResult = await getNodeByPathQuery(path, locale, isDraftMode);
+
+  if (nodeByPathResult.error) {
+    throw new Error(nodeByPathResult.error);
+  }
 
   // The response will contain either a redirect or node data.
   // If it's a redirect, redirect to the new path:
-  const redirectResult = extractRedirectFromRouteQueryResult(nodeByPathResult);
+  const redirectResult = extractRedirectFromRouteQueryResult(
+    nodeByPathResult.data,
+  );
+
   if (redirectResult) {
     // Set to temporary redirect for 302 and 307 status codes,
     // and permanent for all others.
@@ -101,14 +76,14 @@ export default async function NodePage({
   }
 
   // Extract the node entity from the query result:
-  let node = extractEntityFromRouteQueryResult(nodeByPathResult);
+  let node = extractEntityFromRouteQueryResult(nodeByPathResult.data);
 
   // Node not found or is not published:
   if (!node || (!isDraftMode && node.status !== true)) {
     notFound();
   }
 
-  // Node is actually a frontpage:
+  // If the node is a frontpage, redirect to the frontpage:
   if (!isDraftMode && node.__typename === "NodeFrontpage") {
     redirect(`/${locale}`);
   }
@@ -128,7 +103,7 @@ export default async function NodePage({
     ) {
       const revisionId = draftData.resourceVersion.split(":").slice(1);
       const revisionPath = `/node/${node.id}/revisions/${revisionId}/view`;
-      const revisionData = await getNodeQueryResult(
+      const revisionData = await getNodeByPathQuery(
         revisionPath,
         locale,
         isDraftMode,
@@ -136,7 +111,7 @@ export default async function NodePage({
 
       // Instead of the entity at the current revision, we want now to
       // display the entity at the requested revision:
-      node = extractEntityFromRouteQueryResult(revisionData);
+      node = extractEntityFromRouteQueryResult(revisionData.data);
       if (!node) {
         notFound();
       }

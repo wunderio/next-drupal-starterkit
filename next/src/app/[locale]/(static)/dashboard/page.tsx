@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import { HeadingPage } from "@/components/heading--page";
+import { getAuth } from "@/lib/auth/get-auth";
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { formatDate } from "@/lib/utils";
 import {
@@ -11,11 +12,14 @@ import {
   WebformSubmissionsListItem,
 } from "@/lib/zod/webform-submission-list";
 
-import { auth } from "@/auth";
-import { LinkWithLocale } from "@/routing";
+import { LinkWithLocale } from "@/i18n/routing";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations();
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  const t = await getTranslations({ locale });
 
   return {
     title: t("user-dashboard"),
@@ -30,7 +34,7 @@ export default async function DashboardPage({
   unstable_setRequestLocale(locale);
   const t = await getTranslations();
 
-  const session = await auth();
+  const session = await getAuth();
 
   const url = drupalClientViewer.buildUrl(
     `/${locale}/rest/my-webform-submissions?_format=json`,

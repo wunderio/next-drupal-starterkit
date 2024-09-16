@@ -1,47 +1,57 @@
-import { cache } from "react";
 import { AbortError } from "p-retry";
 
-import {
-  GET_ENTITY_AT_DRUPAL_PATH,
-  GET_STATIC_PATHS,
-} from "../graphql/queries";
+import { GET_ENTITY_AT_DRUPAL_PATH } from "../graphql/queries";
 
 import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
+import { queryCacher } from "./query-cacher";
 
 import { env } from "@/env";
 
 /**
- * Fetches the node entity at the given path.
- * Uses the react cache() function to cache the result during the request lifecycle.
- * Instead of using this on the pages, use the getNodeQueryResult() instead,
- * so dont need to pass the isDraftMode argument
+ * Function to directly fetch a node from Drupal by its path and locale.
+ *
+ * @param path The path of the node.
+ * @param locale The locale of the node.
+ * @param isDraftMode If true, fetches the draft version of the node.
+ * @returns The fetched node data or null if not found.
  */
-export const fetchNodeQueryResult = cache(
-  async (path: string, locale: string, isDraftMode: boolean) => {
-    const drupalClient = isDraftMode
-      ? drupalClientPreviewer
-      : drupalClientViewer;
+async function fetchNodeByPathQuery(
+  path: string,
+  locale: string,
+  isDraftMode: boolean,
+) {
+  const drupalClient = isDraftMode ? drupalClientPreviewer : drupalClientViewer;
+  return await drupalClient.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
+    path,
+    langcode: locale,
+  });
+}
 
-    const data = await drupalClient.doGraphQlRequest(
-      GET_ENTITY_AT_DRUPAL_PATH,
-      {
-        path,
-        langcode: locale,
-      },
-    );
+// Cache the fetchNodeByPathQuery function, cache options can be passed in the object.
+const cachedFetchNodeByPathQuery = queryCacher(fetchNodeByPathQuery);
 
-    return data;
-  },
-);
-
-export async function getNodeQueryResult(
+/**
+ * Function to retrieve a node by its Drupal path.
+ *
+ * @param path The Drupal path of the node.
+ * @param locale The language code for the locale of the node.
+ * @param isDraftMode Optional. Defaults to false. If true, fetches the draft version of the node.
+ * @returns An object containing the node data or an error message.
+ *
+ * @example
+ * const { data, error } = await getNodeByPathQuery('/about-us', 'en');
+ *
+ * // With draft mode enabled:
+ * const { data, error } = await getNodeByPathQuery('/about-us', 'en', true);
+ */
+export async function getNodeByPathQuery(
   path: string,
   locale: string,
   isDraftMode: boolean = false,
 ) {
   try {
-    const data = await fetchNodeQueryResult(path, locale, isDraftMode);
-    return data;
+    const data = await cachedFetchNodeByPathQuery(path, locale, isDraftMode);
+    return { data: data, error: null };
   } catch (error) {
     const type =
       error instanceof AbortError
@@ -55,26 +65,8 @@ export async function getNodeQueryResult(
         ? `Check graphql_compose logs: ${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/admin/reports`
         : "";
 
-    throw new Error(
-      `${type} Error during GetNodeByPath query with $path: "${path}" and $langcode: "${locale}". ${moreInfo}`,
-    );
+    const errorMessage = `${type} Error during GetNodeByPath query with $path: "${path}" and $langcode: "${locale}". ${moreInfo}`;
+    console.log(JSON.stringify(errorMessage, null, 2));
+    return { data: null, error: errorMessage };
   }
-}
-
-/**
- * Function to get the static paths for the next.js static site generation.
- */
-export async function getNodeStaticPaths({
-  limit,
-  locale,
-}: {
-  limit: number;
-  locale: string;
-}) {
-  const paths = await drupalClientViewer.doGraphQlRequest(GET_STATIC_PATHS, {
-    number: limit,
-    langcode: locale,
-  });
-
-  return paths;
 }

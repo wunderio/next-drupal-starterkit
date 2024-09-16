@@ -1,9 +1,13 @@
 import "@/styles/globals.css";
 import "instantsearch.css/themes/satellite-min.css";
 
-import { Viewport } from "next";
+import { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, unstable_setRequestLocale } from "next-intl/server";
+import {
+  getMessages,
+  getTranslations,
+  unstable_setRequestLocale,
+} from "next-intl/server";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import AuthProvider from "@/components/auth-provider";
@@ -12,7 +16,7 @@ import { Footer } from "@/components/footer/footer";
 import ReactQueryClientProvider from "@/components/query-client-provider";
 import { inter, overpass } from "@/styles/fonts";
 
-import { routing } from "@/routing";
+import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -26,6 +30,21 @@ export const viewport: Viewport = {
   ],
 };
 
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  const t = await getTranslations({ locale });
+
+  return {
+    title: {
+      template: `%s | ${t("meta-site-name")}`,
+      default: t("meta-site-name"),
+    },
+  };
+}
+
 export default async function RootLayout({
   children,
   params: { locale },
@@ -34,7 +53,6 @@ export default async function RootLayout({
   params: { locale: string };
 }) {
   unstable_setRequestLocale(locale);
-
   const messages = await getMessages();
 
   return (

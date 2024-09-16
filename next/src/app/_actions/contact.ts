@@ -4,17 +4,16 @@ import { revalidatePath } from "next/cache";
 import { getLocale } from "next-intl/server";
 
 import { ContactFormInputs } from "@/components/forms/contact-form";
+import { getAuth } from "@/lib/auth/get-auth";
 
-import { drupalClientViewer } from "../drupal/drupal-client";
-
-import { auth } from "@/auth";
+import { drupalClientViewer } from "../../lib/drupal/drupal-client";
 
 export async function createContactSubmissionAction(values: ContactFormInputs) {
   // Because we want to allow only registered users to submit
   // to the contact webform, let's get the session:
-  const session = await auth();
+  const session = await getAuth();
 
-  // if there is no session, return 401:
+  // if there is no session, return an error:
   if (!session) {
     return {
       success: false,
@@ -45,20 +44,24 @@ export async function createContactSubmissionAction(values: ContactFormInputs) {
       },
     });
 
+    // Fetch does not throw on an error status, so we need to check it manually:
     if (!result.ok) {
-      throw new Error();
+      throw new Error("Failed to submit the contact form");
     }
 
-    revalidatePath("/dashboard");
+    // Revalidate the path:
+    revalidatePath(`/${locale}/dashboard`);
 
     return {
       success: true,
+      error: undefined,
     };
   } catch (error) {
+    console.error("Fetch error:", JSON.stringify(error.message, null, 2));
     return {
       success: false,
       error: {
-        type: "Error",
+        type: "FetchError",
         message: error.message,
       },
     };

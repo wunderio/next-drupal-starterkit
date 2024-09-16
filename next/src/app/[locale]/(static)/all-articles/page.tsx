@@ -6,7 +6,7 @@ import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
 
 import ArticlesPagination from "./_components/articles-pagination";
 
-import { getPathname } from "@/routing";
+import { getPathname } from "@/i18n/routing";
 
 type ArticlesListingPageParams = {
   params: {
@@ -21,7 +21,7 @@ type ArticlesListingPageParams = {
 export async function generateMetadata({
   params: { locale },
 }: ArticlesListingPageParams): Promise<Metadata> {
-  const t = await getTranslations();
+  const t = await getTranslations({ locale });
 
   // Example: This page accepts search params like `?page=1`.
   // A canonical link informs search engines that only the

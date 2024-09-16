@@ -11,7 +11,7 @@ import type { MenuType } from "@/types/graphql";
 import { LanguageSwitcher } from "./language-switcher";
 import { UserMenu } from "./user-menu";
 
-import { LinkWithLocale } from "@/routing";
+import { LinkWithLocale } from "@/i18n/routing";
 
 interface HeaderProps {
   menu?: MenuType;
