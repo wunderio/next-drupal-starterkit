@@ -20,15 +20,6 @@
   "tags": "Tunnisteet",
   "share-page": "Jaa sivu",
   "share-to": "Jaa {location}",
-  "search-show-more-options": "Näytä lisää",
-  "search-showing": "Näytetään",
-  "search-out-of": "/",
-  "search-for": "haulle",
-  "search-previous": "Edellinen",
-  "search-next": "Seuraava",
-  "search-first": "Ensimmäinen",
-  "search-last": "Viimeinen",
-  "search-go-to-page": "Mene sivulle {page}",
   "skip-to-main-content": "Siirry pääsisältöön",
   "filter-by": "Suodata {label}",
   "meta-site-name": "Next-drupal wunder mallisivusto",
@@ -95,6 +86,23 @@
   "Error": {
     "title": "Virhe",
     "content": "Tapahtui virhe.",
-    "back-to-homepage": "Palaa etusivulle?"
+    "back,-to-homepage": "Palaa etusivulle?"
+  },
+  "Search": {
+    "Pagination": {
+      "first-page-item-aria-label": "Ensimmäinen sivu",
+      "previous-page-item-aria-label": "Edellinen sivu",
+      "next-page-item-aria-label": "Seuraava sivu",
+      "last-page-item-aria-label": "Viimeinen sivu",
+      "page-item-aria-label": "Siirry sivulle {currentPage} / {nbPages}"
+    },
+    "SearchBox": {
+      "submit-button-title": "Hae",
+      "reset-button-title": "Tyhjennä"
+    },
+    "Stats": {
+      "sorted-hits-text": "{sortedHits} osuvaa tulosta lajiteltuna {hits} ms:ssa, löydetty {time} ms:ssa",
+      "hits-text": "{hits} osuvaa hakutulosta löytyi {time} millisekunnissa"
+    }
   }
 }

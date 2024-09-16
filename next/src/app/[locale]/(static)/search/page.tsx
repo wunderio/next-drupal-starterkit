@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   Configure,
-  CurrentRefinements,
   DynamicWidgets,
   Highlight,
   Hits,
@@ -11,7 +11,6 @@ import {
   RefinementList,
   SearchBox,
   Stats,
-  useQueryRules,
 } from "react-instantsearch";
 import Client from "@searchkit/instantsearch-client";
 
@@ -33,39 +32,23 @@ const HitView = ({ hit }) => {
 };
 
 const Panel = ({ header, children }: any) => (
-  <div className="panel">
-    <h5>{header}</h5>
+  <div className="panel mb-2">
+    <h5 className="text-heading-xs">{header}</h5>
     {children}
   </div>
 );
 
-const QueryRulesBanner = () => {
-  const { items } = useQueryRules({});
-  if (items.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="query-rules">
-      {items.map((item) => (
-        <div key={item.objectID} className="query-rules__item">
-          <a href={item.url}>
-            <b className="query-rules__item-title">{item.title}</b>
-            <span className="query-rules__item-description">{item.body}</span>
-          </a>
-        </div>
-      ))}
-    </div>
-  );
-};
-
 export default function Web({ params: { locale } }) {
-  console.log("locale", locale);
+  const t = useTranslations();
   return (
     <div className="">
       <InstantSearch
         indexName={`content-${locale}`}
         searchClient={searchClient}
+        future={{
+          preserveSharedStateOnUnmount: true,
+          persistHierarchicalRootCount: true,
+        }}
         routing
       >
         <Configure hitsPerPage={10} />
@@ -80,19 +63,61 @@ export default function Web({ params: { locale } }) {
                   <RefinementList attribute="tags" />
                 </Panel>
               </DynamicWidgets>
-              <Stats />
+              <Stats
+                translations={{
+                  rootElementText({
+                    nbHits,
+                    processingTimeMS,
+                    nbSortedHits,
+                    areHitsSorted,
+                  }) {
+                    return areHitsSorted && nbHits !== nbSortedHits
+                      ? t("Search.Stats.sorted-hits-text", {
+                          sortedHits: nbSortedHits.toLocaleString(),
+                          hits: nbHits.toLocaleString(),
+                          time: processingTimeMS.toLocaleString(),
+                        })
+                      : t("Search.Stats.hits-text", {
+                          hits: nbHits.toLocaleString(),
+                          time: processingTimeMS.toLocaleString(),
+                        });
+                  },
+                }}
+              />
             </div>
           </aside>
           <div className="flex-1">
-            <div className="searchbox">
-              <SearchBox />
+            <div className="searchbox pb-4">
+              <SearchBox
+                translations={{
+                  submitButtonTitle: t("Search.SearchBox.submit-button-title"),
+                  resetButtonTitle: t("Search.SearchBox.reset-button-title"),
+                }}
+              />
             </div>
-
-            <CurrentRefinements />
-            <QueryRulesBanner />
-
             <Hits hitComponent={HitView} />
-            <Pagination />
+            <Pagination
+              className="mt-2"
+              translations={{
+                firstPageItemAriaLabel: t(
+                  "Search.Pagination.first-page-item-aria-label",
+                ),
+                previousPageItemAriaLabel: t(
+                  "Search.Pagination.previous-page-item-aria-label",
+                ),
+                nextPageItemAriaLabel: t(
+                  "Search.Pagination.next-page-item-aria-label",
+                ),
+                lastPageItemAriaLabel: t(
+                  "Search.Pagination.last-page-item-aria-label",
+                ),
+                pageItemAriaLabel: ({ currentPage, nbPages }) =>
+                  t("Search.Pagination.page-item-aria-label", {
+                    currentPage,
+                    nbPages,
+                  }),
+              }}
+            />
           </div>
         </div>
       </InstantSearch>
