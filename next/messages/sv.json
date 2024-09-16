@@ -96,5 +96,22 @@
     "title": "Fel",
     "content": "Det uppstod ett fel.",
     "back-to-homepage": "Gå tillbaka till hemsidan?"
+  },
+  "Search": {
+    "Pagination": {
+      "first-page-item-aria-label": "Första sidan",
+      "previous-page-item-aria-label": "Föregående sida",
+      "next-page-item-aria-label": "Nästa sida",
+      "last-page-item-aria-label": "Sista sidan",
+      "page-item-aria-label": "Gå till sida {currentPage} av {nbPages}"
+    },
+    "SearchBox": {
+      "submit-button-title": "Sök",
+      "reset-button-title": "Återställ"
+    },
+    "Stats": {
+      "sorted-hits-text": "{sortedHits} relevanta resultat sorterade ut från {hits} ms, hittades i {time} ms",
+      "hits-text": "{hits} resultat hittades på {time} ms"
+    }
   }
 }

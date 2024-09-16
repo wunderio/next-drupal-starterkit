@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "instantsearch.css/themes/satellite-min.css";
 
 import { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";

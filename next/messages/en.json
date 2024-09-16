@@ -95,5 +95,22 @@
     "title": "Error",
     "content": "An error occurred.",
     "back-to-homepage": "Go back to the homepage?"
+  },
+  "Search": {
+    "Pagination": {
+      "first-page-item-aria-label": "First page",
+      "previous-page-item-aria-label": "Previous page",
+      "next-page-item-aria-label": "Next page",
+      "last-page-item-aria-label": "Last page",
+      "page-item-aria-label": "Go to page {currentPage} of {nbPages}"
+    },
+    "SearchBox": {
+      "submit-button-title": "Search",
+      "reset-button-title": "Reset"
+    },
+    "Stats": {
+      "sorted-hits-text": "{sortedHits} relevant results sorted out of {hits} ms, found in {time} ms",
+      "hits-text": "{hits} results found in {time} ms"
+    }
   }
 }
