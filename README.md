@@ -134,8 +134,8 @@ The template includes a Drupal migration to populate the site with a set of tran
 
 ### Multilanguage setup
 
-This template is set up to use three languages: English (default), Finnish and Swedish. These languages are added in Drupal using the usual translation modules, and to the frontend using the [next-i18next](https://github.com/i18next/next-i18next) npm package.
-The indexing in Elasticsearch takes into consideration the language of the content for analysis. The interface is translated. (Note: translations have mostly been done with Google Translate, so don't expect perfect Finnish or Swedish... or English for that matter. 🙂 )
+This template is set up to use three languages: English (default), Finnish, and Swedish. These languages are added in Drupal using the standard translation modules and integrated into the frontend using the [Next-Intl](https://next-intl-docs.vercel.app/) module.
+The Elasticsearch indexing takes the content language into account for analysis, and the interface is fully translated. (Note: Most translations were done using Google Translate, so please expect some inaccuracies in Finnish, Swedish, and even English. 🙂)
 
 ### Webforms
 
@@ -152,7 +152,7 @@ If the backend is not available momentarily, the frontend will try again to call
 
 ### Frontend user authentication and registration
 
-The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Next-Auth](https://next-auth.js.org/).
+The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Next-Auth](https://authjs.dev/).
 
 - As an example, only registered users are allowed to post to the drupal `contact` webform, and parts of the interface in the frontend are available only for logged-in users.
 - Some test users are imported as part of the content migration (check the `users.csv' file for the credentials).
@@ -214,8 +214,7 @@ You can then run your tests inside the Cypress application.
 #### Redis caching
 
 The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. Both the ddev and lando setup include redis by default.
-The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package. We added custom logic to our cache handler
-to handle prepopulating the cache from builds for ISR. Checl the `cache-handler.mjs` file in the `next` directory for more information.
+The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package.
 
 ### Connecting to Redis in the local environment
 
