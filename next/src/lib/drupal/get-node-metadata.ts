@@ -29,7 +29,7 @@ export async function getNodeMetadata(
     title: nodeEntity?.title,
     metatags: nodeEntity?.metatag as FragmentMetaTagFragment[],
     translations: nodeEntity?.translations,
-    path: "/",
+    path,
     locale,
   });
 
