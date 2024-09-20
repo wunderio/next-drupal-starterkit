@@ -51,7 +51,6 @@ export default async function AllArticlesPage({
   unstable_setRequestLocale(locale);
 
   // Get the query and current page from the search params
-  const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
 
   // This has to match one of the allowed values in the article listing view
@@ -62,7 +61,6 @@ export default async function AllArticlesPage({
     limit: PAGE_SIZE,
     offset: currentPage ? PAGE_SIZE * (currentPage - 1) : 0,
     locale,
-    query,
   };
 
   const { articles, totalPages } = await getLatestArticlesItems(variables);
@@ -75,12 +73,8 @@ export default async function AllArticlesPage({
   const pageRoot = `/all-articles`;
   const prevPage = currentPage - 1;
   const nextPage = currentPage + 1;
-  const prevPageHref =
-    prevEnabled &&
-    `${pageRoot}?page=${prevPage}` + (query && `&query=${query}`);
-  const nextPageHref =
-    nextEnabled &&
-    `${pageRoot}?page=${nextPage}` + (query && `&query=${query}`);
+  const prevPageHref = prevEnabled && `${pageRoot}?page=${prevPage}`;
+  const nextPageHref = nextEnabled && `${pageRoot}?page=${nextPage}`;
 
   const paginationProps = {
     currentPage,
