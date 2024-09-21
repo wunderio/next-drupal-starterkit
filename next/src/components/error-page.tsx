@@ -4,8 +4,16 @@ import { HeadingPage } from "@/components/heading--page";
 
 import { LinkWithLocale } from "@/i18n/routing";
 
-export default function ErrorPage() {
+export default function ErrorPage({
+  error,
+}: {
+  error: Error & { digest?: string };
+}) {
   const t = useTranslations("Error");
+
+  if (process.env.NODE_ENV === "development") {
+    throw error;
+  }
 
   return (
     <>
