@@ -14,6 +14,7 @@ import AuthProvider from "@/components/auth-provider";
 import DraftAlert from "@/components/draft-alert";
 import { Footer } from "@/components/footer/footer";
 import ReactQueryClientProvider from "@/components/query-client-provider";
+import { preloadMenus } from "@/lib/drupal/get-menus";
 import { inter, overpass } from "@/styles/fonts";
 
 import { routing } from "@/i18n/routing";
@@ -53,6 +54,7 @@ export default async function RootLayout({
   params: { locale: string };
 }) {
   unstable_setRequestLocale(locale);
+  preloadMenus(locale);
   const messages = await getMessages();
 
   return (

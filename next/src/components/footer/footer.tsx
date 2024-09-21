@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getLocale } from "next-intl/server";
 
-import { getMenu } from "@/lib/drupal/get-menus";
-import { MenuAvailable } from "@/lib/gql/graphql";
+import { getMenus } from "@/lib/drupal/get-menus";
+import { removeLocaleFromPath } from "@/lib/utils";
 import FacebookIcon from "@/styles/icons/facebook.svg";
 import LinkedInIcon from "@/styles/icons/linkedin.svg";
 import TwitterIcon from "@/styles/icons/twitter.svg";
@@ -13,10 +13,11 @@ import { SocialShare } from "./social-share";
 
 export async function Footer() {
   const locale = await getLocale();
-  const menu = await getMenu(MenuAvailable.Footer, locale);
+  // const menu = await getMenu(MenuAvailable.Footer, locale);
+  const { footer: footerMenu } = await getMenus(locale);
 
-  // Only show the menu items that match the current locale:,S FOR APP ROUTER
-  const filteredItems = menu?.items?.filter(
+  // Only show the footerMenu items that match the current locale
+  const filteredItems = footerMenu?.items?.filter(
     (link) => link.langcode?.id == locale,
   );
 
@@ -27,9 +28,10 @@ export async function Footer() {
           <ul className="flex flex-wrap mr-4 gap-x-12 gap-y-4">
             {filteredItems?.map((link) => {
               const icon = link.attributes?.icon;
+              const href = removeLocaleFromPath(locale, link.url);
               return (
                 <li key={link.id}>
-                  <FooterLink href={link.url} icon={icon}>
+                  <FooterLink href={href} icon={icon}>
                     {link.title}
                   </FooterLink>
                 </li>
