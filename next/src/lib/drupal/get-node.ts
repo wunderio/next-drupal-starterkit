@@ -1,13 +1,12 @@
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 import { AbortError } from "p-retry";
 
 import { GET_ENTITY_AT_DRUPAL_PATH } from "../graphql/queries";
 
 import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
-import { queryCacher } from "./query-cacher";
 
 import { env } from "@/env";
-import { unstable_cache } from "next/cache";
-import { cache } from "react";
 
 /**
  * Function to directly fetch a node from Drupal by its path and locale.

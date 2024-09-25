@@ -1,8 +1,9 @@
+import { Suspense } from "react";
+
 import { HeadingParagraph } from "@/components/heading--paragraph";
 import type { FragmentParagraphListingArticleFragment } from "@/lib/gql/graphql";
 
 import { ArticlesListing } from "../article/articles-listing";
-import { Suspense } from "react";
 import { LoadingSpinner } from "../loading-spinner";
 
 export function ParagraphListingArticles({

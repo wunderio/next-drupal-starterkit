@@ -1,5 +1,5 @@
+import { unstable_cache } from "next/cache";
 import { cache } from "react";
-import { neshCache } from "@neshca/cache-handler/functions";
 import { AbortError } from "p-retry";
 
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
@@ -8,7 +8,6 @@ import { MenuAvailable } from "../gql/graphql";
 import { GET_MENU } from "../graphql/queries";
 
 import { env } from "@/env";
-import { unstable_cache } from "next/cache";
 
 /**
  * Fetches the menu data for a given menu name and locale from the Drupal client.
