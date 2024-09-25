@@ -8,6 +8,7 @@ import { MenuAvailable } from "../gql/graphql";
 import { GET_MENU } from "../graphql/queries";
 
 import { env } from "@/env";
+import { unstable_cache } from "next/cache";
 
 /**
  * Fetches the menu data for a given menu name and locale from the Drupal client.
@@ -17,11 +18,18 @@ import { env } from "@/env";
  * @returns A promise that resolves to the menu data.
  */
 export async function fetchMenu(name: MenuAvailable, locale: string) {
-  return await drupalClientViewer.doGraphQlRequest(GET_MENU, {
-    name,
-    langcode: locale,
-  });
+  return unstable_cache(
+    async () =>
+      await drupalClientViewer.doGraphQlRequest(GET_MENU, {
+        name,
+        langcode: locale,
+      }),
+    [name, locale],
+  )();
 }
+
+// Wrapper function to cache getMenu function with react cache
+const cachedFetchMenu = cache(fetchMenu);
 
 /**
  * Gets the menu data for a given menu name and locale.
@@ -33,7 +41,7 @@ export async function fetchMenu(name: MenuAvailable, locale: string) {
  */
 export async function getMenu(name: MenuAvailable, locale: string) {
   try {
-    const menus = await fetchMenu(name, locale);
+    const menus = await cachedFetchMenu(name, locale);
     return menus.menu;
   } catch (error) {
     const type =
@@ -54,27 +62,22 @@ export async function getMenu(name: MenuAvailable, locale: string) {
   }
 }
 
-// Wrapper function to cache getMenu function with neshCache
-const cachedGetMenu = neshCache(getMenu);
-
 /**
  * Retrieves the main and footer menus for a given locale and memoizes the result during the request.
  *
  * @param locale - The language code for the menus.
  * @returns A promise that resolves to an object containing the main and footer menus.
  */
-export const getMenus = cache(async (locale: string) => {
+export const getMenus = async (locale: string) => {
   const [main, footer] = await Promise.all(
-    ["MAIN", "FOOTER"].map((menu) =>
-      cachedGetMenu({}, menu as MenuAvailable, locale),
-    ),
+    ["MAIN", "FOOTER"].map((menu) => getMenu(menu as MenuAvailable, locale)),
   );
 
   return {
     main: main,
     footer: footer,
   };
-});
+};
 
 /**
  * Preloads the menus for a given locale.
