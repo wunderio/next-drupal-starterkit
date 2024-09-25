@@ -154,6 +154,8 @@ services:
         REDIS_HOST: redis
         REDIS_PASS: "mypassword"
         ES_HOST: elasticsearch
+        # To enable nesh cache debugging
+        NEXT_PRIVATE_DEBUG_CACHE: 1
     build:
       - "cd next && npm ci"
     scanner: false
