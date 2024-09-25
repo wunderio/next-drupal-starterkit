@@ -22,16 +22,20 @@ const config: CodegenConfig = {
       },
     },
   ],
-  documents: ["lib/graphql/**/*.ts", "!./node_modules/**/*", "!./.next/**/*"],
+  documents: [
+    "src/lib/graphql/**/*.ts",
+    "!./node_modules/**/*",
+    "!./.next/**/*",
+  ],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    "./lib/gql/": {
+    "./src/lib/gql/": {
       preset: "client",
       presetConfig: {
         fragmentMasking: false,
       },
     },
-    "./lib/graphql/schema.graphql": {
+    "./src/lib/graphql/schema.graphql": {
       plugins: ["schema-ast"],
       config: {
         includeDirectives: true,

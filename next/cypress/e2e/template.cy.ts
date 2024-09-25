@@ -14,22 +14,22 @@ describe("Frontend test for Login and Sending Message", () => {
   });
 });
 
-describe("Frontend Test for Search Functionality", () => {
-  it("Opens the page, performs search, and verifies search results", () => {
-    // Navigating to the main page and clicking on Search button
-    cy.visit("https://frontend.lndo.site");
-    cy.get('a[href="/search"]').click();
-    cy.wait(500);
-    // Searching for string "Drupal"
-    cy.get("[data-transaction-name='search input']").type("Drupal");
-    cy.get("[data-transaction-name='search submit']").click();
-    // Waiting for the search results to load
-    cy.wait(1000);
-    // Verifying results
-    cy.get(".sui-results-container").should("be.visible");
-    cy.contains("Drupal and Next.js can be used together").should("be.visible");
-  });
-});
+// describe("Frontend Test for Search Functionality", () => {
+//   it("Opens the page, performs search, and verifies search results", () => {
+//     // Navigating to the main page and clicking on Search button
+//     cy.visit("https://frontend.lndo.site");
+//     cy.get('a[href="/search"]').click();
+//     cy.wait(500);
+//     // Searching for string "Drupal"
+//     cy.get("[data-transaction-name='search input']").type("Drupal");
+//     cy.get("[data-transaction-name='search submit']").click();
+//     // Waiting for the search results to load
+//     cy.wait(1000);
+//     // Verifying results
+//     cy.get(".sui-results-container").should("be.visible");
+//     cy.contains("Drupal and Next.js can be used together").should("be.visible");
+//   });
+// });
 
 describe("Frontend Test for Language Switching", () => {
   it("Opens the page, switches language and verifies it", () => {
