@@ -191,8 +191,8 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({
     typeof previewData.resourceVersion === "string" &&
     previewData.resourceVersion !== "rel:latest-version"
   ) {
-    const [nodeId, revisionId] = previewData.resourceVersion.split(":");
-    const path = `/node/${nodeId}/revisions/${revisionId}/view`;
+    const [_, revisionId] = previewData.resourceVersion.split(":");
+    const path = `/node/${node.id}/revisions/${revisionId}/view`;
     const revisionRoutedata = await drupalClient.doGraphQlRequest(
       GET_ENTITY_AT_DRUPAL_PATH,
       { path, langcode: locale },
