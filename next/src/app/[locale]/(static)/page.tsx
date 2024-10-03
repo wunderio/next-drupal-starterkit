@@ -28,6 +28,7 @@ export async function generateMetadata({
 }
 
 export const revalidate = REVALIDATE_LONG;
+export const dynamic = "force-static";
 
 export default async function FrontPage({
   params: { locale },

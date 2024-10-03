@@ -39,6 +39,7 @@ export async function generateStaticParams({
 
 // We set the revalidate time to a long period because the content is not expected to change frequently.
 export const revalidate = REVALIDATE_LONG;
+export const dynamic = "force-static";
 
 export default async function NodePage({
   params: { locale, slug },

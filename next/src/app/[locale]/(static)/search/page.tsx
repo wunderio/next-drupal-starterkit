@@ -22,7 +22,7 @@ const HitView = ({ hit }) => {
   return (
     <Link href={hit.path}>
       <div>
-        <h2 className="text-xl font-semibold mb-2">
+        <h2 className="mb-2 text-xl font-semibold">
           <Highlight attribute="title" hit={hit} />
         </h2>
         <p className="text-gray-600">{hit.excerpt}</p>
@@ -32,7 +32,7 @@ const HitView = ({ hit }) => {
 };
 
 const Panel = ({ header, children }: any) => (
-  <div className="panel mb-2">
+  <div className="mb-2 panel">
     <h5 className="text-heading-xs">{header}</h5>
     {children}
   </div>
@@ -44,6 +44,7 @@ export default function Web({ params: { locale } }) {
     <div className="">
       <InstantSearch
         indexName={`content-${locale}`}
+        // @ts-ignore
         searchClient={searchClient}
         future={{
           preserveSharedStateOnUnmount: true,
@@ -53,7 +54,7 @@ export default function Web({ params: { locale } }) {
       >
         <Configure hitsPerPage={10} />
         <div className="flex flex-col md:flex-row">
-          <aside className="mr-2 w-56">
+          <aside className="w-56 mr-2">
             <div className="search-panel__filters">
               <DynamicWidgets facets={["*"]}>
                 <Panel header="Content Type">
@@ -87,7 +88,7 @@ export default function Web({ params: { locale } }) {
             </div>
           </aside>
           <div className="flex-1">
-            <div className="searchbox pb-4">
+            <div className="pb-4 searchbox">
               <SearchBox
                 translations={{
                   submitButtonTitle: t("Search.SearchBox.submit-button-title"),
