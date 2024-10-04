@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "concurrently --raw 'npm run graphql-codegen:watch' 'npm run dev:nocodegen'",
     "dev:nocodegen": "next dev",
-    "build": "npm run graphql-codegen && next build",
-    "start": "next start",
+    "build": "NEXT_PUBLIC_INIT_REDIS=false npm run graphql-codegen && next build",
+    "start": "NEXT_PUBLIC_INIT_REDIS=true next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "storybook": "STORYBOOK=true storybook dev -p 6006",
