@@ -1,8 +1,7 @@
 import { useTranslations } from "next-intl";
 
-import { AuthGateServer } from "../auth-gate-server";
-
 import { ContactForm } from "./contact-form";
+import { AuthGateClient } from "../auth-gate-client";
 
 export function ContactFormContainer() {
   const t = useTranslations();
@@ -12,10 +11,10 @@ export function ContactFormContainer() {
       <h2 className="font-bold text-heading-sm md:text-heading-md">
         {t("form-title")}
       </h2>
-      <AuthGateServer text={t("login-to-fill-form")}>
+      <AuthGateClient text={t("login-to-fill-form")}>
         <p>{t("form-description")}</p>
         <ContactForm />
-      </AuthGateServer>
+      </AuthGateClient>
     </div>
   );
 }
