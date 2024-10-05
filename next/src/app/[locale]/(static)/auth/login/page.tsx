@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import LoginForm from "./form";
+import { Suspense } from "react";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -10,8 +11,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export const dynamic = "force-static";
-
 export default function LoginPage({
   params: { locale },
 }: {
@@ -19,5 +18,9 @@ export default function LoginPage({
 }) {
   unstable_setRequestLocale(locale);
 
-  return <LoginForm />;
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />;
+    </Suspense>
+  );
 }

@@ -21,6 +21,8 @@ const nextConfig = {
     process.env.NODE_ENV === "production" && process.env.NEXT_PUBLIC_INIT_REDIS
       ? require.resolve("./cache-handler.mjs")
       : undefined,
+
+  cacheMaxMemorySize: 0, // disable default in-memory caching
   experimental: {
     // This is required for the experimental feature of pre-populating the cache with the initial data
     instrumentationHook: true,

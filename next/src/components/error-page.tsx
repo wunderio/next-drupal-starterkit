@@ -12,7 +12,7 @@ export default function ErrorPage({
 }) {
   const t = useTranslations("Error");
 
-  if (env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === "development") {
     throw error;
   }
 

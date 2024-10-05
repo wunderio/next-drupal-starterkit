@@ -16,7 +16,7 @@ export default async function DynamicLayout({
   params: { locale: string; slug: string[] };
 }) {
   unstable_setRequestLocale(locale);
-  const path = Array.isArray(slug) ? `/${slug?.join("/")}` : slug;
+  const path = "/" + slug.join("/");
 
   const nodeByPathResult = await getNodeByPathQuery(path, locale);
   const nodeEntity = extractEntityFromRouteQueryResult(nodeByPathResult.data);

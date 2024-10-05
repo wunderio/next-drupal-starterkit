@@ -10,8 +10,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export const dynamic = "force-static";
-
 export default function RegisterPage({
   params: { locale },
 }: {

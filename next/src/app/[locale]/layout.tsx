@@ -10,7 +10,6 @@ import {
 } from "next-intl/server";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import AuthProvider from "@/components/auth-provider";
 import DraftAlert from "@/components/draft-alert";
 import { Footer } from "@/components/footer/footer";
 import ReactQueryClientProvider from "@/components/query-client-provider";
@@ -55,7 +54,10 @@ export default async function RootLayout({
   params: { locale: string };
 }) {
   unstable_setRequestLocale(locale);
+
+  // We preload the menus here to avoid unnecessary delays in rendering
   preloadMenus(locale);
+
   const messages = await getMessages();
 
   return (
