@@ -10,7 +10,6 @@ import {
 } from "next-intl/server";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import AuthProvider from "@/components/auth-provider";
 import DraftAlert from "@/components/draft-alert";
 import { Footer } from "@/components/footer/footer";
 import ReactQueryClientProvider from "@/components/query-client-provider";
