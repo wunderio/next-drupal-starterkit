@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 
 import { HeadingPage } from "@/components/heading--page";
 
-import { env } from "@/env";
 import { LinkWithLocale } from "@/i18n/routing";
 
 export default function ErrorPage({

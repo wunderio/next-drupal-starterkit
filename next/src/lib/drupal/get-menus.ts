@@ -1,5 +1,3 @@
-import { unstable_cache } from "next/cache";
-import { cache } from "react";
 import { AbortError } from "p-retry";
 
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
@@ -8,6 +6,7 @@ import { MenuAvailable } from "../gql/graphql";
 import { GET_MENU } from "../graphql/queries";
 
 import { env } from "@/env";
+import { queryCacher } from "./query-cacher";
 
 /**
  * Fetches the menu data for a given menu name and locale from the Drupal client.
@@ -17,18 +16,14 @@ import { env } from "@/env";
  * @returns A promise that resolves to the menu data.
  */
 export async function fetchMenu(name: MenuAvailable, locale: string) {
-  return unstable_cache(
-    async () =>
-      await drupalClientViewer.doGraphQlRequest(GET_MENU, {
-        name,
-        langcode: locale,
-      }),
-    [name, locale],
-  )();
+  return await drupalClientViewer.doGraphQlRequest(GET_MENU, {
+    name,
+    langcode: locale,
+  });
 }
 
 // Wrapper function to cache getMenu function with react cache
-const cachedFetchMenu = cache(fetchMenu);
+const cachedFetchMenu = queryCacher(fetchMenu);
 
 /**
  * Gets the menu data for a given menu name and locale.
