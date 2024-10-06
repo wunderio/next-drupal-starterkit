@@ -1,5 +1,3 @@
-import { unstable_cache } from "next/cache";
-import { cache } from "react";
 import { AbortError } from "p-retry";
 
 import { GET_ENTITY_AT_DRUPAL_PATH } from "../graphql/queries";
@@ -7,6 +5,7 @@ import { GET_ENTITY_AT_DRUPAL_PATH } from "../graphql/queries";
 import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
 
 import { env } from "@/env";
+import { queryCacher } from "./query-cacher";
 
 /**
  * Function to directly fetch a node from Drupal by its path and locale.
@@ -22,18 +21,14 @@ async function fetchNodeByPathQuery(
   isDraftMode: boolean,
 ) {
   const drupalClient = isDraftMode ? drupalClientPreviewer : drupalClientViewer;
-  return unstable_cache(
-    async () =>
-      await drupalClient.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
-        path,
-        langcode: locale,
-      }),
-    [path, locale],
-  )();
+  return await drupalClient.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
+    path,
+    langcode: locale,
+  });
 }
 
 // Wrapper function to cache fetchNodeByPathQuery function with react cache
-const cachedFetchNodeByPathQuery = cache(fetchNodeByPathQuery);
+const cachedFetchNodeByPathQuery = queryCacher(fetchNodeByPathQuery);
 
 /**
  * Function to retrieve a node by its Drupal path.
