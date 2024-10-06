@@ -1,4 +1,4 @@
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 
 import { env } from "@/env";
@@ -25,7 +25,7 @@ async function handler(request: NextRequest) {
     revalidatePath(path);
 
     const locale = path.split("/")[1];
-    // If the locale in the path is the default locale, we need to revalidate the default locale path as well.
+    // If the locale in the path is the default locale, we need to revalidate the path without the locale as well
     if (locale === routing.defaultLocale) {
       const pathname = "/" + path.split("/").slice(2).join("/");
       revalidatePath(pathname);
