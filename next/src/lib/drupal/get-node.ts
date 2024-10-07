@@ -6,6 +6,8 @@ import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
 
 import { env } from "@/env";
 import { queryCacher } from "./query-cacher";
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 
 /**
  * Function to directly fetch a node from Drupal by its path and locale.
@@ -27,8 +29,22 @@ async function fetchNodeByPathQuery(
   });
 }
 
+async function fetchNodeByPathQuery2(
+  path: string,
+  locale: string,
+  isDraftMode: boolean,
+) {
+  const drupalClient = isDraftMode ? drupalClientPreviewer : drupalClientViewer;
+  return unstable_cache(async () => {
+    return await drupalClient.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
+      path,
+      langcode: locale,
+    });
+  }, [path, locale])();
+}
+
 // Wrapper function to cache fetchNodeByPathQuery function with react cache
-const cachedFetchNodeByPathQuery = queryCacher(fetchNodeByPathQuery);
+const cachedFetchNodeByPathQuery = cache(fetchNodeByPathQuery2);
 
 /**
  * Function to retrieve a node by its Drupal path.
