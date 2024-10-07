@@ -29,7 +29,11 @@ services:
     autoscaling:
       enabled: true
       minReplicas: 2
-      maxReplicas: 3      
+      maxReplicas: 3     
+    lifecycle:
+      preStart:
+        exec:
+          command: ["sh", "-c", "until nc -z redis 6379; do sleep 1; done"]  
 
 nginx:
   content_security_policy: >- # Lines below are joined without line breaks.
