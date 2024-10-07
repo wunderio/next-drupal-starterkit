@@ -307,6 +307,14 @@ workflows:
             # but this uses local custom command instead of silta/npm-install-build until SLT-847 is implemented
             - npm-install-build:
                 path: next
+            - run:
+                name: Wait for Redis to be ready
+                command: |
+                  until redis-cli -h redis -p 6379 ping; do
+                    echo "Waiting for Redis..."
+                    sleep 5
+                  done
+                  
           image_build_steps:
             - silta/build-docker-image:
                 dockerfile: "silta/node.Dockerfile"
