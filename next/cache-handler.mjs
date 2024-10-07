@@ -1,12 +1,12 @@
 // @ts-check
 
+import { REVALIDATE_LONG } from "@/lib/constants";
 import { CacheHandler } from "@neshca/cache-handler";
 import createLruHandler from "@neshca/cache-handler/local-lru";
 import createRedisHandler from "@neshca/cache-handler/redis-strings";
 import { createClient } from "redis";
 
-// This should match the REVALIDATE_LONG value in src/lib/constants.ts
-const defaultStaleAge = 60 * 10;
+const defaultStaleAge = REVALIDATE_LONG;
 
 // Retry connection to Redis up to 5 times with a delay of 2 seconds between each attempt.
 const maxRetries = 10;
