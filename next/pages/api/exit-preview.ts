@@ -1,7 +1,12 @@
-import { NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default function exit(_, response: NextApiResponse) {
+export default function exit(
+  request: NextApiRequest,
+  response: NextApiResponse,
+) {
+  // Get the callback URL from the query parameters
+  const { callbackUrl } = request.query;
   response.clearPreviewData();
-  response.writeHead(307, { Location: "/" });
-  response.end();
+  // Redirect to the callback URL or the homepage if the callback URL is not provided
+  response.redirect(307, (callbackUrl as string) ?? "/");
 }
