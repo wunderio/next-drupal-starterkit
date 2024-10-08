@@ -8,10 +8,6 @@ import { createClient } from "redis";
 // This should match the REVALIDATE_LONG value in src/lib/constants.ts
 const defaultStaleAge = 60 * 10;
 
-// Retry connection to Redis up to 5 times with a delay of 2 seconds between each attempt.
-const maxRetries = 10;
-const retryDelay = 2000;
-
 CacheHandler.onCreation(async ({ buildId }) => {
   /** @type {import("redis").RedisClientType | undefined} */
   let client;
@@ -19,43 +15,55 @@ CacheHandler.onCreation(async ({ buildId }) => {
   let handler;
 
   if (
+    // Do not create the Redis handler during the build phase.
+    // It has little benefit and can cause issues: https://github.com/caching-tools/next-shared-cache/issues/284
     process.env.NEXT_PHASE !== "phase-production-build" &&
+    // Ensure redis env vars are set:
     process.env.REDIS_HOST &&
     process.env.REDIS_PASS
   ) {
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      // Create a Redis client.
+      client = createClient({
+        socket: {
+          port: 6379,
+          host: process.env.REDIS_HOST,
+        },
+        password: process.env.REDIS_PASS,
+      });
+
+      // Redis won't work without error handling.
+      client.on("error", (e) => {
+        console.error("Redis client error:", e);
+      });
+    } catch (error) {
+      console.warn("Failed to create Redis client:", error);
+    }
+
+    if (client) {
       try {
-        // Create a Redis client.
-        client = createClient({
-          socket: {
-            port: 6379,
-            host: process.env.REDIS_HOST,
-          },
-          password: process.env.REDIS_PASS,
-        });
-
-        client.on("error", (e) => {
-          throw e;
-        });
-
         console.info("Connecting Redis client...");
 
         // Wait for the client to connect.
+        // Caveat: This will block the server from starting until the client is connected.
+        // And there is no timeout. Make your own timeout if needed.
         await client.connect();
         console.info("Redis client connected.");
-        break; // Exit the loop if connection is successful
       } catch (error) {
-        console.warn(
-          `Attempt ${attempt} to connect Redis client failed:`,
-          error,
-        );
-        if (attempt < maxRetries) {
-          console.info(`Retrying in ${retryDelay / 1000} seconds...`);
-          await new Promise((resolve) => setTimeout(resolve, retryDelay));
-        } else {
-          console.warn("Max retries reached. Falling back to LRU handler.");
-          client = null; // Reset the client to null
-        }
+        console.warn("Failed to connect Redis client:", error);
+
+        console.warn("Disconnecting the Redis client...");
+        // Try to disconnect the client to stop it from reconnecting.
+        client
+          .disconnect()
+          .then(() => {
+            console.info("Redis client disconnected.");
+          })
+          .catch(() => {
+            console.warn(
+              "Failed to quit the Redis client after failing to connect.",
+            );
+          });
       }
     }
 
@@ -65,12 +73,17 @@ CacheHandler.onCreation(async ({ buildId }) => {
         client,
         keyPrefix: `cache-${buildId}:`,
         sharedTagsKey: "_sharedTags_",
+        // timeout for the Redis client operations like `get` and `set`
+        // after this timeout, the operation will be considered failed and the `localHandler` will be used
         timeoutMs: 3000,
       };
 
+      // Create the Redis Handler if the client is available and connected.
       handler = await createRedisHandler(redisHandlerOptions);
       console.info("Redis handler created.");
     } else {
+      // Fallback to LRU handler if Redis client is not available.
+      // The application will still work, but the cache will be in memory only and not shared.
       handler = createLruHandler();
       console.warn(
         "Falling back to LRU handler because Redis client is not available.",

@@ -5,7 +5,6 @@ import { GET_ENTITY_AT_DRUPAL_PATH } from "../graphql/queries";
 import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
 
 import { env } from "@/env";
-import { queryCacher } from "./query-cacher";
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
 
