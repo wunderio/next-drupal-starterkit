@@ -45,12 +45,8 @@ export default async function FrontPage({
     getArticleTeasers({ limit: 3, locale, sticky: true }),
   ]);
 
-  if (nodeByPathResult.error) {
-    throw new Error(nodeByPathResult.error);
-  }
-
   // Extract the frontpage node from the query result
-  const frontpage = extractEntityFromRouteQueryResult(nodeByPathResult.data);
+  const frontpage = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   // If the node does not exist or is not a frontpage, we throw an error
   if (!frontpage || !(frontpage.__typename === "NodeFrontpage")) {

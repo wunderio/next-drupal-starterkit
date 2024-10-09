@@ -55,15 +55,9 @@ export default async function NodePage({
   // in the getNodeByPathQuery function.
   const nodeByPathResult = await getNodeByPathQuery(path, locale, isDraftMode);
 
-  if (nodeByPathResult.error) {
-    throw new Error(nodeByPathResult.error);
-  }
-
   // The response will contain either a redirect or node data.
   // If it's a redirect, redirect to the new path:
-  const redirectResult = extractRedirectFromRouteQueryResult(
-    nodeByPathResult.data,
-  );
+  const redirectResult = extractRedirectFromRouteQueryResult(nodeByPathResult);
 
   if (redirectResult) {
     // Set to temporary redirect for 302 and 307 status codes,
@@ -76,7 +70,7 @@ export default async function NodePage({
   }
 
   // Extract the node entity from the query result:
-  let node = extractEntityFromRouteQueryResult(nodeByPathResult.data);
+  let node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   // Node not found or is not published:
   if (!node || (!isDraftMode && node.status !== true)) {
@@ -111,7 +105,7 @@ export default async function NodePage({
 
       // Instead of the entity at the current revision, we want now to
       // display the entity at the requested revision:
-      node = extractEntityFromRouteQueryResult(revisionData.data);
+      node = extractEntityFromRouteQueryResult(revisionData);
       if (!node) {
         notFound();
       }

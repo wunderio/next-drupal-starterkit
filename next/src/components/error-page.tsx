@@ -11,10 +11,6 @@ export default function ErrorPage({
 }) {
   const t = useTranslations("Error");
 
-  if (process.env.NODE_ENV === "development") {
-    throw error;
-  }
-
   return (
     <>
       <HeadingPage>{t("title")}</HeadingPage>
@@ -24,6 +20,12 @@ export default function ErrorPage({
           {t("back-to-homepage")}
         </LinkWithLocale>
       </p>
+
+      {process.env.NODE_ENV === "development" && (
+        <pre className="p-4 mt-4 text-sm rounded bg-info text-error">
+          {error.stack}
+        </pre>
+      )}
     </>
   );
 }

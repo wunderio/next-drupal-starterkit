@@ -4,6 +4,7 @@ import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
 import { env } from "@/env";
 import { cache } from "react";
 import { neshCache } from "@neshca/cache-handler/functions";
+import { REVALIDATE_LONG } from "../constants";
 
 /**
  * Function to directly fetch a node from Drupal by its path and locale.
@@ -48,14 +49,12 @@ export async function getNodeByPathQuery(
   isDraftMode: boolean = false,
 ) {
   try {
-    const data = await cachedFetchNodeByPathQuery(
-      { tags: [`/${locale}${path}`] },
+    return await cachedFetchNodeByPathQuery(
+      { tags: [`/${locale}${path}`], revalidate: REVALIDATE_LONG },
       path,
       locale,
       isDraftMode,
     );
-
-    return { data: data, error: null };
   } catch (error) {
     const type =
       error instanceof AbortError
@@ -71,6 +70,6 @@ export async function getNodeByPathQuery(
 
     const errorMessage = `${type} Error during GetNodeByPath query with $path: "${path}" and $langcode: "${locale}". ${moreInfo}`;
     console.log(JSON.stringify(errorMessage, null, 2));
-    return { data: null, error: errorMessage };
+    throw new Error(errorMessage);
   }
 }
