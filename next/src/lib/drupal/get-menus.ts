@@ -8,6 +8,8 @@ import { GET_MENU } from "../graphql/queries";
 import { env } from "@/env";
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
+import { neshCache } from "@neshca/cache-handler/functions";
+import { REVALIDATE_LONG } from "../constants";
 
 /**
  * Fetches the menu data for a given menu name and locale from the Drupal client.
@@ -23,18 +25,17 @@ import { cache } from "react";
 //   });
 // }
 
-export async function fetchMenu2(name: MenuAvailable, locale: string) {
-  return unstable_cache(async () => {
-    return await drupalClientViewer.doGraphQlRequest(GET_MENU, {
-      name,
-      langcode: locale,
-    });
-  }, [name, locale])();
+export async function fetchMenu(name: MenuAvailable, locale: string) {
+  return await drupalClientViewer.doGraphQlRequest(GET_MENU, {
+    name,
+    langcode: locale,
+  });
 }
 
 // Wrapper function to cache getMenu function with react cache
 // const cachedFetchMenu = queryCacher(fetchMenu);
-const cachedFetchMenu = cache(fetchMenu2);
+const cached = cache(fetchMenu);
+const cachedFetchMenu = neshCache(cached);
 
 /**
  * Gets the menu data for a given menu name and locale.
@@ -46,7 +47,11 @@ const cachedFetchMenu = cache(fetchMenu2);
  */
 export async function getMenu(name: MenuAvailable, locale: string) {
   try {
-    const menus = await cachedFetchMenu(name, locale);
+    const menus = await cachedFetchMenu(
+      { tags: [name, locale], revalidate: REVALIDATE_LONG },
+      name,
+      locale,
+    );
     return menus.menu;
   } catch (error) {
     const type =
