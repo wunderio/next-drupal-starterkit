@@ -1,12 +1,9 @@
 import { AbortError } from "p-retry";
-
 import { GET_ENTITY_AT_DRUPAL_PATH } from "../graphql/queries";
-
 import { drupalClientPreviewer, drupalClientViewer } from "./drupal-client";
-
 import { env } from "@/env";
-import { unstable_cache } from "next/cache";
 import { cache } from "react";
+import { neshCache } from "@neshca/cache-handler/functions";
 
 /**
  * Function to directly fetch a node from Drupal by its path and locale.
@@ -21,6 +18,7 @@ async function fetchNodeByPathQuery(
   locale: string,
   isDraftMode: boolean,
 ) {
+  console.log(`Fetching node by path: ${path} and locale: ${locale}`);
   const drupalClient = isDraftMode ? drupalClientPreviewer : drupalClientViewer;
   return await drupalClient.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
     path,
@@ -28,22 +26,24 @@ async function fetchNodeByPathQuery(
   });
 }
 
-async function fetchNodeByPathQuery2(
+const neshCachedFetch = neshCache(fetchNodeByPathQuery);
+
+async function fetchNodeByPathQuery4(
   path: string,
   locale: string,
   isDraftMode: boolean,
 ) {
-  const drupalClient = isDraftMode ? drupalClientPreviewer : drupalClientViewer;
-  return unstable_cache(async () => {
-    return await drupalClient.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
-      path,
-      langcode: locale,
-    });
-  }, [path, locale])();
+  const data = neshCachedFetch(
+    { tags: [`/${locale}${path}`] },
+    path,
+    locale,
+    isDraftMode,
+  );
+  return data;
 }
 
 // Wrapper function to cache fetchNodeByPathQuery function with react cache
-const cachedFetchNodeByPathQuery = cache(fetchNodeByPathQuery2);
+const cachedFetchNodeByPathQuery = cache(fetchNodeByPathQuery4);
 
 /**
  * Function to retrieve a node by its Drupal path.
@@ -66,6 +66,7 @@ export async function getNodeByPathQuery(
 ) {
   try {
     const data = await cachedFetchNodeByPathQuery(path, locale, isDraftMode);
+
     return { data: data, error: null };
   } catch (error) {
     const type =

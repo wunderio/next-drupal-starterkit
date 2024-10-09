@@ -1,4 +1,4 @@
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
 
 import { env } from "@/env";
@@ -30,6 +30,8 @@ async function handler(request: NextRequest) {
       const pathname = "/" + path.split("/").slice(2).join("/");
       revalidatePath(pathname);
     }
+
+    revalidateTag(path);
 
     return new Response("Revalidated.");
   } catch (error) {
