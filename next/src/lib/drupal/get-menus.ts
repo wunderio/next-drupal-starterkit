@@ -6,7 +6,6 @@ import { MenuAvailable } from "../gql/graphql";
 import { GET_MENU } from "../graphql/queries";
 
 import { env } from "@/env";
-import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import { neshCache } from "@neshca/cache-handler/functions";
 import { REVALIDATE_LONG } from "../constants";
@@ -18,13 +17,6 @@ import { REVALIDATE_LONG } from "../constants";
  * @param locale - The language code for the menu.
  * @returns A promise that resolves to the menu data.
  */
-// export async function fetchMenu(name: MenuAvailable, locale: string) {
-//   return await drupalClientViewer.doGraphQlRequest(GET_MENU, {
-//     name,
-//     langcode: locale,
-//   });
-// }
-
 export async function fetchMenu(name: MenuAvailable, locale: string) {
   return await drupalClientViewer.doGraphQlRequest(GET_MENU, {
     name,
@@ -32,10 +24,8 @@ export async function fetchMenu(name: MenuAvailable, locale: string) {
   });
 }
 
-// Wrapper function to cache getMenu function with react cache
-// const cachedFetchMenu = queryCacher(fetchMenu);
-const cached = cache(fetchMenu);
-const cachedFetchMenu = neshCache(cached);
+// Here we wrap the function in react cache and nesh cache  avoiding unnecessary requests.
+const cachedFetchMenu = neshCache(cache(fetchMenu));
 
 /**
  * Gets the menu data for a given menu name and locale.

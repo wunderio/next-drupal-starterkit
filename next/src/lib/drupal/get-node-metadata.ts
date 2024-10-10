@@ -13,16 +13,8 @@ export async function getNodeMetadata(
   // Fetch the frontpage node from Drupal used to generate metadata.
   const nodeByPathResult = await getNodeByPathQuery(path, locale);
 
-  // If the query result contains an error, we return a default metadata object.
-  if (nodeByPathResult.error) {
-    return {
-      title: "Error",
-      description: "Error",
-    };
-  }
-
   // Extract the frontpage node from the query result
-  const nodeEntity = extractEntityFromRouteQueryResult(nodeByPathResult.data);
+  const nodeEntity = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   // Get metadata for the frontpage node.
   const metadata = await generateNodeMetadata({

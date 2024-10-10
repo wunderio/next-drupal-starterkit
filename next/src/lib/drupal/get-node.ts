@@ -26,8 +26,8 @@ async function fetchNodeByPathQuery(
   });
 }
 
-const cached = cache(fetchNodeByPathQuery);
-const cachedFetchNodeByPathQuery = neshCache(cached);
+// Here we wrap the function in react cache and nesh cache  avoiding unnecessary requests.
+const cachedFetchNodeByPathQuery = neshCache(cache(fetchNodeByPathQuery));
 
 /**
  * Function to retrieve a node by its Drupal path.

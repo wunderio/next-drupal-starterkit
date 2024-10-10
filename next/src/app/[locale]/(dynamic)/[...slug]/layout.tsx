@@ -19,7 +19,7 @@ export default async function DynamicLayout({
   const path = Array.isArray(slug) ? `/${slug?.join("/")}` : slug;
 
   const nodeByPathResult = await getNodeByPathQuery(path, locale);
-  const nodeEntity = extractEntityFromRouteQueryResult(nodeByPathResult.data);
+  const nodeEntity = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   // Add information about possible other language versions of this node.
   // Not all node types necessarily have translations enabled,
