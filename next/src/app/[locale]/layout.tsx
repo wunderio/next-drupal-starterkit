@@ -54,7 +54,10 @@ export default async function RootLayout({
   params: { locale: string };
 }) {
   unstable_setRequestLocale(locale);
+
+  // We preload the menus here to avoid unnecessary delays in rendering
   preloadMenus(locale);
+
   const messages = await getMessages();
 
   return (
