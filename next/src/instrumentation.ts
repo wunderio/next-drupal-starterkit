@@ -15,7 +15,7 @@ export async function register() {
       // You can disable these features by setting the options to false.
       // For example, if you want to populate the cache with only pre-rendered pages, you can set the options as follows:
       fetch: false,
-      routes: false,
+      // routes: false,
     });
   }
 }
