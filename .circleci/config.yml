@@ -54,7 +54,7 @@ commands:
       - save_cache:
           paths:
             - <<parameters.path>>/node_modules
-            - <<parameters.path>>/.next/cache
+            - <<parameters.path>>/.next/cache/fetch-cache
           key: <<parameters.cache-version>>-npm-{{ checksum "<<parameters.path>>/package-lock.json" }}
 
   # @TODO it would be nice to be able to pass the keypair from env

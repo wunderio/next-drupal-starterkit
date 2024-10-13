@@ -11,10 +11,13 @@ const nextConfig = {
   generateBuildId: async () => {
     // This environment variable is set by CircleCI.
     // adjust this to your needs if you use another CI/CD tool.
-    return process.env.CIRCLE_BUILD_NUM
+    const buildId = process.env.CIRCLE_BUILD_NUM
       ? `build-id-${process.env.CIRCLE_BUILD_NUM}`
       : // If no build number is available, we generate a random build ID.
         crypto.randomBytes(20).toString("hex");
+    console.log("Build ID:", buildId);
+    console.log("CIRCLE_BUILD_NUM:", process.env.CIRCLE_BUILD_NUM);
+    return buildId;
   },
   cacheHandler:
     // Only use the cache handler in production and if the INIT_REDIS env is set in package.json
