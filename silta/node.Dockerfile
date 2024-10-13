@@ -11,7 +11,7 @@ COPY ./.next/standalone /app
 COPY ./.next/static /app/.next/static
 # We copy the fetch cache so that the cache handler can
 # prepopulate redis with it:
-COPY ./.next/cache/fetch-cache/ /app/.next/cache/fetch-cache
+# COPY ./.next/cache/fetch-cache/ /app/.next/cache/fetch-cache
 COPY ./public /app/public
 
 WORKDIR /app
