@@ -14,7 +14,7 @@ CacheHandler.onCreation(async ({ buildId }) => {
   /** @type {import("@neshca/cache-handler").Handler | undefined} */
   let handler;
 
-  console.log("BUILD_ID:", buildId);
+  console.info("BUILD_ID:", buildId);
 
   if (
     // Do not create the Redis handler during the build phase.
