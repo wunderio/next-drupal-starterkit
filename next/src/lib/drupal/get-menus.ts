@@ -37,8 +37,9 @@ const cachedFetchMenu = neshCache(cache(fetchMenu));
  */
 export async function getMenu(name: MenuAvailable, locale: string) {
   try {
+    // TODO: Find a way how to revalidate the menu when changes are made in Drupal.
     const menus = await cachedFetchMenu(
-      { tags: [name, locale], revalidate: REVALIDATE_LONG },
+      { tags: [name], revalidate: REVALIDATE_LONG },
       name,
       locale,
     );

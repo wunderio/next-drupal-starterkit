@@ -9,9 +9,13 @@ FROM wunderio/silta-node:20-alpine-v1
 # to the image.
 COPY ./.next/standalone /app
 COPY ./.next/static /app/.next/static
+
 # We copy the fetch cache so that the cache handler can
 # prepopulate redis with it:
+
+# THIS IS DISABLED UNTIL WE FIGURE OUT WHY IT DOESN'T WORK CORRECTLY.
 # COPY ./.next/cache/fetch-cache/ /app/.next/cache/fetch-cache
+
 COPY ./public /app/public
 
 WORKDIR /app
