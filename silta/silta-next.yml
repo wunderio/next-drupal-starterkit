@@ -29,7 +29,7 @@ services:
     autoscaling:
       enabled: true
       minReplicas: 2
-      maxReplicas: 3      
+      maxReplicas: 3
 
 nginx:
   content_security_policy: >- # Lines below are joined without line breaks.
