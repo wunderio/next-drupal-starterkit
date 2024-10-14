@@ -81,18 +81,13 @@ CacheHandler.onCreation(async ({ buildId }) => {
       // Create the Redis Handler if the client is available and connected.
       handler = await createRedisHandler(redisHandlerOptions);
       console.info("Redis handler created.");
-    } else {
-      // Fallback to LRU handler if Redis client is not available.
-      // The application will still work, but the cache will be in memory only and not shared.
-      handler = createLruHandler();
-      console.warn(
-        "Falling back to LRU handler because Redis client is not available.",
-      );
     }
   }
 
+  const lruHandler = createLruHandler();
+
   return {
-    handlers: [handler],
+    handlers: [handler, lruHandler],
     ttl: {
       defaultStaleAge,
       estimateExpireAge: (staleAge) => staleAge * 2,

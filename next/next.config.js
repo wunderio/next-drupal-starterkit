@@ -18,7 +18,7 @@ const nextConfig = {
   },
   cacheHandler:
     // Only use the cache handler in production and if the INIT_REDIS env is set in package.json
-    process.env.NODE_ENV === "production" && process.env.NEXT_PUBLIC_INIT_REDIS
+    process.env.NODE_ENV === "production"
       ? require.resolve("./cache-handler.mjs")
       : undefined,
   cacheMaxMemorySize: 0, // Disable in-memory cache
