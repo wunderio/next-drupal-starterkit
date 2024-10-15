@@ -34,11 +34,12 @@ const cachedFetchMenu = neshCache(cache(fetchMenu));
  * @param name - The name of the menu to fetch.
  * @param locale - The language code for the menu.
  * @returns A promise that resolves to the menu data or null if an error occurs.
+ * @throws If an error occurs during fetching.
  */
 export async function getMenu(name: MenuAvailable, locale: string) {
   try {
     const menus = await cachedFetchMenu(
-      { tags: [name, locale], revalidate: REVALIDATE_LONG },
+      { revalidate: REVALIDATE_LONG },
       name,
       locale,
     );
@@ -58,7 +59,7 @@ export async function getMenu(name: MenuAvailable, locale: string) {
 
     const errorMessage = `${type} Error during GetMenuQuery with $name: "${name}" and $langcode: "${locale}". ${moreInfo}`;
     console.error(JSON.stringify(errorMessage, null, 2));
-    return null;
+    throw new Error(errorMessage);
   }
 }
 

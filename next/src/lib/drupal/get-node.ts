@@ -7,7 +7,7 @@ import { neshCache } from "@neshca/cache-handler/functions";
 import { REVALIDATE_LONG } from "../constants";
 
 /**
- * Function to directly fetch a node from Drupal by its path and locale.
+ * Data-access function to directly fetch a node from Drupal by its path and locale.
  *
  * @param path The path of the node.
  * @param locale The locale of the node.
@@ -36,6 +36,7 @@ const cachedFetchNodeByPathQuery = neshCache(cache(fetchNodeByPathQuery));
  * @param locale The language code for the locale of the node.
  * @param isDraftMode Optional. Defaults to false. If true, fetches the draft version of the node.
  * @returns An object containing the node data or an error message.
+ * @throws If an error occurs during fetching.
  *
  * @example
  * const { data, error } = await getNodeByPathQuery('/about-us', 'en');
@@ -50,7 +51,7 @@ export async function getNodeByPathQuery(
 ) {
   try {
     return await cachedFetchNodeByPathQuery(
-      { tags: [`/${locale}${path}`], revalidate: REVALIDATE_LONG },
+      { revalidate: REVALIDATE_LONG },
       path,
       locale,
       isDraftMode,
