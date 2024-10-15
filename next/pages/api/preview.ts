@@ -6,5 +6,5 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse,
 ) {
-  return await drupalClientPreviewer.preview(request, response);
+  await drupalClientPreviewer.preview(request, response);
 }
