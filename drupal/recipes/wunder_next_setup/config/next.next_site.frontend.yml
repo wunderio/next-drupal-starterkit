@@ -4,7 +4,7 @@ dependencies: {  }
 id: frontend
 label: 'Next.js frontend'
 base_url: 'http://localhost:3000'
-preview_url: 'http://localhost:3000/api/preview'
+preview_url: 'http://localhost:3000/api/draft'
 preview_secret: null
 revalidate_url: 'http://localhost:3000/api/revalidate'
 revalidate_secret: null

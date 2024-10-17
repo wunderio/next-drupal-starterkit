@@ -54,7 +54,8 @@ Follow this guide to get the backend and frontend up and running. You can either
 ```bash
 ./setup-lando.sh
 ```
-or 
+
+or
 
 ```bash
 ./setup-ddev.sh
@@ -78,9 +79,9 @@ After the setup is complete, you can access the site at the following URLs:
 
 Lando has two separate containers for the backend and frontend, so the URLs are different:
 
-| Backend | Frontend                     |
-|--|--|
-| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/  |
+| Backend                                   | Frontend                    |
+| ----------------------------------------- | --------------------------- |
+| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/ |
 
 You can get a more detailed list of all the services and their urls with the command:
 
@@ -92,9 +93,9 @@ lando info
 
 DDEV has a single container for both the backend and frontend, so the URLs differ only by the port:
 
-| Backend | Frontend                                       |
-|--|--|
-| https://next-drupal-starterkit.ddev.site| https://next-drupal-starterkit.ddev.site:3000  |
+| Backend                                  | Frontend                                      |
+| ---------------------------------------- | --------------------------------------------- |
+| https://next-drupal-starterkit.ddev.site | https://next-drupal-starterkit.ddev.site:3000 |
 
 You can get a more detailed list of all the services and their urls with the command:
 
@@ -133,8 +134,8 @@ The template includes a Drupal migration to populate the site with a set of tran
 
 ### Multilanguage setup
 
-This template is set up to use three languages: English (default), Finnish and Swedish. These languages are added in Drupal using the usual translation modules, and to the frontend using the [next-i18next](https://github.com/i18next/next-i18next) npm package.
-The indexing in Elasticsearch takes into consideration the language of the content for analysis. The interface is translated. (Note: translations have mostly been done with Google Translate, so don't expect perfect Finnish or Swedish... or English for that matter. 🙂 )
+This template is set up to use three languages: English (default), Finnish, and Swedish. These languages are added in Drupal using the standard translation modules and integrated into the frontend using the [Next-Intl](https://next-intl-docs.vercel.app/) module.
+The Elasticsearch indexing takes the content language into account for analysis, and the interface is fully translated. (Note: Most translations were done using Google Translate, so please expect some inaccuracies in Finnish, Swedish, and even English. 🙂)
 
 ### Webforms
 
@@ -151,7 +152,7 @@ If the backend is not available momentarily, the frontend will try again to call
 
 ### Frontend user authentication and registration
 
-The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Next-Auth](https://next-auth.js.org/).
+The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Next-Auth](https://authjs.dev/).
 
 - As an example, only registered users are allowed to post to the drupal `contact` webform, and parts of the interface in the frontend are available only for logged-in users.
 - Some test users are imported as part of the content migration (check the `users.csv' file for the credentials).
@@ -184,29 +185,6 @@ The environment variables used by the frontend are also checked for type safety.
 
 The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` path that can be submitted to search engines.
 
-#### Redis caching
-
-The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. Both the ddev and lando setup include redis by default.
-The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package. We added custom logic to our cache handler
-to handle prepopulating the cache from builds for ISR. Checl the `cache-handler.mjs` file in the `next` directory for more information.
-
-### Connecting to Redis in the local environment
-
-You can connect to Redis and interact with it using the [redis cli](https://redis.io/docs/latest/develop/connect/cli/) in the local environment by running the following command:
-
-If you are using Lando:
-
-```bash
-lando redis-cli
-```
-
-If you are using DDEV:
-
-```bash
-ddev redis
-```
-
-
 ### Testing with Cypress
 
 The template includes example tests to be run with Cypress. The Lando setup includes a headless browser and Cypress, so you can run the tests locally without the need to install anything else, but it won't be able to use the visual Cypress application. See below for more details.
@@ -233,6 +211,23 @@ If you want to run the visual Cypress application, you will need to run cypress 
 
 You can then run your tests inside the Cypress application.
 
-### UI library
+#### Redis caching
 
-The `ui/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects. The components are meant to be used as a starting point, and should be modified, added and removed as required to fit the needs of the project.
+The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. Both the ddev and lando setup include redis by default.
+The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package.
+
+### Connecting to Redis in the local environment
+
+You can connect to Redis and interact with it using the [redis cli](https://redis.io/docs/latest/develop/connect/cli/) in the local environment by running the following command:
+
+If you are using Lando:
+
+```bash
+lando redis-cli
+```
+
+If you are using DDEV:
+
+```bash
+ddev redis
+```
