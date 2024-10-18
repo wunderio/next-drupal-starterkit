@@ -26,6 +26,10 @@ tooling:
     service: node
     dir: /app/next
 
+  npx:
+    command: "npx"
+    service: node
+
   # This command will stop (kill) any running node operations
   # in the node container in lando. You can use it instead of the
   # usual ctrl-c keyboard combination.
@@ -154,6 +158,8 @@ services:
         # We instruct node to use the Lando CA certificate for HTTPS connections:
         NODE_EXTRA_CA_CERTS: /lando/certs/LandoCA.crt
     build:
+      # This is needed to be able to run lando npx commands:
+      - "mkdir -p /var/www/.npm-global/lib"
       - "cd next && npm ci"
     scanner: false
 
