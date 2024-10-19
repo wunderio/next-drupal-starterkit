@@ -8,8 +8,8 @@ const meta: Meta<typeof Button> = {
   component: Button,
   tags: ["autodocs"],
   args: {
-    variant: "primary",
-    size: "md",
+    variant: "default",
+    size: "default",
     children: "Click me",
     disabled: false,
   },
@@ -18,11 +18,11 @@ const meta: Meta<typeof Button> = {
       description: "Determines the style of the button.",
       table: {
         type: {
-          summary: "primary | secondary | tertiary",
+          summary: "default | secondary | outline",
         },
       },
       control: "radio",
-      options: ["primary", "secondary", "tertiary"],
+      options: ["default", "secondary", "outline"],
     },
     size: {
       description: "Determines the size of the button.",
@@ -61,10 +61,10 @@ type Story = StoryObj<typeof Button>;
 export const Default: Story = {};
 
 export const Primary: Story = {
-  name: 'variant="primary"',
+  name: 'variant="default"',
   args: {
     children: "Primary button",
-    variant: "primary",
+    variant: "default",
   },
 };
 
@@ -76,11 +76,11 @@ export const Secondary: Story = {
   },
 };
 
-export const Tertiary: Story = {
-  name: 'variant="tertiary"',
+export const Outline: Story = {
+  name: 'variant="outline"',
   args: {
     children: "Tertiary button",
-    variant: "tertiary",
+    variant: "outline",
   },
 };
 
@@ -96,7 +96,7 @@ export const Medium: Story = {
   name: 'size="md"',
   args: {
     children: "Medium button",
-    size: "md",
+    size: "default",
   },
 };
 
@@ -111,7 +111,7 @@ export const Large: Story = {
 export const WithIconOnly: Story = {
   name: "Icon only",
   args: {
-    children: <WarningIcon className="h-6 w-6" />,
+    children: <WarningIcon className="w-6 h-6" />,
   },
 };
 
@@ -120,7 +120,7 @@ export const WithIconLeft: Story = {
   args: {
     children: (
       <>
-        <WarningIcon className="mr-2 inline h-6 w-6" />
+        <WarningIcon className="inline w-6 h-6 mr-2" />
         <span>Icon left</span>
       </>
     ),
@@ -133,7 +133,7 @@ export const WithIconRight: Story = {
     children: (
       <>
         <span>Icon right</span>
-        <WarningIcon className="ml-2 inline h-6 w-6" />
+        <WarningIcon className="inline w-6 h-6 ml-2" />
       </>
     ),
   },
