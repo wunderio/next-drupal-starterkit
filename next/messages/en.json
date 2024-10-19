@@ -112,5 +112,10 @@
       "sorted-hits-text": "{sortedHits} relevant results sorted out of {hits} ms, found in {time} ms",
       "hits-text": "{hits} results found in {time} ms"
     }
+  },
+  "ModeToggle": {
+    "label": "Theme",
+    "dark": "Dark",
+    "light": "Light"
   }
 }

@@ -113,5 +113,10 @@
       "sorted-hits-text": "{sortedHits} osuvaa tulosta lajiteltuna {hits} ms:ssa, löydetty {time} ms:ssa",
       "hits-text": "{hits} osuvaa hakutulosta löytyi {time} millisekunnissa"
     }
+  },
+  "ModeToggle": {
+    "label": "Teema",
+    "dark": "Tumma",
+    "light": "Vaalea"
   }
 }

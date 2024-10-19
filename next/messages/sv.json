@@ -113,5 +113,10 @@
       "sorted-hits-text": "{sortedHits} relevanta resultat sorterade ut från {hits} ms, hittades i {time} ms",
       "hits-text": "{hits} resultat hittades på {time} ms"
     }
+  },
+  "ModeToggle": {
+    "label": "Tema",
+    "dark": "Mörkt",
+    "light": "Ljust"
   }
 }

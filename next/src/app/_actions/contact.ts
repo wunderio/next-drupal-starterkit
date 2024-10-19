@@ -2,11 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { getLocale } from "next-intl/server";
-
-import { ContactFormInputs } from "@/components/forms/contact-form";
 import { getAuth } from "@/lib/auth/get-auth";
 
 import { drupalClientViewer } from "../../lib/drupal/drupal-client";
+import { ContactFormInputs, contactFormSchema } from "@/lib/zod/contact-form";
 
 export async function createContactSubmissionAction(values: ContactFormInputs) {
   // Because we want to allow only registered users to submit
@@ -24,6 +23,21 @@ export async function createContactSubmissionAction(values: ContactFormInputs) {
     };
   }
 
+  const validatedValues = contactFormSchema.safeParse(values);
+
+  if (!validatedValues.success) {
+    const errors = validatedValues.error.flatten().fieldErrors;
+
+    return {
+      success: false,
+      errors: {
+        name: errors.name?.[0] ?? "",
+        email: errors.email?.[0] ?? "",
+        message: errors.message?.[0] ?? "",
+      },
+    };
+  }
+
   // Get the locale with next-intl:
   const locale = await getLocale();
 
@@ -35,7 +49,7 @@ export async function createContactSubmissionAction(values: ContactFormInputs) {
       method: "POST",
       body: JSON.stringify({
         webform_id: "contact",
-        ...values,
+        ...validatedValues.data,
       }),
       headers: {
         "Content-Type": "application/json",
