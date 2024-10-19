@@ -36,7 +36,7 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
             href="/all-articles"
             className={cn(
               buttonVariants({ variant: "default" }),
-              "mr-4 mt-4 inline-flex px-5 py-3",
+              "mt-4 inline-flex px-5 py-3",
             )}
           >
             {t("all-articles")}

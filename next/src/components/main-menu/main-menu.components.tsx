@@ -49,7 +49,7 @@ export const MenuRoot = forwardRef<
       {...props}
       className={cn(
         "absolute inset-0 z-40 overflow-y-auto overflow-x-hidden border-border lg:bottom-auto lg:min-h-[75vh]",
-        isOpen && "border-t bg-secondary lg:border",
+        isOpen && "border-t lg:border bg-background",
         isOpen &&
           "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r after:border-border",
       )}
@@ -83,13 +83,13 @@ export function MenuList({ children, level }) {
   return (
     <NavigationMenu.List
       className={cn(
-        "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r border-border bg-secondary lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
+        "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r border-border lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
         level === 0 &&
           "z-10 h-full lg:left-0 lg:z-auto lg:border-border lg:bg-secondary",
         level === 1 &&
-          "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto lg:border-border lg:bg-secondary",
+          "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto lg:border-border lg:bg-background",
         level === 2 &&
-          "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto lg:border-border lg:bg-secondary",
+          "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto lg:border-border lg:bg-background",
       )}
     >
       {children}
@@ -138,7 +138,7 @@ export function MenuItem({
   return (
     <NavigationMenu.Item
       className={cn(
-        "flex items-stretch border-b border-border bg-secondary font-bold tracking-widest underline-offset-4 lg:border-b-0",
+        "flex items-stretch border-b border-border font-bold tracking-widest underline-offset-4 lg:border-b-0",
         isTopLevel && "lg:bg-secondary",
       )}
       value={value}
@@ -161,17 +161,7 @@ export function MenuLink({
 }) {
   const pathname = usePathnameWithoutLocale();
   const locale = useLocale();
-
-  // TODO: Rethink this...
-
-  /**
-   * Drupal node menu  path comes with locale
-   * Drupal Next.js menu routes path comes without locale
-   * LinkWithLocale expects path without locale
-   */
-
   const isActive = isMenuItemActive(locale, pathname, href);
-
   const hrefWithoutLocale = removeLocaleFromPath(locale, href);
 
   return (
@@ -203,7 +193,7 @@ export function MenuTrigger({
       className={cn(
         "flex w-20 shrink-0 items-center justify-center ring-inset ring-ring hover:ring-2 lg:border-none",
         isTopLevel
-          ? "lg:ring-ring lg:aria-expanded:bg-secondary"
+          ? "lg:ring-ring lg:aria-expanded:bg-background"
           : "lg:aria-expanded:bg-secondary lg:aria-expanded:text-secondary-foreground lg:aria-expanded:ring-ring",
       )}
       aria-label={`${t("show-submenu", { parent })}`}

@@ -25,37 +25,32 @@ export function ParagraphAccordionTwoColumns({
 }) {
   return (
     <section data-paragraph={paragraph.__typename}>
-      {paragraph.heading && (
-        <HeadingParagraph>{paragraph.heading}</HeadingParagraph>
-      )}
-
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2">
-        <div>
+        <div className="flex flex-col items-center justify-center">
+          {paragraph.heading && (
+            <HeadingParagraph>{paragraph.heading}</HeadingParagraph>
+          )}
           {paragraph.accordionFormattedText && (
-            <div className="flex items-center justify-center">
-              <FormattedText
-                html={paragraph.accordionFormattedText.processed}
-                className={cn(
-                  "text-left text-md/xl sm:text-lg",
-                  paragraph.heading && "mt-4",
-                )}
-              />
-            </div>
+            <FormattedText
+              html={paragraph.accordionFormattedText.processed}
+              className={cn(
+                "text-left text-xl sm:text-lg",
+                paragraph.heading && "mt-4",
+              )}
+            />
           )}
           {paragraph.primaryLink && (
-            <div className="flex items-center justify-center py-3">
-              <Link
-                href={paragraph.primaryLink.url}
-                className={cn(
-                  buttonVariants({ variant: "default" }),
-                  "text-base mr-4 inline-flex max-w-sm px-5 py-3",
-                )}
-              >
-                {paragraph.primaryLink.title}
+            <Link
+              href={paragraph.primaryLink.url}
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "text-base mr-4 inline-flex mt-4 max-w-sm py-3 px-10 ",
+              )}
+            >
+              {paragraph.primaryLink.title}
 
-                <ArrowIcon className="w-6 h-6 ml-3 -rotate-90" aria-hidden />
-              </Link>
-            </div>
+              <ArrowIcon className="w-6 h-6 ml-3 -rotate-90" aria-hidden />
+            </Link>
           )}
         </div>
         <div>

@@ -33,7 +33,7 @@ export function ParagraphAccordionOneColumn({
         <FormattedText
           html={paragraph.accordionFormattedText.processed}
           className={cn(
-            "text-left text-md/xl sm:text-lg",
+            "text-left text-xl sm:text-lg",
             paragraph.heading && "mt-4",
           )}
         />
@@ -43,7 +43,7 @@ export function ParagraphAccordionOneColumn({
           href={paragraph.primaryLink.url}
           className={cn(
             buttonVariants({ variant: "default" }),
-            "text-base mr-4 inline-flex max-w-sm px-5 py-3",
+            "text-base mr-4 inline-flex mt-4 max-w-sm py-3 px-10 ",
           )}
         >
           {paragraph.primaryLink.title}
@@ -51,7 +51,7 @@ export function ParagraphAccordionOneColumn({
         </Link>
       )}
 
-      <Accordion type="single" collapsible>
+      <Accordion type="single" collapsible className="mt-4">
         {paragraph.accordionItems?.map(
           (item: FragmentParagraphAccordionItemFragment) => (
             <AccordionItem key={item.id} value={item.id}>
