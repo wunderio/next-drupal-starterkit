@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "concurrently --raw 'npm run graphql-codegen:watch' 'npm run dev:nocodegen'",
     "dev:nocodegen": "next dev",
-    "build": "npm run graphql-codegen && NEXT_PUBLIC_INIT_REDIS=false next build",
+    "build": "npm run graphql-codegen && next build",
     "start": "NEXT_PUBLIC_INIT_REDIS=true next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
-    "@neshca/cache-handler": "^1.7.3",
+    "@neshca/cache-handler": "^1.8.0",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.2",
