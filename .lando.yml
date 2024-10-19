@@ -26,6 +26,11 @@ tooling:
     service: node
     dir: /app/next
 
+  npx:
+    description: "Runs npx commands"
+    service: node
+    dir: /app/next
+
   # This command will stop (kill) any running node operations
   # in the node container in lando. You can use it instead of the
   # usual ctrl-c keyboard combination.
@@ -44,10 +49,12 @@ tooling:
     user: www-data
     cmd:
       - appserver: "php /app/drupal/vendor/bin/phpunit -c /app/drupal/phpunit.xml --testdox"
+
   regenerate-phpunit-config:
     description: "Regenerates fresh PHPUnit configuration."
     cmd:
       - appserver: /app/.lando/phpunit.sh
+
   xdebug:
     description: "Loads Xdebug in the selected mode"
     cmd:
@@ -159,6 +166,7 @@ services:
         # To enable nesh cache debugging
         # NEXT_PRIVATE_DEBUG_CACHE: 1
     build:
+      - "mkdir -p /var/www/.npm-global/lib"
       - "cd next && npm ci"
     scanner: false
 
