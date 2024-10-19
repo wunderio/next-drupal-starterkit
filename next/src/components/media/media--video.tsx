@@ -19,13 +19,7 @@ export function MediaVideo({
   };
 
   const videoId = getYouTubeId(media.mediaOembedVideo);
-  return (
-    <YouTube
-      className="aspect-h-9 aspect-w-16"
-      videoId={videoId}
-      opts={options}
-    />
-  );
+  return <YouTube className="aspect-video" videoId={videoId} opts={options} />;
 }
 
 /**
