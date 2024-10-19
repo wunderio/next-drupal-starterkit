@@ -66,7 +66,10 @@ export function ParagraphHero({
           </div>
         </div>
         <div className="hidden lg:col-span-6 lg:mt-0 lg:flex">
-          <MediaImage media={paragraph.image as FragmentMediaImageFragment} />
+          <MediaImage
+            media={paragraph.image as FragmentMediaImageFragment}
+            priority
+          />
         </div>
       </div>
     </section>

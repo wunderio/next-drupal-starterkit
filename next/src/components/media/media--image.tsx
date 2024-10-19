@@ -2,7 +2,12 @@ import NextImage from "next/image";
 
 import { FragmentMediaImageFragment } from "@/lib/gql/graphql";
 
-export function MediaImage({ media }: { media: FragmentMediaImageFragment }) {
+type MediaImageProps = {
+  media: FragmentMediaImageFragment;
+  priority?: boolean;
+};
+
+export function MediaImage({ media, priority }: MediaImageProps) {
   if (!media) {
     return null;
   }
@@ -16,6 +21,7 @@ export function MediaImage({ media }: { media: FragmentMediaImageFragment }) {
       height={height}
       alt={alt || "Image"}
       title={title || ""}
+      priority={priority}
       className="object-cover h-auto max-w-full"
     />
   );

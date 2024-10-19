@@ -10,6 +10,15 @@ import {
   WebformSubmissionRaw,
 } from "@/lib/zod/webform-submission";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 import { LinkWithLocale } from "@/i18n/routing";
 
 type DashboardPageParams = {
@@ -65,22 +74,22 @@ export default async function DashboardPage({
       <p className="my-6 text-justify text-md/xl text-scapaflow sm:text-lg">
         {t("form-submission-intro-text", { form: submission.formTitle })}
       </p>
-      <table className="w-full text-left border-collapse">
-        <thead className="font-bold text-white border border-primary-700 bg-primary-700 text-heading-xs">
-          <tr>
-            <th className="px-3 py-4">{t("form-field")}</th>
-            <th className="px-3 py-4">{t("form-value")}</th>
-          </tr>
-        </thead>
-        <tbody className="text-sm bg-white text-steelgray">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">{t("form-field")}</TableHead>
+            <TableHead>{t("form-value")}</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {submission.formData.map(([key, value]) => (
-            <tr key={key} className="border border-graysuit">
-              <td className="p-3">{key}</td>
-              <td className="p-3">{value}</td>
-            </tr>
+            <TableRow key={key}>
+              <TableCell className="font-medium">{key}</TableCell>
+              <TableCell>{value}</TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </>
   );
 }

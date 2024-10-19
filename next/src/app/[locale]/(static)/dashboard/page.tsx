@@ -12,6 +12,15 @@ import {
   WebformSubmissionsListItem,
 } from "@/lib/zod/webform-submission-list";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 import { LinkWithLocale } from "@/i18n/routing";
 
 export async function generateMetadata({
@@ -63,25 +72,24 @@ export default async function DashboardPage({
       <p className="my-6 text-justify text-md/xl text-scapaflow sm:text-lg">
         {t("user-dashboard-intro-greeting", { username: session.user.name })}
       </p>
-      <table className="w-full text-left border-collapse">
-        <thead className="font-bold text-white border border-primary-700 bg-primary-700 text-heading-xs">
-          <tr>
-            <th className="px-3 py-4">{t("form")}</th>
-            <th className="px-3 py-4">{t("date")}</th>
-            <th className="px-3 py-4">{t("more-details")}</th>
-          </tr>
-        </thead>
-        <tbody className="text-sm bg-white text-steelgray">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">{t("form")}</TableHead>
+            <TableHead>{t("date")}</TableHead>
+            <TableHead className="text-right">{t("more-details")}</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {submissions.map((submission) => (
-            <tr
-              key={submission.uuid[0]["value"]}
-              className="border border-graysuit"
-            >
-              <td className="p-3">{submission.webform_id[0]["target_id"]}</td>
-              <td className="p-3">
+            <TableRow key={submission.uuid[0]["value"]}>
+              <TableCell className="font-medium">
+                {submission.webform_id[0]["target_id"]}
+              </TableCell>
+              <TableCell>
                 {formatDate(submission.completed[0]["value"], locale)}
-              </td>
-              <td className="p-3">
+              </TableCell>
+              <TableCell className="text-right">
                 <LinkWithLocale
                   href={{
                     pathname:
@@ -95,19 +103,18 @@ export default async function DashboardPage({
                 >
                   {t("see-more")}
                 </LinkWithLocale>
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           ))}
-
           {submissions.length === 0 && (
-            <tr className="border border-graysuit">
-              <td colSpan={3} className="p-3">
+            <TableRow>
+              <TableCell colSpan={3} className="p-3">
                 {t("no-submissions-yet")}
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           )}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </>
   );
 }
