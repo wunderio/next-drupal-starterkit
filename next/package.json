@@ -20,6 +20,7 @@
     "graphql-codegen:watch": "npm run codegen-access-token && graphql-codegen  --config codegen.ts --watch"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@neshca/cache-handler": "^1.7.3",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-checkbox": "^1.1.2",
@@ -53,12 +54,13 @@
     "p-retry": "^6.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.53.0",
+    "react-hook-form": "^7.53.1",
     "react-instantsearch": "^7.13.2",
     "react-youtube": "^10.1.0",
     "redis": "^4.7.0",
     "server-only": "^0.0.1",
     "sharp": "^0.33.5",
+    "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
