@@ -61,7 +61,7 @@ export function UserMenu() {
         <DropdownMenuContent className="z-50">
           {status === "authenticated" ? (
             <>
-              <LinkWithLocale className="p-2" href="/dashboard">
+              <LinkWithLocale href="/dashboard" className="hover:underline">
                 <DropdownMenuItem>{t("user-dashboard")}</DropdownMenuItem>
               </LinkWithLocale>
               <LogoutButton>
@@ -70,10 +70,10 @@ export function UserMenu() {
             </>
           ) : (
             <>
-              <LinkWithLocale className="p-2" href={loginUrl}>
+              <LinkWithLocale href={loginUrl} className="hover:underline">
                 <DropdownMenuItem>{t("log-in")}</DropdownMenuItem>
               </LinkWithLocale>
-              <LinkWithLocale className="p-2" href="/auth/register">
+              <LinkWithLocale href="/auth/register" className="hover:underline">
                 <DropdownMenuItem>{t("register")}</DropdownMenuItem>
               </LinkWithLocale>
             </>
