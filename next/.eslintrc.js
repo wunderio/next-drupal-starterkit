@@ -1,5 +1,4 @@
 module.exports = {
-  // project: "next",
   root: true,
   parserOptions: {
     ecmaVersion: "latest",
@@ -30,7 +29,7 @@ module.exports = {
       parser: "@typescript-eslint/parser",
       parserOptions: {
         project: "./tsconfig.json",
-        tsconfigRootDir: __dirname, // Ensures ESLint resolves from the correct directory
+        tsconfigRootDir: __dirname,
       },
       env: {
         browser: true,
