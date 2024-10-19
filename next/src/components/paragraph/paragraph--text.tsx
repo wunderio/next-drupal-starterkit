@@ -9,7 +9,7 @@ export function ParagraphText({
   paragraph: FragmentParagraphFormattedTextFragment;
 }) {
   return (
-    <>
+    <section data-paragraph={paragraph.__typename}>
       {paragraph.formattedTextHeading && (
         <HeadingParagraph>{paragraph.formattedTextHeading}</HeadingParagraph>
       )}
@@ -20,6 +20,6 @@ export function ParagraphText({
           paragraph.formattedTextHeading && "mt-4",
         )}
       />
-    </>
+    </section>
   );
 }

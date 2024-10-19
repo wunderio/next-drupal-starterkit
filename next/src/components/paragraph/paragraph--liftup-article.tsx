@@ -7,7 +7,7 @@ export function ParagraphLiftupArticle({
   paragraph: FragmentParagraphLiftupArticleFragment;
 }) {
   return (
-    <section>
+    <section data-paragraph={paragraph.__typename}>
       <ArticleTeasers
         articles={paragraph.articles}
         heading={paragraph.heading}

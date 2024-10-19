@@ -25,7 +25,7 @@ export function ParagraphAccordionOneColumn({
   paragraph: FragmentParagraphAccordionFragment;
 }) {
   return (
-    <>
+    <section data-paragraph={paragraph.__typename}>
       {paragraph.heading && (
         <HeadingParagraph>{paragraph.heading}</HeadingParagraph>
       )}
@@ -70,6 +70,6 @@ export function ParagraphAccordionOneColumn({
           ),
         )}
       </Accordion>
-    </>
+    </section>
   );
 }

@@ -17,11 +17,15 @@ export function ParagraphHero({
   paragraph: FragmentParagraphHeroFragment;
 }) {
   return (
-    <section id="hero" className="bg-secondary">
+    <section
+      id="hero"
+      className="bg-secondary"
+      data-paragraph={paragraph.__typename}
+    >
       <div className="grid max-w-screen-xl mx-auto lg:grid-cols-12">
         <div className="px-8 py-8 mr-auto place-self-center lg:col-span-6 lg:py-16">
           {paragraph.paragraphHeroHeading && (
-            <h1 className="max-w-2xl mb-4 text-lg font-bold leading-none tracking-tight text-left text-primary md:text-xl">
+            <h1 className="max-w-2xl mb-4 text-2xl font-bold leading-none tracking-tight text-left text-primary md:text-5xl">
               {paragraph.paragraphHeroHeading}
             </h1>
           )}

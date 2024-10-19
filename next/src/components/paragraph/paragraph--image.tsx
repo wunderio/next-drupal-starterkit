@@ -6,5 +6,9 @@ export function ParagraphImage({
 }: {
   paragraph: FragmentParagraphImageFragment;
 }) {
-  return <Media media={paragraph.image} />;
+  return (
+    <section data-paragraph={paragraph.__typename}>
+      <Media media={paragraph.image} />
+    </section>
+  );
 }

@@ -6,5 +6,9 @@ export function ParagraphVideo({
 }: {
   paragraph: FragmentParagraphVideoFragment;
 }) {
-  return <Media media={paragraph.video} />;
+  return (
+    <section data-paragraph={paragraph.__typename}>
+      <Media media={paragraph.video} />
+    </section>
+  );
 }

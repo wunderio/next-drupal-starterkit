@@ -12,7 +12,7 @@ export function ParagraphListingArticles({
   paragraph: FragmentParagraphListingArticleFragment;
 }) {
   return (
-    <>
+    <section data-paragraph={paragraph.__typename}>
       {paragraph.paragraphListingArticleHeading && (
         <HeadingParagraph>
           {paragraph.paragraphListingArticleHeading}
@@ -21,6 +21,6 @@ export function ParagraphListingArticles({
       <Suspense fallback={<LoadingSpinner />}>
         <ArticlesListing key={paragraph.id} limit={paragraph.limit} />
       </Suspense>
-    </>
+    </section>
   );
 }

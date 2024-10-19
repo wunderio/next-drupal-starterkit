@@ -11,7 +11,10 @@ export function ParagraphFileAttachments({
   paragraph: FragmentParagraphFileAttachmentsFragment;
 }) {
   return (
-    <section className="relative h-full p-4 transition-all bg-white border rounded border-border hover:shadow-md">
+    <section
+      className="relative h-full p-4 transition-all bg-white border rounded border-border hover:shadow-md"
+      data-paragraph={paragraph.__typename}
+    >
       {paragraph.fileAttachmentsParagraphHeading && (
         <HeadingParagraph>
           {paragraph.fileAttachmentsParagraphHeading}
