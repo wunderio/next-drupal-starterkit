@@ -9,10 +9,10 @@ import WunderIcon from "@/styles/icons/wunder.svg";
 import type { MenuType } from "@/types/graphql";
 
 import { LanguageSwitcher } from "./language-switcher";
+import { ModeToggle } from "./mode-toggle";
 import { UserMenu } from "./user-menu";
 
 import { LinkWithLocale } from "@/i18n/routing";
-import { ModeToggle } from "./mode-toggle";
 
 interface HeaderProps {
   menu?: MenuType;

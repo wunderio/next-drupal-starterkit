@@ -1,14 +1,14 @@
+import { cache } from "react";
+import { neshCache } from "@neshca/cache-handler/functions";
 import { AbortError } from "p-retry";
 
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 
+import { REVALIDATE_LONG } from "../constants";
 import { MenuAvailable } from "../gql/graphql";
 import { GET_MENU } from "../graphql/queries";
 
 import { env } from "@/env";
-import { cache } from "react";
-import { neshCache } from "@neshca/cache-handler/functions";
-import { REVALIDATE_LONG } from "../constants";
 
 /**
  * Fetches the menu data for a given menu name and locale from the Drupal client.

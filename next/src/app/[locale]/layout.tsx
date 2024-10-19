@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import "instantsearch.css/themes/satellite-min.css";
 
 import { Metadata, Viewport } from "next";
+import { SessionProvider } from "next-auth/react";
 import { NextIntlClientProvider } from "next-intl";
 import {
   getMessages,
@@ -13,13 +14,12 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import DraftAlert from "@/components/draft-alert";
 import { Footer } from "@/components/footer/footer";
 import ReactQueryClientProvider from "@/components/query-client-provider";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { preloadMenus } from "@/lib/drupal/get-menus";
 import { inter, overpass } from "@/styles/fonts";
 
 import { routing } from "@/i18n/routing";
-import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

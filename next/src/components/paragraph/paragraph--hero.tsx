@@ -2,14 +2,13 @@ import Link from "next/link";
 
 import { FormattedText } from "@/components/formatted-text";
 import { MediaImage } from "@/components/media/media--image";
+import { buttonVariants } from "@/components/ui/button";
 import type {
   FragmentMediaImageFragment,
   FragmentParagraphHeroFragment,
 } from "@/lib/gql/graphql";
 import { cn } from "@/lib/utils";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
-
-import { buttonVariants } from "@/components/ui/button";
 
 export function ParagraphHero({
   paragraph,

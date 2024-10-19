@@ -1,8 +1,9 @@
 import { useTranslations } from "next-intl";
 
-import { ContactForm } from "./contact-form";
 import { AuthGateClient } from "../auth-gate-client";
 import { HeadingParagraph } from "../heading--paragraph";
+
+import { ContactForm } from "./contact-form";
 
 export function ContactFormContainer() {
   const t = useTranslations();

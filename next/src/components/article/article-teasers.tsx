@@ -1,14 +1,15 @@
 import { useTranslations } from "next-intl";
 
+import { buttonVariants } from "@/components/ui/button";
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 import { cn } from "@/lib/utils";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
+import { HeadingParagraph } from "../heading--paragraph";
+
 import { ArticleTeaser } from "./article-teaser";
 
 import { LinkWithLocale } from "@/i18n/routing";
-import { buttonVariants } from "@/components/ui/button";
-import { HeadingParagraph } from "../heading--paragraph";
 
 interface LatestArticlesProps {
   articles?: FragmentArticleTeaserFragment[];

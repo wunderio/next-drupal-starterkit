@@ -2,10 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { getLocale } from "next-intl/server";
+
 import { getAuth } from "@/lib/auth/get-auth";
+import { ContactFormInputs, contactFormSchema } from "@/lib/zod/contact-form";
 
 import { drupalClientViewer } from "../../lib/drupal/drupal-client";
-import { ContactFormInputs, contactFormSchema } from "@/lib/zod/contact-form";
 
 export async function createContactSubmissionAction(values: ContactFormInputs) {
   // Because we want to allow only registered users to submit

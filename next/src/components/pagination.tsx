@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
 import { LinkWithLocale } from "@/i18n/routing";
-import { Button } from "@/components/ui/button";
 
 export type PaginationProps = {
   currentPage?: number;
@@ -99,7 +99,7 @@ export function Pagination({
     <div className="flex items-center justify-between w-full">
       <MaybeLink href={prevPageHref}>
         <Button
-          variant="tertiary"
+          variant="link"
           disabled={!prevEnabled || !!isLoading}
           onClick={handlePrevClick}
           tabIndex={props["aria-hidden"] ? -1 : undefined}
@@ -111,7 +111,7 @@ export function Pagination({
       {numbers.length > 0 && <p>{numbers.join("/")}</p>}
       <MaybeLink href={nextPageHref}>
         <Button
-          variant="tertiary"
+          variant="link"
           disabled={!nextEnabled || !!isLoading}
           onClick={handleNextClick}
           tabIndex={props["aria-hidden"] ? -1 : undefined}

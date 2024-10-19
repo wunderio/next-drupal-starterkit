@@ -1,21 +1,20 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 
-import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
-import AccountIcon from "@/styles/icons/account-circle.svg";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"; // Adjust the import path as necessary
+import AccountIcon from "@/styles/icons/account-circle.svg";
+
+import { LogoutButton } from "../ui/logout-button";
 
 import { LinkWithLocale } from "@/i18n/routing";
-import { LogoutButton } from "../ui/logout-button";
 
 export function UserMenu() {
   const t = useTranslations();

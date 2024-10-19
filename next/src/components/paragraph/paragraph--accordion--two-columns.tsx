@@ -4,20 +4,19 @@ import { FormattedText } from "@/components/formatted-text";
 import { HeadingParagraph } from "@/components/heading--paragraph";
 import { Paragraph } from "@/components/paragraph";
 import {
-  FragmentParagraphAccordionFragment,
-  FragmentParagraphAccordionItemFragment,
-  FragmentParagraphUnionFragment,
-} from "@/lib/gql/graphql";
-import { cn } from "@/lib/utils";
-import ArrowIcon from "@/styles/icons/arrow-down.svg";
-
-import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { buttonVariants } from "@/components/ui/button";
+import {
+  FragmentParagraphAccordionFragment,
+  FragmentParagraphAccordionItemFragment,
+  FragmentParagraphUnionFragment,
+} from "@/lib/gql/graphql";
+import { cn } from "@/lib/utils";
+import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
 export function ParagraphAccordionTwoColumns({
   paragraph,

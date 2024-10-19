@@ -1,17 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-
-import DarkIcon from "@/styles/icons/dark_mode.svg";
-import LightIcon from "@/styles/icons/lightbulb.svg";
-
-import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
-import { cn } from "@/lib/utils";
-
-import * as React from "react";
-
 import { useTheme } from "next-themes";
+import * as React from "react";
+import { Moon, Sun } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -19,10 +11,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { Moon, Sun } from "lucide-react";
 
-type Theme = "light" | "dark";
+import { Button } from "../ui/button";
 
 export function ModeToggle() {
   const t = useTranslations("ModeToggle");

@@ -13,6 +13,7 @@ export const env = createEnv({
     ES_HOST: zod.string(),
   },
   client: {
+    NEXT_PUBLIC_NODE_ENV: zod.enum(["development", "production", "test"]),
     NEXT_PUBLIC_DRUPAL_BASE_URL: zod.string().url(),
     NEXT_PUBLIC_FRONTEND_URL: zod.string().url(),
   },
@@ -20,6 +21,7 @@ export const env = createEnv({
   /* eslint-disable n/no-process-env */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+    NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,
     DRUPAL_CLIENT_ID: process.env.DRUPAL_CLIENT_ID,
     DRUPAL_CLIENT_SECRET: process.env.DRUPAL_CLIENT_SECRET,
     DRUPAL_CLIENT_VIEWER_ID: process.env.DRUPAL_CLIENT_VIEWER_ID,

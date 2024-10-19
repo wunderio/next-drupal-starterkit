@@ -5,12 +5,12 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 
 import { ErrorRequired } from "@/components/forms/error-required";
-
-import { registerAction } from "@/app/_actions/register";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { StatusMessage } from "@/components/ui/status-message";
+
+import { registerAction } from "@/app/_actions/register";
 
 type Inputs = {
   name: string;

@@ -7,13 +7,12 @@ import { ContactList } from "@/components/contact-list";
 import { ContactFormContainer } from "@/components/forms/contact-form-container";
 import { LogoStrip } from "@/components/logo-strip";
 import { Node } from "@/components/node";
+import { Separator } from "@/components/ui/separator";
 import { REVALIDATE_LONG } from "@/lib/constants";
 import { getArticleTeasers } from "@/lib/drupal/get-article-teasers";
 import { getNodeByPathQuery } from "@/lib/drupal/get-node";
 import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
-
-import { Separator } from "@/components/ui/separator";
 
 type FrontpageParams = {
   params: { locale: string };

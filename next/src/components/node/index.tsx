@@ -22,7 +22,6 @@ export function Node({ node }: { node: TypedRouteEntity }) {
       // This will show ts error if a node type is implemented in the Drupal GraphQL schema,
       // but is missing from the switch statement
       node === typeof never;
-
       console.log(
         `components/node.tsx: Node type not yet implemented: ${(node as TypedRouteEntity).__typename}`,
       );
