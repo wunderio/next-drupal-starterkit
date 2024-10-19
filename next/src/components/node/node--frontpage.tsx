@@ -4,7 +4,7 @@ import type { FrontpageType } from "@/types/graphql";
 
 export function NodeFrontpage({ page }: { page: FrontpageType }) {
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-12">
       {page.contentElements?.map(
         (paragraph: FragmentParagraphUnionFragment) => (
           <Paragraph key={paragraph.id} paragraph={paragraph} />

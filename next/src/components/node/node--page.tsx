@@ -4,7 +4,7 @@ import type { PageType } from "@/types/graphql";
 
 export function NodePage({ page }: { page: PageType }) {
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-12">
       {page.contentElements?.map(
         (paragraph: FragmentParagraphUnionFragment) => (
           <Paragraph key={paragraph.id} paragraph={paragraph} />
