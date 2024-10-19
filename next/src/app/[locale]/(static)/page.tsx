@@ -61,9 +61,9 @@ export default async function FrontPage({
   return (
     <>
       <Node node={frontpage} />
-      <Separator className="max-w-4xl" />
+      <Separator className="max-w-4xl mx-auto my-9" />
       <ContactFormContainer />
-      <Separator className="max-w-4xl" />
+      <Separator className="max-w-4xl mx-auto my-9" />
       <ArticleTeasers
         heading={t("promoted-articles")}
         articles={articleTeasers}

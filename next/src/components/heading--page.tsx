@@ -1,3 +1,5 @@
 export function HeadingPage({ children }: { children: JSX.Element | string }) {
-  return <h1 className="font-bold text-left text-md md:text-lg">{children}</h1>;
+  return (
+    <h1 className="text-xl font-bold text-left md:text-4xl">{children}</h1>
+  );
 }

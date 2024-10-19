@@ -66,7 +66,12 @@ function FooterLink({ href, icon, newTab = false, children }: FooterLinkProps) {
   }[icon];
 
   return (
-    <Link href={href} target={target} rel={rel}>
+    <Link
+      href={href}
+      target={target}
+      rel={rel}
+      className="flex hover:underline"
+    >
       {icon && (
         <div className="flex items-center justify-center w-6 h-6 mr-2">
           <Icon className="w-full h-auto" aria-hidden />

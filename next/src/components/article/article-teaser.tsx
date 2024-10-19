@@ -2,6 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 import { formatDateTimestamp } from "@/lib/utils";
 interface ArticleTeaserProps {
@@ -15,25 +24,28 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
   const author = article.author?.name;
 
   return (
-    <Link
-      href={article.path}
-      className="relative grid h-full p-4 transition-all border rounded border-border hover:shadow-md"
-    >
-      <h3 className="mb-2 font-bold text-md line-clamp-2">{article.title}</h3>
-      <div className="mb-4 line-clamp-2 text-md">
-        {author && <>{t("posted-by", { author })} - </>}
-        {date}
-      </div>
-      {article.image && (
-        <Image
-          src={article.image.url}
-          width={384}
-          height={240}
-          alt={article.image.alt}
-          className="object-cover max-w-full"
-          priority
-        />
-      )}
+    <Link href={article.path}>
+      <Card className="flex flex-col justify-between h-full hover:shadow-md">
+        <CardHeader>
+          <CardTitle>{article.title}</CardTitle>
+          <CardDescription>
+            {author && <>{t("posted-by", { author })} - </>}
+            {date}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {article.image && (
+            <Image
+              src={article.image.url}
+              width={384}
+              height={240}
+              alt={article.image.alt}
+              className="object-cover w-full h-auto aspect-video"
+              priority
+            />
+          )}
+        </CardContent>
+      </Card>
     </Link>
   );
 }

@@ -22,7 +22,7 @@ export function Header({ menu }: HeaderProps) {
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
 
   return (
-    <header className="z-50 flex-shrink-0 border-b border-border text-foreground md:sticky md:top-0 bg-background">
+    <header className="z-50 flex-shrink-0 border-b border-border md:sticky md:top-0 bg-background">
       <nav className="flex flex-row items-center justify-between max-w-6xl px-6 py-4 mx-auto">
         <HomeLink />
         <div className="flex flex-row items-center justify-end gap-6 sm:gap-8">

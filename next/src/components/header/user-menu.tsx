@@ -25,10 +25,6 @@ export function UserMenu() {
 
   const { data, status } = useSession();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen((o) => !o);
-  const close = () => setIsOpen(false);
-
   const loginUrl = {
     pathname: "/auth/login",
     query: {
@@ -38,48 +34,44 @@ export function UserMenu() {
     },
   };
 
-  const ref = useOnClickOutside<HTMLDivElement>(close);
-
   return (
-    <div ref={ref}>
-      <DropdownMenu>
-        <span className="sr-only">{t("user-menu")}</span>
-        <DropdownMenuTrigger asChild>
-          <button
-            type="button"
-            className="hover:underline"
-            aria-expanded={status === "authenticated"}
-          >
-            <span className="capitalize sr-only sm:not-sr-only sm:mr-2 sm:inline">
-              {status === "authenticated"
-                ? data.user.name
-                : t("user-menu-account")}
-            </span>
-            <AccountIcon className="inline-block w-6 h-6" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="z-50">
-          {status === "authenticated" ? (
-            <>
-              <LinkWithLocale href="/dashboard" className="hover:underline">
-                <DropdownMenuItem>{t("user-dashboard")}</DropdownMenuItem>
-              </LinkWithLocale>
-              <LogoutButton>
-                <DropdownMenuItem>{t("log-out")}</DropdownMenuItem>
-              </LogoutButton>
-            </>
-          ) : (
-            <>
-              <LinkWithLocale href={loginUrl} className="hover:underline">
-                <DropdownMenuItem>{t("log-in")}</DropdownMenuItem>
-              </LinkWithLocale>
-              <LinkWithLocale href="/auth/register" className="hover:underline">
-                <DropdownMenuItem>{t("register")}</DropdownMenuItem>
-              </LinkWithLocale>
-            </>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+    <DropdownMenu>
+      <span className="sr-only">{t("user-menu")}</span>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className="hover:underline"
+          aria-expanded={status === "authenticated"}
+        >
+          <span className="capitalize sr-only sm:not-sr-only sm:mr-2 sm:inline">
+            {status === "authenticated"
+              ? data.user.name
+              : t("user-menu-account")}
+          </span>
+          <AccountIcon className="inline-block w-6 h-6" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="z-50">
+        {status === "authenticated" ? (
+          <>
+            <LinkWithLocale href="/dashboard" className="hover:underline">
+              <DropdownMenuItem>{t("user-dashboard")}</DropdownMenuItem>
+            </LinkWithLocale>
+            <LogoutButton>
+              <DropdownMenuItem>{t("log-out")}</DropdownMenuItem>
+            </LogoutButton>
+          </>
+        ) : (
+          <>
+            <LinkWithLocale href={loginUrl} className="hover:underline">
+              <DropdownMenuItem>{t("log-in")}</DropdownMenuItem>
+            </LinkWithLocale>
+            <LinkWithLocale href="/auth/register" className="hover:underline">
+              <DropdownMenuItem>{t("register")}</DropdownMenuItem>
+            </LinkWithLocale>
+          </>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

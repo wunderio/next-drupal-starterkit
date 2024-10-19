@@ -61,7 +61,7 @@ export function LogoStrip() {
         {logos?.map(({ id, image, label }) => (
           <li
             key={id}
-            className="box-pack-center mb-4 flex max-w-[50%] items-center justify-center p-4"
+            className="mb-4 flex max-w-[50%] items-center justify-center p-4"
           >
             {image}
             <span className="sr-only">{label}</span>
