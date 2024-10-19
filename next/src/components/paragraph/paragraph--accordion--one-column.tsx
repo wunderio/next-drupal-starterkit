@@ -11,8 +11,13 @@ import {
 import { cn } from "@/lib/utils";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
-import { Accordion } from "@/ui/accordion";
-import { buttonVariants } from "@/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { buttonVariants } from "@/components/ui/button";
 
 export function ParagraphAccordionOneColumn({
   paragraph,
@@ -29,7 +34,7 @@ export function ParagraphAccordionOneColumn({
         <FormattedText
           html={paragraph.accordionFormattedText.processed}
           className={cn(
-            "text-left text-md/xl text-scapaflow sm:text-lg",
+            "text-left text-md/xl sm:text-lg",
             paragraph.heading && "mt-4",
           )}
         />
@@ -38,7 +43,7 @@ export function ParagraphAccordionOneColumn({
         <Link
           href={paragraph.primaryLink.url}
           className={cn(
-            buttonVariants({ variant: "primary" }),
+            buttonVariants({ variant: "default" }),
             "text-base mr-4 inline-flex max-w-sm px-5 py-3",
           )}
         >
@@ -47,23 +52,24 @@ export function ParagraphAccordionOneColumn({
         </Link>
       )}
 
-      <Accordion
-        items={paragraph.accordionItems?.map(
-          (item: FragmentParagraphAccordionItemFragment) => ({
-            id: item.id,
-            heading: item.accordionItemHeading,
-            content: (
-              <div className="grid gap-4">
-                {item.contentElements?.map(
-                  (paragraph: FragmentParagraphUnionFragment) => (
-                    <Paragraph key={paragraph.id} paragraph={paragraph} />
-                  ),
-                )}
-              </div>
-            ),
-          }),
+      <Accordion type="single" collapsible>
+        {paragraph.accordionItems?.map(
+          (item: FragmentParagraphAccordionItemFragment) => (
+            <AccordionItem key={item.id} value={item.id}>
+              <AccordionTrigger>{item.accordionItemHeading}</AccordionTrigger>
+              <AccordionContent>
+                <div className="grid gap-4">
+                  {item.contentElements?.map(
+                    (paragraph: FragmentParagraphUnionFragment) => (
+                      <Paragraph key={paragraph.id} paragraph={paragraph} />
+                    ),
+                  )}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ),
         )}
-      />
+      </Accordion>
     </>
   );
 }

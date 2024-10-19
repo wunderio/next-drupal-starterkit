@@ -21,7 +21,7 @@ export function Header({ menu }: HeaderProps) {
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
 
   return (
-    <header className="z-50 flex-shrink-0 bg-white border-b border-finnishwinter text-primary-600 md:sticky md:top-0">
+    <header className="z-50 flex-shrink-0 border-b border-border text-primary md:sticky md:top-0 bg-secondary">
       <nav className="flex flex-row items-center justify-between max-w-6xl px-6 py-4 mx-auto">
         <HomeLink />
         <div className="flex flex-row items-center justify-end gap-6 sm:gap-8">

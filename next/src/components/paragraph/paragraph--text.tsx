@@ -16,7 +16,7 @@ export function ParagraphText({
       <FormattedText
         html={paragraph.formattedTextText.processed}
         className={cn(
-          "text-left text-md/xl text-scapaflow sm:text-lg",
+          "text-left text-md/xl sm:text-lg",
           paragraph.formattedTextHeading && "mt-4",
         )}
       />

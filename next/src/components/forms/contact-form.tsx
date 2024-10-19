@@ -4,11 +4,11 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
 import { createContactSubmissionAction } from "@/app/_actions/contact";
-import { Button } from "@/ui/button";
-import { Input } from "@/ui/input";
-import { Label } from "@/ui/label";
-import { StatusMessage } from "@/ui/status-message";
-import { Textarea } from "@/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { StatusMessage } from "@/components/ui/status-message";
+import { Textarea } from "@/components/ui/textarea";
 
 export type ContactFormInputs = {
   name: string;

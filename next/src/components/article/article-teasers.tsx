@@ -7,7 +7,8 @@ import ArrowIcon from "@/styles/icons/arrow-down.svg";
 import { ArticleTeaser } from "./article-teaser";
 
 import { LinkWithLocale } from "@/i18n/routing";
-import { buttonVariants } from "@/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { HeadingParagraph } from "../heading--paragraph";
 
 interface LatestArticlesProps {
   articles?: FragmentArticleTeaserFragment[];
@@ -19,9 +20,7 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
 
   return (
     <>
-      <h2 className="font-bold text-heading-sm md:text-heading-md">
-        {heading}
-      </h2>
+      <HeadingParagraph>{heading}</HeadingParagraph>
       <ul className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
         {articles?.map((article) => (
           <li key={article.id}>
@@ -35,7 +34,7 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
           <LinkWithLocale
             href="/all-articles"
             className={cn(
-              buttonVariants({ variant: "primary" }),
+              buttonVariants({ variant: "default" }),
               "text-base mr-4 mt-4 inline-flex px-5 py-3",
             )}
           >

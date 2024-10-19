@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
 import { LinkWithLocale } from "@/i18n/routing";
-import { Button } from "@/ui/button";
+import { Button } from "@/components/ui/button";
 
 export type PaginationProps = {
   currentPage?: number;

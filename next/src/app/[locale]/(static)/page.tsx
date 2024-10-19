@@ -13,7 +13,7 @@ import { getNodeByPathQuery } from "@/lib/drupal/get-node";
 import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
-import { Divider } from "@/ui/divider";
+import { Separator } from "@/components/ui/separator";
 
 type FrontpageParams = {
   params: { locale: string };
@@ -61,9 +61,9 @@ export default async function FrontPage({
   return (
     <>
       <Node node={frontpage} />
-      <Divider className="max-w-4xl" />
+      <Separator className="max-w-4xl" />
       <ContactFormContainer />
-      <Divider className="max-w-4xl" />
+      <Separator className="max-w-4xl" />
       <ArticleTeasers
         heading={t("promoted-articles")}
         articles={articleTeasers}

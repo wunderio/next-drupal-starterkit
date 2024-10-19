@@ -17,7 +17,7 @@ export function NodeArticle({ article, ...props }: ArticleProps) {
     <article {...props}>
       <HeadingPage>{article.title}</HeadingPage>
       {article.excerpt && <div className="my-4 text-xl">{article.excerpt}</div>}
-      <div className="mb-4 text-scapaflow">
+      <div className="mb-4">
         {article.author?.name && (
           <span>{t("posted-by", { author: article.author.name })} - </span>
         )}
@@ -35,7 +35,7 @@ export function NodeArticle({ article, ...props }: ArticleProps) {
             priority
           />
           {article.image.title && (
-            <figcaption className="py-2 text-sm text-center text-scapaflow">
+            <figcaption className="py-2 text-sm text-center">
               {article.image.title}
             </figcaption>
           )}
@@ -43,7 +43,7 @@ export function NodeArticle({ article, ...props }: ArticleProps) {
       )}
       {article.body?.processed && (
         <FormattedText
-          className="mt-4 text-md/xl text-scapaflow sm:text-lg"
+          className="mt-4 text-md/xl sm:text-lg"
           html={article.body?.processed}
         />
       )}

@@ -10,10 +10,10 @@ import { useForm } from "react-hook-form";
 import { ErrorRequired } from "@/components/forms/error-required";
 
 import { env } from "@/env";
-import { Button } from "@/ui/button";
-import { Input } from "@/ui/input";
-import { Label } from "@/ui/label";
-import { StatusMessage } from "@/ui/status-message";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { StatusMessage } from "@/components/ui/status-message";
 
 type Inputs = {
   username: string;

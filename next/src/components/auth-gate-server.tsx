@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { getAuth } from "@/lib/auth/get-auth";
 
-import { StatusMessage } from "@/ui/status-message";
+import { StatusMessage } from "@/components/ui/status-message";
 
 type AuthGateProps = {
   children: React.ReactNode;

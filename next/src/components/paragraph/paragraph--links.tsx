@@ -17,7 +17,7 @@ export function ParagraphLinks({
           key={index}
           role="listitem"
           href={link.url}
-          className="relative min-h-[6em] cursor-pointer rounded border border-finnishwinter bg-primary-100 p-8 text-lg text-steelgray hover:bg-primary-200"
+          className="relative min-h-[6em] cursor-pointer rounded border border-border bg-primary p-8 text-lg hover:bg-primary"
         >
           {link.title}
 

@@ -8,6 +8,12 @@ import { useLanguageLinks } from "@/lib/contexts/language-links-context";
 import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
 import { cn, removeLocaleFromPath } from "@/lib/utils";
 import LanguageIcon from "@/styles/icons/language.svg";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu"; // Adjust the import path as necessary
 
 import { LinkWithLocale, routing } from "@/i18n/routing";
 
@@ -32,32 +38,30 @@ export function LanguageSwitcher() {
   return (
     <div ref={ref}>
       <span className="sr-only">{t("language-switcher")}</span>
-      <button
-        type="button"
-        className="hover:underline"
-        onClick={toggle}
-        aria-expanded={isOpen}
-      >
-        <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
-          {languageLinks[activeLocale].name}
-        </span>
-        <LanguageIcon className="inline-block w-6 h-6" aria-hidden="true" />
-      </button>
-      <ul
-        className={cn(
-          "absolute z-50 mt-1 w-fit border border-finnishwinter bg-mischka",
-          !isOpen && "hidden",
-        )}
-      >
-        {routing.locales
-          .filter((locale) => locale !== activeLocale)
-          .map((locale) => {
-            const { name, path } = languageLinks[locale];
-            const href = removeLocaleFromPath(locale, path);
-            return (
-              <li key={locale}>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            className="hover:underline"
+            aria-expanded={isOpen}
+            onClick={toggle}
+          >
+            <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
+              {languageLinks[activeLocale].name}
+            </span>
+            <LanguageIcon className="inline-block w-6 h-6" aria-hidden="true" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="z-50">
+          {routing.locales
+            .filter((locale) => locale !== activeLocale)
+            .map((locale) => {
+              const { name, path } = languageLinks[locale];
+              const href = removeLocaleFromPath(locale, path);
+              return (
                 <LinkWithLocale
-                  className="block p-2 hover:bg-primary-50"
+                  key={locale}
+                  className="hover:underline"
                   locale={locale}
                   href={{
                     pathname: href || "/",
@@ -65,12 +69,12 @@ export function LanguageSwitcher() {
                     params: params,
                   }}
                 >
-                  {name}
+                  <DropdownMenuItem key={locale}>{name}</DropdownMenuItem>
                 </LinkWithLocale>
-              </li>
-            );
-          })}
-      </ul>
+              );
+            })}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

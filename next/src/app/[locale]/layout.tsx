@@ -18,6 +18,7 @@ import { inter, overpass } from "@/styles/fonts";
 
 import { routing } from "@/i18n/routing";
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -61,22 +62,29 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body>
-        <SessionProvider>
-          <NextIntlClientProvider messages={messages}>
-            <ReactQueryClientProvider>
-              <Fonts>
-                <DraftAlert />
-                <div className="flex flex-col min-h-screen">
-                  {children}
-                  <Footer />
-                </div>
-              </Fonts>
-              <ReactQueryDevtools />
-            </ReactQueryClientProvider>
-          </NextIntlClientProvider>
-        </SessionProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SessionProvider>
+            <NextIntlClientProvider messages={messages}>
+              <ReactQueryClientProvider>
+                <Fonts>
+                  <DraftAlert />
+                  <div className="flex flex-col min-h-screen">
+                    {children}
+                    <Footer />
+                  </div>
+                </Fonts>
+                <ReactQueryDevtools />
+              </ReactQueryClientProvider>
+            </NextIntlClientProvider>
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

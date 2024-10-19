@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 import { DraftAlertClient } from "./draft-alert-client";
 
-import { SkipToContentLink } from "@/ui/skip-to-content-link";
+import { SkipToContentLink } from "@/components/ui/skip-to-content-link";
 
 export default async function DraftAlert() {
   const { isEnabled } = draftMode();

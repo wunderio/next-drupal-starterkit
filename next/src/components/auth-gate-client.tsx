@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
-import { StatusMessage } from "@/ui/status-message";
+import { StatusMessage } from "@/components/ui/status-message";
 
 type AuthGateProps = {
   children: React.ReactNode;

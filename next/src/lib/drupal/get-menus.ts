@@ -38,7 +38,7 @@ const cachedFetchMenu = neshCache(cache(fetchMenu));
 export async function getMenu(name: MenuAvailable, locale: string) {
   try {
     const menus = await cachedFetchMenu(
-      { tags: [name, locale], revalidate: REVALIDATE_LONG },
+      { tags: [name], revalidate: REVALIDATE_LONG },
       name,
       locale,
     );

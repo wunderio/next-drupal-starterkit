@@ -22,7 +22,7 @@ export async function Footer() {
   );
 
   return (
-    <footer className="border-t border-finnishwinter">
+    <footer className="border-t border-border">
       <div className="max-w-6xl px-6 mx-auto">
         <nav className="flex flex-col items-center gap-2 py-8 text-md sm:flex-row sm:justify-between">
           <ul className="flex flex-wrap mr-4 gap-x-12 gap-y-4">
@@ -66,7 +66,7 @@ function FooterLink({ href, icon, newTab = false, children }: FooterLinkProps) {
   }[icon];
 
   return (
-    <Link href={href} target={target} rel={rel} className="hyperlink">
+    <Link href={href} target={target} rel={rel}>
       {icon && (
         <div className="flex items-center justify-center w-6 h-6 mr-2">
           <Icon className="w-full h-auto" aria-hidden />

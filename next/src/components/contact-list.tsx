@@ -1,5 +1,6 @@
-import NextImage from "next/image";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { HeadingParagraph } from "./heading--paragraph";
 
 interface Contact {
   image: string;
@@ -41,19 +42,17 @@ export async function ContactList() {
   const t = await getTranslations();
   return (
     <section className="py-8">
-      <h2 className="font-bold text-heading-sm md:text-heading-md">
-        {t("contact")}
-      </h2>
+      <HeadingParagraph>{t("contact")}</HeadingParagraph>
       <ul className="grid grid-cols-1 gap-4 py-4 auto-rows-max justify-items-center sm:grid-cols-2 md:grid-cols-3">
         {contacts?.map(({ id, image, name, title, phoneNumber, email }) => (
           <li key={id} className="grid p-4 justify-items-center">
-            <div className="mb-6 flex h-[100px] items-center justify-center overflow-hidden">
-              <NextImage
+            <div className="mb-6 flex h-[100px] w-[100px] items-center justify-center overflow-hidden rounded-full">
+              <Image
                 src={image}
                 width={100}
                 height={100}
                 alt={t("image-of", { name })}
-                className="circle-clip"
+                className="rounded-full"
               />
             </div>
             <p className="font-bold">{name}</p>

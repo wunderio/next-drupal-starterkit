@@ -1,35 +1,35 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "@/ui/button";
+import { Button } from "@/components/ui/button";
 import {
-  Modal,
-  ModalContent,
-  ModalDescription,
-  ModalHeader,
-  ModalTitle,
-  ModalTrigger,
-} from "@/ui/modal";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-const meta: Meta<typeof Modal> = {
-  title: "Library/Modal",
-  component: Modal,
+const meta: Meta<typeof Dialog> = {
+  title: "Library/Dialog",
+  component: Dialog,
   tags: ["autodocs"],
 };
 
 export default meta;
-type Story = StoryObj<typeof Modal>;
+type Story = StoryObj<typeof Dialog>;
 
 export const Default: Story = {
   render: () => (
-    <Modal>
-      <ModalTrigger asChild>
-        <Button>Open modal</Button>
-      </ModalTrigger>
-      <ModalContent>
-        <ModalHeader>
-          <ModalTitle>Modal title</ModalTitle>
-          <ModalDescription>Optional modal description.</ModalDescription>
-        </ModalHeader>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Open Dialog</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Dialog title</DialogTitle>
+          <DialogDescription>Optional Dialog description.</DialogDescription>
+        </DialogHeader>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
           turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec
@@ -54,7 +54,7 @@ export const Default: Story = {
           lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in
           elementum tellus.
         </p>
-      </ModalContent>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   ),
 };

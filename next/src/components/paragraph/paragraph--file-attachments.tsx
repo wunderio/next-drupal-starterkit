@@ -11,7 +11,7 @@ export function ParagraphFileAttachments({
   paragraph: FragmentParagraphFileAttachmentsFragment;
 }) {
   return (
-    <section className="relative h-full p-4 transition-all bg-white border rounded border-finnishwinter hover:shadow-md">
+    <section className="relative h-full p-4 transition-all bg-white border rounded border-border hover:shadow-md">
       {paragraph.fileAttachmentsParagraphHeading && (
         <HeadingParagraph>
           {paragraph.fileAttachmentsParagraphHeading}
@@ -21,7 +21,7 @@ export function ParagraphFileAttachments({
         <FormattedText
           html={paragraph.fileAttachmentsParagraphFormattedText.processed}
           className={cn(
-            "text-left text-md/xl text-scapaflow sm:text-lg",
+            "text-left text-md/xl sm:text-lg",
             paragraph.fileAttachmentsParagraphHeading && "mt-4",
           )}
         />

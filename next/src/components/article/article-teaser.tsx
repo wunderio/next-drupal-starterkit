@@ -17,12 +17,10 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
   return (
     <Link
       href={article.path}
-      className="relative grid h-full p-4 transition-all bg-white border rounded border-finnishwinter hover:shadow-md"
+      className="relative grid h-full p-4 transition-all border rounded border-border hover:shadow-md"
     >
-      <h3 className="mb-2 font-bold line-clamp-2 text-heading-xs">
-        {article.title}
-      </h3>
-      <div className="mb-4 line-clamp-2 text-md text-scapaflow">
+      <h3 className="mb-2 font-bold text-md line-clamp-2">{article.title}</h3>
+      <div className="mb-4 line-clamp-2 text-md">
         {author && <>{t("posted-by", { author })} - </>}
         {date}
       </div>

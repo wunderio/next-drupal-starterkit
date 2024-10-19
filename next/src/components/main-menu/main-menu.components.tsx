@@ -48,10 +48,10 @@ export const MenuRoot = forwardRef<
       ref={ref}
       {...props}
       className={cn(
-        "absolute inset-0 z-40 overflow-y-auto overflow-x-hidden border-finnishwinter lg:bottom-auto lg:min-h-[75vh]",
-        isOpen && "border-t bg-white lg:border",
+        "absolute inset-0 z-40 overflow-y-auto overflow-x-hidden border-border lg:bottom-auto lg:min-h-[75vh]",
+        isOpen && "border-t bg-secondary lg:border",
         isOpen &&
-          "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r",
+          "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r after:border-border",
       )}
     />
   );
@@ -83,11 +83,13 @@ export function MenuList({ children, level }) {
   return (
     <NavigationMenu.List
       className={cn(
-        "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r border-white bg-white lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
+        "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r border-border bg-secondary lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
         level === 0 &&
-          "z-10 h-full lg:left-0 lg:z-auto lg:border-primary-600 lg:bg-primary-600",
-        level === 1 && "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto",
-        level === 2 && "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto",
+          "z-10 h-full lg:left-0 lg:z-auto lg:border-border lg:bg-secondary",
+        level === 1 &&
+          "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto lg:border-border lg:bg-secondary",
+        level === 2 &&
+          "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto lg:border-border lg:bg-secondary",
       )}
     >
       {children}
@@ -103,7 +105,7 @@ export function MenuListTitle({
   children: ReactNode;
 }) {
   return (
-    <h2 className="p-6 pt-0 font-bold border-b border-finnishwinter text-heading-xs text-steelgray hover:underline lg:hidden">
+    <h2 className="p-6 pt-0 text-xs font-bold border-b border-border hover:underline lg:hidden">
       <MenuLink href={href} isTitle={true}>
         {children}
       </MenuLink>
@@ -136,8 +138,8 @@ export function MenuItem({
   return (
     <NavigationMenu.Item
       className={cn(
-        "flex items-stretch border-b border-finnishwinter bg-white font-bold tracking-widest text-primary-600 underline-offset-4 lg:border-b-0",
-        isTopLevel && "lg:bg-primary-600 lg:text-mischka",
+        "flex items-stretch border-b border-border bg-secondary font-bold tracking-widest underline-offset-4 lg:border-b-0",
+        isTopLevel && "lg:bg-secondary",
       )}
       value={value}
     >
@@ -179,7 +181,7 @@ export function MenuLink({
       className={cn(
         !isTitle &&
           "aria-current:underline block h-full grow p-6 hover:underline data-[active]:underline",
-        isTopLevel && "lg:ring-white",
+        isTopLevel && "lg:ring-ring",
       )}
     >
       <LinkWithLocale href={hrefWithoutLocale}>{children}</LinkWithLocale>
@@ -199,10 +201,10 @@ export function MenuTrigger({
     <NavigationMenu.Trigger
       {...disableHoverEvents}
       className={cn(
-        "flex w-20 shrink-0 items-center justify-center ring-inset ring-primary-700 hover:ring-2 lg:border-none",
+        "flex w-20 shrink-0 items-center justify-center ring-inset ring-ring hover:ring-2 lg:border-none",
         isTopLevel
-          ? "lg:ring-white lg:aria-expanded:bg-white lg:aria-expanded:text-primary-600"
-          : "lg:aria-expanded:bg-primary-600 lg:aria-expanded:text-white lg:aria-expanded:ring-primary-600",
+          ? "lg:ring-ring lg:aria-expanded:bg-secondary"
+          : "lg:aria-expanded:bg-secondary lg:aria-expanded:text-secondary-foreground lg:aria-expanded:ring-ring",
       )}
       aria-label={`${t("show-submenu", { parent })}`}
     >

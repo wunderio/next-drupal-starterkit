@@ -18,7 +18,7 @@ export default async function PageLayout({
   return (
     <LanguageLinksProvider languageLinks={languageLinks}>
       <Header menu={main} />
-      <main className="grow bg-mischka" id="main-content">
+      <main className="grow" id="main-content">
         <div className="max-w-6xl px-6 py-8 mx-auto">{children}</div>
       </main>
     </LanguageLinksProvider>

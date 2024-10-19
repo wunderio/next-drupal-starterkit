@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "@/ui/button";
-import { StatusMessage } from "@/ui/status-message";
+import { Button } from "@/components/ui/button";
+import { StatusMessage } from "@/components/ui/status-message";
 
 const meta: Meta<typeof StatusMessage> = {
   title: "Library/StatusMessage",
