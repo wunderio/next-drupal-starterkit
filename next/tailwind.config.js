@@ -1,9 +1,14 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import("tailwindcss").Config} */
 module.exports = {
   darkMode: ["class"],
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
-    colors: {},
+    fontFamily: {
+      inter: ["--font-inter", ...defaultTheme.fontFamily.sans],
+      overpass: ["--font-overpass", ...defaultTheme.fontFamily.sans],
+    },
     extend: {
       borderRadius: {
         lg: "var(--radius)",
@@ -76,5 +81,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 };

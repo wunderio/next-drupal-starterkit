@@ -1,15 +1,8 @@
 import { useTranslations } from "next-intl";
-
-import { buttonVariants } from "@/components/ui/button";
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
-import { cn } from "@/lib/utils";
-import ArrowIcon from "@/styles/icons/arrow-down.svg";
-
 import { HeadingParagraph } from "../heading--paragraph";
-
 import { ArticleTeaser } from "./article-teaser";
-
-import { LinkWithLocale } from "@/i18n/routing";
+import { ArrowLinkButton } from "../ui/arrow-link-button";
 
 interface LatestArticlesProps {
   articles?: FragmentArticleTeaserFragment[];
@@ -32,17 +25,13 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
       <div className="flex items-center justify-center">
         {!articles?.length && <p className="py-4">{t("no-content-found")}</p>}
         {articles?.length && (
-          <LinkWithLocale
+          <ArrowLinkButton
+            variant="default"
             href="/all-articles"
-            className={cn(
-              buttonVariants({ variant: "default" }),
-              "mt-4 inline-flex px-5 py-3",
-            )}
+            className="mt-4"
           >
             {t("all-articles")}
-
-            <ArrowIcon className="w-6 h-6 ml-3 -rotate-90" aria-hidden />
-          </LinkWithLocale>
+          </ArrowLinkButton>
         )}
       </div>
     </>

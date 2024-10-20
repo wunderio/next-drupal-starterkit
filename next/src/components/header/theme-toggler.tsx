@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import * as React from "react";
+
 import { Moon, Sun } from "lucide-react";
 
 import {
@@ -12,20 +12,31 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
 
-export function ModeToggle() {
+type Theme = "light" | "dark" | undefined;
+
+export function ThemeToggler() {
   const t = useTranslations("ModeToggle");
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+
+  const [hydratedTheme, setHydratedTheme] = useState<Theme>();
+
+  useEffect(() => {
+    setHydratedTheme(theme as Theme);
+  }, [theme]);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <div className="capitalize cursor-pointer hover:underline">
+          <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
+            {t(hydratedTheme)}
+          </span>
+          <Sun className="inline-block w-6 h-6 transition-all rotate-0 dark:-rotate-90 dark:hidden" />
+          <Moon className="hidden w-6 h-6 transition-all rotate-90 dark:rotate-0 dark:inline-block" />
           <span className="sr-only">{t("label")}</span>
-        </Button>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>

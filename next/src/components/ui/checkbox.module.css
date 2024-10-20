@@ -1,4 +1,0 @@
-/* Overwrite _focus-visible.css styles */
-.checkbox:focus:not(:focus-visible) {
-  box-shadow: none;
-}

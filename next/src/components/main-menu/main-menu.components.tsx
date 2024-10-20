@@ -85,7 +85,7 @@ export function MenuList({ children, level }) {
       className={cn(
         "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r border-border lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
         level === 0 &&
-          "z-10 h-full lg:left-0 lg:z-auto lg:border-border lg:bg-secondary",
+          "z-10 h-full lg:left-0 lg:z-auto lg:border-border lg:bg-primary",
         level === 1 &&
           "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto lg:border-border lg:bg-background",
         level === 2 &&
@@ -139,7 +139,9 @@ export function MenuItem({
     <NavigationMenu.Item
       className={cn(
         "flex items-stretch border-b border-border font-bold tracking-widest underline-offset-4 lg:border-b-0",
-        isTopLevel && "lg:bg-secondary",
+        isTopLevel
+          ? "lg:bg-primary lg:text-primary-foreground"
+          : "lg:bg-background lg:text-primary",
       )}
       value={value}
     >
@@ -193,8 +195,8 @@ export function MenuTrigger({
       className={cn(
         "flex w-20 shrink-0 items-center justify-center ring-inset ring-ring hover:ring-2 lg:border-none",
         isTopLevel
-          ? "lg:ring-ring lg:aria-expanded:bg-background"
-          : "lg:aria-expanded:bg-secondary lg:aria-expanded:text-secondary-foreground lg:aria-expanded:ring-ring",
+          ? "lg:ring-ring lg:aria-expanded:bg-background lg:aria-expanded:text-primary"
+          : "lg:aria-expanded:bg-primary lg:aria-expanded:text-primary-foreground lg:aria-expanded:ring-ring",
       )}
       aria-label={`${t("show-submenu", { parent })}`}
     >

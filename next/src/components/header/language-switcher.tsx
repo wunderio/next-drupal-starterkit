@@ -10,11 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"; // Adjust the import path as necessary
 import { useLanguageLinks } from "@/lib/contexts/language-links-context";
-import { useOnClickOutside } from "@/lib/hooks/use-on-click-outside";
-import { cn, removeLocaleFromPath } from "@/lib/utils";
+import { removeLocaleFromPath } from "@/lib/utils";
 import LanguageIcon from "@/styles/icons/language.svg";
 
 import { LinkWithLocale, routing } from "@/i18n/routing";
+import { Button } from "../ui/button";
 
 export function LanguageSwitcher() {
   const t = useTranslations();
@@ -26,12 +26,12 @@ export function LanguageSwitcher() {
     <DropdownMenu>
       <span className="sr-only">{t("language-switcher")}</span>
       <DropdownMenuTrigger asChild>
-        <button type="button" className="hover:underline">
+        <div className="capitalize cursor-pointer hover:underline">
           <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
             {languageLinks[activeLocale].name}
           </span>
           <LanguageIcon className="inline-block w-6 h-6" aria-hidden="true" />
-        </button>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="z-50">
         {routing.locales

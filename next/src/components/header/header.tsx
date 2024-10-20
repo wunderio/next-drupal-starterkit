@@ -2,17 +2,14 @@
 
 import { useTranslations } from "next-intl";
 import { Suspense, useState } from "react";
-
 import { MainMenu, MenuToggle } from "@/components/main-menu/main-menu";
 import SearchIcon from "@/styles/icons/search.svg";
 import WunderIcon from "@/styles/icons/wunder.svg";
 import type { MenuType } from "@/types/graphql";
-
 import { LanguageSwitcher } from "./language-switcher";
-import { ModeToggle } from "./mode-toggle";
 import { UserMenu } from "./user-menu";
-
 import { LinkWithLocale } from "@/i18n/routing";
+import { ThemeToggler } from "./theme-toggler";
 
 interface HeaderProps {
   menu?: MenuType;
@@ -22,16 +19,16 @@ export function Header({ menu }: HeaderProps) {
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
 
   return (
-    <header className="z-50 flex-shrink-0 border-b border-border md:sticky md:top-0 bg-background">
+    <header className="z-50 flex-shrink-0 border-b border-border md:sticky md:top-0 bg-background text-primary">
       <nav className="flex flex-row items-center justify-between max-w-6xl px-6 py-4 mx-auto">
         <HomeLink />
-        <div className="flex flex-row items-center justify-end gap-6 sm:gap-8">
+        <div className="flex flex-row items-center justify-end gap-4 sm:gap-6">
           <SearchLink />
           <Suspense fallback={null}>
             <UserMenu />
           </Suspense>
           <LanguageSwitcher />
-          <ModeToggle />
+          <ThemeToggler />
           <MenuToggle isOpen={isMainMenuOpen} setIsOpen={setIsMainMenuOpen} />
         </div>
       </nav>
@@ -49,7 +46,7 @@ function HomeLink() {
 
   return (
     <LinkWithLocale href="/" className="inline">
-      <WunderIcon className="w-32" />
+      <WunderIcon className="w-32 pb-2" />
       <span className="sr-only">{t("homepage-link")}</span>
     </LinkWithLocale>
   );

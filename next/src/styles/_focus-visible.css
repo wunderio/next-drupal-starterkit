@@ -3,5 +3,5 @@
 }
 
 :focus-visible {
-  @apply ring-2 ring-primary-700 ring-offset-2;
+  @apply ring-2 ring-primary ring-offset-2;
 }
