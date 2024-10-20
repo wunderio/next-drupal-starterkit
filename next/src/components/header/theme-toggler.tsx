@@ -12,24 +12,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type Theme = "light" | "dark" | undefined;
-
 export function ThemeToggler() {
   const t = useTranslations("ModeToggle");
-  const { theme, setTheme } = useTheme();
-
-  const [hydratedTheme, setHydratedTheme] = useState<Theme>();
-
-  useEffect(() => {
-    setHydratedTheme(theme as Theme);
-  }, [theme]);
+  const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="capitalize cursor-pointer hover:underline">
-          <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
-            {t(hydratedTheme)}
+          <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline dark:hidden">
+            {t("light")}
+          </span>
+          <span className="sr-only sm:not-sr-only sm:mr-2 sm:hidden dark:inline">
+            {t("dark")}
           </span>
           <Sun className="inline-block w-6 h-6 transition-all rotate-0 dark:-rotate-90 dark:hidden" />
           <Moon className="hidden w-6 h-6 transition-all rotate-90 dark:rotate-0 dark:inline-block" />
