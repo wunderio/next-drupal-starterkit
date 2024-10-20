@@ -3,7 +3,9 @@
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,17 +14,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { StatusMessage } from "@/components/ui/status-message";
-
-import { registerAction } from "@/app/_actions/register";
 import {
   RegisterFormInputs,
   registerFormSchema,
 } from "@/lib/zod/register-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
+import { registerAction } from "@/app/_actions/register";
 
 export default function RegisterForm() {
   const t = useTranslations();

@@ -4,7 +4,10 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,16 +16,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { useForm } from "react-hook-form";
-
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { StatusMessage } from "@/components/ui/status-message";
+import { LoginFormInputs, loginFormSchema } from "@/lib/zod/login-form";
 
 import { env } from "@/env";
-import { LoginFormInputs, loginFormSchema } from "@/lib/zod/login-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function LoginForm() {
   const locale = useLocale();
