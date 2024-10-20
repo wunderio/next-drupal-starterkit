@@ -18,12 +18,12 @@ export function ParagraphLinks({
             key={index}
             role="listitem"
             href={link.url}
-            className="min-h-[6em] cursor-pointer rounded border border-border p-8 text-lg flex justify-between"
+            className="min-h-[6em] cursor-pointer rounded border border-border p-8 text-lg flex justify-between group"
           >
             {link.title}
             <ArrowIcon
               aria-hidden
-              className="w-6 h-6 -rotate-90 text-primary-600"
+              className="w-6 h-6 transition-transform duration-500 -rotate-90 text-primary-600 group-hover:translate-x-2"
             />
           </Link>
         ))}

@@ -14,7 +14,7 @@ export interface ArrowLinkProps
 export function ArrowLinkButton({
   href,
   children,
-  variant,
+  variant = "default",
   className,
 }: ArrowLinkProps) {
   return (
@@ -29,7 +29,7 @@ export function ArrowLinkButton({
       {children}
 
       <ArrowIcon
-        className="w-6 h-6 ml-1 transition-transform duration-500 -rotate-90 group-hover:translate-x-1"
+        className="w-6 h-6 ml-1 transition-transform duration-500 -rotate-90 group-hover:translate-x-2"
         aria-hidden
       />
     </LinkWithLocale>

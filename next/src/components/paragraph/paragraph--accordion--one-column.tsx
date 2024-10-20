@@ -18,6 +18,8 @@ import {
 import { cn } from "@/lib/utils";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
 
+import { ArrowLinkButton } from "../ui/arrow-link-button";
+
 export function ParagraphAccordionOneColumn({
   paragraph,
 }: {
@@ -39,16 +41,12 @@ export function ParagraphAccordionOneColumn({
         />
       )}
       {paragraph.primaryLink && (
-        <Link
+        <ArrowLinkButton
           href={paragraph.primaryLink.url}
-          className={cn(
-            buttonVariants({ variant: "default" }),
-            "text-base mr-4 inline-flex mt-4 max-w-sm py-3 px-10 ",
-          )}
+          className="max-w-sm px-10 py-3 mt-4"
         >
           {paragraph.primaryLink.title}
-          <ArrowIcon className="w-6 h-6 ml-3 -rotate-90" aria-hidden />
-        </Link>
+        </ArrowLinkButton>
       )}
 
       <Accordion type="single" collapsible className="mt-4">

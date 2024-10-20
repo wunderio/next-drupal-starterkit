@@ -4,7 +4,7 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import { ArticleTeasers } from "@/components/article/article-teasers";
 import { ContactList } from "@/components/contact-list";
-import { ContactFormContainer } from "@/components/forms/contact-form-container";
+import { ContactForm } from "@/components/forms/contact-form";
 import { LogoStrip } from "@/components/logo-strip";
 import { Node } from "@/components/node";
 import { Separator } from "@/components/ui/separator";
@@ -61,7 +61,7 @@ export default async function FrontPage({
     <>
       <Node node={frontpage} />
       <Separator className="max-w-4xl mx-auto my-9" />
-      <ContactFormContainer />
+      <ContactForm />
       <Separator className="max-w-4xl mx-auto my-9" />
       <ArticleTeasers
         heading={t("promoted-articles")}

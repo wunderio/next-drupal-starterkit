@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 
-import LoginForm from "./form";
+import LoginForm from "../../../../../components/forms/login-form";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
