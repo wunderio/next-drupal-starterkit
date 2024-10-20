@@ -3,14 +3,24 @@
 import { getLocale } from "next-intl/server";
 
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
+import {
+  RegisterFormInputs,
+  registerFormSchema,
+} from "@/lib/zod/register-form";
 
-export async function registerAction(values: { name: string; email: string }) {
+export async function registerAction(values: RegisterFormInputs) {
   const locale = await getLocale();
 
-  const { name, email } = values;
+  const validatedInputs = registerFormSchema.safeParse(values);
 
-  if (!name || !email) {
-    return { success: false, error: "Name and mail are required" };
+  if (!validatedInputs.success) {
+    return {
+      success: false,
+      error: {
+        type: "ValidationError",
+        message: "Name and email are required",
+      },
+    };
   }
 
   try {
@@ -20,8 +30,8 @@ export async function registerAction(values: { name: string; email: string }) {
     const result = await drupalClientViewer.fetch(url.toString(), {
       method: "POST",
       body: JSON.stringify({
-        name: [{ value: name }],
-        mail: [{ value: email }],
+        name: [{ value: validatedInputs.data.name }],
+        mail: [{ value: validatedInputs.data.email }],
         preferred_langcode: [
           {
             value: locale,

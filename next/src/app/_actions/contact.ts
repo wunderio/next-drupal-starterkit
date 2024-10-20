@@ -24,17 +24,14 @@ export async function createContactSubmissionAction(values: ContactFormInputs) {
     };
   }
 
-  const validatedValues = contactFormSchema.safeParse(values);
+  const validatedInputs = contactFormSchema.safeParse(values);
 
-  if (!validatedValues.success) {
-    const errors = validatedValues.error.flatten().fieldErrors;
-
+  if (!validatedInputs.success) {
     return {
       success: false,
-      errors: {
-        name: errors.name?.[0] ?? "",
-        email: errors.email?.[0] ?? "",
-        message: errors.message?.[0] ?? "",
+      error: {
+        type: "ValidationError",
+        message: "Name, email, subject, and message are required",
       },
     };
   }
@@ -50,7 +47,7 @@ export async function createContactSubmissionAction(values: ContactFormInputs) {
       method: "POST",
       body: JSON.stringify({
         webform_id: "contact",
-        ...validatedValues.data,
+        ...validatedInputs.data,
       }),
       headers: {
         "Content-Type": "application/json",

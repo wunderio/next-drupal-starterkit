@@ -4,21 +4,25 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
 import { useForm } from "react-hook-form";
 
-import { ErrorRequired } from "@/components/forms/error-required";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { StatusMessage } from "@/components/ui/status-message";
 
 import { env } from "@/env";
-
-type Inputs = {
-  username: string;
-  password: string;
-};
+import { LoginFormInputs, loginFormSchema } from "@/lib/zod/login-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function LoginForm() {
   const locale = useLocale();
@@ -34,23 +38,21 @@ export default function LoginForm() {
 
   const t = useTranslations();
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<Inputs>();
+  const form = useForm<LoginFormInputs>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const onSubmit = async ({ username, password }: Inputs) => {
-    setIsSubmitting(true);
+  const onSubmit = async ({ username, password }: LoginFormInputs) => {
     await signIn("credentials", {
       username,
       password,
       callbackUrl:
         typeof callbackUrl === "string" ? callbackUrl : `/${locale}}`,
     });
-    setIsSubmitting(false);
   };
 
   const resetPasswordBackendUrl = `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/${locale}/user/password`;
@@ -78,47 +80,43 @@ export default function LoginForm() {
             {t("login-error-check-username-password")}
           </StatusMessage>
         )}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col w-full max-w-2xl"
-        >
-          <div className="mb-6">
-            <Label htmlFor="username">{t("username")}</Label>
-            <Input
-              id="username"
-              autoComplete="username"
-              aria-invalid={errors.username ? "true" : "false"}
-              {...register("username", {
-                required: true,
-              })}
-              className="inset-0 w-full h-12 p-2 border rounded border-neu-200 text-body-sm text-neu-400 ring-offset-4 focus:ring-4"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("username")}</FormLabel>
+                  <FormControl>
+                    <Input placeholder={t("username")} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            {errors.username && errors.username.type === "required" && (
-              <ErrorRequired fieldTranslatedLabelKey={"username"} />
-            )}
-          </div>
-
-          <div className="mb-6">
-            <Label htmlFor="password">{t("password")}</Label>
-            <Input
-              id="password"
-              autoComplete="current-password"
-              type="password"
-              aria-invalid={errors.password ? "true" : "false"}
-              {...register("password", {
-                required: true,
-              })}
-              className="inset-0 w-full h-12 p-2 border rounded border-neu-200 text-body-sm text-neu-400 ring-offset-4 focus:ring-4"
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("password")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder={t("password")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            {errors.password && errors.password.type === "required" && (
-              <ErrorRequired fieldTranslatedLabelKey={"password"} />
-            )}
-          </div>
-
-          <Button type="submit" disabled={isSubmitting}>
-            {t("log-in")}
-          </Button>
-        </form>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              {t("log-in")}
+            </Button>
+          </form>
+        </Form>
         <Link className="inline-block mt-2" href={resetPasswordBackendUrl}>
           {t("reset-your-password")}
         </Link>

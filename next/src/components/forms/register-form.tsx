@@ -1,57 +1,59 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
-import { ErrorRequired } from "@/components/forms/error-required";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { StatusMessage } from "@/components/ui/status-message";
 
 import { registerAction } from "@/app/_actions/register";
-
-type Inputs = {
-  name: string;
-  email: string;
-};
+import {
+  RegisterFormInputs,
+  registerFormSchema,
+} from "@/lib/zod/register-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function RegisterForm() {
   const t = useTranslations();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-    clearErrors,
-  } = useForm<Inputs>();
+  const form = useForm<RegisterFormInputs>({
+    resolver: zodResolver(registerFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+    },
+  });
 
-  const [isSuccess, setIsSuccess] = useState(false);
   const [isSubmitting, startTransition] = useTransition();
 
-  const onSubmit = (data: Inputs) => {
-    clearErrors("root.serverError");
+  const onSubmit = (data: RegisterFormInputs) => {
+    form.clearErrors("root.serverError");
 
     startTransition(async () => {
       await registerAction(data).then((res) => {
         if (res.error) {
           console.error("Error registering user", JSON.stringify(res.error));
-          setError("root.serverError", {
+          form.setError("root.serverError", {
             type: "server",
             message: res.error,
           });
-          setIsSuccess(false);
-        }
-        if (res.success) {
-          setIsSuccess(true);
         }
       });
     });
   };
 
-  if (isSuccess) {
+  if (form.formState.isSubmitSuccessful) {
     return (
       <StatusMessage level="success">
         <p className="mb-4">{t("register-success")}</p>
@@ -61,55 +63,49 @@ export default function RegisterForm() {
   return (
     <>
       <div className="max-w-md pt-8 pb-16 font-work">
-        {errors.root && errors.root.serverError && (
-          <StatusMessage level="error">
-            <p className="mb-4">
-              Server error. Message: {errors.root.serverError.message}, Status:{" "}
-              {errors.root.serverError.type}
-            </p>
-          </StatusMessage>
-        )}
-
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col w-full max-w-2xl gap-4"
-        >
-          <div className="mb-6">
-            <Label htmlFor="email">{t("email")}</Label>
-            <Input
-              id="email"
-              type="email"
-              autoComplete="email"
-              {...register("email", {
-                required: true,
-              })}
-              aria-invalid={errors.email ? "true" : "false"}
-              className="inset-0 w-full h-12 p-2 border rounded border-neu-200 text-body-sm text-neu-400 ring-offset-4 focus:ring-4"
+        {form.formState.errors.root &&
+          form.formState.errors.root.serverError && (
+            <StatusMessage level="error">
+              <p className="mb-4">
+                Server error. Message:{" "}
+                {form.formState.errors.root.serverError.message}, Status:{" "}
+                {form.formState.errors.root.serverError.type}
+              </p>
+            </StatusMessage>
+          )}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("username")}</FormLabel>
+                  <FormControl>
+                    <Input placeholder={t("username")} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            {errors.email && errors.email.type === "required" && (
-              <ErrorRequired fieldTranslatedLabelKey={"email"} />
-            )}
-          </div>
-          <div className="mb-6">
-            <Label htmlFor="name">{t("username")}</Label>
-            <Input
-              id="name"
-              type="text"
-              autoComplete="name"
-              aria-invalid={errors.name ? "true" : "false"}
-              {...register("name", {
-                required: true,
-              })}
-              className="inset-0 w-full h-12 p-2 border rounded border-neu-200 text-body-sm text-neu-400 ring-offset-4 focus:ring-4"
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("email")}</FormLabel>
+                  <FormControl>
+                    <Input placeholder={t("email")} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            {errors.name && errors.name.type === "required" && (
-              <ErrorRequired fieldTranslatedLabelKey={"username"} />
-            )}
-          </div>
-          <Button type="submit" disabled={isSubmitting}>
-            {t("register")}
-          </Button>
-        </form>
+            <Button type="submit" disabled={isSubmitting}>
+              {t("register")}
+            </Button>
+          </form>
+        </Form>
       </div>
     </>
   );
