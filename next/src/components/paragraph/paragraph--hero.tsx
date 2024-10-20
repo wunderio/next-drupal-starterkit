@@ -1,6 +1,5 @@
 import { FormattedText } from "@/components/formatted-text";
 import { MediaImage } from "@/components/media/media--image";
-
 import type {
   FragmentMediaImageFragment,
   FragmentParagraphHeroFragment,

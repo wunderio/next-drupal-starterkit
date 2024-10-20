@@ -3,13 +3,6 @@ import { notFound } from "next/navigation";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import { HeadingPage } from "@/components/heading--page";
-import { getAuth } from "@/lib/auth/get-auth";
-import { drupalClientViewer } from "@/lib/drupal/drupal-client";
-import {
-  validateAndCleanupWebformSubmission,
-  WebformSubmissionRaw,
-} from "@/lib/zod/webform-submission";
-
 import {
   Table,
   TableBody,
@@ -18,6 +11,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getAuth } from "@/lib/auth/get-auth";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
+import {
+  validateAndCleanupWebformSubmission,
+  WebformSubmissionRaw,
+} from "@/lib/zod/webform-submission";
 
 import { LinkWithLocale } from "@/i18n/routing";
 

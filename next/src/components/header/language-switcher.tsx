@@ -13,8 +13,9 @@ import { useLanguageLinks } from "@/lib/contexts/language-links-context";
 import { removeLocaleFromPath } from "@/lib/utils";
 import LanguageIcon from "@/styles/icons/language.svg";
 
-import { LinkWithLocale, routing } from "@/i18n/routing";
 import { Button } from "../ui/button";
+
+import { LinkWithLocale, routing } from "@/i18n/routing";
 
 export function LanguageSwitcher() {
   const t = useTranslations();

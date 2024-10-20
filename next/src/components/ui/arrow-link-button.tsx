@@ -1,7 +1,10 @@
-import { buttonVariants } from "./button";
+import { VariantProps } from "class-variance-authority";
+
 import { cn } from "@/lib/utils";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
-import { VariantProps } from "class-variance-authority";
+
+import { buttonVariants } from "./button";
+
 import { LinkWithLocale } from "@/i18n/routing";
 
 export interface ArrowLinkProps

@@ -2,6 +2,14 @@ import { Metadata } from "next";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 import { HeadingPage } from "@/components/heading--page";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { getAuth } from "@/lib/auth/get-auth";
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
 import { formatDate } from "@/lib/utils";
@@ -11,15 +19,6 @@ import {
   WebformSubmissionsListEmpty,
   WebformSubmissionsListItem,
 } from "@/lib/zod/webform-submission-list";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 import { LinkWithLocale } from "@/i18n/routing";
 

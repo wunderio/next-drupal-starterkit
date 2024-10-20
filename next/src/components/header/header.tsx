@@ -2,14 +2,17 @@
 
 import { useTranslations } from "next-intl";
 import { Suspense, useState } from "react";
+
 import { MainMenu, MenuToggle } from "@/components/main-menu/main-menu";
 import SearchIcon from "@/styles/icons/search.svg";
 import WunderIcon from "@/styles/icons/wunder.svg";
 import type { MenuType } from "@/types/graphql";
+
 import { LanguageSwitcher } from "./language-switcher";
-import { UserMenu } from "./user-menu";
-import { LinkWithLocale } from "@/i18n/routing";
 import { ThemeToggler } from "./theme-toggler";
+import { UserMenu } from "./user-menu";
+
+import { LinkWithLocale } from "@/i18n/routing";
 
 interface HeaderProps {
   menu?: MenuType;
