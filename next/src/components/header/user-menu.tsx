@@ -46,7 +46,7 @@ export function UserMenu() {
               ? data.user.name
               : t("user-menu-account")}
           </span>
-          <AccountIcon className="inline-block w-6 h-6" />
+          <AccountIcon className="inline-block w-6 h-6" aria-hidden />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="z-50">

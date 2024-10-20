@@ -23,7 +23,7 @@ export default function ArticlesPagination({
 
   return (
     <>
-      <div className="" ref={focusRef} tabIndex={-1} />
+      <div ref={focusRef} tabIndex={-1} />
       <HeadingPage>{t("all-articles")}</HeadingPage>
       <ul className="mt-4">
         {articles?.map((article) => (
