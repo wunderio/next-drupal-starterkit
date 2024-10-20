@@ -27,8 +27,8 @@ tooling:
     dir: /app/next
 
   npx:
-    command: "npx"
     service: node
+    dir: /app/next
 
   # This command will stop (kill) any running node operations
   # in the node container in lando. You can use it instead of the
