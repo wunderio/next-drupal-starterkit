@@ -26,6 +26,11 @@ tooling:
     service: node
     dir: /app/next
 
+  npx:
+    description: "Runs npx commands"
+    service: node
+    dir: /app/next
+
   # This command will stop (kill) any running node operations
   # in the node container in lando. You can use it instead of the
   # usual ctrl-c keyboard combination.
@@ -44,10 +49,12 @@ tooling:
     user: www-data
     cmd:
       - appserver: "php /app/drupal/vendor/bin/phpunit -c /app/drupal/phpunit.xml --testdox"
+
   regenerate-phpunit-config:
     description: "Regenerates fresh PHPUnit configuration."
     cmd:
       - appserver: /app/.lando/phpunit.sh
+
   xdebug:
     description: "Loads Xdebug in the selected mode"
     cmd:
@@ -147,13 +154,19 @@ services:
         NEXT_IMAGE_DOMAIN: next-drupal-starterkit.lndo.site
         NEXT_PUBLIC_FRONTEND_URL: https://frontend.lndo.site
         # Environment variables for next_auth:
-        NEXTAUTH_SECRET: nextauth_secret_not_secure_used_only_locally
-        NEXTAUTH_URL: https://frontend.lndo.site
+        # Environment variables for next_auth:
+        AUTH_SECRET: nextauth_secret_not_secure_used_only_locally
+        AUTH_TRUST_HOST: true
+        AUTH_URL: https://frontend.lndo.site
         REDIS_HOST: redis
         REDIS_PASS: "mypassword"
         # We instruct node to use the Lando CA certificate for HTTPS connections:
         NODE_EXTRA_CA_CERTS: /lando/certs/LandoCA.crt
+        ES_HOST: elasticsearch
+        # To enable nesh cache debugging
+        # NEXT_PRIVATE_DEBUG_CACHE: 1
     build:
+      - "mkdir -p /var/www/.npm-global/lib"
       - "cd next && npm ci"
     scanner: false
 

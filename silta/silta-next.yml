@@ -16,24 +16,26 @@ services:
       DRUPAL_CLIENT_VIEWER_SECRET: ${DRUPAL_CLIENT_VIEWER_SECRET}
       DRUPAL_CLIENT_VIEWER_ID: <|DRUPAL_CLIENT_VIEWER_ID|>
       DRUPAL_REVALIDATE_SECRET: ${DRUPAL_REVALIDATE_SECRET}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      AUTH_SECRET: ${AUTH_SECRET}
       NEXT_PUBLIC_DRUPAL_BASE_URL: https://<|DRUPAL_DOMAIN|>
       NEXT_PUBLIC_FRONTEND_URL: https://<|NEXT_DOMAIN|>
       NEXT_IMAGE_DOMAIN: <|DRUPAL_DOMAIN|>
-      NEXTAUTH_URL: https://<|NEXT_DOMAIN|>
+      AUTH_URL: https://<|NEXT_DOMAIN|>
       NEXT_TELEMETRY_DISABLED: 1
+      AUTH_TRUST_HOST: true
+      ES_HOST: <|ES_HOST|>
     # Autoscaling is enabled by default, because we want to test that the frontend
     # can work with redis.
     autoscaling:
       enabled: true
       minReplicas: 2
-      maxReplicas: 3      
+      maxReplicas: 3
 
 nginx:
   content_security_policy: >- # Lines below are joined without line breaks.
     upgrade-insecure-requests;
     default-src 'none';
-    script-src 'self' youtube.com https://www.youtube.com;
+    script-src 'unsafe-inline' 'self' youtube.com https://www.youtube.com;
     frame-src youtube.com https://www.youtube.com;
     style-src 'self' 'unsafe-inline';
     img-src 'self' data: *.wdr.io https://i.ytimg.com;
