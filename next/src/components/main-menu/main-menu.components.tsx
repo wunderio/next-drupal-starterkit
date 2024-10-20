@@ -83,13 +83,11 @@ export function MenuList({ children, level }) {
   return (
     <NavigationMenu.List
       className={cn(
-        "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r border-border lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
+        "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r bg-background border-border lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
         level === 0 &&
-          "z-10 h-full lg:left-0 lg:z-auto lg:border-border lg:bg-primary",
-        level === 1 &&
-          "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto lg:border-border lg:bg-background",
-        level === 2 &&
-          "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto lg:border-border lg:bg-background",
+          "z-10 h-full lg:left-0 lg:z-auto lg:border-border bg-primary",
+        level === 1 && "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto",
+        level === 2 && "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto",
       )}
     >
       {children}
@@ -105,7 +103,7 @@ export function MenuListTitle({
   children: ReactNode;
 }) {
   return (
-    <h2 className="p-6 pt-0 text-xs font-bold border-b border-border hover:underline lg:hidden">
+    <h2 className="p-6 pt-0 font-bold border-b text-md border-border text-muted-foreground hover:underline lg:hidden">
       <MenuLink href={href} isTitle={true}>
         {children}
       </MenuLink>
@@ -138,10 +136,8 @@ export function MenuItem({
   return (
     <NavigationMenu.Item
       className={cn(
-        "flex items-stretch border-b border-border font-bold tracking-widest underline-offset-4 lg:border-b-0",
-        isTopLevel
-          ? "lg:bg-primary lg:text-primary-foreground"
-          : "lg:bg-background lg:text-primary",
+        "flex items-stretch border-b border-border font-bold bg-background text-primary tracking-widest underline-offset-4 lg:border-b-0",
+        isTopLevel && "lg:bg-primary lg:text-primary-foreground",
       )}
       value={value}
     >
