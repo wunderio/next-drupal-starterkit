@@ -85,7 +85,7 @@ export function MenuList({ children, level }) {
       className={cn(
         "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r bg-background border-border lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
         level === 0 &&
-          "z-10 h-full lg:left-0 lg:z-auto lg:border-border bg-primary",
+          "z-10 h-full lg:left-0 lg:z-auto lg:border-border bg-background lg:bg-primary",
         level === 1 && "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto",
         level === 2 && "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto",
       )}

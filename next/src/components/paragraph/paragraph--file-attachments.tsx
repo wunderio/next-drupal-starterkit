@@ -12,7 +12,7 @@ export function ParagraphFileAttachments({
 }) {
   return (
     <section
-      className="relative h-full p-4 transition-all bg-white border rounded border-border hover:shadow-md"
+      className="relative h-full p-4 transition-all border rounded bg-background border-border hover:shadow-md"
       data-paragraph={paragraph.__typename}
     >
       {paragraph.fileAttachmentsParagraphHeading && (
@@ -24,7 +24,7 @@ export function ParagraphFileAttachments({
         <FormattedText
           html={paragraph.fileAttachmentsParagraphFormattedText.processed}
           className={cn(
-            "text-left text-md/xl sm:text-lg",
+            "text-left text-md sm:text-lg",
             paragraph.fileAttachmentsParagraphHeading && "mt-4",
           )}
         />
