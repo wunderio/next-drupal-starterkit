@@ -155,8 +155,6 @@ services:
         NEXTAUTH_URL: https://frontend.lndo.site
         REDIS_HOST: redis
         REDIS_PASS: "mypassword"
-        # Needed in lando > 3.22 to use openssl CA for node.
-        NODE_OPTIONS: --use-openssl-ca
     build:
       # This is needed to be able to run lando npx commands:
       - "mkdir -p /var/www/.npm-global/lib"
@@ -253,4 +251,4 @@ env_file:
   - .lando/.env
 
 # Tested with Lando version
-version: v3.22
+version: v3.21
