@@ -155,8 +155,6 @@ services:
         NEXTAUTH_URL: https://frontend.lndo.site
         REDIS_HOST: redis
         REDIS_PASS: "mypassword"
-        # We instruct node to use the Lando CA certificate for HTTPS connections:
-        NODE_EXTRA_CA_CERTS: /lando/certs/LandoCA.crt
     build:
       # This is needed to be able to run lando npx commands:
       - "mkdir -p /var/www/.npm-global/lib"
@@ -253,4 +251,4 @@ env_file:
   - .lando/.env
 
 # Tested with Lando version
-version: v3.22
+version: v3.22.3
