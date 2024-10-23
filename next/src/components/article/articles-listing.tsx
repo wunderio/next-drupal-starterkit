@@ -13,7 +13,7 @@ export async function ArticlesListing({ limit }: { limit: number }) {
 
   return (
     <>
-      <ul className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 md:grid-cols-3">
         {data?.map((article: FragmentArticleTeaserFragment) => (
           <li key={article.id}>
             <ArticleTeaser article={article} />

@@ -18,7 +18,7 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
   return (
     <>
       <HeadingParagraph>{heading}</HeadingParagraph>
-      <ul className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 md:grid-cols-3">
         {articles?.map((article) => (
           <li key={article.id}>
             <ArticleTeaser article={article} />
