@@ -27,7 +27,6 @@ tooling:
     dir: /app/next
 
   npx:
-    description: "Runs npx commands"
     service: node
     dir: /app/next
 
@@ -133,6 +132,8 @@ services:
     type: node:20
     ssl: true
     sslExpose: true
+    globals:
+      npm: latest
     overrides:
       image: "cypress/included:cypress-13.6.4-node-20.11.0-chrome-121.0.6167.85-1-ff-120.0-edge-121.0.2277.83-1"
       ports:
@@ -160,13 +161,11 @@ services:
         AUTH_URL: https://frontend.lndo.site
         REDIS_HOST: redis
         REDIS_PASS: "mypassword"
-        # We instruct node to use the Lando CA certificate for HTTPS connections:
-        NODE_EXTRA_CA_CERTS: /lando/certs/LandoCA.crt
+
         ES_HOST: elasticsearch
         # To enable nesh cache debugging
         # NEXT_PRIVATE_DEBUG_CACHE: 1
     build:
-      - "mkdir -p /var/www/.npm-global/lib"
       - "cd next && npm ci"
     scanner: false
 
@@ -260,4 +259,4 @@ env_file:
   - .lando/.env
 
 # Tested with Lando version
-version: v3.22
+version: v3.22.3

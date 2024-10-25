@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1cd98f962bcb76d4ee54112149baf82",
+    "content-hash": "ea57262c7754efd53b4478f4b3c471bd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2137,17 +2137,17 @@
         },
         {
             "name": "drupal/graphql_compose",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/graphql_compose.git",
-                "reference": "2.2.0"
+                "reference": "2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.2.0.zip",
-                "reference": "2.2.0",
-                "shasum": "6814a63db9a1f9895c4ecba0fc8bcee7acf288fe"
+                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.2.1.zip",
+                "reference": "2.2.1",
+                "shasum": "2293a62f322a109f7d38d9549769bcaa65137d2e"
             },
             "require": {
                 "doctrine/inflector": "^2",
@@ -2184,8 +2184,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.2.0",
-                    "datestamp": "1720438776",
+                    "version": "2.2.1",
+                    "datestamp": "1726380157",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3783,7 +3783,7 @@
             "version": "v8.12.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:elastic/elasticsearch-php.git",
+                "url": "https://github.com/elastic/elasticsearch-php.git",
                 "reference": "6f4a2ee4ff2cb9f75a6ee00f574aa2d9c1bb14fd"
             },
             "dist": {
@@ -16691,6 +16691,6 @@
     "platform": {
         "php": ">=8.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
