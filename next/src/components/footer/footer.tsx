@@ -13,7 +13,6 @@ import { SocialShare } from "./social-share";
 
 export async function Footer() {
   const locale = await getLocale();
-  // const menu = await getMenu(MenuAvailable.Footer, locale);
   const { footer: footerMenu } = await getMenus(locale);
 
   // Only show the footerMenu items that match the current locale
