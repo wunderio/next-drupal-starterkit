@@ -57,6 +57,9 @@ const nextConfig = {
 
     return config;
   },
+  experimental: {
+    swrDelta: 31536000, // 1 year
+  },
 };
 
 module.exports = withNextIntl(nextConfig);
