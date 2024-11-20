@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
-import RegisterForm from "../../../../../components/forms/register-form";
+import RegisterForm from "@/components/forms/register-form";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
