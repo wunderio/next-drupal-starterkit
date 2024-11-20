@@ -5,11 +5,11 @@
  * Main module file for wunder_next.
  */
 
-use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
+use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
 use Drupal\simple_oauth\Entities\AccessTokenEntity;
 use Drupal\user\Entity\User;
 
