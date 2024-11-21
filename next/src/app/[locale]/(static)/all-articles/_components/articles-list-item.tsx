@@ -23,8 +23,8 @@ export function ArticleListItem({ article }: ArticleListItemProps) {
       className={cn(
         "relative mb-4 grid h-full rounded border p-4 transition-all hover:shadow-md",
         article.sticky
-          ? "border-primary-100 bg-primary-50"
-          : "border-finnishwinter bg-white",
+          ? "border-primary-100 bg-slate-200 dark:bg-slate-600"
+          : "border-finnishwinter bg-white dark:bg-black",
       )}
     >
       <h2 className="mb-2 font-bold line-clamp-2 text-heading-xs">
