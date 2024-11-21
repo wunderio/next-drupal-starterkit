@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.7.0] 19.11.2024
+
+- Add swrDelta config option for CDNs by @joshua-scott 
+- Bump webpack from 5.93.0 to 5.94.0 in /next by @dependabot
+- NEX-172: Fix preview of previous revisions of nodes by @vermario
+- NEX-173: Redirect to current page after exiting preview by @jekku123
+- NEX-174: Do not return anything from the api preview route by @vermario
+- NEX-175: Add the possibility of running npx commands in lando by @vermario
+- NEX-170: Make example content even more clearly example content by @vermario
+- NEX-171: Upgrade the graphql_compose contrib module to version 2.2.1 by @vermario
+
+## [2.6.0] 10.8.2024
+
+- Cleanup and simplify Drupal clients by @joshua-scott
+- Bump ws from 8.17.0 to 8.17.1 in /next by @dependabot 
+- Bump braces from 3.0.2 to 3.0.3 in /drupal by @dependabot 
+- Update npm packages + Storybook config by @joshua-scott
+- Caching Search results by @micahsuomi
+- NEX-101: Improve data fetching and error handling by @joshua-scott
+- NEX-101: Sitemap.xml improvements by @joshua-scott
+- NEX-104: Add Redis for frontend caching by @vermario
+- NEX-165: Add patch to graphql_compose to allow for nodes with unpublished translations by @vermario
+- NEX-164: Upgrade to drupal 10.3.2, update contrib modules by @vermario
+
 ## [2.5.0] 10.6.2024
  
 - Add DDEV support
