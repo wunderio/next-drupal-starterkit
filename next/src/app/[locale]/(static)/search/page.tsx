@@ -22,7 +22,7 @@ const HitView = ({ hit }) => {
   return (
     <Link href={hit.path}>
       <div>
-        <h2 className="mb-2 text-xl font-semibold">
+        <h2 className="mb-2 text-xl font-semibold dark:text-black">
           <Highlight attribute="title" hit={hit} />
         </h2>
         <p className="text-gray-600">{hit.excerpt}</p>
