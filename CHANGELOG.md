@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [3.0.0] 22.11.2024
+
+New major release! 🎉
+
+Major kudos to @jekku123 that has done 99% of the work for this! 🥇
+
+- Update to drupal 10.3.9
+- Update contrib modules
+- Update to latest version of next-drupal (beta2) both Drupal module and npm package
+- Switch to Auth.js for authentication
+- Changes to drupalClient to extend NextDrupalBase
+- Switch to next-intl
+- Refinements for the redis integration
+- Implementation of Draft Mode
+- Directory refactoring in the /next subfolder
+- Revamped search functionality using searchkit
+- Added dark mode
+
 ## [2.7.0] 19.11.2024
 
 - Add swrDelta config option for CDNs by @joshua-scott 
