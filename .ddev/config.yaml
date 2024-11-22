@@ -36,11 +36,14 @@ web_environment:
   - NEXT_IMAGE_DOMAIN=next-drupal-starterkit.ddev.site
   - NEXT_PUBLIC_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3000
     # Environment variables for next_auth:
-  - NEXTAUTH_SECRET=nextauth_secret_not_secure_used_only_locally
-  - NEXTAUTH_URL=https://next-drupal-starterkit.ddev.site:3000
-  - # Environment variables for redis
+  - AUTH_SECRET=nextauth_secret_not_secure_used_only_locally
+  - AUTH_TRUST_HOST=true
+  - AUTH_URL=https://next-drupal-starterkit.ddev.site:3000
+   # Environment variables for redis
   - REDIS_HOST=redis
   - REDIS_PASS=redis
+   # Environment variables for elasticsearch
+  - ES_HOST=elasticsearch
 
 corepack_enable: false
 web_extra_exposed_ports:

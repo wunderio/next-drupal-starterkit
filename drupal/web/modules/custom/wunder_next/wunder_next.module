@@ -5,11 +5,11 @@
  * Main module file for wunder_next.
  */
 
-use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
+use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
 use Drupal\simple_oauth\Entities\AccessTokenEntity;
 use Drupal\user\Entity\User;
 
@@ -27,7 +27,7 @@ function wunder_next_next_site_load($entities) {
   foreach ($entities as $next_site) {
     if ($next_site->id() == 'frontend') {
       $next_site->setBaseUrl($settings['frontend_url']);
-      $next_site->setPreviewUrl($settings['frontend_url'] . '/api/preview');
+      $next_site->setPreviewUrl($settings['frontend_url'] . '/api/draft');
       $next_site->setRevalidateUrl($settings['frontend_url'] . '/api/revalidate');
       $next_site->setRevalidateSecret($settings['revalidate_secret']);
     }

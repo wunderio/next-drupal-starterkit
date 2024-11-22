@@ -2,6 +2,8 @@
 
 This is a starter template created by [Wunder](https://www.wunder.io) for a decoupled website using the open-source [Next.js for Drupal](https://next-drupal.org/) project by [Chapter Three](https://www.chapterthree.com) and contributors.
 
+> ⚠️⚠️ **Now using the App router in Next.js!** 🎉 If you prefer using the pages router, we have kept the old version in the `pages-router` branch.
+
 ## 🪂 Check out the running demo at https://next-drupal-starterkit.dev.wdr.io !
 
 The aims of this template are:
@@ -54,7 +56,8 @@ Follow this guide to get the backend and frontend up and running. You can either
 ```bash
 ./setup-lando.sh
 ```
-or 
+
+or
 
 ```bash
 ./setup-ddev.sh
@@ -78,9 +81,9 @@ After the setup is complete, you can access the site at the following URLs:
 
 Lando has two separate containers for the backend and frontend, so the URLs are different:
 
-| Backend | Frontend                     |
-|--|--|
-| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/  |
+| Backend                                   | Frontend                    |
+| ----------------------------------------- | --------------------------- |
+| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/ |
 
 You can get a more detailed list of all the services and their urls with the command:
 
@@ -92,9 +95,11 @@ lando info
 
 DDEV has a single container for both the backend and frontend, so the URLs differ only by the port:
 
-| Backend | Frontend                                       |
-|--|--|
-| https://next-drupal-starterkit.ddev.site| https://next-drupal-starterkit.ddev.site:3000  |
+| Backend                                  | Frontend                                      |
+| ---------------------------------------- | --------------------------------------------- |
+| https://next-drupal-starterkit.ddev.site | https://next-drupal-starterkit.ddev.site:3000 |
+
+> NOTE: localhost:3000 does not work in DDEV, you need to use the URL provided by DDEV above.
 
 You can get a more detailed list of all the services and their urls with the command:
 
@@ -108,7 +113,7 @@ We try to add to the template what we think are the most commonly requested feat
 
 ### Preview mode
 
-The template is set up to allow editors to use [Preview mode](https://next-drupal.org/docs/reference/preview). Visit the node page on the Drupal side while the frontend is running to see a preview of the page.
+The template is set up to allow editors to use [Draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode). Visit the node page on the Drupal side while the frontend is running to see a preview of the page.
 
 ### On-demand revalidation
 
@@ -122,10 +127,10 @@ The Next.js site will then create the metatags using a combination of these two 
 ### Search indexing and frontend search interface
 
 The site is set up to work with Elasticsearch to provide a complete search experience.
-The Lando setup includes spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module, which in turn makes use of the [Elasticsearch helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
+Both the Lando and DDEV setups include spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module, which in turn makes use of the [Elasticsearch helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
 On the frontend side, the search user uses the [Elastic UI library](https://elastic.github.io/eui/).
 The frontend site queries Elasticsearch via a simple proxy controller in Drupal, also provided by the included `wunder_search` custom Drupal module.
-The lando setup also includes [ElasticVue](https://elasticvue.com/), a tool to help you manage your Elasticsearch indexes.
+The included frontend search UI is provided by [Searchkit](https://www.searchkit.co/).
 
 ### Importable demo content
 
@@ -133,8 +138,8 @@ The template includes a Drupal migration to populate the site with a set of tran
 
 ### Multilanguage setup
 
-This template is set up to use three languages: English (default), Finnish and Swedish. These languages are added in Drupal using the usual translation modules, and to the frontend using the [next-i18next](https://github.com/i18next/next-i18next) npm package.
-The indexing in Elasticsearch takes into consideration the language of the content for analysis. The interface is translated. (Note: translations have mostly been done with Google Translate, so don't expect perfect Finnish or Swedish... or English for that matter. 🙂 )
+This template is set up to use three languages: English (default), Finnish, and Swedish. These languages are added in Drupal using the standard translation modules and integrated into the frontend using the [Next-Intl](https://next-intl-docs.vercel.app/) module.
+The Elasticsearch indexing takes the content language into account for analysis, and the interface is fully translated. (Note: Most translations were done using Google Translate, so please expect some inaccuracies in Finnish, Swedish, and even English. 🙂)
 
 ### Webforms
 
@@ -151,7 +156,7 @@ If the backend is not available momentarily, the frontend will try again to call
 
 ### Frontend user authentication and registration
 
-The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Next-Auth](https://next-auth.js.org/).
+The template includes the setup to allow users to log into the Drupal backend from the Next.js frontend, using [Auth.js](https://authjs.dev/).
 
 - As an example, only registered users are allowed to post to the drupal `contact` webform, and parts of the interface in the frontend are available only for logged-in users.
 - Some test users are imported as part of the content migration (check the `users.csv' file for the credentials).
@@ -171,10 +176,19 @@ When adding or modifying queries and fragments, the codegen script needs to be r
 
 Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `lando drush cr` or `ddev drush cr` to clear the Drupal cache.
 
+##### VSCode extensions to work with GraphQL and TypeScript
+
+We have included a `.vscode/extensions.json` file that will suggest some useful extensions to work with GraphQL and TypeScript in VSCode with full autocomplete and syntax highlighting. You can install them by clicking on the notification that appears when you open the project in VSCode.
+
+Please note:
+1. We suggest opening the project in VSCode using the `/next` directory as the root of the project. 
+2. The latest version of the "GraphQL: Language Feature Support" extension [currently has a bug](https://github.com/graphql/graphiql/issues/3620) that prevents it from working correctly with the `graphql-codegen` package. Make sure to install the v0.9.3 version instead.
+
 #### Typesafe environment variables
 
-The environment variables used by the frontend are also checked for type safety. If used correctly, a Zod error will prevent the frontend from building if the environment variables are not set according to the schema defined in `next/env.ts`. To add a new environment variable:
+The environment variables used by the frontend are also checked for type safety. If used correctly, a Zod error will prevent the frontend from building if the environment variables are not set according to the schema defined in `next/env.ts`. 
 
+To add a new environment variable:
 1. Add it to `.lando.yml`, under services > node > overrides > environment. or to `.ddev/config.yaml` for DDEV.
 2. Add it to `next/env.ts`. Note that it must be added twice there - once under server/client to define its schema, and once under `runtimeEnv` to read the actual value.
 3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
@@ -184,30 +198,7 @@ The environment variables used by the frontend are also checked for type safety.
 
 The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` path that can be submitted to search engines.
 
-#### Redis caching
-
-The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. Both the ddev and lando setup include redis by default.
-The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package. We added custom logic to our cache handler
-to handle prepopulating the cache from builds for ISR. Checl the `cache-handler.mjs` file in the `next` directory for more information.
-
-### Connecting to Redis in the local environment
-
-You can connect to Redis and interact with it using the [redis cli](https://redis.io/docs/latest/develop/connect/cli/) in the local environment by running the following command:
-
-If you are using Lando:
-
-```bash
-lando redis-cli
-```
-
-If you are using DDEV:
-
-```bash
-ddev redis
-```
-
-
-### Testing with Cypress
+### Testing with Cypress (Lando only)
 
 The template includes example tests to be run with Cypress. The Lando setup includes a headless browser and Cypress, so you can run the tests locally without the need to install anything else, but it won't be able to use the visual Cypress application. See below for more details.
 
@@ -233,6 +224,23 @@ If you want to run the visual Cypress application, you will need to run cypress 
 
 You can then run your tests inside the Cypress application.
 
-### UI library
+#### Redis caching
 
-The `ui/` directory contains some reusable UI components that are used in the frontend. These components are based on the [Wunder Component Library](https://www.figma.com/file/i0RIoStoPOZfcqS80DLbkD/The-Component-Library), which is a collection of reusable UI components designed to be used as a shared base for many projects. The components are meant to be used as a starting point, and should be modified, added and removed as required to fit the needs of the project.
+The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. Both the ddev and lando setup include redis by default.
+The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package.
+
+### Connecting to Redis in the local environment
+
+You can connect to Redis and interact with it using the [redis cli](https://redis.io/docs/latest/develop/connect/cli/) in the local environment by running the following command:
+
+If you are using Lando:
+
+```bash
+lando redis-cli
+```
+
+If you are using DDEV:
+
+```bash
+ddev redis
+```

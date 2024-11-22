@@ -3,8 +3,8 @@
 namespace Drupal\wunder_next\Commands;
 
 use Consolidation\AnnotatedCommand\CommandError;
-use Drupal\consumers\Entity\Consumer;
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\consumers\Entity\Consumer;
 use Drupal\user\Entity\User;
 use Drush\Commands\DrushCommands;
 

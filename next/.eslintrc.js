@@ -28,7 +28,8 @@ module.exports = {
       files: ["**/*.{ts,tsx}"],
       parser: "@typescript-eslint/parser",
       parserOptions: {
-        project: "tsconfig.json",
+        project: "./tsconfig.json",
+        tsconfigRootDir: __dirname,
       },
       env: {
         browser: true,
@@ -56,6 +57,10 @@ module.exports = {
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/no-empty-object-type": "off",
+        "@typescript-eslint/no-require-imports": "off",
+        "@typescript-eslint/no-unused-expressions": "off",
+        "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-misused-promises": [
           "error",
           {
@@ -78,18 +83,6 @@ module.exports = {
                 message: 'Import from "next-i18next" instead.',
               },
             ],
-          },
-        ],
-
-        // Allow unused variables only if they start with `_` or `err`.
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": [
-          "error",
-          {
-            vars: "all",
-            varsIgnorePattern: "^_",
-            args: "after-used",
-            argsIgnorePattern: "^_|^err",
           },
         ],
 

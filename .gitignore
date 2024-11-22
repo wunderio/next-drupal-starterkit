@@ -21,3 +21,5 @@ node_modules
 # Ignore start.sh script status file
 .last_successful_command_ddev
 .last_successful_command_lando
+
+Makefile

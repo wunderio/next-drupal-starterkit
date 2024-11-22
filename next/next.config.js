@@ -1,5 +1,7 @@
-const { i18n } = require("./next-i18next.config");
 const crypto = require("crypto");
+
+const createNextIntlPlugin = require("next-intl/plugin");
+const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,10 +17,15 @@ const nextConfig = {
         crypto.randomBytes(20).toString("hex");
   },
   cacheHandler:
-    // If the environment has a redis host set, we use a cache handler:
+    // Only use the cache handler in production
     process.env.NODE_ENV === "production"
       ? require.resolve("./cache-handler.mjs")
       : undefined,
+  cacheMaxMemorySize: 0, // Disable in-memory cache
+  experimental: {
+    // This is required for the experimental feature of pre-populating the cache with the initial data
+    instrumentationHook: true,
+  },
   poweredByHeader: false,
   images: {
     remotePatterns: [
@@ -29,13 +36,25 @@ const nextConfig = {
       },
     ],
   },
-  i18n,
   webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/i,
-      issuer: /\.tsx$/i,
-      loader: "@svgr/webpack",
-    });
+    // Grab the existing rule that handles SVG imports
+    const fileLoaderRule = config.module.rules.find((rule) =>
+      rule.test?.test?.(".svg"),
+    );
+
+    config.module.rules.push(
+      // Convert *.svg imports to React components
+      {
+        test: /\.svg$/i,
+        issuer: fileLoaderRule.issuer,
+        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, // exclude if *.svg?url
+        use: ["@svgr/webpack"],
+      },
+    );
+
+    // Modify the file loader rule to ignore *.svg, since we have it handled now.
+    fileLoaderRule.exclude = /\.svg$/i;
+
     return config;
   },
   experimental: {
@@ -43,4 +62,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);
