@@ -10,6 +10,7 @@ New major release! 🎉
 
 Major kudos to @jekku123 that has done 99% of the work for this! 🥇
 
+- Switch from "pages router" to "app router" in Next.js
 - Update to drupal 10.3.9
 - Update contrib modules
 - Update to latest version of next-drupal (beta2) both Drupal module and npm package
