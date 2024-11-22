@@ -21,10 +21,15 @@ export function LanguageSwitcher() {
   const activeLocale = useLocale();
   const params = useParams();
 
+  console.log(languageLinks[activeLocale]);
+
   return (
     <DropdownMenu>
       <span className="sr-only">{t("language-switcher")}</span>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger
+        asChild
+        data-language-name={languageLinks[activeLocale].name}
+      >
         <div className="capitalize cursor-pointer hover:underline">
           <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
             {languageLinks[activeLocale].name}
