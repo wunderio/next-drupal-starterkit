@@ -21,8 +21,6 @@ export function LanguageSwitcher() {
   const activeLocale = useLocale();
   const params = useParams();
 
-  console.log(languageLinks[activeLocale]);
-
   return (
     <DropdownMenu>
       <span className="sr-only">{t("language-switcher")}</span>
