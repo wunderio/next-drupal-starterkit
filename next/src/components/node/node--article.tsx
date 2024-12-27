@@ -35,7 +35,7 @@ export function NodeArticle({ article, ...props }: ArticleProps) {
             priority
           />
           {article.image.title && (
-            <figcaption className="py-2 text-sm text-center">
+            <figcaption className="py-2 text-center text-sm">
               {article.image.title}
             </figcaption>
           )}
@@ -43,7 +43,7 @@ export function NodeArticle({ article, ...props }: ArticleProps) {
       )}
       {article.body?.processed && (
         <FormattedText
-          className="mt-4 text-md/xl sm:text-lg"
+          className="text-md/xl mt-4 sm:text-lg"
           html={article.body?.processed}
         />
       )}

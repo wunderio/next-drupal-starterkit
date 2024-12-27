@@ -22,7 +22,7 @@ export function MediaImage({ media, priority }: MediaImageProps) {
       alt={alt || "Image"}
       title={title || ""}
       priority={priority}
-      className="object-cover h-auto max-w-full"
+      className="h-auto max-w-full object-cover"
     />
   );
 }

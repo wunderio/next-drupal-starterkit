@@ -17,13 +17,13 @@ export default function ErrorPage({
       <HeadingPage>{t("title")}</HeadingPage>
       <p className="mt-8 text-lg">
         {t("content")}{" "}
-        <LinkWithLocale href="/" className="underline hyperlink">
+        <LinkWithLocale href="/" className="hyperlink underline">
           {t("back-to-homepage")}
         </LinkWithLocale>
       </p>
 
       {env.NEXT_PUBLIC_NODE_ENV === "development" && (
-        <pre className="p-4 mt-4 text-sm rounded bg-info text-error">
+        <pre className="mt-4 rounded bg-info p-4 text-sm text-error">
           {error.stack}
         </pre>
       )}

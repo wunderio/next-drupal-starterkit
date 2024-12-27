@@ -44,7 +44,7 @@ export function ParagraphAccordionTwoColumns({
           {paragraph.primaryLink && (
             <ArrowLinkButton
               href={paragraph.primaryLink.url}
-              className="max-w-sm px-10 py-3 mt-4"
+              className="mt-4 max-w-sm px-10 py-3"
             >
               {paragraph.primaryLink.title}
             </ArrowLinkButton>

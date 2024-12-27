@@ -61,7 +61,7 @@ export default function RegisterForm() {
   }
   return (
     <>
-      <div className="max-w-md pt-8 pb-16 font-work">
+      <div className="font-work max-w-md pb-16 pt-8">
         {form.formState.errors.root &&
           form.formState.errors.root.serverError && (
             <StatusMessage level="error">

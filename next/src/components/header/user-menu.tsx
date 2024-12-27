@@ -38,7 +38,7 @@ export function UserMenu() {
       <span className="sr-only">{t("user-menu")}</span>
       <DropdownMenuTrigger asChild>
         <div
-          className="capitalize cursor-pointer hover:underline"
+          className="cursor-pointer capitalize hover:underline"
           aria-expanded={status === "authenticated"}
         >
           <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
@@ -46,7 +46,7 @@ export function UserMenu() {
               ? data.user.name
               : t("user-menu-account")}
           </span>
-          <AccountIcon className="inline-block w-6 h-6" aria-hidden />
+          <AccountIcon className="inline-block h-6 w-6" aria-hidden />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="z-50">

@@ -46,7 +46,7 @@ export function ContactForm() {
 
   if (form.formState.isSubmitSuccessful) {
     return (
-      <StatusMessage level="success" className="w-full max-w-3xl mx-auto">
+      <StatusMessage level="success" className="mx-auto w-full max-w-3xl">
         <p className="mb-4">{t("form-thank-you-message")}</p>
         <Button type="button" onClick={() => form.reset()}>
           {t("form-send-another-message")}
@@ -56,7 +56,7 @@ export function ContactForm() {
   }
 
   return (
-    <div className="flex flex-col max-w-xl gap-5 p-4 mx-auto mb-4 transition-all border rounded shadow-md border-border">
+    <div className="mx-auto mb-4 flex max-w-xl flex-col gap-5 rounded border border-border p-4 shadow-md transition-all">
       <HeadingParagraph>{t("form-title")}</HeadingParagraph>
       <AuthGateClient text={t("login-to-fill-form")}>
         <p className="text-muted-foreground">{t("form-description")}</p>

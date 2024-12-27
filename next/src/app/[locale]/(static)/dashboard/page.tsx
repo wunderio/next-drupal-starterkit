@@ -68,7 +68,7 @@ export default async function DashboardPage({
   return (
     <>
       <HeadingPage>{t("user-dashboard")}</HeadingPage>
-      <p className="my-6 text-justify text-md/xl text-scapaflow sm:text-lg">
+      <p className="text-md/xl text-scapaflow my-6 text-justify sm:text-lg">
         {t("user-dashboard-intro-greeting", { username: session.user.name })}
       </p>
       <Table>

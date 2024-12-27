@@ -27,10 +27,10 @@ export function ArticleListItem({ article }: ArticleListItemProps) {
           : "border-finnishwinter bg-white dark:bg-black",
       )}
     >
-      <h2 className="mb-2 font-bold line-clamp-2 text-heading-xs">
+      <h2 className="text-heading-xs mb-2 line-clamp-2 font-bold">
         {article.title}
       </h2>
-      <div className="mb-4 line-clamp-2 text-md text-scapaflow">
+      <div className="text-md text-scapaflow mb-4 line-clamp-2">
         {author && <>{t("posted-by", { author })} - </>}
         {date}
       </div>

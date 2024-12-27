@@ -111,7 +111,7 @@ export const Large: Story = {
 export const WithIconOnly: Story = {
   name: "Icon only",
   args: {
-    children: <WarningIcon className="w-6 h-6" />,
+    children: <WarningIcon className="h-6 w-6" />,
   },
 };
 
@@ -120,7 +120,7 @@ export const WithIconLeft: Story = {
   args: {
     children: (
       <>
-        <WarningIcon className="inline w-6 h-6 mr-2" />
+        <WarningIcon className="mr-2 inline h-6 w-6" />
         <span>Icon left</span>
       </>
     ),
@@ -133,7 +133,7 @@ export const WithIconRight: Story = {
     children: (
       <>
         <span>Icon right</span>
-        <WarningIcon className="inline w-6 h-6 ml-2" />
+        <WarningIcon className="ml-2 inline h-6 w-6" />
       </>
     ),
   },

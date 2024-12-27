@@ -38,7 +38,7 @@ const options: HTMLReactParserOptions = {
               width={numberWidth}
               height={numberHeight}
               alt={alt}
-              className="object-cover max-w-full"
+              className="max-w-full object-cover"
             />
           );
         }

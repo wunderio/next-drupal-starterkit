@@ -22,14 +22,14 @@ export function ArrowLinkButton({
       href={href}
       className={cn(
         buttonVariants({ variant }),
-        "text-base inline-flex px-5 py-3 group",
+        "group inline-flex px-5 py-3 text-base",
         className,
       )}
     >
       {children}
 
       <ArrowIcon
-        className="w-6 h-6 ml-1 transition-transform duration-500 -rotate-90 group-hover:translate-x-2"
+        className="ml-1 h-6 w-6 -rotate-90 transition-transform duration-500 group-hover:translate-x-2"
         aria-hidden
       />
     </LinkWithLocale>

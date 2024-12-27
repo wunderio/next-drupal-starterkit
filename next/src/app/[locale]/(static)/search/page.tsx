@@ -32,7 +32,7 @@ const HitView = ({ hit }) => {
 };
 
 const Panel = ({ header, children }: any) => (
-  <div className="mb-2 panel">
+  <div className="panel mb-2">
     <h5 className="text-heading-xs">{header}</h5>
     {children}
   </div>
@@ -54,7 +54,7 @@ export default function Web({ params: { locale } }) {
       >
         <Configure hitsPerPage={10} />
         <div className="flex flex-col md:flex-row">
-          <aside className="w-56 mr-2">
+          <aside className="mr-2 w-56">
             <div className="search-panel__filters">
               <DynamicWidgets facets={["*"]}>
                 <Panel header="Content Type">
@@ -88,7 +88,7 @@ export default function Web({ params: { locale } }) {
             </div>
           </aside>
           <div className="flex-1">
-            <div className="pb-4 searchbox">
+            <div className="searchbox pb-4">
               <SearchBox
                 translations={{
                   submitButtonTitle: t("Search.SearchBox.submit-button-title"),

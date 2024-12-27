@@ -32,7 +32,7 @@ const getIcon = (fileType: string) => {
     default:
       return (
         <ListIcon
-          className="mr-1.5 h-4 w-4 flex-shrink-0 text-primary-600"
+          className="text-primary-600 mr-1.5 h-4 w-4 flex-shrink-0"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
           viewBox="0 0 20 20"

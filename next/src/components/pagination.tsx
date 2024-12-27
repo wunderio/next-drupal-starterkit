@@ -96,7 +96,7 @@ export function Pagination({
   };
 
   return (
-    <div className="flex items-center justify-between w-full">
+    <div className="flex w-full items-center justify-between">
       <MaybeLink href={prevPageHref}>
         <Button
           variant="link"
@@ -104,7 +104,7 @@ export function Pagination({
           onClick={handlePrevClick}
           tabIndex={props["aria-hidden"] ? -1 : undefined}
         >
-          <ArrowIcon className="w-6 h-6 mr-4 rotate-90" aria-hidden />
+          <ArrowIcon className="mr-4 h-6 w-6 rotate-90" aria-hidden />
           {t("search-previous")}
         </Button>
       </MaybeLink>
@@ -117,7 +117,7 @@ export function Pagination({
           tabIndex={props["aria-hidden"] ? -1 : undefined}
         >
           {t("search-next")}
-          <ArrowIcon className="w-6 h-6 ml-4 -rotate-90" aria-hidden />
+          <ArrowIcon className="ml-4 h-6 w-6 -rotate-90" aria-hidden />
         </Button>
       </MaybeLink>
     </div>

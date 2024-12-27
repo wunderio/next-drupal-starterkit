@@ -19,7 +19,7 @@ export default async function PageLayout({
     <LanguageLinksProvider languageLinks={languageLinks}>
       <Header menu={main} />
       <main className="grow" id="main-content">
-        <div className="max-w-6xl px-6 py-8 mx-auto">{children}</div>
+        <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
       </main>
     </LanguageLinksProvider>
   );

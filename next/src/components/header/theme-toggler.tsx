@@ -18,15 +18,15 @@ export function ThemeToggler() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="capitalize cursor-pointer hover:underline">
-          <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline dark:hidden">
+        <div className="cursor-pointer capitalize hover:underline">
+          <span className="sr-only dark:hidden sm:not-sr-only sm:mr-2 sm:inline">
             {t("light")}
           </span>
-          <span className="sr-only sm:not-sr-only sm:mr-2 sm:hidden dark:inline">
+          <span className="sr-only dark:inline sm:not-sr-only sm:mr-2 sm:hidden">
             {t("dark")}
           </span>
-          <Sun className="inline-block w-6 h-6 transition-all rotate-0 dark:-rotate-90 dark:hidden" />
-          <Moon className="hidden w-6 h-6 transition-all rotate-90 dark:rotate-0 dark:inline-block" />
+          <Sun className="inline-block h-6 w-6 rotate-0 transition-all dark:hidden dark:-rotate-90" />
+          <Moon className="hidden h-6 w-6 rotate-90 transition-all dark:inline-block dark:rotate-0" />
           <span className="sr-only">{t("label")}</span>
         </div>
       </DropdownMenuTrigger>

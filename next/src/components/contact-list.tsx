@@ -44,9 +44,9 @@ export async function ContactList() {
   return (
     <section className="py-8">
       <HeadingParagraph>{t("contact")}</HeadingParagraph>
-      <ul className="grid grid-cols-1 gap-4 py-4 auto-rows-max justify-items-center sm:grid-cols-2 md:grid-cols-3">
+      <ul className="grid auto-rows-max grid-cols-1 justify-items-center gap-4 py-4 sm:grid-cols-2 md:grid-cols-3">
         {contacts?.map(({ id, image, name, title, phoneNumber, email }) => (
-          <li key={id} className="grid p-4 justify-items-center">
+          <li key={id} className="grid justify-items-center p-4">
             <div className="mb-6 flex h-[100px] w-[100px] items-center justify-center overflow-hidden rounded-full">
               <Image
                 src={image}
@@ -62,7 +62,7 @@ export async function ContactList() {
               href={`tel:${phoneNumber}`}
               target="_blank"
               rel="noreferrer"
-              className="no-underline hyperlink hover:underline"
+              className="hyperlink no-underline hover:underline"
             >
               {phoneNumber}
             </a>
@@ -70,7 +70,7 @@ export async function ContactList() {
               href={`mailto:${email}`}
               target="_blank"
               rel="noreferrer"
-              className="no-underline hyperlink hover:underline"
+              className="hyperlink no-underline hover:underline"
             >
               {email}
             </a>

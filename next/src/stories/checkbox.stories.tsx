@@ -19,7 +19,7 @@ export const WithLabel: Story = {
         <Checkbox id="withLabel" name="withLabel" />
         <label
           htmlFor="withLabel"
-          className="cursor-pointer pl-2 text-sm peer-disabled:cursor-not-allowed peer-disabled:text-graysuit"
+          className="peer-disabled:text-graysuit cursor-pointer pl-2 text-sm peer-disabled:cursor-not-allowed"
         >
           I accept the terms and conditions
         </label>
@@ -35,7 +35,7 @@ export const DisabledWithLabel: Story = {
         <Checkbox disabled id="disabledWithLabel" name="disabledWithLabel" />
         <label
           htmlFor="disabledWithLabel"
-          className="cursor-pointer pl-2 text-sm peer-disabled:cursor-not-allowed peer-disabled:text-graysuit"
+          className="peer-disabled:text-graysuit cursor-pointer pl-2 text-sm peer-disabled:cursor-not-allowed"
         >
           I accept the terms and conditions
         </label>
