@@ -135,7 +135,7 @@ services:
     globals:
       npm: latest
     overrides:
-      image: "cypress/included:cypress-13.6.4-node-20.11.0-chrome-121.0.6167.85-1-ff-120.0-edge-121.0.2277.83-1"
+      image: "cypress/included:cypress-13.15.1-node-20.18.0-chrome-130.0.6723.69-1-ff-131.0.3-edge-130.0.2849.52-1"
       ports:
         - "3000:3000"
         - "6006:6006"
