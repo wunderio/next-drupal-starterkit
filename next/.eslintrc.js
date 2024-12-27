@@ -35,9 +35,10 @@ module.exports = {
         browser: true,
         node: true,
       },
-      plugins: ["n", "simple-import-sort"],
+      plugins: ["n", "simple-import-sort", "react", "@typescript-eslint"],
       extends: [
         "eslint:recommended",
+        "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "next",
@@ -72,19 +73,6 @@ module.exports = {
 
         // Instead, `import { env } from "@/env"` to access environment variables.
         "n/no-process-env": ["error"],
-
-        "no-restricted-imports": [
-          "error",
-          {
-            paths: [
-              // Restrict i18n imports to ensure SSR compatibility.
-              {
-                name: "react-i18next",
-                message: 'Import from "next-i18next" instead.',
-              },
-            ],
-          },
-        ],
 
         // Sort imports.
         "simple-import-sort/imports": [
