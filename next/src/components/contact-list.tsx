@@ -14,26 +14,26 @@ interface Contact {
 
 const contacts: Contact[] = [
   {
-    image: "/john_dean.jpg",
+    image: "/profile.png",
     name: "John Dean",
     title: "CFO",
-    phoneNumber: "+358445123456",
+    phoneNumber: "+358123456789",
     email: "john.dean@example.com",
     id: 1,
   },
   {
-    image: "/charlie_dean.jpg",
+    image: "/profile.png",
     name: "Charlie Dean",
     title: "CTO",
-    phoneNumber: "+358445123458",
+    phoneNumber: "+358123456789",
     email: "charlie.dean@example.com",
     id: 3,
   },
   {
-    image: "/jane_dean.jpg",
+    image: "/profile.png",
     name: "Jane Dean",
     title: "CEO",
-    phoneNumber: "+358445123457",
+    phoneNumber: "+358123456789",
     email: "jane.dean@example.com",
     id: 2,
   },
