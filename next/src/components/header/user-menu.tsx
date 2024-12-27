@@ -10,9 +10,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"; // Adjust the import path as necessary
+import { LogoutButton } from "@/components/ui/logout-button";
 import AccountIcon from "@/styles/icons/account-circle.svg";
-
-import { LogoutButton } from "../ui/logout-button";
 
 import { LinkWithLocale } from "@/i18n/routing";
 

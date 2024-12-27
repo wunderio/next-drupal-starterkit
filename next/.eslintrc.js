@@ -96,9 +96,7 @@ module.exports = {
               // Packages. Put `next`/`react`-related packages first.
               ["^next", "^@next", "^react", "^@?\\w"],
               // Internal paths - change these to match your project structure defined in tsconfig.json.
-              ["^@/(components|lib|pages|styles|types)(/.*|$)"],
-              // UI library imports.
-              ["^@ui(/.*|$)"],
+              ["^@/(app|components|lib|pages|styles|types)(/.*|$)"],
               // Parent imports. Put `..` last.
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
               // Other relative imports. Put same-folder imports and `.` last.

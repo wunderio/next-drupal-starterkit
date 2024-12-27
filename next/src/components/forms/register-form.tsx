@@ -5,6 +5,7 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { registerAction } from "@/app/_actions/register";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,8 +21,6 @@ import {
   RegisterFormInputs,
   registerFormSchema,
 } from "@/lib/zod/register-form";
-
-import { registerAction } from "@/app/_actions/register";
 
 export default function RegisterForm() {
   const t = useTranslations();

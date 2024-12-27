@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ArrowLinkButton } from "@/components/ui/arrow-link-button";
 import { buttonVariants } from "@/components/ui/button";
 import {
   FragmentParagraphAccordionFragment,
@@ -17,8 +18,6 @@ import {
 } from "@/lib/gql/graphql";
 import { cn } from "@/lib/utils";
 import ArrowIcon from "@/styles/icons/arrow-down.svg";
-
-import { ArrowLinkButton } from "../ui/arrow-link-button";
 
 export function ParagraphAccordionTwoColumns({
   paragraph,

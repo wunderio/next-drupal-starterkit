@@ -2,9 +2,8 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { FragmentMetaTagFragment } from "@/lib/gql/graphql";
+import { removeLocaleFromPath } from "@/lib/utils";
 import { TypedRouteEntity } from "@/types/graphql";
-
-import { removeLocaleFromPath } from "../utils";
 
 import { env } from "@/env";
 import { routing } from "@/i18n/routing";

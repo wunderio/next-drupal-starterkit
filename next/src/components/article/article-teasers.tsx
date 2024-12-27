@@ -1,11 +1,9 @@
 import { useTranslations } from "next-intl";
 
+import { ArticleTeaser } from "@/components/article/article-teaser";
+import { HeadingParagraph } from "@/components/heading--paragraph";
+import { ArrowLinkButton } from "@/components/ui/arrow-link-button";
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
-
-import { HeadingParagraph } from "../heading--paragraph";
-import { ArrowLinkButton } from "../ui/arrow-link-button";
-
-import { ArticleTeaser } from "./article-teaser";
 
 interface LatestArticlesProps {
   articles?: FragmentArticleTeaserFragment[];

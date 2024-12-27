@@ -2,11 +2,10 @@ import { cache } from "react";
 import { neshCache } from "@neshca/cache-handler/functions";
 import { AbortError } from "p-retry";
 
+import { REVALIDATE_LONG } from "@/lib/constants";
 import { drupalClientViewer } from "@/lib/drupal/drupal-client";
-
-import { REVALIDATE_LONG } from "../constants";
-import { MenuAvailable } from "../gql/graphql";
-import { GET_MENU } from "../graphql/queries";
+import { MenuAvailable } from "@/lib/gql/graphql";
+import { GET_MENU } from "@/lib/graphql/queries";
 
 import { env } from "@/env";
 

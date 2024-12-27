@@ -1,7 +1,6 @@
-import { FragmentArticleTeaserFragment } from "../gql/graphql";
-import { LISTING_ARTICLES } from "../graphql/queries";
-
-import { drupalClientViewer } from "./drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
+import { LISTING_ARTICLES } from "@/lib/graphql/queries";
 
 import { routing } from "@/i18n/routing";
 

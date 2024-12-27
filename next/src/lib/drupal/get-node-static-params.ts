@@ -1,6 +1,5 @@
-import { GET_STATIC_PATHS } from "../graphql/queries";
-
-import { drupalClientViewer } from "./drupal-client";
+import { drupalClientViewer } from "@/lib/drupal/drupal-client";
+import { GET_STATIC_PATHS } from "@/lib/graphql/queries";
 
 export async function getNodeStaticParams(
   nodeTypes: string[],

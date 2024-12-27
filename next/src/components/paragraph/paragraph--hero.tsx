@@ -1,12 +1,11 @@
 import { FormattedText } from "@/components/formatted-text";
 import { MediaImage } from "@/components/media/media--image";
+import { ArrowLinkButton } from "@/components/ui/arrow-link-button";
 import type {
   FragmentMediaImageFragment,
   FragmentParagraphHeroFragment,
 } from "@/lib/gql/graphql";
 import { cn } from "@/lib/utils";
-
-import { ArrowLinkButton } from "../ui/arrow-link-button";
 
 export function ParagraphHero({
   paragraph,

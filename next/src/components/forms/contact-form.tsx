@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
+import { createContactSubmissionAction } from "@/app/_actions/contact";
+import { AuthGateClient } from "@/components/auth-gate-client";
+import { HeadingParagraph } from "@/components/heading--paragraph";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,13 +19,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { StatusMessage } from "@/components/ui/status-message";
+import { Textarea } from "@/components/ui/textarea";
 import { ContactFormInputs, contactFormSchema } from "@/lib/zod/contact-form";
-
-import { AuthGateClient } from "../auth-gate-client";
-import { HeadingParagraph } from "../heading--paragraph";
-import { Textarea } from "../ui/textarea";
-
-import { createContactSubmissionAction } from "@/app/_actions/contact";
 
 export function ContactForm() {
   const t = useTranslations();
