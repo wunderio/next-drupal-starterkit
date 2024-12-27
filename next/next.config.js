@@ -3,6 +3,10 @@ const crypto = require("crypto");
 const createNextIntlPlugin = require("next-intl/plugin");
 const withNextIntl = createNextIntlPlugin();
 
+const imageHostname = String(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL).split(
+  "://",
+)[1];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -32,7 +36,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: process.env.NEXT_IMAGE_DOMAIN,
+        hostname: imageHostname,
         pathname: "**",
       },
     ],

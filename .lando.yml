@@ -152,9 +152,7 @@ services:
         DRUPAL_CLIENT_VIEWER_ID: drupal-client-viewer-id
         DRUPAL_CLIENT_VIEWER_SECRET: drupal_client_viewer_secret_not_secure_used_only_locally
         NEXT_PUBLIC_DRUPAL_BASE_URL: https://next-drupal-starterkit.lndo.site
-        NEXT_IMAGE_DOMAIN: next-drupal-starterkit.lndo.site
         NEXT_PUBLIC_FRONTEND_URL: https://frontend.lndo.site
-        # Environment variables for next_auth:
         # Environment variables for next_auth:
         AUTH_SECRET: nextauth_secret_not_secure_used_only_locally
         AUTH_TRUST_HOST: true

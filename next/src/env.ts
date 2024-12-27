@@ -9,7 +9,6 @@ export const env = createEnv({
     DRUPAL_CLIENT_VIEWER_ID: zod.string(),
     DRUPAL_CLIENT_VIEWER_SECRET: zod.string(),
     DRUPAL_REVALIDATE_SECRET: zod.string(),
-    NEXT_IMAGE_DOMAIN: zod.string(),
     ES_HOST: zod.string(),
   },
   client: {
@@ -27,7 +26,6 @@ export const env = createEnv({
     DRUPAL_CLIENT_VIEWER_ID: process.env.DRUPAL_CLIENT_VIEWER_ID,
     DRUPAL_CLIENT_VIEWER_SECRET: process.env.DRUPAL_CLIENT_VIEWER_SECRET,
     DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
-    NEXT_IMAGE_DOMAIN: process.env.NEXT_IMAGE_DOMAIN,
     NEXT_PUBLIC_DRUPAL_BASE_URL: process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
     NEXT_PUBLIC_FRONTEND_URL: process.env.NEXT_PUBLIC_FRONTEND_URL,
     ES_HOST: process.env.ES_HOST,
