@@ -57,7 +57,6 @@ module.exports = {
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
-        "@typescript-eslint/no-empty-object-type": "off",
 
         // Instead, `import { env } from "@/env"` to access environment variables.
         "n/no-process-env": ["error"],
