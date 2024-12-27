@@ -79,7 +79,10 @@ export default function LoginForm() {
           </StatusMessage>
         )}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
+            className="space-y-8"
+          >
             <FormField
               control={form.control}
               name="username"
