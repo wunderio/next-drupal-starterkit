@@ -41,6 +41,16 @@ const nextConfig = {
       : randomUUID().split("-")[0];
   },
 
+  async rewrites() {
+    return [
+      // Expose health check endpoint at /_ping:
+      {
+        source: "/_ping",
+        destination: "/api/health",
+      },
+    ];
+  },
+
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
