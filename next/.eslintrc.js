@@ -51,7 +51,6 @@ module.exports = {
         // Remove these if you want to enforce stricter rules.
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-call": "off",
@@ -59,7 +58,6 @@ module.exports = {
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
         "@typescript-eslint/no-empty-object-type": "off",
-        "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-unused-expressions": "off",
         "@typescript-eslint/no-misused-promises": [
           "error",
