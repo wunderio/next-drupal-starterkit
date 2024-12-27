@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingPage } from "@/components/heading--page";
 import { formatDateTimestamp } from "@/lib/utils";
-import { ArticleType } from "@/types/graphql";
+import type { ArticleType } from "@/types/graphql";
 
 interface ArticleProps {
   article: ArticleType;

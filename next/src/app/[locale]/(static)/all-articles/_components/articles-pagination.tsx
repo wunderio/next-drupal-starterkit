@@ -5,7 +5,7 @@ import { useRef } from "react";
 
 import { HeadingPage } from "@/components/heading--page";
 import { Pagination, PaginationProps } from "@/components/pagination";
-import { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
+import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
 
 import { ArticleListItem } from "./articles-list-item";
 

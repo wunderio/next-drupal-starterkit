@@ -1,7 +1,7 @@
 import { MediaDocument } from "@/components/media/media--document";
 import { MediaImage } from "@/components/media/media--image";
 import { MediaVideo } from "@/components/media/media--video";
-import { FragmentMediaUnionFragment } from "@/lib/gql/graphql";
+import type { FragmentMediaUnionFragment } from "@/lib/gql/graphql";
 
 export function Media({ media }: { media: FragmentMediaUnionFragment }) {
   if (!media) {

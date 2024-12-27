@@ -1,5 +1,5 @@
 import { Paragraph } from "@/components/paragraph";
-import { FragmentParagraphUnionFragment } from "@/lib/gql/graphql";
+import type { FragmentParagraphUnionFragment } from "@/lib/gql/graphql";
 import type { FrontpageType } from "@/types/graphql";
 
 export function NodeFrontpage({ page }: { page: FrontpageType }) {

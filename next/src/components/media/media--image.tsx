@@ -1,6 +1,6 @@
 import NextImage from "next/image";
 
-import { FragmentMediaImageFragment } from "@/lib/gql/graphql";
+import type { FragmentMediaImageFragment } from "@/lib/gql/graphql";
 
 type MediaImageProps = {
   media: FragmentMediaImageFragment;
