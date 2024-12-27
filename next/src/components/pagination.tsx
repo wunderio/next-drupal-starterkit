@@ -74,7 +74,7 @@ export function Pagination({
   }, [currentPage, restoreScroll]);
 
   const handlePrevClick = (e) => {
-    setPrevPage && setPrevPage();
+    setPrevPage?.();
     if (prevPageHref && focusRestoreRef) {
       e.preventDefault();
       setIsLoading("back");
@@ -85,7 +85,7 @@ export function Pagination({
   };
 
   const handleNextClick = (e) => {
-    setNextPage && setNextPage();
+    setNextPage?.();
     if (nextPageHref && focusRestoreRef) {
       e.preventDefault();
       setIsLoading("forward");
