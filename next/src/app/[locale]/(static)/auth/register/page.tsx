@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import RegisterForm from "@/components/forms/register-form";
 
@@ -15,7 +15,7 @@ export default function RegisterPage({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   return <RegisterForm />;
 }

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { ArticleTeasers } from "@/components/article/article-teasers";
 import { ContactList } from "@/components/contact-list";
@@ -31,7 +31,7 @@ export const revalidate = REVALIDATE_LONG;
 export default async function FrontPage({
   params: { locale },
 }: FrontpageParams) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations();
 
   // This works because it matches the pathauto pattern for the Frontpage content type defined in Drupal

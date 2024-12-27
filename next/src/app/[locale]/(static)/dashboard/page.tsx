@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { HeadingPage } from "@/components/heading--page";
 import {
@@ -39,7 +39,7 @@ export default async function DashboardPage({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations();
 
   const session = await getAuth();

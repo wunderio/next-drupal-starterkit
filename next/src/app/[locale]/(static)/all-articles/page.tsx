@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { REVALIDATE_LONG } from "@/lib/constants";
 import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
@@ -48,7 +48,7 @@ export default async function AllArticlesPage({
   params: { locale },
   searchParams,
 }: ArticlesListingPageParams) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   // Get the query and current page from the search params
   const currentPage = Number(searchParams?.page) || 1;
