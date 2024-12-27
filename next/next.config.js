@@ -25,6 +25,7 @@ const nextConfig = {
   experimental: {
     // This is required for the experimental feature of pre-populating the cache with the initial data
     instrumentationHook: true,
+    swrDelta: 31536000, // 1 year
   },
   poweredByHeader: false,
   images: {
@@ -56,9 +57,6 @@ const nextConfig = {
     fileLoaderRule.exclude = /\.svg$/i;
 
     return config;
-  },
-  experimental: {
-    swrDelta: 31536000, // 1 year
   },
 };
 
