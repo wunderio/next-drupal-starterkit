@@ -1,6 +1,8 @@
-const { randomUUID } = require("node:crypto");
+// @ts-check
 
-const createNextIntlPlugin = require("next-intl/plugin");
+import { randomUUID } from "node:crypto";
+import createNextIntlPlugin from "next-intl/plugin";
+
 const withNextIntl = createNextIntlPlugin();
 
 const imageHostname = String(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL).split(
@@ -16,7 +18,7 @@ const nextConfig = {
   cacheHandler:
     // Only use the cache handler in production
     process.env.NODE_ENV === "production"
-      ? require.resolve("./cache-handler.mjs")
+      ? new URL("./cache-handler.mjs", import.meta.url).pathname
       : undefined,
   cacheMaxMemorySize: 0, // Disable in-memory cache
 
@@ -37,7 +39,7 @@ const nextConfig = {
 
   async generateBuildId() {
     return process.env.CIRCLECI
-      ? process.env.CIRCLE_BUILD_NUM
+      ? String(process.env.CIRCLE_BUILD_NUM)
       : randomUUID().split("-")[0];
   },
 
@@ -81,4 +83,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withNextIntl(nextConfig);
+export default withNextIntl(nextConfig);
