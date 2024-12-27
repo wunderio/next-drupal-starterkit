@@ -61,7 +61,6 @@ module.exports = {
         "@typescript-eslint/no-empty-object-type": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-unused-expressions": "off",
-        "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-misused-promises": [
           "error",
           {
@@ -73,6 +72,18 @@ module.exports = {
 
         // Instead, `import { env } from "@/env"` to access environment variables.
         "n/no-process-env": ["error"],
+
+        // Allow unused variables only if they start with `_` or `err`.
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            vars: "all",
+            varsIgnorePattern: "^_",
+            args: "after-used",
+            argsIgnorePattern: "^_|^err",
+          },
+        ],
 
         // Sort imports.
         "simple-import-sort/imports": [
