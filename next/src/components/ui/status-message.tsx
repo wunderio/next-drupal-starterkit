@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import React from "react";
-import { cva } from "cva";
+import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import Success from "@/styles/icons/checkmark.svg";
