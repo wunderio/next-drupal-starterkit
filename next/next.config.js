@@ -72,6 +72,13 @@ const nextConfig = {
 
     return config;
   },
+
+  eslint: {
+    ignoreDuringBuilds: Boolean(process.env.NEXT_BUILD_SKIP_CHECKS),
+  },
+  typescript: {
+    ignoreBuildErrors: Boolean(process.env.NEXT_BUILD_SKIP_CHECKS),
+  },
 };
 
 module.exports = withNextIntl(nextConfig);
