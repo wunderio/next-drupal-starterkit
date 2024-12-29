@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { HeadingPage } from "@/components/heading--page";
 import {
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function DashboardPage({
   params: { locale, webformName, webformSubmissionUuid },
 }: DashboardPageParams) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations();
 
   const session = await getAuth();
@@ -67,10 +67,10 @@ export default async function DashboardPage({
   return (
     <>
       <HeadingPage>{t("form-submission-details")}</HeadingPage>
-      <LinkWithLocale href="/dashboard" className="block mt-4 hyperlink">
+      <LinkWithLocale href="/dashboard" className="hyperlink mt-4 block">
         {t("back-to-dashboard")}
       </LinkWithLocale>
-      <p className="my-6 text-justify text-md/xl text-scapaflow sm:text-lg">
+      <p className="text-md/xl text-scapaflow my-6 text-justify sm:text-lg">
         {t("form-submission-intro-text", { form: submission.formTitle })}
       </p>
       <Table>

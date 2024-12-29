@@ -1,11 +1,9 @@
 import { useTranslations } from "next-intl";
 
+import { ArticleTeaser } from "@/components/article/article-teaser";
+import { HeadingParagraph } from "@/components/heading--paragraph";
+import { ArrowLinkButton } from "@/components/ui/arrow-link-button";
 import type { FragmentArticleTeaserFragment } from "@/lib/gql/graphql";
-
-import { HeadingParagraph } from "../heading--paragraph";
-import { ArrowLinkButton } from "../ui/arrow-link-button";
-
-import { ArticleTeaser } from "./article-teaser";
 
 interface LatestArticlesProps {
   articles?: FragmentArticleTeaserFragment[];
@@ -18,7 +16,7 @@ export function ArticleTeasers({ articles, heading }: LatestArticlesProps) {
   return (
     <>
       <HeadingParagraph>{heading}</HeadingParagraph>
-      <ul className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 md:grid-cols-3">
+      <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {articles?.map((article) => (
           <li key={article.id}>
             <ArticleTeaser article={article} />

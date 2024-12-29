@@ -1,4 +1,4 @@
-import { FragmentNodeTranslationFragment } from "@/lib/gql/graphql";
+import type { FragmentNodeTranslationFragment } from "@/lib/gql/graphql";
 
 import { routing } from "@/i18n/routing";
 

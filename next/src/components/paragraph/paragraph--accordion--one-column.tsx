@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { FormattedText } from "@/components/formatted-text";
 import { HeadingParagraph } from "@/components/heading--paragraph";
 import { Paragraph } from "@/components/paragraph";
@@ -9,16 +7,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { buttonVariants } from "@/components/ui/button";
+import { ArrowLinkButton } from "@/components/ui/arrow-link-button";
 import {
   FragmentParagraphAccordionFragment,
   FragmentParagraphAccordionItemFragment,
   FragmentParagraphUnionFragment,
 } from "@/lib/gql/graphql";
 import { cn } from "@/lib/utils";
-import ArrowIcon from "@/styles/icons/arrow-down.svg";
-
-import { ArrowLinkButton } from "../ui/arrow-link-button";
 
 export function ParagraphAccordionOneColumn({
   paragraph,
@@ -43,7 +38,7 @@ export function ParagraphAccordionOneColumn({
       {paragraph.primaryLink && (
         <ArrowLinkButton
           href={paragraph.primaryLink.url}
-          className="max-w-sm px-10 py-3 mt-4"
+          className="mt-4 max-w-sm px-10 py-3"
         >
           {paragraph.primaryLink.title}
         </ArrowLinkButton>

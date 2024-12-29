@@ -49,7 +49,7 @@ export const MenuRoot = forwardRef<
       {...props}
       className={cn(
         "absolute inset-0 z-40 overflow-y-auto overflow-x-hidden border-border lg:bottom-auto lg:min-h-[75vh]",
-        isOpen && "border-t lg:border bg-background",
+        isOpen && "border-t bg-background lg:border",
         isOpen &&
           "after:absolute after:left-[calc(66.67%+1px)] after:h-full after:border-r after:border-border",
       )}
@@ -74,7 +74,7 @@ export function MenuToggle({
       aria-label={t("toggle-menu")}
       aria-expanded={isOpen ? "true" : "false"}
     >
-      <ToggleIcon className="inline w-6 h-6" aria-hidden="true" />
+      <ToggleIcon className="inline h-6 w-6" aria-hidden="true" />
     </button>
   );
 }
@@ -83,9 +83,9 @@ export function MenuList({ children, level }) {
   return (
     <NavigationMenu.List
       className={cn(
-        "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r bg-background border-border lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
+        "fixed inset-0 top-[72px] overflow-scroll border-b border-l border-r border-border bg-background lg:absolute lg:top-0 lg:w-[min(33.334vw,384px)] lg:overflow-visible",
         level === 0 &&
-          "z-10 h-full lg:left-0 lg:z-auto lg:border-border bg-background lg:bg-primary",
+          "z-10 h-full bg-background lg:left-0 lg:z-auto lg:border-border lg:bg-primary",
         level === 1 && "z-20 lg:left-[min(33.334vw,383px)] lg:z-auto",
         level === 2 && "z-30 lg:left-[min(33.334vw,383px)] lg:z-auto",
       )}
@@ -103,7 +103,7 @@ export function MenuListTitle({
   children: ReactNode;
 }) {
   return (
-    <h2 className="p-6 pt-0 font-bold border-b text-md border-border text-muted-foreground hover:underline lg:hidden">
+    <h2 className="text-md border-b border-border p-6 pt-0 font-bold text-muted-foreground hover:underline lg:hidden">
       <MenuLink href={href} isTitle={true}>
         {children}
       </MenuLink>
@@ -115,10 +115,10 @@ export function MenuBack({ onClick }: { onClick: () => void }) {
   const t = useTranslations();
   return (
     <button
-      className="inline-flex items-center justify-center pr-2 m-6 hover:underline lg:hidden"
+      className="m-6 inline-flex items-center justify-center pr-2 hover:underline lg:hidden"
       onClick={onClick}
     >
-      <Chevron className="w-6 h-6 rotate-90" aria-hidden="true" />
+      <Chevron className="h-6 w-6 rotate-90" aria-hidden="true" />
       <span className="pl-4">{t("menu-back")}</span>
     </button>
   );
@@ -136,7 +136,7 @@ export function MenuItem({
   return (
     <NavigationMenu.Item
       className={cn(
-        "flex items-stretch border-b border-border font-bold bg-background text-primary tracking-widest underline-offset-4 lg:border-b-0",
+        "flex items-stretch border-b border-border bg-background font-bold tracking-widest text-primary underline-offset-4 lg:border-b-0",
         isTopLevel && "lg:bg-primary lg:text-primary-foreground",
       )}
       value={value}
@@ -196,7 +196,7 @@ export function MenuTrigger({
       )}
       aria-label={`${t("show-submenu", { parent })}`}
     >
-      <Chevron className="-rotate-90 h-9 w-9" />
+      <Chevron className="h-9 w-9 -rotate-90" />
     </NavigationMenu.Trigger>
   );
 }

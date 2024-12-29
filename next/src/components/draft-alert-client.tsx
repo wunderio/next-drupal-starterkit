@@ -25,7 +25,7 @@ export function DraftAlertClient({
   }
 
   return (
-    <div className="sticky top-0 left-0 z-50 w-full px-2 py-2 text-center">
+    <div className="sticky left-0 top-0 z-50 w-full px-2 py-2 text-center">
       <p className="mb-0">
         This page is a draft.{" "}
         <button className="underline" onClick={buttonHandler}>

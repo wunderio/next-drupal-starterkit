@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { getDraftData } from "next-drupal/draft";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
@@ -43,7 +43,7 @@ export const revalidate = REVALIDATE_LONG;
 export default async function NodePage({
   params: { locale, slug },
 }: NodePageParams) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   // Construct the path from the slug array.
   const path = "/" + slug.join("/");

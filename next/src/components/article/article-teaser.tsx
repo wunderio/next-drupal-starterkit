@@ -23,7 +23,7 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
 
   return (
     <Link href={article.path}>
-      <Card className="flex flex-col justify-between h-full hover:shadow-md">
+      <Card className="flex h-full flex-col justify-between hover:shadow-md">
         <CardHeader>
           <CardTitle>{article.title}</CardTitle>
           <CardDescription>
@@ -38,7 +38,7 @@ export function ArticleTeaser({ article }: ArticleTeaserProps) {
               width={384}
               height={240}
               alt={article.image.alt}
-              className="object-cover w-full h-auto aspect-video"
+              className="aspect-video h-auto w-full object-cover"
               priority
             />
           )}

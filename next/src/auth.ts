@@ -137,7 +137,7 @@ async function refreshAccessToken(token) {
       accessTokenExpires: Date.now() + data.expires_in * 1000,
       refreshToken: data.refresh_token ?? token.refreshToken,
     };
-  } catch (error) {
+  } catch {
     return {
       ...token,
       error: "RefreshAccessTokenError",

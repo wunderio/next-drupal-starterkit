@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 
 import LoginForm from "@/components/forms/login-form";
@@ -16,7 +16,7 @@ export default function LoginPage({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   return (
     <Suspense fallback={null}>

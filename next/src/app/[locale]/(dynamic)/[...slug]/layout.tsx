@@ -1,4 +1,4 @@
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 import PageLayout from "@/components/page-layout";
 import {
@@ -15,7 +15,7 @@ export default async function DynamicLayout({
   children: React.ReactNode;
   params: { locale: string; slug: string[] };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const path = "/" + slug.join("/");
 
   const nodeByPathResult = await getNodeByPathQuery(path, locale);

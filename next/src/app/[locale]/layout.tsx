@@ -7,7 +7,7 @@ import { NextIntlClientProvider } from "next-intl";
 import {
   getMessages,
   getTranslations,
-  unstable_setRequestLocale,
+  setRequestLocale,
 } from "next-intl/server";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -55,7 +55,7 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   // We preload the menus here to avoid unnecessary delays in rendering
   preloadMenus(locale);
@@ -76,7 +76,7 @@ export default async function RootLayout({
               <ReactQueryClientProvider>
                 <Fonts>
                   <DraftAlert />
-                  <div className="flex flex-col min-h-screen">
+                  <div className="flex min-h-screen flex-col">
                     {children}
                     <Footer />
                   </div>

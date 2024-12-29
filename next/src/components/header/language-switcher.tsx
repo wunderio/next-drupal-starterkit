@@ -28,11 +28,11 @@ export function LanguageSwitcher() {
         asChild
         data-language-name={languageLinks[activeLocale].name}
       >
-        <div className="capitalize cursor-pointer hover:underline">
+        <div className="cursor-pointer capitalize hover:underline">
           <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
             {languageLinks[activeLocale].name}
           </span>
-          <LanguageIcon className="inline-block w-6 h-6" aria-hidden="true" />
+          <LanguageIcon className="inline-block h-6 w-6" aria-hidden="true" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="z-50">

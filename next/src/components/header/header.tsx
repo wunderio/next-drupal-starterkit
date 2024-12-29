@@ -22,8 +22,8 @@ export function Header({ menu }: HeaderProps) {
   const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
 
   return (
-    <header className="z-50 flex-shrink-0 border-b border-border md:sticky md:top-0 bg-background text-primary">
-      <nav className="flex flex-row items-center justify-between max-w-6xl px-6 py-4 mx-auto">
+    <header className="z-50 flex-shrink-0 border-b border-border bg-background text-primary md:sticky md:top-0">
+      <nav className="mx-auto flex max-w-6xl flex-row items-center justify-between px-6 py-4">
         <HomeLink />
         <div className="flex flex-row items-center justify-end gap-4 sm:gap-6">
           <SearchLink />
@@ -63,7 +63,7 @@ function SearchLink() {
       <span className="sr-only sm:not-sr-only sm:mr-2 sm:inline">
         {t("search")}
       </span>
-      <SearchIcon className="inline-block w-6 h-6" aria-hidden="true" />
+      <SearchIcon className="inline-block h-6 w-6" aria-hidden="true" />
     </LinkWithLocale>
   );
 }

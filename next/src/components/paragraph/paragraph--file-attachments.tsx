@@ -12,7 +12,7 @@ export function ParagraphFileAttachments({
 }) {
   return (
     <section
-      className="relative h-full p-4 transition-all border rounded bg-background border-border hover:shadow-md"
+      className="relative h-full rounded border border-border bg-background p-4 transition-all hover:shadow-md"
       data-paragraph={paragraph.__typename}
     >
       {paragraph.fileAttachmentsParagraphHeading && (
@@ -24,17 +24,17 @@ export function ParagraphFileAttachments({
         <FormattedText
           html={paragraph.fileAttachmentsParagraphFormattedText.processed}
           className={cn(
-            "text-left text-md sm:text-lg",
+            "text-md text-left sm:text-lg",
             paragraph.fileAttachmentsParagraphHeading && "mt-4",
           )}
         />
       )}
 
-      <ul className="space-y-2 list-inside" aria-label={"downloadable-files"}>
+      <ul className="list-inside space-y-2" aria-label={"downloadable-files"}>
         {paragraph.fileAttachments.map((attachment) => (
           <li
             key={attachment.id}
-            className="w-full gap-1 hover:text-primary-600"
+            className="hover:text-primary-600 w-full gap-1"
           >
             <Media media={attachment} />
           </li>

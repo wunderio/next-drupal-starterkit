@@ -35,9 +35,10 @@ module.exports = {
         browser: true,
         node: true,
       },
-      plugins: ["n", "simple-import-sort"],
+      plugins: ["n", "simple-import-sort", "react", "@typescript-eslint"],
       extends: [
         "eslint:recommended",
+        "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "next",
@@ -50,39 +51,25 @@ module.exports = {
         // Remove these if you want to enforce stricter rules.
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
-        "@typescript-eslint/no-empty-object-type": "off",
-        "@typescript-eslint/no-require-imports": "off",
-        "@typescript-eslint/no-unused-expressions": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-        "@typescript-eslint/no-misused-promises": [
-          "error",
-          {
-            checksVoidReturn: {
-              attributes: false,
-            },
-          },
-        ],
 
         // Instead, `import { env } from "@/env"` to access environment variables.
         "n/no-process-env": ["error"],
 
-        "no-restricted-imports": [
+        // Allow unused variables only if they start with `_` or `err`.
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
           "error",
           {
-            paths: [
-              // Restrict i18n imports to ensure SSR compatibility.
-              {
-                name: "react-i18next",
-                message: 'Import from "next-i18next" instead.',
-              },
-            ],
+            vars: "all",
+            varsIgnorePattern: "^_",
+            args: "after-used",
+            argsIgnorePattern: "^_|^err",
           },
         ],
 
@@ -96,9 +83,7 @@ module.exports = {
               // Packages. Put `next`/`react`-related packages first.
               ["^next", "^@next", "^react", "^@?\\w"],
               // Internal paths - change these to match your project structure defined in tsconfig.json.
-              ["^@/(components|lib|pages|styles|types)(/.*|$)"],
-              // UI library imports.
-              ["^@ui(/.*|$)"],
+              ["^@/(app|components|lib|pages|styles|types)(/.*|$)"],
               // Parent imports. Put `..` last.
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
               // Other relative imports. Put same-folder imports and `.` last.

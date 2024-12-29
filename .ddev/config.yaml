@@ -33,7 +33,6 @@ web_environment:
   - ENVIRONMENT_NAME=ddev
   - HASH_SALT=notsosecurehashnotsosecurehashnotsosecurehash
   - NEXT_PUBLIC_DRUPAL_BASE_URL=https://next-drupal-starterkit.ddev.site
-  - NEXT_IMAGE_DOMAIN=next-drupal-starterkit.ddev.site
   - NEXT_PUBLIC_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3000
     # Environment variables for next_auth:
   - AUTH_SECRET=nextauth_secret_not_secure_used_only_locally

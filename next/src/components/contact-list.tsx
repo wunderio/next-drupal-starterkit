@@ -14,26 +14,26 @@ interface Contact {
 
 const contacts: Contact[] = [
   {
-    image: "/john_dean.jpg",
+    image: "/profile.png",
     name: "John Dean",
     title: "CFO",
-    phoneNumber: "+358445123456",
+    phoneNumber: "+358123456789",
     email: "john.dean@example.com",
     id: 1,
   },
   {
-    image: "/charlie_dean.jpg",
+    image: "/profile.png",
     name: "Charlie Dean",
     title: "CTO",
-    phoneNumber: "+358445123458",
+    phoneNumber: "+358123456789",
     email: "charlie.dean@example.com",
     id: 3,
   },
   {
-    image: "/jane_dean.jpg",
+    image: "/profile.png",
     name: "Jane Dean",
     title: "CEO",
-    phoneNumber: "+358445123457",
+    phoneNumber: "+358123456789",
     email: "jane.dean@example.com",
     id: 2,
   },
@@ -44,9 +44,9 @@ export async function ContactList() {
   return (
     <section className="py-8">
       <HeadingParagraph>{t("contact")}</HeadingParagraph>
-      <ul className="grid grid-cols-1 gap-4 py-4 auto-rows-max justify-items-center sm:grid-cols-2 md:grid-cols-3">
+      <ul className="grid auto-rows-max grid-cols-1 justify-items-center gap-4 py-4 sm:grid-cols-2 md:grid-cols-3">
         {contacts?.map(({ id, image, name, title, phoneNumber, email }) => (
-          <li key={id} className="grid p-4 justify-items-center">
+          <li key={id} className="grid justify-items-center p-4">
             <div className="mb-6 flex h-[100px] w-[100px] items-center justify-center overflow-hidden rounded-full">
               <Image
                 src={image}
@@ -62,7 +62,7 @@ export async function ContactList() {
               href={`tel:${phoneNumber}`}
               target="_blank"
               rel="noreferrer"
-              className="no-underline hyperlink hover:underline"
+              className="hyperlink no-underline hover:underline"
             >
               {phoneNumber}
             </a>
@@ -70,7 +70,7 @@ export async function ContactList() {
               href={`mailto:${email}`}
               target="_blank"
               rel="noreferrer"
-              className="no-underline hyperlink hover:underline"
+              className="hyperlink no-underline hover:underline"
             >
               {email}
             </a>

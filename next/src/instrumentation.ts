@@ -1,5 +1,6 @@
+/* eslint-disable n/no-process-env */
+
 export async function register() {
-  // eslint-disable-next-line
   if (process.env.NEXT_RUNTIME === "nodejs") {
     const { registerInitialCache } = await import(
       "@neshca/cache-handler/instrumentation"

@@ -1,24 +1,23 @@
+/* eslint-disable n/no-process-env */
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 /**
  * Gets an access token from Drupal and saves it the temporary directory,
  * so it can be used by graphql-codegen to authenticate to the Drupal GraphQL API.
  */
 void (async function getAndSaveAccessToken() {
   try {
-    /* eslint-disable @typescript-eslint/no-var-requires */
     const { loadEnvConfig } = require("@next/env");
     const fs = require("fs");
     const path = require("path");
     const os = require("os");
-    /* eslint-enable @typescript-eslint/no-var-requires */
 
     loadEnvConfig(process.cwd());
 
-    /* eslint-disable n/no-process-env */
     const oauthUrl = `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`;
     const credentials = Buffer.from(
       `${process.env.DRUPAL_CLIENT_ID}:${process.env.DRUPAL_CLIENT_SECRET}`,
     ).toString("base64");
-    /* eslint-enable n/no-process-env */
 
     const response = await fetch(oauthUrl, {
       method: "POST",

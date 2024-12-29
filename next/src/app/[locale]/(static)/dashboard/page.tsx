@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { HeadingPage } from "@/components/heading--page";
 import {
@@ -39,7 +39,7 @@ export default async function DashboardPage({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations();
 
   const session = await getAuth();
@@ -68,7 +68,7 @@ export default async function DashboardPage({
   return (
     <>
       <HeadingPage>{t("user-dashboard")}</HeadingPage>
-      <p className="my-6 text-justify text-md/xl text-scapaflow sm:text-lg">
+      <p className="text-md/xl text-scapaflow my-6 text-justify sm:text-lg">
         {t("user-dashboard-intro-greeting", { username: session.user.name })}
       </p>
       <Table>

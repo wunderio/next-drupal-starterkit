@@ -145,7 +145,6 @@ commands:
             fi
 
             echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=https://$drupal_domain" >> "$BASH_ENV"
-            echo "export NEXT_IMAGE_DOMAIN=$drupal_domain" >> "$BASH_ENV"
             echo "export NEXT_PUBLIC_FRONTEND_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export AUTH_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export DRUPAL_CLIENT_ID=$drupal_client_id" >> "$BASH_ENV"
@@ -160,7 +159,7 @@ commands:
 
             echo "Expanding special variable DRUPAL_CLIENT_ID = $drupal_client_id ..."
             sed -i -e "s/<|DRUPAL_CLIENT_ID|>/$drupal_client_id/g" $envvars_file
-            
+
             echo "Expanding special variable ES_HOST = $elasticsearch_host ..."
             sed -i -e "s/<|ES_HOST|>/$elasticsearch_host/g" $envvars_file
 

@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
+import { createContactSubmissionAction } from "@/app/_actions/contact";
+import { AuthGateClient } from "@/components/auth-gate-client";
+import { HeadingParagraph } from "@/components/heading--paragraph";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,13 +19,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { StatusMessage } from "@/components/ui/status-message";
+import { Textarea } from "@/components/ui/textarea";
 import { ContactFormInputs, contactFormSchema } from "@/lib/zod/contact-form";
-
-import { AuthGateClient } from "../auth-gate-client";
-import { HeadingParagraph } from "../heading--paragraph";
-import { Textarea } from "../ui/textarea";
-
-import { createContactSubmissionAction } from "@/app/_actions/contact";
 
 export function ContactForm() {
   const t = useTranslations();
@@ -46,7 +44,7 @@ export function ContactForm() {
 
   if (form.formState.isSubmitSuccessful) {
     return (
-      <StatusMessage level="success" className="w-full max-w-3xl mx-auto">
+      <StatusMessage level="success" className="mx-auto w-full max-w-3xl">
         <p className="mb-4">{t("form-thank-you-message")}</p>
         <Button type="button" onClick={() => form.reset()}>
           {t("form-send-another-message")}
@@ -56,12 +54,15 @@ export function ContactForm() {
   }
 
   return (
-    <div className="flex flex-col max-w-xl gap-5 p-4 mx-auto mb-4 transition-all border rounded shadow-md border-border">
+    <div className="mx-auto mb-4 flex max-w-xl flex-col gap-5 rounded border border-border p-4 shadow-md transition-all">
       <HeadingParagraph>{t("form-title")}</HeadingParagraph>
       <AuthGateClient text={t("login-to-fill-form")}>
         <p className="text-muted-foreground">{t("form-description")}</p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
+            className="space-y-8"
+          >
             <FormField
               control={form.control}
               name="name"

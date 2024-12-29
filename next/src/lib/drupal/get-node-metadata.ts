@@ -1,10 +1,9 @@
 import { Metadata } from "next";
 
-import { FragmentMetaTagFragment } from "../gql/graphql";
-import { extractEntityFromRouteQueryResult } from "../graphql/utils";
-
-import { generateNodeMetadata } from "./generate-node-metadata";
-import { getNodeByPathQuery } from "./get-node";
+import { generateNodeMetadata } from "@/lib/drupal/generate-node-metadata";
+import { getNodeByPathQuery } from "@/lib/drupal/get-node";
+import type { FragmentMetaTagFragment } from "@/lib/gql/graphql";
+import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
 export async function getNodeMetadata(
   path: string,

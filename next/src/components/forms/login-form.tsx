@@ -57,7 +57,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="max-w-md pt-8 pb-16 font-work">
+      <div className="font-work max-w-md pb-16 pt-8">
         {passwordJustUpdated && (
           <StatusMessage level="success" className="mb-8">
             {t("password-updated-login-below")}
@@ -79,7 +79,10 @@ export default function LoginForm() {
           </StatusMessage>
         )}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
+            className="space-y-8"
+          >
             <FormField
               control={form.control}
               name="username"
@@ -115,7 +118,7 @@ export default function LoginForm() {
             </Button>
           </form>
         </Form>
-        <Link className="inline-block mt-2" href={resetPasswordBackendUrl}>
+        <Link className="mt-2 inline-block" href={resetPasswordBackendUrl}>
           {t("reset-your-password")}
         </Link>
       </div>

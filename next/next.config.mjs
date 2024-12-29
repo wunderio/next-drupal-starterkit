@@ -1,41 +1,58 @@
-const crypto = require("crypto");
+// @ts-check
 
-const createNextIntlPlugin = require("next-intl/plugin");
+import { randomUUID } from "node:crypto";
+import createNextIntlPlugin from "next-intl/plugin";
+
 const withNextIntl = createNextIntlPlugin();
+
+const imageHostname = String(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL).split(
+  "://",
+)[1];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Only generate standalone output in circle ci:
+  poweredByHeader: false,
   output: process.env.CIRCLECI ? "standalone" : undefined,
-  generateBuildId: async () => {
-    // This environment variable is set by CircleCI.
-    // adjust this to your needs if you use another CI/CD tool.
-    return process.env.CIRCLE_BUILD_NUM
-      ? `build-id-${process.env.CIRCLE_BUILD_NUM}`
-      : // If no build number is available, we generate a random build ID.
-        crypto.randomBytes(20).toString("hex");
-  },
+
   cacheHandler:
     // Only use the cache handler in production
     process.env.NODE_ENV === "production"
-      ? require.resolve("./cache-handler.mjs")
+      ? new URL("./cache-handler.mjs", import.meta.url).pathname
       : undefined,
   cacheMaxMemorySize: 0, // Disable in-memory cache
-  experimental: {
-    // This is required for the experimental feature of pre-populating the cache with the initial data
-    instrumentationHook: true,
-  },
-  poweredByHeader: false,
+
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: process.env.NEXT_IMAGE_DOMAIN,
+        hostname: imageHostname,
         pathname: "**",
       },
     ],
   },
+
+  experimental: {
+    instrumentationHook: true,
+    swrDelta: 31536000, // 1 year
+  },
+
+  async generateBuildId() {
+    return process.env.CIRCLECI
+      ? String(process.env.CIRCLE_BUILD_NUM)
+      : randomUUID().split("-")[0];
+  },
+
+  async rewrites() {
+    return [
+      // Expose health check endpoint at /_ping:
+      {
+        source: "/_ping",
+        destination: "/api/health",
+      },
+    ];
+  },
+
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
@@ -57,9 +74,13 @@ const nextConfig = {
 
     return config;
   },
-  experimental: {
-    swrDelta: 31536000, // 1 year
+
+  eslint: {
+    ignoreDuringBuilds: Boolean(process.env.NEXT_BUILD_SKIP_CHECKS),
+  },
+  typescript: {
+    ignoreBuildErrors: Boolean(process.env.NEXT_BUILD_SKIP_CHECKS),
   },
 };
 
-module.exports = withNextIntl(nextConfig);
+export default withNextIntl(nextConfig);

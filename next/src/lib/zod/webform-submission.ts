@@ -6,6 +6,7 @@ const WebformSubmissionRawSchema = z.object({
   // processed_submission: z.record(z.record(z.unknown())),
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const WebformSubmissionSchema = z.object({
   formTitle: z.string(),
   formData: z.array(z.tuple([z.string(), z.any()])),

@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import React from "react";
-import { cva } from "cva";
+import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import Success from "@/styles/icons/checkmark.svg";
@@ -53,7 +53,7 @@ export const StatusMessage = React.forwardRef<
       {...props}
     >
       <Icon className={cn("absolute left-6 top-6 h-6 w-6", color)} />
-      <h3 className="mb-2 font-bold text-md">
+      <h3 className="text-md mb-2 font-bold">
         {title ?? t(`statusmessage-${level}`)}
       </h3>
       {children}
