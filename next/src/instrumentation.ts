@@ -4,6 +4,11 @@ import { registerOTel } from "@vercel/otel";
 
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
+    // Register the OpenTelemetry instrumentation for the Node.js runtime.
+    registerOTel({
+      serviceName: "next-drupal-starterkit", // Change to the name of the service
+    });
+
     const { registerInitialCache } = await import(
       "@neshca/cache-handler/instrumentation"
     );
@@ -20,8 +25,5 @@ export async function register() {
       // fetch: false,
       // routes: false,
     });
-
-    // Register OpenTelemetry
-    registerOTel({ serviceName: "next-drupal-starterkit" });
   }
 }

@@ -9,6 +9,7 @@
     "dev:nocodegen": "next dev",
     "build": "npm run graphql-codegen && next build",
     "start": "next start",
+    "start:otel-verbose": "NEXT_OTEL_VERBOSE=1 next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "storybook": "STORYBOOK=true storybook dev -p 6006",
