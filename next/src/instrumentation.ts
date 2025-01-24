@@ -1,5 +1,7 @@
 /* eslint-disable n/no-process-env */
 
+import { registerOTel } from "@vercel/otel";
+
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     const { registerInitialCache } = await import(
@@ -18,5 +20,8 @@ export async function register() {
       // fetch: false,
       // routes: false,
     });
+
+    // Register OpenTelemetry
+    registerOTel({ serviceName: "next-drupal-starterkit" });
   }
 }
