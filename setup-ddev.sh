@@ -7,7 +7,7 @@ commands=(
   "ddev composer install"
   "ddev generate-oauth-keys"
   "ddev drush si minimal -y"
-  "ddev install-recipe wunder_next_setup"
+  "ddev drush recipe ../recipes/wunder_next_setup -y"
   "ddev drush wunder_next:setup-users-and-consumers"
   "ddev drush eshd -y"
   "ddev drush eshs"

@@ -44,7 +44,7 @@
         "drupal/token": "^1.15",
         "drupal/webform": "^6.2",
         "drupal/webform_rest": "^4.0",
-        "drush/drush": "^12",
+        "drush/drush": "^13",
         "elasticsearch/elasticsearch": "^8.9",
         "vlucas/phpdotenv": "^5.4",
         "webflo/drupal-finder": "^1.2",
