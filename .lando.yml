@@ -60,16 +60,6 @@ tooling:
       - appserver: /app/.lando/xdebug.sh
     user: root
 
-  # This custom message allows you to install a drupal recipe from the
-  # /drupal/recipes folder. Drupal recipes are a new feature that is bein
-  # added to Drupal10 as a core initiative.
-  install-recipe:
-    description: "Installs the specified recipe. Accepts the recipe folder name. Recipes should be stored in /recipes"
-    cmd:
-      - appserver: /app/.lando/install_recipe.sh
-    dir: /app/drupal/web
-    user: www-data
-
   # This custom command can be used to automatically generate keys for the simple_oauth module.
   generate-oauth-keys:
     description: "Generates a pair of public and private keys into the oauth directory"
