@@ -13,5 +13,5 @@ type: frontpage
 description: 'Represents the frontpage of the site. Only one content of this type can be created.'
 help: null
 new_revision: true
-preview_mode: 0
+preview_mode: 1
 display_submitted: false

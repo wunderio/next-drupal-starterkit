@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6bd520075e496264d592ba75643fcbef",
+    "content-hash": "0a99dde3df1cc1250e28623311e195de",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2218,6 +2218,100 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/graphql_compose",
                 "issues": "https://www.drupal.org/project/issues/graphql_compose"
+            }
+        },
+        {
+            "name": "drupal/graphql_compose_preview",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/graphql_compose_preview.git",
+                "reference": "1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/graphql_compose_preview-1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": "efa0b3792f02f0fdcad407ac74cbfbec7c8f6311"
+            },
+            "require": {
+                "drupal/core": "^10.1 || ^11",
+                "drupal/graphql_compose": "^2.1",
+                "drupal/graphql_compose_routes": "*",
+                "drupal/token": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "drupal/token": "^1"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.0",
+                    "datestamp": "1715644169",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "almunnings",
+                    "homepage": "https://www.drupal.org/user/2251362"
+                },
+                {
+                    "name": "cedricl",
+                    "homepage": "https://www.drupal.org/user/3715087"
+                }
+            ],
+            "description": "Extended preview capabilities for GraphQL Compose.",
+            "homepage": "http://drupal.org/project/graphql_compose_preview",
+            "support": {
+                "source": "http://cgit.drupalcode.org/graphql_compose_preview",
+                "issues": "https://www.drupal.org/project/issues/graphql_compose_preview"
+            }
+        },
+        {
+            "name": "drupal/graphql_compose_routes",
+            "version": "2.2.1",
+            "require": {
+                "drupal/core": "^10.1 || ^11",
+                "drupal/graphql_compose": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "2.2.1",
+                    "datestamp": "1726380157",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "almunnings",
+                    "homepage": "https://www.drupal.org/user/2251362"
+                },
+                {
+                    "name": "jmolivas",
+                    "homepage": "https://www.drupal.org/user/678770"
+                }
+            ],
+            "description": "Enable to load content by URL.",
+            "homepage": "https://www.drupal.org/project/graphql_compose",
+            "support": {
+                "source": "https://git.drupalcode.org/project/graphql_compose"
             }
         },
         {

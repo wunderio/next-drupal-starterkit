@@ -8,36 +8,31 @@ dependencies:
     - field.field.node.frontpage.field_image
     - node.type.frontpage
   module:
-    - entity_reference_revisions
+    - graphql_compose_preview
     - user
 _core:
-  default_config_hash: iQiEDwDbiX74dfrydqxMbIhomdQuAEQW2gj7Nr6jzho
+  default_config_hash: 2udaDMvFzgq9bd-BT52TyLrnH7hrlojoMS_ecJZQG2Y
 id: node.frontpage.default
 targetEntityType: node
 bundle: frontpage
 mode: default
 content:
-  field_content_elements:
-    type: entity_reference_revisions_entity_view
-    label: above
+  preview_token:
+    type: preview_token_iframe
+    label: hidden
     settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 1
-    region: content
-  field_excerpt:
-    type: basic_string
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 2
-    region: content
-  links:
-    settings: {  }
+      iframe_url: '[wunder_next:frontend-url]/[language:prefix]/nodepreview?path=[node:preview:url]'
+      class: ''
+      width: 100%
+      height: '900'
+      allow: 'fullscreen autoplay'
+      transparency: '1'
     third_party_settings: {  }
     weight: 0
     region: content
 hidden:
+  field_content_elements: true
+  field_excerpt: true
   field_image: true
   langcode: true
+  links: true

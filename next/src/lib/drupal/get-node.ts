@@ -19,7 +19,7 @@ import { env } from "@/env";
  * @param isDraftMode If true, fetches the draft version of the node.
  * @returns The fetched node data or null if not found.
  */
-async function fetchNodeByPathQuery(
+export async function fetchNodeByPathQuery(
   path: string,
   locale: string,
   isDraftMode: boolean,

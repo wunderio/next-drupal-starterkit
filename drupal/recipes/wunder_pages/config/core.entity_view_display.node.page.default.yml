@@ -8,32 +8,31 @@ dependencies:
     - field.field.node.page.field_image
     - node.type.page
   module:
-    - entity_reference_revisions
+    - graphql_compose_preview4
     - user
 _core:
-  default_config_hash: qxlb1jPfrVIESUefBGl9EDfUz9v5z0lCzQVeLLFlZIc
+  default_config_hash: VKWhaiCsOqXl4HWw1liSZQM7Gx1iaJ3XJcezGR69RzY
 id: node.page.default
 targetEntityType: node
 bundle: page
 mode: default
 content:
-  field_content_elements:
-    type: entity_reference_revisions_entity_view
+  preview_token:
+    type: preview_token_iframe
     label: hidden
     settings:
-      view_mode: default
-      link: ''
+      iframe_url: 'https://frontend.lndo.site/[node:language:langcode]/nodepreview?path=[node:preview:url]'
+      class: ''
+      width: 100%
+      height: '900'
+      allow: 'fullscreen autoplay'
+      transparency: '1'
     third_party_settings: {  }
     weight: 0
     region: content
-  field_excerpt:
-    type: basic_string
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
 hidden:
+  field_content_elements: true
+  field_excerpt: true
   field_image: true
   langcode: true
   links: true
