@@ -7,56 +7,34 @@ dependencies:
     - field.field.node.article.field_excerpt
     - field.field.node.article.field_image
     - field.field.node.article.field_tags
-    - image.style.wide
     - node.type.article
   module:
-    - image
-    - text
+    - graphql_compose_preview
     - user
 _core:
-  default_config_hash: rQu7I7KFg5At6en_IYjDhg6UfCGKEUqZwQBPIK-kjCU
+  default_config_hash: gvTKDHdsYYjgf1AxpW680J5OHy7o8J4eojeYveCltQE
 id: node.article.default
 targetEntityType: node
 bundle: article
 mode: default
 content:
-  body:
-    type: text_default
+  preview_token:
+    type: preview_token_iframe
     label: hidden
-    settings: {  }
+    settings:
+      iframe_url: '[wunder_next:frontend-url]/[language:prefix]/nodepreview?path=[node:preview:url]'
+      class: ''
+      width: 100%
+      height: '900'
+      allow: 'fullscreen autoplay'
+      transparency: '1'
     third_party_settings: {  }
     weight: 0
     region: content
-  field_excerpt:
-    type: basic_string
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 101
-    region: content
-  field_image:
-    type: image
-    label: hidden
-    settings:
-      image_link: ''
-      image_style: wide
-      image_loading:
-        attribute: lazy
-    third_party_settings: {  }
-    weight: -1
-    region: content
-  field_tags:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 10
-    region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 100
-    region: content
 hidden:
+  body: true
+  field_excerpt: true
+  field_image: true
+  field_tags: true
   langcode: true
+  links: true
