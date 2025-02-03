@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 
 import { Node } from "@/components/node";
+import NotFoundPage from "@/components/not-found-page";
 import { fetchNodeByPathQuery } from "@/lib/drupal/get-node";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
@@ -17,14 +18,10 @@ async function DrupalPreviewPage({ searchParams, params: { locale } }) {
   const node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   if (!node) {
-    return <div>Item not found</div>;
+    return <NotFoundPage />;
   }
 
-  return (
-    <div className="container p-10">
-      <Node node={node} />
-    </div>
-  );
+  return <Node node={node} />;
 }
 
 export default DrupalPreviewPage;
