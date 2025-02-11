@@ -8,7 +8,7 @@ dependencies:
     - field.field.node.page.field_image
     - node.type.page
   module:
-    - graphql_compose_preview4
+    - graphql_compose_preview
     - user
 _core:
   default_config_hash: VKWhaiCsOqXl4HWw1liSZQM7Gx1iaJ3XJcezGR69RzY
