@@ -95,12 +95,13 @@ export default async function NodePage({
       typeof draftData.resourceVersion === "string" &&
       draftData.resourceVersion !== "rel:latest-version"
     ) {
-      const revisionId = draftData.resourceVersion.split(":").slice(1);
-      const revisionPath = `/node/${node.id}/revisions/${revisionId}/view`;
+      const [_, revision] = draftData.resourceVersion.split(":");
+      const revisionPath = `/node/${node.id}`;
       const revisionData = await getNodeByPathQuery(
         revisionPath,
         locale,
-        isDraftMode,
+        true,
+        revision,
       );
 
       // Instead of the entity at the current revision, we want now to
