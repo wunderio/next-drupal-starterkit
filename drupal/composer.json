@@ -26,6 +26,7 @@
         "drupal/entity_reference_revisions": "^1.12",
         "drupal/graphql": "^4.9",
         "drupal/graphql_compose": "^2.2",
+        "drupal/graphql_compose_preview": "^1.0",
         "drupal/menu_link_attributes": "^1.5",
         "drupal/metatag": "^2.0",
         "drupal/migrate_plus": "^6.0",
@@ -140,6 +141,9 @@
             },
             "drupal/graphql" : {
                 "drupal-graphql#1323: Add check for translation (from Github)": "https://patch-diff.githubusercontent.com/raw/drupal-graphql/graphql/pull/1388.patch"
+            },
+            "drupal/graphql_compose" : {
+                "entity_url producer in preview returns error #3503977": "patches/graphl_compose_entity_url_in_preview_returns_error.patch"
             },
             "drupal/core": {
                 "Fix error when enabling the language module via recipe": "https://www.drupal.org/files/issues/2019-11-19/drupal.8.8.x-3002532-20.patch"

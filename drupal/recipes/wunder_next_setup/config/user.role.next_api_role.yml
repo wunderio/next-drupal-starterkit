@@ -7,6 +7,8 @@ dependencies:
     - media
     - node
     - subrequests
+    - graphql_compose
+    - graphql_compose_preview
 id: next_api_role
 label: 'API Previewer'
 weight: 4
@@ -19,4 +21,4 @@ permissions:
   - 'issue subrequests'
   - 'view all media revisions'
   - 'view all revisions'
-
+  - 'view graphql_compose_preview entity'

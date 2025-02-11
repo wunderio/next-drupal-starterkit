@@ -20,6 +20,7 @@ install:
   - graphql_compose_routes
   - graphql_compose_users
   - graphql_compose_views
+  - graphql_compose_preview
   - next_graphql
   - typed_data
 config:
