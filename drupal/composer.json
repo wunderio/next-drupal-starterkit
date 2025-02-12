@@ -33,7 +33,7 @@
         "drupal/migrate_source_csv": "^3.5",
         "drupal/migrate_tools": "^6.0",
         "drupal/monolog": "^3.0@beta",
-        "drupal/next": "^2.0@beta",
+        "drupal/next": "^2.0",
         "drupal/paragraphs": "^1.18",
         "drupal/pathauto": "^1.13",
         "drupal/redirect": "^1.10",
