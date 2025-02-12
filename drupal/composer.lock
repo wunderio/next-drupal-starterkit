@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4bd73c95ee8150fcb2cd6758cca1e913",
+    "content-hash": "d9425f1f220f6be29062012dd376b0b8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1873,29 +1873,30 @@
         },
         {
             "name": "drupal/decoupled_router",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/decoupled_router.git",
-                "reference": "2.0.4"
+                "reference": "2.0.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/decoupled_router-2.0.4.zip",
-                "reference": "2.0.4",
-                "shasum": "8dacb4460c93a3fa9b034516a7e1caaf254be76b"
+                "url": "https://ftp.drupal.org/files/projects/decoupled_router-2.0.5.zip",
+                "reference": "2.0.5",
+                "shasum": "0899f6331358aac1476e72fc60a8f03d5654c654"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9 || ^10"
+                "drupal/core": "^9.5 || ^10 || ^11",
+                "php": ">=8.1"
             },
             "require-dev": {
-                "drupal/redirect": "^1.8"
+                "drupal/redirect": "dev-1.x"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.4",
-                    "datestamp": "1669803945",
+                    "version": "2.0.5",
+                    "datestamp": "1720638599",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
