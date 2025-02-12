@@ -37,7 +37,7 @@
         "drupal/next": "^2.0",
         "drupal/paragraphs": "^1.18",
         "drupal/pathauto": "^1.13",
-        "drupal/redirect": "^1.10",
+        "drupal/redirect": "^1.11",
         "drupal/registration_role": "^2.0",
         "drupal/require_login": "^3.0",
         "drupal/restui": "^1.21",
