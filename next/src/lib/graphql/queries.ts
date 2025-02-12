@@ -4,8 +4,8 @@ import { graphql } from "@/lib/gql";
  * Given a path, this query will return the node, or a redirect.
  */
 export const GET_ENTITY_AT_DRUPAL_PATH = graphql(`
-  query GetNodeByPath($path: String!, $langcode: String!) {
-    route(path: $path, langcode: $langcode) {
+  query GetNodeByPath($path: String!, $langcode: String!, $revision: ID) {
+    route(path: $path, langcode: $langcode, revision: $revision) {
       __typename
       ... on RouteInternal {
         __typename

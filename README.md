@@ -111,9 +111,13 @@ ddev describe
 
 We try to add to the template what we think are the most commonly requested features in website projects. Most of these are based on the features provided by [Next.js for Drupal](https://next-drupal.org/), but we have paid special attention to making these work in a multilanguage setup.
 
-### Preview mode
+### Draft mode
 
-The template is set up to allow editors to use [Draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode). Visit the node page on the Drupal side while the frontend is running to see a preview of the page.
+The template is set up to allow editors to use [Draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode). Visit the node page on the Drupal side while the frontend is running to see a preview of the page. This works also for unpublished content, and for draft revisions.
+
+### Drupal preview
+
+You can preview changes to a piece of content, or even a completely new piece of content before saving it the first time. Use the usual preview button in the Drupal backend to see the changes in the frontend.
 
 ### On-demand revalidation
 
