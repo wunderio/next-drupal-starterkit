@@ -8,6 +8,6 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const callbackPath = searchParams.get("callbackPath");
 
-  disableDraftMode();
+  await disableDraftMode();
   redirect(callbackPath ?? "/");
 }

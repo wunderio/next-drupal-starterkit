@@ -86,7 +86,7 @@ export default async function NodePage({
   // In this case, the draftData will contain the resourceVersion property,
   // which we can use to fetch the correct revision:
   if (isDraftMode) {
-    const draftData = getDraftData();
+    const draftData = await getDraftData();
 
     if (
       draftData &&
