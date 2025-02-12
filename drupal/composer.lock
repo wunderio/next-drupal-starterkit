@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "682d574971198a945f7dc3ace53d1cef",
+    "content-hash": "79737bc21da85fa5f06b5cc24e27b985",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3275,20 +3275,20 @@
         },
         {
             "name": "drupal/subrequests",
-            "version": "3.0.11",
+            "version": "3.0.12",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/subrequests.git",
-                "reference": "3.0.11"
+                "reference": "3.0.12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/subrequests-3.0.11.zip",
-                "reference": "3.0.11",
-                "shasum": "9f1e793804620444d880083442669a00fb13a974"
+                "url": "https://ftp.drupal.org/files/projects/subrequests-3.0.12.zip",
+                "reference": "3.0.12",
+                "shasum": "b3081a064a0a2275c400cf871bc56aeeb1fe812c"
             },
             "require": {
-                "drupal/core": "^8 || ^9 || ^10",
+                "drupal/core": "^10 || ^11",
                 "galbar/jsonpath": "^1.0"
             },
             "require-dev": {
@@ -3297,8 +3297,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.11",
-                    "datestamp": "1704970244",
+                    "version": "3.0.12",
+                    "datestamp": "1722952638",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"

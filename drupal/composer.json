@@ -43,6 +43,7 @@
         "drupal/restui": "^1.21",
         "drupal/simple_oauth": "^5.2",
         "drupal/simplei": "^2.0@beta",
+        "drupal/subrequests": "^3.0",
         "drupal/token": "^1.15",
         "drupal/typed_data": "^2.1",
         "drupal/webform": "^6.2",
@@ -133,7 +134,7 @@
         "composer-exit-on-patch-failure": true,
         "patches": {
             "drupal/subrequests": {
-                "#3049395-47 - Page Cache causes different subrequests to return the same responses": "https://www.drupal.org/files/issues/2022-12-06/subrequests-3049395-chnage-request-type-47.patch"
+                "#3049395-58 - Page Cache causes different subrequests to return the same responses": "https://www.drupal.org/files/issues/2024-08-06/subrequests-3049395-change-request-type.patch"
             },
             "drupal/decoupled_router": {
                 "#3111456-78 - Unable to resolve path on node in other language than default": "https://www.drupal.org/files/issues/2024-10-22/decoupled_router-3111456-resolve-langcode-issue-78--external-redirects.patch"
