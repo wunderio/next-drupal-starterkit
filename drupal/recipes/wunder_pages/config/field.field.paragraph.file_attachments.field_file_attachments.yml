@@ -6,8 +6,6 @@ dependencies:
     - field.storage.paragraph.field_file_attachments
     - media.type.document
     - paragraphs.paragraphs_type.file_attachments
-_core:
-  default_config_hash: vOnCmghcuWRg1OgQL99p92UidMUM2yQt93sylXPRXEY
 id: paragraph.file_attachments.field_file_attachments
 field_name: field_file_attachments
 entity_type: paragraph
@@ -15,7 +13,7 @@ bundle: file_attachments
 label: 'File attachments'
 description: ''
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
