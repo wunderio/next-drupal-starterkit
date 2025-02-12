@@ -29,7 +29,7 @@
         "drupal/graphql_compose": "^2.3",
         "drupal/graphql_compose_preview": "^1.0",
         "drupal/menu_link_attributes": "^1.5",
-        "drupal/metatag": "^2.0",
+        "drupal/metatag": "^2.1",
         "drupal/migrate_plus": "^6.0",
         "drupal/migrate_source_csv": "^3.5",
         "drupal/migrate_tools": "^6.0",
