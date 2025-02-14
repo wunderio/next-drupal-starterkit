@@ -88,7 +88,7 @@ function wunder_next_ckeditor5_plugin_info_alter(array &$plugin_definitions): vo
     $image_resize_plugin_definition = $plugin_definitions['ckeditor5_imageResize']->toArray();
     $image_resize_plugin_definition["ckeditor5"]["config"]["image"]["resizeUnit"] = "px";
     $plugin_definitions['ckeditor5_imageResize'] = new CKEditor5PluginDefinition($image_resize_plugin_definition);
-  };
+  }
 }
 
 /**

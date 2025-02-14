@@ -5,8 +5,6 @@ dependencies:
   config:
     - field.storage.paragraph.field_heading
     - paragraphs.paragraphs_type.file_attachments
-_core:
-  default_config_hash: 7KLvwig4dPrDAwcQkjqCUrZgu3jW9GcINDW60cUBEmY
 id: paragraph.file_attachments.field_heading
 field_name: field_heading
 entity_type: paragraph
@@ -14,7 +12,7 @@ bundle: file_attachments
 label: Heading
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }
