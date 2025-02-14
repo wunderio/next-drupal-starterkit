@@ -220,3 +220,22 @@ function wunder_next_page_attachments_alter(array &$attachments) {
     'noindex',
   ];
 }
+
+/**
+ * Implements hook_next_site_preview_alter().
+ */
+function wunder_next_next_site_preview_alter(array &$preview, array &$context) {
+
+  // For our use case, we always want to show the preview in the active
+  // language, if the entity has a translation for it.
+  $active_language = \Drupal::languageManager()->getCurrentLanguage();
+
+  if ($context['entity']->hasTranslation($active_language->getId())) {
+    // If the entity has a translation in the active language, we want to
+    // use the translation for the preview.
+    $context['entity'] = $context['entity']->getTranslation($active_language->getId());
+    // Rebuild the preview with the new entity.
+    $preview = $context['plugin']->render($context['entity'], $context['sites']);
+  }
+
+}
