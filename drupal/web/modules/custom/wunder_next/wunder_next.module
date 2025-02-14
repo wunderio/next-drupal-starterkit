@@ -220,3 +220,17 @@ function wunder_next_page_attachments_alter(array &$attachments) {
     'noindex',
   ];
 }
+
+/**
+ * Implements hook_next_site_preview_alter().
+ */
+function wunder_next_next_site_preview_alter(array &$preview, array &$context) {
+
+  /** @var \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository */
+  $entity_repository = \Drupal::service('entity.repository');
+  // Make sure we use the translated version of the entity, if available:
+  $context['entity'] = $entity_repository->getTranslationFromContext($context['entity']);
+  // Rebuild the preview:
+  $preview = $context['plugin']->render($context['entity'], $context['sites']);
+
+}
