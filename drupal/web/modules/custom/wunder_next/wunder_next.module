@@ -226,16 +226,11 @@ function wunder_next_page_attachments_alter(array &$attachments) {
  */
 function wunder_next_next_site_preview_alter(array &$preview, array &$context) {
 
-  // For our use case, we always want to show the preview in the active
-  // language, if the entity has a translation for it.
-  $active_language = \Drupal::languageManager()->getCurrentLanguage();
-
-  if ($context['entity']->hasTranslation($active_language->getId())) {
-    // If the entity has a translation in the active language, we want to
-    // use the translation for the preview.
-    $context['entity'] = $context['entity']->getTranslation($active_language->getId());
-    // Rebuild the preview with the new entity.
-    $preview = $context['plugin']->render($context['entity'], $context['sites']);
-  }
+  /** @var \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository */
+  $entity_repository = \Drupal::service('entity.repository');
+  // Make sure we use the translated version of the entity, if available:
+  $context['entity'] = $entity_repository->getTranslationFromContext($context['entity']);
+  // Rebuild the preview:
+  $preview = $context['plugin']->render($context['entity'], $context['sites']);
 
 }
