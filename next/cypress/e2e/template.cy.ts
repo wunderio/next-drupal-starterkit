@@ -1,16 +1,21 @@
 /// <reference types="cypress" />
 
-describe("Frontend test for Login and Sending Message", () => {
+describe("Frontend test for Login, Sending Message, Checking Dashboard", () => {
   it("Logs in and is able to fill the webform", () => {
-    cy.visit("https://frontend.lndo.site/auth/login?callbackUrl=%2F");
-    cy.get('input[name="username"]').type("testuser1");
-    cy.get('input[name="password"]').type("test").type("{enter}");
-    cy.wait(3000);
+    cy.login("testuser1", "test");
+    // Fill in the form
     cy.get('input[name="name"]').type("Mario");
     cy.get('input[name="email"]').type("mario.vercellotti@wunder.io");
     cy.get('textarea[name="message"]').type("hello from Cypress!");
     cy.get('input[name="subject"]').type("cypress testing 101").type("{enter}");
     cy.wait(1000);
+    cy.contains("Success").should("be.visible");
+    cy.contains("testuser1").click();
+    cy.wait(1000);
+    cy.contains("Dashboard").click();
+    cy.contains("See more").click();
+    cy.contains("hello from Cypress!").should("be.visible");
+    cy.wait(10000);
   });
 });
 
@@ -61,6 +66,18 @@ describe("Basic Layout Test", () => {
     cy.get("header").should("be.visible").should("exist");
     // Checking if footer exists
     cy.get("footer").should("be.visible").should("exist");
+  });
+});
+
+describe("Menu Navigation Test", () => {
+  it("Open the navigation menu to the third level and visits a page", () => {
+    cy.testMenuAtViewport("macbook-15");
+  });
+});
+
+describe("Menu Navigation Test mobile", () => {
+  it("Open the navigation menu to the third level and visits a page", () => {
+    cy.testMenuAtViewport("iphone-6");
   });
 });
 
