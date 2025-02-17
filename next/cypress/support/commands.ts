@@ -26,6 +26,8 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
 
+import "cypress-mailpit";
+
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
@@ -64,6 +66,8 @@ Cypress.Commands.add("login", (username: string, password: string) => {
   cy.get('input[name="password"]').type(password);
   cy.wait(3000);
   cy.get('button[type="submit"]').click();
+  cy.wait(1000);
+  cy.contains(username).should("be.visible");
 });
 
 export {};
