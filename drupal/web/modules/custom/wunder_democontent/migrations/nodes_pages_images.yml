@@ -7,6 +7,7 @@ source:
   ids:
     - id
   constants:
+    file_source_dir: modules/custom/wunder_democontent/sources/images
     file_dest_uri: 'public://images/pages'
     uid: 1
     status: 1
@@ -23,22 +24,25 @@ process:
   uid: constants/uid
   status: constants/status
 
-  # Get the filename from the url using the basename php function:
-  file_filename:
-    plugin: callback
-    source: Paragraphs_0_image
-    callable: basename
+  # Source path is constructed by combining the source directory with the filename
+  file_source:
+    plugin: concat
+    delimiter: /
+    source:
+      - constants/file_source_dir
+      - Paragraphs_0_image
+
   # The destination uses the filename added to our constant:
   file_dest:
     plugin: concat
     delimiter: /
     source:
       - constants/file_dest_uri
-      - '@file_filename'
+      - Paragraphs_0_image
   uri:
     plugin: file_copy
     source:
-      - Paragraphs_0_image
+      - '@file_source'
       - '@file_dest'
     file_exists: rename
 destination:
