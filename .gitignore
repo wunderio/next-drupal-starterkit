@@ -22,4 +22,7 @@ node_modules
 .last_successful_command_ddev
 .last_successful_command_lando
 
+# Ignore Lando data volumes
+/.lando/data-*
+
 Makefile
