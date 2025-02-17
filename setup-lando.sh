@@ -15,7 +15,7 @@ commands=(
   "lando drush mim --group=demo_content --execute-dependencies"
   "lando drush pm-uninstall wunder_democontent migrate migrate_tools migrate_plus -y"
   "lando drush state:del wunder_democontent.disable_revalidation"
-  "lando drush cron"
+  "lando drush queue:run elasticsearch_helper_indexing"
   "lando npm i"
   "lando npm run build"
 )

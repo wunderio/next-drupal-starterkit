@@ -7,8 +7,6 @@ dependencies:
     - paragraphs.paragraphs_type.file_attachments
   module:
     - text
-_core:
-  default_config_hash: TYG8nacyl_zaQR-6isU8QQ_MKsoah3QP9rUk9MJWXkc
 id: paragraph.file_attachments.field_formatted_text
 field_name: field_formatted_text
 entity_type: paragraph
@@ -16,7 +14,7 @@ bundle: file_attachments
 label: 'Formatted text'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

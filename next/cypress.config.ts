@@ -6,4 +6,7 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
+  env: {
+    MAILPIT_URL: "http://mail.lndo.site",
+  },
 });

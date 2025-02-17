@@ -16,7 +16,7 @@ commands=(
   "ddev drush mim --group=demo_content --execute-dependencies"
   "ddev drush pm-uninstall wunder_democontent migrate migrate_tools migrate_plus -y"
   "ddev drush state:del wunder_democontent.disable_revalidation"
-  "ddev drush cron"
+  "ddev drush queue:run elasticsearch_helper_indexing"
   "cd next && ddev npm run build"
 )
 

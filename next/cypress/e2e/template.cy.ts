@@ -1,16 +1,25 @@
 /// <reference types="cypress" />
 
-describe("Frontend test for Login and Sending Message", () => {
-  it("Logs in and is able to fill the webform", () => {
-    cy.visit("https://frontend.lndo.site/auth/login?callbackUrl=%2F");
-    cy.get('input[name="username"]').type("testuser1");
-    cy.get('input[name="password"]').type("test").type("{enter}");
-    cy.wait(3000);
-    cy.get('input[name="name"]').type("Mario");
-    cy.get('input[name="email"]').type("mario.vercellotti@wunder.io");
+import { randomBytes } from "crypto";
+
+import { extractLinkFromString } from "../support/utils";
+
+describe("Frontend test for Login, Sending Message, Checking Dashboard", () => {
+  it("Logs in and is able to fill the webform and see the results in the dashboard", () => {
+    cy.login("testuser1", "test");
+    // Fill in the webform:
+    cy.get('input[name="name"]').type("Test user");
+    cy.get('input[name="email"]').type("testuser1@example.com");
     cy.get('textarea[name="message"]').type("hello from Cypress!");
     cy.get('input[name="subject"]').type("cypress testing 101").type("{enter}");
     cy.wait(1000);
+    cy.contains("Success").should("be.visible");
+    // Navigate to the dashboard and check if the message is there:
+    cy.contains("testuser1").click();
+    cy.wait(1000);
+    cy.contains("Dashboard").click();
+    cy.contains("See more").click();
+    cy.contains("hello from Cypress!").should("be.visible");
   });
 });
 
@@ -61,6 +70,92 @@ describe("Basic Layout Test", () => {
     cy.get("header").should("be.visible").should("exist");
     // Checking if footer exists
     cy.get("footer").should("be.visible").should("exist");
+  });
+});
+
+describe("Menu Navigation Test", () => {
+  it("Open the navigation menu to the third level and visits a page", () => {
+    cy.testMenuAtViewport("macbook-15");
+  });
+});
+
+describe("Menu Navigation Test mobile", () => {
+  it("Open the navigation menu to the third level and visits a page", () => {
+    cy.testMenuAtViewport("iphone-6");
+  });
+});
+
+describe("Register a new user workflow test", () => {
+  // Generate a random username and email
+  const username = "testuser_" + randomBytes(2).toString("hex");
+  const email = username + "@example.com";
+  const password = "mypassword";
+
+  it("Registers a new user account, and logs in with it", () => {
+    cy.visit("https://frontend.lndo.site/register");
+    cy.get('input[name="name"]').type(username);
+    cy.get('input[name="email"]').type(email);
+    cy.get('button[type="submit"]').click();
+    cy.wait(2000);
+    cy.contains("Success").should("be.visible");
+
+    // Check that mailpit has received the email.
+    cy.mailpitHasEmailsBySubject(
+      `Account details for ${username} at Drush Site-Install`,
+    );
+
+    // Get the link from the latest email received by mailpit:
+    cy.mailpitGetMail().then((result) => {
+      const setYourPasswordLink = extractLinkFromString(result.Text);
+      cy.visit(setYourPasswordLink);
+      cy.get('input[type="submit"]').click();
+    });
+
+    cy.contains(username).should("be.visible");
+
+    cy.get("input[name='pass[pass1]']").type(password);
+    cy.wait(500);
+    cy.get("input[name='pass[pass2]']").type(password);
+    cy.get('input[type="submit"]').click();
+    cy.login(username, password);
+  });
+});
+
+describe("Request a new password workflow test", () => {
+  const username = "testuser3";
+  const email = "testuser3@example.com";
+  const newpassword = "newpassword";
+
+  it("Requests a new password and logs in with it", () => {
+    cy.visit("https://frontend.lndo.site/login?callbackUrl=%2F");
+    cy.contains("Reset your password").click();
+    cy.get('input[name="name"]').type(email);
+    cy.get('input[type="submit"]').click();
+    cy.wait(2000);
+    cy.contains("check your email for a link to reset your password").should(
+      "be.visible",
+    );
+
+    // Check that mailpit has received the email:
+    cy.mailpitHasEmailsBySubject(
+      `Replacement login information for ${username} at Drush Site-Install`,
+    );
+
+    // Get the link from the latest email received by mailpit:
+    cy.mailpitGetMail().then((result) => {
+      const resetLink = extractLinkFromString(result.Text);
+      cy.visit(resetLink);
+      // Submit the form confirming that you want to change the password:
+      cy.get('input[type="submit"]').click();
+    });
+
+    // Set the new password twice and submit the form.
+    cy.get("input[name='pass[pass1]']").type(newpassword);
+    cy.wait(500);
+    cy.get("input[name='pass[pass2]']").type(newpassword);
+    cy.get('input[type="submit"]').click();
+    // We can now log in with the new password.
+    cy.login(username, newpassword);
   });
 });
 

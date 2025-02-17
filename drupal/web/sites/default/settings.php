@@ -12,11 +12,11 @@ $databases = [];
 // These settings do not apply to ddev
 if (getenv('IS_DDEV_PROJECT') !== 'true') {
   $databases['default']['default'] = [
-    'database' => $_ENV['DB_NAME_DRUPAL'],
-    'username' => $_ENV['DB_USER_DRUPAL'],
-    'password' => $_ENV['DB_PASS_DRUPAL'],
+    'database' => $_ENV['DB_NAME'],
+    'username' => $_ENV['DB_USER'],
+    'password' => $_ENV['DB_PASS'],
     'prefix' => '',
-    'host' => $_ENV['DB_HOST_DRUPAL'],
+    'host' => $_ENV['DB_HOST'],
     'port' => '3306',
     'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
     'driver' => 'mysql',
@@ -57,6 +57,20 @@ $settings['wunder_next.settings']['client_viewer_secret'] = $_ENV['DRUPAL_CLIENT
 
 // Use the frontend site URL to create links in the xml sitemap:
 $config['simple_sitemap.settings']['base_url'] = $_ENV['WUNDER_NEXT_FRONTEND_URL'];
+
+// Symfony Mailer configuration.
+// @see: https://www.drupal.org/node/3369935
+$config['system.mail']['interface'] = [ 'default' => 'symfony_mailer' ];
+
+// Default SMTP settings.
+$smtp_address_parts = explode(':', getenv('SMTP_ADDRESS'));
+if (!empty($smtp_address_parts[0]) && !empty($smtp_address_parts[1])) {
+  $config['system.mail']['mailer_dsn'] = [
+    'scheme' => 'smtp',
+    'host' => $smtp_address_parts[0],
+    'port' => $smtp_address_parts[1],
+  ];
+}
 
 // Environment-specific settings.
 $env = $_ENV['ENVIRONMENT_NAME'];
