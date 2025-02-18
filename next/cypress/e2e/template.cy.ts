@@ -85,23 +85,30 @@ describe("Menu Navigation Test mobile", () => {
   });
 });
 
+// Data to create a new user account:
+const username = "testuser_" + randomBytes(2).toString("hex");
+const testUserAccount = {
+  username,
+  email: username + "@example.com",
+  originalPassword: "mypassword",
+  newPassword: "newpassword",
+};
+
+// Data to request a new password:
 describe("Register a new user workflow test", () => {
-  // Generate a random username and email
-  const username = "testuser_" + randomBytes(2).toString("hex");
-  const email = username + "@example.com";
-  const password = "mypassword";
+  // Generate a random username and email;
 
   it("Registers a new user account, and logs in with it", () => {
     cy.visit("https://frontend.lndo.site/register");
-    cy.get('input[name="name"]').type(username);
-    cy.get('input[name="email"]').type(email);
+    cy.get('input[name="name"]').type(testUserAccount.username);
+    cy.get('input[name="email"]').type(testUserAccount.email);
     cy.get('button[type="submit"]').click();
     cy.wait(2000);
     cy.contains("Success").should("be.visible");
 
     // Check that mailpit has received the email.
     cy.mailpitHasEmailsBySubject(
-      `Account details for ${username} at Drush Site-Install`,
+      `Account details for ${testUserAccount.username} at Drush Site-Install`,
     );
 
     // Get the link from the latest email received by mailpit:
@@ -111,25 +118,21 @@ describe("Register a new user workflow test", () => {
       cy.get('input[type="submit"]').click();
     });
 
-    cy.contains(username).should("be.visible");
+    cy.contains(testUserAccount.username).should("be.visible");
 
-    cy.get("input[name='pass[pass1]']").type(password);
+    cy.get("input[name='pass[pass1]']").type(testUserAccount.originalPassword);
     cy.wait(500);
-    cy.get("input[name='pass[pass2]']").type(password);
+    cy.get("input[name='pass[pass2]']").type(testUserAccount.originalPassword);
     cy.get('input[type="submit"]').click();
-    cy.login(username, password);
+    cy.login(testUserAccount.username, testUserAccount.originalPassword);
   });
 });
 
 describe("Request a new password workflow test", () => {
-  const username = "testuser3";
-  const email = "testuser3@example.com";
-  const newpassword = "newpassword";
-
   it("Requests a new password and logs in with it", () => {
     cy.visit("https://frontend.lndo.site/login?callbackUrl=%2F");
     cy.contains("Reset your password").click();
-    cy.get('input[name="name"]').type(email);
+    cy.get('input[name="name"]').type(testUserAccount.email);
     cy.get('input[type="submit"]').click();
     cy.wait(2000);
     cy.contains("check your email for a link to reset your password").should(
@@ -138,7 +141,7 @@ describe("Request a new password workflow test", () => {
 
     // Check that mailpit has received the email:
     cy.mailpitHasEmailsBySubject(
-      `Replacement login information for ${username} at Drush Site-Install`,
+      `Replacement login information for ${testUserAccount.username} at Drush Site-Install`,
     );
 
     // Get the link from the latest email received by mailpit:
@@ -150,12 +153,12 @@ describe("Request a new password workflow test", () => {
     });
 
     // Set the new password twice and submit the form.
-    cy.get("input[name='pass[pass1]']").type(newpassword);
+    cy.get("input[name='pass[pass1]']").type(testUserAccount.newPassword);
     cy.wait(500);
-    cy.get("input[name='pass[pass2]']").type(newpassword);
+    cy.get("input[name='pass[pass2]']").type(testUserAccount.newPassword);
     cy.get('input[type="submit"]').click();
     // We can now log in with the new password.
-    cy.login(username, newpassword);
+    cy.login(testUserAccount.username, testUserAccount.newPassword);
   });
 });
 
