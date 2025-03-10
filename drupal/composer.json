@@ -23,7 +23,7 @@
         "drupal/core-composer-scaffold": "^10.4",
         "drupal/core-recommended": "^10.4",
         "drupal/decoupled_router": "^2.0",
-        "drupal/elasticsearch_helper": "^8.1",
+        "drupal/elasticsearch_helper": "^8.2",
         "drupal/entity_reference_revisions": "^1.12",
         "drupal/graphql": "^4.10",
         "drupal/graphql_compose": "^2.3",
