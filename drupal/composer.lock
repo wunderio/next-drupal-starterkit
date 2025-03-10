@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d769e5c47a43774d5fdc719b957a7db9",
+    "content-hash": "4c1723c9e4e5d7209d3cc1e93821c6bb",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1928,27 +1928,27 @@
         },
         {
             "name": "drupal/elasticsearch_helper",
-            "version": "8.1.0",
+            "version": "8.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/elasticsearch_helper.git",
-                "reference": "8.1.0"
+                "reference": "8.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/elasticsearch_helper-8.1.0.zip",
-                "reference": "8.1.0",
-                "shasum": "58f0a86e344d1e7687688203c10b1270779bde23"
+                "url": "https://ftp.drupal.org/files/projects/elasticsearch_helper-8.2.0.zip",
+                "reference": "8.2.0",
+                "shasum": "01cf674acab56e6be359715495c01da1d7f252d1"
             },
             "require": {
-                "drupal/core": "^9.4 || ^10",
+                "drupal/core": "^10 || ^11",
                 "elasticsearch/elasticsearch": "^8.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.1.0",
-                    "datestamp": "1695721432",
+                    "version": "8.2.0",
+                    "datestamp": "1740761357",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -1972,10 +1972,6 @@
                 {
                     "name": "floretan",
                     "homepage": "https://www.drupal.org/user/66163"
-                },
-                {
-                    "name": "jcnventura",
-                    "homepage": "https://www.drupal.org/user/122464"
                 },
                 {
                     "name": "maijs",
