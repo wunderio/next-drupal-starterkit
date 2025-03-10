@@ -42,7 +42,7 @@ import ViewportPreset = Cypress.ViewportPreset;
 Cypress.Commands.add("testMenuAtViewport", (viewport: ViewportPreset) => {
   cy.viewport(viewport);
   // Navigating to the main page and clicking on the menu button
-  cy.visit("https://frontend.lndo.site");
+  cy.visit(Cypress.env("FRONTEND_URL"));
   cy.get("button[aria-label='Toggle menu']").click();
   cy.wait(500);
   // Opening second level menu
@@ -61,7 +61,8 @@ Cypress.Commands.add("testMenuAtViewport", (viewport: ViewportPreset) => {
 });
 
 Cypress.Commands.add("login", (username: string, password: string) => {
-  cy.visit("https://frontend.lndo.site/auth/login?callbackUrl=%2F");
+  const urlLogin = Cypress.env("FRONTEND_URL") + "/auth/login?callbackUrl=%2F";
+  cy.visit(urlLogin);
   cy.get('input[name="username"]').type(username);
   cy.get('input[name="password"]').type(password);
   cy.wait(3000);

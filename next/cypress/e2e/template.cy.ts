@@ -26,7 +26,8 @@ describe("Frontend test for Login, Sending Message, Checking Dashboard", () => {
 describe("Frontend Test for Search Functionality", () => {
   it("Opens the page, performs search, and verifies search results", () => {
     // Navigating to the main page and clicking on Search button
-    cy.visit("https://frontend.lndo.site/search");
+    const searchUrl = Cypress.env("FRONTEND_URL") + "/search";
+    cy.visit(searchUrl);
     cy.wait(1000);
     // Searching for an article:
     cy.get("input[type=search]").type("Example article");
@@ -43,7 +44,7 @@ describe("Frontend Test for Search Functionality", () => {
 describe("Frontend Test for Language Switching", () => {
   it("Opens the page, switches language and verifies it", () => {
     // Navigating to the main page and clicking on Language button
-    cy.visit("https://frontend.lndo.site");
+    cy.visit(Cypress.env("FRONTEND_URL"));
     cy.get('[data-language-name="English"]').click({ force: true });
     cy.wait(500);
     // Clicking through the language options and checking translations
@@ -65,7 +66,7 @@ describe("Frontend Test for Language Switching", () => {
 describe("Basic Layout Test", () => {
   it("Opens the page, checks if header and footer is in place", () => {
     // Navigating to the main page and checking if header and footer exists
-    cy.visit("https://frontend.lndo.site");
+    cy.visit(Cypress.env("FRONTEND_URL"));
     // Checking if header exists
     cy.get("header").should("be.visible").should("exist");
     // Checking if footer exists
@@ -96,10 +97,9 @@ const testUserAccount = {
 
 // Data to request a new password:
 describe("Register a new user workflow test", () => {
-  // Generate a random username and email;
-
   it("Registers a new user account, and logs in with it", () => {
-    cy.visit("https://frontend.lndo.site/register");
+    const registerUrl = Cypress.env("FRONTEND_URL") + "/register";
+    cy.visit(registerUrl);
     cy.get('input[name="name"]').type(testUserAccount.username);
     cy.get('input[name="email"]').type(testUserAccount.email);
     cy.get('button[type="submit"]').click();
@@ -130,7 +130,8 @@ describe("Register a new user workflow test", () => {
 
 describe("Request a new password workflow test", () => {
   it("Requests a new password and logs in with it", () => {
-    cy.visit("https://frontend.lndo.site/login?callbackUrl=%2F");
+    const loginUrl = Cypress.env("FRONTEND_URL") + "/login?callbackUrl=%2F";
+    cy.visit(loginUrl);
     cy.contains("Reset your password").click();
     cy.get('input[name="name"]').type(testUserAccount.email);
     cy.get('input[type="submit"]').click();
