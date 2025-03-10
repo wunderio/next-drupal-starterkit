@@ -8,5 +8,7 @@ export default defineConfig({
   },
   env: {
     MAILPIT_URL: "http://mail.lndo.site",
+    FRONTEND_URL: "https://frontend.lndo.site",
+    BACKEND_URL: "https://backend.lndo.site",
   },
 });
