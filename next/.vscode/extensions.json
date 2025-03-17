@@ -4,7 +4,7 @@
     "esbenp.prettier-vscode",
     "stylelint.vscode-stylelint",
     "bradlc.vscode-tailwindcss",
-    "graphql.vscode-graphql", // note: v0.9.3 is recommended for now, 0.11.0 has a bug: https://github.com/graphql/graphiql/issues/3620
+    "graphql.vscode-graphql",
     "graphql.vscode-graphql-syntax"
   ]
 }
