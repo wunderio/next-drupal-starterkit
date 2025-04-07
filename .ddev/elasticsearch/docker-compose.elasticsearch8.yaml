@@ -3,13 +3,14 @@ services:
   elasticsearch:
     image: elasticsearch:8.10.2ss
     environment:
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-      discovery.type: "single-node"
-      bootstrap.memory_lock: "true"
-      http.cors.enabled: "true"
+      ES_JAVA_OPTS: '-Xms512m -Xmx512m -XX:UseSVE=0'
+      CLI_JAVA_OPTS: '-XX:UseSVE=0'
+      discovery.type: 'single-node'
+      bootstrap.memory_lock: 'true'
+      http.cors.enabled: 'true'
       http.cors.allow-origin: "'*'"
       # Disable authentication in local development
-      xpack.security.enabled: "false"
-      xpack.security.enrollment.enabled: "false"
+      xpack.security.enabled: 'false'
+      xpack.security.enrollment.enabled: 'false'
     volumes:
       - ./elasticsearch/config/elasticsearch8.yml:/usr/share/elasticsearch/config/elasticsearch.yml

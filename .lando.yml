@@ -164,7 +164,8 @@ services:
       command: "/bin/tini -- /usr/local/bin/docker-entrypoint.sh eswrapper"
       user: elasticsearch
       environment:
-        ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+        ES_JAVA_OPTS: "-Xms512m -Xmx512m -XX:UseSVE=0"
+        CLI_JAVA_OPTS: "-XX:UseSVE=0"
         discovery.type: "single-node"
         bootstrap.memory_lock: "true"
         http.cors.enabled: "true"
