@@ -1,28 +1,29 @@
 http:
   routers:
     # Router for HTTP (port 80)
-    example-web-80-http-frontend:
+    next-drupal-starterkit-web-80-http-frontend:
       entrypoints:
         - http-80
       rule: Host(`frontend.ddev.site`)
-      service: "example-web-3000"
+      service: "next-drupal-starterkit-web-node-3000"
       ruleSyntax: v3
       tls: false
       priority: 100
 
     # Router for HTTPS (port 443)
-    example-web-80-https-frontend:
+    next-drupal-starterkit-web-80-https-frontend:
       entrypoints:
         - http-443
       rule: Host(`frontend.ddev.site`)
-      service: "example-web-3000"
+      service: "next-drupal-starterkit-web-node-3000"
       ruleSyntax: v3
       tls: true
       priority: 100
 
   services:
-    # The custom service that routes to your Node app
-    example-web-3000:
+    # Here we define the service for the Next.js app, which
+    # is running on port 3000 on the web container.
+    next-drupal-starterkit-web-node-3000:
       loadbalancer:
         servers:
           - url: http://next-drupal-starterkit.ddev.site:3000
