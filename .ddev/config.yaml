@@ -46,14 +46,22 @@ web_environment:
   - REDIS_PASS=redis
    # Environment variables for elasticsearch
   - ES_HOST=elasticsearch
+  - SMTP_ADDRESS=localhost:1025
 
 corepack_enable: false
 
 hooks:
   post-start:
-    - exec: "elasticsearch-plugin install analysis-icu"
-      service: elasticsearch
     - exec: "cd next && npm i"
+    - exec-host: |
+        # Run the Elasticsearch plugin setup script
+        ddev exec -s elasticsearch /mnt/ddev_config/elasticsearch/elasticsearch-setup.sh
+        # Check for the restart marker file
+        if [ -f .ddev/elasticsearch/restart_needed ]; then
+          echo "Elasticsearch plugins installed. Restarting elasticsearch container..."
+          docker restart ddev-${DDEV_SITENAME}-elasticsearch
+          rm .ddev/elasticsearch/restart_needed
+        fi
 
 web_extra_exposed_ports:
   - name: node-app
