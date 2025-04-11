@@ -95,9 +95,9 @@ lando info
 
 DDEV has a single container for both the backend and frontend, so the URLs differ only by the port:
 
-| Backend                                  | Frontend                                      |
-| ---------------------------------------- | --------------------------------------------- |
-| https://next-drupal-starterkit.ddev.site | https://next-drupal-starterkit.ddev.site:3000 |
+| Backend                                  | Frontend                   |
+| ---------------------------------------- |----------------------------|
+| https://next-drupal-starterkit.ddev.site | https://frontend.ddev.site |
 
 > NOTE: localhost:3000 does not work in DDEV, you need to use the URL provided by DDEV above.
 

@@ -6,7 +6,10 @@ nodejs_version: "20"
 php_version: "8.3"
 webserver_type: nginx-fpm
 xdebug_enabled: false
-additional_hostnames: []
+# This allows us to access the frontend app via https://frontend.ddev.site
+# also check the traefik config in .ddev/traefik/config/frontend.yaml.
+additional_hostnames:
+  - frontend
 additional_fqdns: []
 database:
     type: mariadb
@@ -29,15 +32,15 @@ web_environment:
   # URL OF THE FRONTEND SITE:
   # This needs to match the proxy value for the node service
   # so if you change it, remember to change it here as well.
-  - WUNDER_NEXT_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3000
+  - WUNDER_NEXT_FRONTEND_URL=https://frontend.ddev.site
   - ENVIRONMENT_NAME=ddev
   - HASH_SALT=notsosecurehashnotsosecurehashnotsosecurehash
   - NEXT_PUBLIC_DRUPAL_BASE_URL=https://next-drupal-starterkit.ddev.site
-  - NEXT_PUBLIC_FRONTEND_URL=https://next-drupal-starterkit.ddev.site:3000
+  - NEXT_PUBLIC_FRONTEND_URL=https://frontend.ddev.site
     # Environment variables for next_auth:
   - AUTH_SECRET=nextauth_secret_not_secure_used_only_locally
   - AUTH_TRUST_HOST=true
-  - AUTH_URL=https://next-drupal-starterkit.ddev.site:3000
+  - AUTH_URL=https://frontend.ddev.site
    # Environment variables for redis
   - REDIS_HOST=redis
   - REDIS_PASS=redis
@@ -45,14 +48,15 @@ web_environment:
   - ES_HOST=elasticsearch
 
 corepack_enable: false
-web_extra_exposed_ports:
-  - name: "Next.js"
-    container_port: 3000
-    http_port: 2999
-    https_port: 3000
 
 hooks:
   post-start:
     - exec: "elasticsearch-plugin install analysis-icu"
       service: elasticsearch
     - exec: "cd next && npm i"
+
+web_extra_exposed_ports:
+  - name: node-app
+    container_port: 3000
+    http_port: 3000
+    https_port: 3001
