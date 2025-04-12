@@ -44,7 +44,7 @@ export const {
 
         // Get access token from Drupal.
         const response = await drupalClientViewer.fetch(
-          `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
+          `${env.DRUPAL_BASE_URL_INTERNAL}/oauth/token`,
           {
             method: "POST",
             body: formData,
@@ -115,7 +115,7 @@ async function refreshAccessToken(token) {
     formData.append("refresh_token", token.refreshToken);
 
     const response = await fetch(
-      `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
+      `${env.DRUPAL_BASE_URL_INTERNAL}/oauth/token`,
       {
         method: "POST",
         body: formData,

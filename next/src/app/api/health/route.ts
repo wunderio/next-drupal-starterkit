@@ -6,7 +6,7 @@ export async function GET() {
   try {
     // Checking that Drupal is up:
     const drupalResponse = await fetch(
-      `${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/_ping.php`,
+      `${env.DRUPAL_BASE_URL_INTERNAL}/_ping.php`,
     );
 
     const drupalStatus = drupalResponse.status;

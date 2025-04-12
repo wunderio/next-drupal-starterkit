@@ -145,6 +145,7 @@ commands:
             fi
 
             echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=https://$drupal_domain" >> "$BASH_ENV"
+            echo "export DRUPAL_BASE_URL_INTERNAL=https://$drupal_domain" >> "$BASH_ENV"
             echo "export NEXT_PUBLIC_FRONTEND_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export AUTH_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export DRUPAL_CLIENT_ID=$drupal_client_id" >> "$BASH_ENV"

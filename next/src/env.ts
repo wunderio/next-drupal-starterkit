@@ -10,6 +10,7 @@ export const env = createEnv({
     DRUPAL_CLIENT_VIEWER_SECRET: zod.string(),
     DRUPAL_REVALIDATE_SECRET: zod.string(),
     ES_HOST: zod.string(),
+    DRUPAL_BASE_URL_INTERNAL: zod.string().url(),
   },
   client: {
     NEXT_PUBLIC_NODE_ENV: zod.enum(["development", "production", "test"]),
@@ -27,6 +28,7 @@ export const env = createEnv({
     DRUPAL_CLIENT_VIEWER_SECRET: process.env.DRUPAL_CLIENT_VIEWER_SECRET,
     DRUPAL_REVALIDATE_SECRET: process.env.DRUPAL_REVALIDATE_SECRET,
     NEXT_PUBLIC_DRUPAL_BASE_URL: process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
+    DRUPAL_BASE_URL_INTERNAL: process.env.DRUPAL_BASE_URL_INTERNAL,
     NEXT_PUBLIC_FRONTEND_URL: process.env.NEXT_PUBLIC_FRONTEND_URL,
     ES_HOST: process.env.ES_HOST,
   },

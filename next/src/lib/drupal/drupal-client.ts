@@ -43,7 +43,7 @@ export const createGraphQlDrupalClient = (
     }
   }
 
-  return new GraphQlDrupalClient(env.NEXT_PUBLIC_DRUPAL_BASE_URL, {
+  return new GraphQlDrupalClient(env.DRUPAL_BASE_URL_INTERNAL, {
     fetcher: (input, init) => pRetry(() => fetch(input, init), RETRY_OPTIONS),
     auth: {
       clientId,
