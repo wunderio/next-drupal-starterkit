@@ -123,7 +123,9 @@ commands:
 
             drupal_release_name=`silta ci release name`
             next_release_name=`silta ci release name --release-suffix next`
-            drupal_release_name_for_internal_use=`silta ci release name --release-suffix drupal`
+            # This is the name that will be used in the internal URL, used in
+            # Node containers to call the Drupal backend.
+            drupal_release_name_for_internal_use=${drupal_release_name}-drupal
 
             # If name is too long, truncate it and append a hash
             if [ ${#drupal_release_name} -ge 36 ]; then
