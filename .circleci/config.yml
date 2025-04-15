@@ -145,6 +145,8 @@ commands:
             fi
 
             echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=https://$drupal_domain" >> "$BASH_ENV"
+            # Here we set the internal URL to the same as the public one, because
+            # CircleCI is not able to resolve the internal URL.
             echo "export DRUPAL_BASE_URL_INTERNAL=https://$drupal_domain" >> "$BASH_ENV"
             echo "export NEXT_PUBLIC_FRONTEND_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export AUTH_URL=https://$next_domain" >> "$BASH_ENV"
@@ -154,6 +156,11 @@ commands:
 
             echo "Expanding special variable DRUPAL_DOMAIN = $drupal_domain ..."
             sed -i -e "s/<|DRUPAL_DOMAIN|>/$drupal_domain/g" $envvars_file
+            
+            # We set the release name here to the internal URL
+            # and this will then be used by the node containers to call the drupal backend.
+            echo "Expanding special variable DRUPAL_RELEASE_NAME = $drupal_release_name ..."
+            sed -i -e "s/<|DRUPAL_RELEASE_NAME|>/$drupal_release_name/g" $envvars_file
 
             echo "Expanding special variable NEXT_DOMAIN = $next_domain ..."
             sed -i -e "s/<|NEXT_DOMAIN|>/$next_domain/g" $envvars_file
