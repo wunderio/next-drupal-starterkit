@@ -5,11 +5,29 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
-const imageHostname = String(process.env.DRUPAL_BASE_URL_INTERNAL).split("://");
+// We have to have three different image hostnames here, because of the
+// Circle CI build process. While in CI, the internal and external hostname
+// will be set to the same value. For this reason we also have another env
+// variable for the internal images hostname, which will be the same in CI and
+// in production.
 
-if (imageHostname.length < 2) {
+const imageHostnameInternal = String(
+  process.env.DRUPAL_BASE_URL_INTERNAL,
+).split("://");
+
+if (imageHostnameInternal.length < 2) {
   throw new Error(
     "Invalid DRUPAL_BASE_URL_INTERNAL. Expected a valid URL with protocol and hostname.",
+  );
+}
+
+const imageHostnameInternalImages = String(
+  process.env.DRUPAL_BASE_URL_INTERNAL_IMAGES,
+).split("://");
+
+if (imageHostnameInternalImages.length < 2) {
+  throw new Error(
+    "Invalid DRUPAL_BASE_URL_INTERNAL_IMAGES. Expected a valid URL with protocol and hostname.",
   );
 }
 
@@ -39,13 +57,20 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: imageHostname[0] === "https" ? "https" : "http",
-        hostname: imageHostname[1],
+        protocol: imageHostnameInternal[0] === "https" ? "https" : "http",
+        hostname: imageHostnameInternal[1],
         pathname: "**",
       },
       {
         protocol: imageHostnameExternal[0] === "https" ? "https" : "http",
         hostname: imageHostnameExternal[1],
+        pathname: "**",
+      },
+      // Allow images from the internal images URL, this is used while building
+      // in the CI/CD pipeline.
+      {
+        protocol: imageHostnameInternalImages[0] === "https" ? "https" : "http",
+        hostname: imageHostnameInternalImages[1],
         pathname: "**",
       },
     ],
