@@ -2,7 +2,7 @@
 
 import { getLocale } from "next-intl/server";
 
-import { drupalClientViewer } from "@/lib/drupal/drupal-client";
+import { drupalExternalClientViewer } from "@/lib/drupal/drupal-client";
 import {
   RegisterFormInputs,
   registerFormSchema,
@@ -24,10 +24,12 @@ export async function registerAction(values: RegisterFormInputs) {
   }
 
   try {
-    const url = drupalClientViewer.buildUrl("/user/register?_format=json");
+    const url = drupalExternalClientViewer.buildUrl(
+      "/user/register?_format=json",
+    );
 
     // Do a call to drupal to register the user:
-    const result = await drupalClientViewer.fetch(url.toString(), {
+    const result = await drupalExternalClientViewer.fetch(url.toString(), {
       method: "POST",
       body: JSON.stringify({
         name: [{ value: validatedInputs.data.name }],
