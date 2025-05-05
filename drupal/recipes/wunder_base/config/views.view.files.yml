@@ -1,12 +1,9 @@
-uuid: 3475f976-f71a-47a9-8023-4a18a8721a5e
 langcode: en
 status: true
 dependencies:
   module:
     - file
     - user
-_core:
-  default_config_hash: DaGeEDJMcbbQtgV96AuPeZ-0irMc_Oa6Zzh2U3Kmul8
 id: files
 label: Files
 module: file
@@ -335,6 +332,15 @@ display:
             date_format: medium
             custom_date_format: ''
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
         changed:
           id: changed
           table: file_managed
@@ -391,6 +397,15 @@ display:
             date_format: medium
             custom_date_format: ''
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
         count:
           id: count
           table: file_usage
@@ -466,6 +481,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -1001,6 +1017,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       empty: {  }
       arguments:
         fid:
@@ -1023,7 +1040,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true

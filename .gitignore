@@ -17,9 +17,15 @@
 node_modules
 
 # Ignore start.sh script status file
-.last_successful_command
+.last_successful_command_ddev
+.last_successful_command_lando
+
+# Ignore Lando data volumes
+/.lando/data-*
 
 # Unencrypted secrets
 /silta/secrets*.yml
 # ... except the example secrets
 !/silta/secrets.example.yml
+
+Makefile

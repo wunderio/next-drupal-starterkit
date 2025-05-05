@@ -11,6 +11,8 @@ third_party_settings:
     enabled: true
     bundle_settings:
       untranslatable_fields_hide: '0'
+_core:
+  default_config_hash: m9eArFd4e2nUr05lbSZg802ofbY5XGaSik9rgNh2uaQ
 id: paragraph.video
 target_entity_type_id: paragraph
 target_bundle: video

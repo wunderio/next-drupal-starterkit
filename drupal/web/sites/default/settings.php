@@ -6,20 +6,22 @@
  */
 
 // Database settings, overridden per environment.
+// Also, check the override at the end of the file for the init_commands.
 $databases = [];
-$databases['default']['default'] = [
-  'database' => $_ENV['DB_NAME_DRUPAL'],
-  'username' => $_ENV['DB_USER_DRUPAL'],
-  'password' => $_ENV['DB_PASS_DRUPAL'],
-  'prefix' => '',
-  'host' => $_ENV['DB_HOST_DRUPAL'],
-  'port' => '3306',
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysql',
-  'init_commands' => [
-    'isolation_level' => 'SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED',
-  ],
-];
+
+// These settings do not apply to ddev
+if (getenv('IS_DDEV_PROJECT') !== 'true') {
+  $databases['default']['default'] = [
+    'database' => $_ENV['DB_NAME'],
+    'username' => $_ENV['DB_USER'],
+    'password' => $_ENV['DB_PASS'],
+    'prefix' => '',
+    'host' => $_ENV['DB_HOST'],
+    'port' => '3306',
+    'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+    'driver' => 'mysql',
+  ];
+}
 
 // Salt for one-time login links, cancel links, form tokens, etc.
 $settings['hash_salt'] = $_ENV['HASH_SALT'];
@@ -48,11 +50,27 @@ $settings['file_scan_ignore_directories'] = [
 // Get environment variables into settings:
 $settings['wunder_next.settings']['frontend_url'] = $_ENV['WUNDER_NEXT_FRONTEND_URL'];
 $settings['wunder_next.settings']['revalidate_secret'] = $_ENV['DRUPAL_REVALIDATE_SECRET'];
-$settings['wunder_next.settings']['client_secret'] = $_ENV['DRUPAL_CLIENT_SECRET'];
 $settings['wunder_next.settings']['client_id'] = $_ENV['DRUPAL_CLIENT_ID'];
+$settings['wunder_next.settings']['client_secret'] = $_ENV['DRUPAL_CLIENT_SECRET'];
+$settings['wunder_next.settings']['client_viewer_id'] = $_ENV['DRUPAL_CLIENT_VIEWER_ID'];
+$settings['wunder_next.settings']['client_viewer_secret'] = $_ENV['DRUPAL_CLIENT_VIEWER_SECRET'];
 
 // Use the frontend site URL to create links in the xml sitemap:
 $config['simple_sitemap.settings']['base_url'] = $_ENV['WUNDER_NEXT_FRONTEND_URL'];
+
+// Symfony Mailer configuration.
+// @see: https://www.drupal.org/node/3369935
+$config['system.mail']['interface'] = [ 'default' => 'symfony_mailer' ];
+
+// Default SMTP settings.
+$smtp_address_parts = explode(':', getenv('SMTP_ADDRESS'));
+if (!empty($smtp_address_parts[0]) && !empty($smtp_address_parts[1])) {
+  $config['system.mail']['mailer_dsn'] = [
+    'scheme' => 'smtp',
+    'host' => $smtp_address_parts[0],
+    'port' => $smtp_address_parts[1],
+  ];
+}
 
 // Environment-specific settings.
 $env = $_ENV['ENVIRONMENT_NAME'];
@@ -69,6 +87,7 @@ switch ($env) {
 
   case 'local':
   case 'lando':
+  case 'ddev':
     $settings['simple_environment_indicator'] = 'DarkGreen Local';
     // Skip file system permissions hardening.
     $settings['skip_permissions_hardening'] = TRUE;
@@ -110,4 +129,20 @@ if (getenv("SILTA_CLUSTER") && getenv('ELASTICSEARCH_HOST')) {
 // Silta cluster configuration overrides.
 if (isset($_ENV['SILTA_CLUSTER']) && file_exists($app_root . '/' . $site_path . '/settings.silta.php')) {
   include $app_root . '/' . $site_path . '/settings.silta.php';
+}
+
+// Set init commands for the database connection.
+// This needs to be here because in Silta the include clause just above this
+// will override the $databases variable.
+$databases['default']['default']['init_commands'] = [
+  'isolation_level' => 'SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED',
+  // Workaround for JSONAPI / Entity Query API performance regression
+  // See https://www.drupal.org/project/drupal/issues/3022864
+  'optimizer_search_depth' => 'SET SESSION optimizer_search_depth = 0',
+];
+
+// Automatically generated include for settings managed by ddev.
+$ddev_settings = dirname(__FILE__) . '/settings.ddev.php';
+if (getenv('IS_DDEV_PROJECT') == 'true' && is_readable($ddev_settings)) {
+  require $ddev_settings;
 }

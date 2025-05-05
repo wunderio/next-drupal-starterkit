@@ -1,4 +1,3 @@
-# An example recipe that shows the creation of a user role.
 name: 'Wunder next setup'
 description: "Enable needed modules to use next-drupal and add pathauto setup"
 type: 'Setup'
@@ -7,18 +6,27 @@ recipes:
   - wunder_search
 install:
   - next
-  - next_jsonapi
   - pathauto
   - wunder_next
-  - jsonapi_menu_items
-  - jsonapi_extras
   - redirect
   - require_login
   - webform_rest
   - registration_role
+  - graphql
+  - graphql_compose
+  - graphql_compose_edges
+  - graphql_compose_menus
+  - graphql_compose_metatags
+  - graphql_compose_routes
+  - graphql_compose_users
+  - graphql_compose_views
+  - graphql_compose_preview
+  - next_graphql
+  - typed_data
 config:
   import:
     redirect: '*'
+    graphql_compose:  '*'
   actions:
     # Set the frontpage for the site:
     system.site:

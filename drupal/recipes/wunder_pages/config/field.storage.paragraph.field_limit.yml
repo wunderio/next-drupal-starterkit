@@ -4,6 +4,8 @@ status: true
 dependencies:
   module:
     - paragraphs
+_core:
+  default_config_hash: oyVbb0v5AWQ3uafi4qivCi11AvmZgnKRqlI2wmPnrw0
 id: paragraph.field_limit
 field_name: field_limit
 entity_type: paragraph

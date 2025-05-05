@@ -1,0 +1,105 @@
+From dcb479e6f07ba688c4434ba8be0d8363b221d6d3 Mon Sep 17 00:00:00 2001
+From: Al Munnings <al.munnings@gmail.com>
+Date: Mon, 3 Feb 2025 21:30:34 +1100
+Subject: [PATCH] Issue #3503977: entity_url producer in preview returns error
+
+---
+ .../LanguageSchemaExtension.php               | 21 ++++++++++----
+ .../GraphQLCompose/FieldType/PathItem.php     | 28 ++++++++++++++++---
+ 2 files changed, 39 insertions(+), 10 deletions(-)
+
+diff --git a/src/Plugin/GraphQL/SchemaExtension/LanguageSchemaExtension.php b/src/Plugin/GraphQL/SchemaExtension/LanguageSchemaExtension.php
+index e91fd5d1..f20b7ced 100644
+--- a/src/Plugin/GraphQL/SchemaExtension/LanguageSchemaExtension.php
++++ b/src/Plugin/GraphQL/SchemaExtension/LanguageSchemaExtension.php
+@@ -4,6 +4,7 @@ declare(strict_types=1);
+ 
+ namespace Drupal\graphql_compose\Plugin\GraphQL\SchemaExtension;
+ 
++use Drupal\Core\Entity\EntityInterface;
+ use Drupal\Core\Language\LanguageInterface;
+ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+ use Drupal\graphql\GraphQL\ResolverBuilder;
+@@ -98,13 +99,21 @@ class LanguageSchemaExtension extends ResolverOnlySchemaExtensionPluginBase impl
+       $registry->addFieldResolver(
+         'Translation',
+         'path',
+-        $builder->compose(
+-          $builder->produce('entity_url')
+-            ->map('entity', $builder->fromParent()),
++        $builder->cond([
++          [
++            $builder->callback(fn (EntityInterface $entity) => $entity->isNew()),
++            $builder->fromValue(NULL),
++          ], [
++            $builder->fromValue(TRUE),
++            $builder->compose(
++              $builder->produce('entity_url')
++                ->map('entity', $builder->fromParent()),
+ 
+-          $builder->produce('url_path')
+-            ->map('url', $builder->fromParent())
+-        )
++              $builder->produce('url_path')
++                ->map('url', $builder->fromParent()),
++            ),
++          ],
++        ]),
+       );
+     }
+ 
+diff --git a/src/Plugin/GraphQLCompose/FieldType/PathItem.php b/src/Plugin/GraphQLCompose/FieldType/PathItem.php
+index 28305abe..8c7d47ae 100644
+--- a/src/Plugin/GraphQLCompose/FieldType/PathItem.php
++++ b/src/Plugin/GraphQLCompose/FieldType/PathItem.php
+@@ -4,6 +4,7 @@ declare(strict_types=1);
+ 
+ namespace Drupal\graphql_compose\Plugin\GraphQLCompose\FieldType;
+ 
++use Drupal\Core\Entity\EntityInterface;
+ use Drupal\graphql\GraphQL\Resolver\Composite;
+ use Drupal\graphql\GraphQL\ResolverBuilder;
+ use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeBase;
+@@ -18,16 +19,35 @@ use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeBase;
+  */
+ class PathItem extends GraphQLComposeFieldTypeBase {
+ 
++  /**
++   * {@inheritdoc}
++   *
++   * Paths cannot be generated if the entity is new.
++   */
++  public function isRequired(): bool {
++    return FALSE;
++  }
++
+   /**
+    * {@inheritdoc}
+    */
+   public function getProducers(ResolverBuilder $builder): Composite {
+     return $builder->compose(
+-      $builder->produce('entity_url')
+-        ->map('entity', $builder->fromParent()),
++      $builder->cond([
++        [
++          $builder->callback(fn (EntityInterface $entity) => $entity->isNew()),
++          $builder->fromValue(NULL),
++        ], [
++          $builder->fromValue(TRUE),
++          $builder->compose(
++            $builder->produce('entity_url')
++              ->map('entity', $builder->fromParent()),
+ 
+-      $builder->produce('url_path')
+-        ->map('url', $builder->fromParent())
++            $builder->produce('url_path')
++              ->map('url', $builder->fromParent()),
++          ),
++        ],
++      ]),
+     );
+   }
+ 
+-- 
+GitLab
+

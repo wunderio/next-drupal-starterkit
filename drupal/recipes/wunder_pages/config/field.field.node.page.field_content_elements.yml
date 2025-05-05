@@ -10,13 +10,14 @@ dependencies:
     - paragraphs.paragraphs_type.formatted_text
     - paragraphs.paragraphs_type.hero
     - paragraphs.paragraphs_type.image
+    - paragraphs.paragraphs_type.liftups_articles
     - paragraphs.paragraphs_type.links
     - paragraphs.paragraphs_type.listing_articles
     - paragraphs.paragraphs_type.video
   module:
     - entity_reference_revisions
 _core:
-  default_config_hash: S2TQpsxH0IPEGyzrJarr58dmsmw5qyFlnfTW-k2tSIA
+  default_config_hash: 8mtvAhPF2U4jLc8oliusJ4b7Fz5wo_pvqIyiBfEnGok
 id: node.page.field_content_elements
 field_name: field_content_elements
 entity_type: node
@@ -39,6 +40,7 @@ settings:
       video: video
       listing_articles: listing_articles
       file_attachments: file_attachments
+      liftups_articles: liftups_articles
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -58,6 +60,9 @@ settings:
         enabled: true
       image:
         weight: -13
+        enabled: true
+      liftups_articles:
+        weight: 11
         enabled: true
       links:
         weight: -10

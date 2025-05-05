@@ -40,3 +40,4 @@ migration_dependencies:
     - paragraphs_frontpage_formatted_text_translations
     - paragraphs_frontpage_hero_translations
     - paragraphs_frontpage_listing_articles_translations
+    - paragraphs_frontpage_liftups_articles_translations

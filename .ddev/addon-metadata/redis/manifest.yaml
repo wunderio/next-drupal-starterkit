@@ -1,0 +1,19 @@
+name: redis
+repository: ddev/ddev-redis-7
+version: v2.7.1
+install_date: "2024-07-31T21:58:58+03:00"
+project_files:
+    - commands/redis/redis
+    - commands/redis/redis-flush
+    - redis/redis.conf
+    - redis/advanced.conf
+    - redis/append.conf
+    - redis/general.conf
+    - redis/io.conf
+    - redis/memory.conf
+    - redis/network.conf
+    - redis/security.conf
+    - redis/snapshots.conf
+    - docker-compose.redis.yaml
+global_files: []
+removal_actions: []

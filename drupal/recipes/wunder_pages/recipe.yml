@@ -11,10 +11,14 @@ install:
   - node
   - text
   - pathauto
+  - workflows
+  - content_moderation
 config:
   import:
     paragraphs: '*'
     pathauto: '*'
+    workflows: '*'
+    content_moderation: '*'
   actions:
     user.role.wunder_content_editor:
       ensure_exists:

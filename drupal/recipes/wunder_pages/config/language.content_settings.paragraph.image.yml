@@ -11,6 +11,8 @@ third_party_settings:
     enabled: true
     bundle_settings:
       untranslatable_fields_hide: '0'
+_core:
+  default_config_hash: McMpqJYUwSvME90P-Vev6iysra7p_VwsdOZKx4qH93o
 id: paragraph.image
 target_entity_type_id: paragraph
 target_bundle: image

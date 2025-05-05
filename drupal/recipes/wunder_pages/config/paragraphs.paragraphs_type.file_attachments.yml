@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: D3g9JYuLsEvnOqAKiC2pf7zV4GzOXcH0HfLbh0CAezc
+  default_config_hash: Oj8r5wt8ovhV9umOnvgnL6W60D_jJ2-VGfBbn9Iu2z0
 id: file_attachments
 label: 'File attachments'
 icon_uuid: null

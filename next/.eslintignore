@@ -1,0 +1,4 @@
+storybook-static
+node_modules
+.next
+/src/lib/gql

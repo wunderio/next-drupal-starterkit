@@ -8,6 +8,7 @@ source:
   constants:
     status: 1
     uid: 1
+    moderation_state: published
 process:
   # We are interested here only in nodes that are translations:
   skipped:
@@ -27,6 +28,7 @@ process:
   title: Title
   field_excerpt: Excerpt
   status: constants/status
+  moderation_state: constants/moderation_state
   uid: constants/uid
   langcode: Langcode
 

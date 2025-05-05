@@ -7,7 +7,7 @@ dependencies:
   module:
     - ckeditor5
 _core:
-  default_config_hash: qtbIKnf_F-jhwZ-rl2ajm3BfFNPj8INYFVd2_5k6UFA
+  default_config_hash: ryQIG1PylLKVV2cpsEYd75RWYKAvkUs4w3yrwg7AjNM
 format: full_html
 editor: ckeditor5
 settings:
@@ -35,6 +35,50 @@ settings:
       - '|'
       - sourceEditing
   plugins:
+    ckeditor5_codeBlock:
+      languages:
+        -
+          label: 'Plain text'
+          language: plaintext
+        -
+          label: C
+          language: c
+        -
+          label: 'C#'
+          language: cs
+        -
+          label: C++
+          language: cpp
+        -
+          label: CSS
+          language: css
+        -
+          label: Diff
+          language: diff
+        -
+          label: HTML
+          language: html
+        -
+          label: Java
+          language: java
+        -
+          label: JavaScript
+          language: javascript
+        -
+          label: PHP
+          language: php
+        -
+          label: Python
+          language: python
+        -
+          label: Ruby
+          language: ruby
+        -
+          label: TypeScript
+          language: typescript
+        -
+          label: XML
+          language: xml
     ckeditor5_heading:
       enabled_headings:
         - heading2
@@ -53,7 +97,7 @@ image_upload:
   status: true
   scheme: public
   directory: inline-images
-  max_size: ''
+  max_size: '5 MB'
   max_dimensions:
-    width: 0
-    height: 0
+    width: 2500
+    height: 2500

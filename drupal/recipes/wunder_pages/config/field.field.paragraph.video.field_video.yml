@@ -8,7 +8,7 @@ dependencies:
     - media.type.video
     - paragraphs.paragraphs_type.video
 _core:
-  default_config_hash: lmk9EKGfVRzP-Oe_3gTcviRFN2h35mY-coKBXQo8gwU
+  default_config_hash: FGlHB0qCwJUTz95D5A9nTxIBh8-pu2txi_k_HLDYmsw
 id: paragraph.video.field_video
 field_name: field_video
 entity_type: paragraph

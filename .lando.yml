@@ -6,14 +6,14 @@ name: next-drupal-starterkit
 recipe: drupal10
 
 config:
-  php: "8.2"
+  php: "8.3"
   via: nginx
   webroot: drupal/web
-  database: "mariadb:10.3"
   composer_version: 2
   xdebug: off
   config:
     php: .lando/php.ini
+    database: .lando/my.cnf
 
 tooling:
   grumphp:
@@ -23,6 +23,10 @@ tooling:
 
   npm:
     description: "Runs npm commands"
+    service: node
+    dir: /app/next
+
+  npx:
     service: node
     dir: /app/next
 
@@ -44,25 +48,17 @@ tooling:
     user: www-data
     cmd:
       - appserver: "php /app/drupal/vendor/bin/phpunit -c /app/drupal/phpunit.xml --testdox"
+
   regenerate-phpunit-config:
     description: "Regenerates fresh PHPUnit configuration."
     cmd:
       - appserver: /app/.lando/phpunit.sh
+
   xdebug:
     description: "Loads Xdebug in the selected mode"
     cmd:
       - appserver: /app/.lando/xdebug.sh
     user: root
-
-  # This custom message allows you to install a drupal recipe from the
-  # /drupal/recipes folder. Drupal recipes are a new feature that is bein
-  # added to Drupal10 as a core initiative.
-  install-recipe:
-    description: "Installs the specified recipe. Accepts the recipe folder name. Recipes should be stored in /recipes"
-    cmd:
-      - appserver: /app/.lando/install_recipe.sh
-    dir: /app/drupal/web
-    user: www-data
 
   # This custom command can be used to automatically generate keys for the simple_oauth module.
   generate-oauth-keys:
@@ -72,10 +68,15 @@ tooling:
     dir: /app/drupal/oauth
     user: www-data
 
+  redis-cli:
+    cmd:
+      - cache: redis-cli -h cache -p 6379 -a mypassword
+
 services:
   database:
     # This is the port you can use to connect to mysql from your host.
     portforward: 34567
+    type: "mariadb:10.6.18"
 
   # This service will handle the backend (php) part of the application.
   appserver:
@@ -100,27 +101,29 @@ services:
         DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
         # The client id, specified in the consumer on the Drupal side.
         DRUPAL_CLIENT_ID: drupal-client-id
+        # The client id for the unprivileged user, specified in the consumer on the Drupal side.
+        DRUPAL_CLIENT_VIEWER_ID: drupal-client-viewer-id
+        DRUPAL_CLIENT_VIEWER_SECRET: drupal_client_viewer_secret_not_secure_used_only_locally
 
         HASH_SALT: notsosecurehashnotsosecurehashnotsosecurehash
         ENVIRONMENT_NAME: lando
-        DB_NAME_DRUPAL: drupal10
-        DB_USER_DRUPAL: drupal10
-        DB_PASS_DRUPAL: drupal10
-        DB_HOST_DRUPAL: database
         DRUSH_OPTIONS_URI: https://next-drupal-starterkit.lndo.site
         # Support debugging with XDEBUG 3.
         XDEBUG_MODE:
         PHP_IDE_CONFIG: serverName=appserver
+        SMTP_ADDRESS: mailpit:1025
         # PHPUnit settings. @see: .lando/phpunit.sh
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chrome:9515"]'
 
   # This service handles the frontend part of the application
   node:
-    type: node:18
+    type: node:20
     ssl: true
     sslExpose: true
+    globals:
+      npm: latest
     overrides:
-      image: "cypress/included:cypress-12.17.3-node-18.16.1-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1"
+      image: "cypress/included:cypress-13.15.1-node-20.18.0-chrome-130.0.6723.69-1-ff-131.0.3-edge-130.0.2849.52-1"
       ports:
         - "3000:3000"
         - "6006:6006"
@@ -134,20 +137,28 @@ services:
         DRUPAL_REVALIDATE_SECRET: revalidate_secret_not_secure_used_only_locally
         DRUPAL_CLIENT_SECRET: drupal_client_secret_not_secure_used_only_locally
         DRUPAL_CLIENT_ID: drupal-client-id
+        DRUPAL_CLIENT_VIEWER_ID: drupal-client-viewer-id
+        DRUPAL_CLIENT_VIEWER_SECRET: drupal_client_viewer_secret_not_secure_used_only_locally
         NEXT_PUBLIC_DRUPAL_BASE_URL: https://next-drupal-starterkit.lndo.site
-        NEXT_IMAGE_DOMAIN: next-drupal-starterkit.lndo.site
         NEXT_PUBLIC_FRONTEND_URL: https://frontend.lndo.site
         # Environment variables for next_auth:
-        NEXTAUTH_SECRET: nextauth_secret_not_secure_used_only_locally
-        NEXTAUTH_URL: https://frontend.lndo.site
+        AUTH_SECRET: nextauth_secret_not_secure_used_only_locally
+        AUTH_TRUST_HOST: true
+        AUTH_URL: https://frontend.lndo.site
+        REDIS_HOST: redis
+        REDIS_PASS: "mypassword"
+
+        ES_HOST: elasticsearch
+        # To enable nesh cache debugging
+        # NEXT_PRIVATE_DEBUG_CACHE: 1
     build:
-      - "cd next && npm install"
+      - "cd next && npm ci"
     scanner: false
 
   # This service adds elasticsearch, used by (you guessed it) the search part of
   # the application.
   elasticsearch:
-    type: compose
+    type: lando
     services:
       image: "docker.elastic.co/elasticsearch/elasticsearch:8.10.2"
       command: "/bin/tini -- /usr/local/bin/docker-entrypoint.sh eswrapper"
@@ -176,37 +187,69 @@ services:
       esdata:
         driver: local
 
-  # The kibana service can be used to monitor and issue queries to elasticsearch.
-  kibana:
-    type: compose
+  # The Elasticvue service can be used to monitor and issue queries to elasticsearch.
+  elasticvue:
+    type: lando
     services:
-      image: "docker.elastic.co/kibana/kibana:8.10.2"
-      command: "/bin/tini -- /usr/local/bin/kibana-docker"
-      user: kibana
+      image: "cars10/elasticvue:1.0.4"
+      command: /docker-entrypoint.sh nginx -g 'daemon off;'
       ports:
-        - "5601:5601"
+        - "8080:8080"
+      environment:
+        ELASTICVUE_CLUSTERS: '[{"name": "dev cluster", "uri": "http://localhost:9200", "password": "", "user": ""}]'
+
+  # Uncomment this section if you prefer to use the more advanced Kibana tool with Elasticsearch:
+  #
+  # kibana:
+  #   type: lando
+  #   services:
+  #     image: "docker.elastic.co/kibana/kibana:7.17.0"
+  #     command: "/bin/tini -- /usr/local/bin/kibana-docker"
+  #     user: kibana
+  #     ports:
+  #       - "5601:5601"
 
   # Any emails generated by Drupal will be caught by this service, and
   # can be seen in the browser.
-  mailhog:
-    type: mailhog
-    hogfrom:
-      - appserver
+  mailpit:
+      type: lando
+      api: 3
+      ssl: true
+      sslExpose: false
+      services:
+        image: axllent/mailpit
+        volumes:
+        - .lando/data-mailpit:/data
+        ports:
+          - "8025"  # Web UI
+          - "1025"  # SMTP
+        environment:
+          MP_MAX_MESSAGES: 5000
+          MP_DATA_FILE: /data/mailpit.db
+          MP_SMTP_AUTH_ACCEPT_ANY: 1
+          MP_SMTP_AUTH_ALLOW_INSECURE: 1
+        command: "/mailpit"
 
+  # This service adds redis, used by the frontend application for caching.
+  redis:
+    type: redis:7
+    persist: true
+    password: mypassword
+    portforward: 6379
 # This section specifies at which urls each service is available. Adjust as necessary
 # for your project.
 proxy:
-  mailhog:
-    - mail.lndo.site
-  elasticsearch:
-    - elasticsearch.lndo.site:9200
-  kibana:
-    - kibana.lndo.site:5601
+  mailpit:
+    - mail.lndo.site:8025
+  elasticvue:
+    - elasticvue.lndo.site:8080
   node:
     # This value is used by the appserver service to connect to the frontend
     # so make sure that this value and the WUNDER_NEXT_FRONTEND_URL env var are
     # in sync.
     - frontend.lndo.site:3000
+  # kibana:
+  #   - kibana.lndo.site:5601
 
 events:
   post-db-import:
@@ -216,4 +259,4 @@ env_file:
   - .lando/.env
 
 # Tested with Lando version
-version: v3.20.2
+version: v3.23.24

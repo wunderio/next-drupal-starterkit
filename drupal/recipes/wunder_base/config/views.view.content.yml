@@ -5,8 +5,6 @@ dependencies:
   module:
     - node
     - user
-_core:
-  default_config_hash: vBKWYGGDoAX-tFd1JErB8tZLSxx3lJ0foouVsgpcbB4
 id: content
 label: Content
 module: node
@@ -187,6 +185,15 @@ display:
             date_format: short
             custom_date_format: ''
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
         operations:
           id: operations
           table: node
@@ -246,6 +253,7 @@ display:
             previous: '‹ Previous'
             first: '« First'
             last: 'Last »'
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:

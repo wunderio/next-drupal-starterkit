@@ -5,3 +5,4 @@ package: Trimble
 core_version_requirement: ^9 || ^10
 dependencies:
   - simple_sitemap:simple_sitemap
+  - drupal:file

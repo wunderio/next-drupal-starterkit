@@ -5,6 +5,8 @@ dependencies:
   module:
     - options
     - paragraphs
+_core:
+  default_config_hash: sC6wZdZoaXyIB0xoPVno7SEIXnWtE7T7hqegIoojSXU
 id: paragraph.field_accordion_layout
 field_name: field_accordion_layout
 entity_type: paragraph

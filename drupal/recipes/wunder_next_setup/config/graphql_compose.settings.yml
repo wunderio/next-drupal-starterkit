@@ -1,0 +1,194 @@
+entity_config:
+  media:
+    audio:
+      enabled: true
+      query_load_enabled: true
+      edges_enabled: true
+    document:
+      enabled: true
+      query_load_enabled: true
+      edges_enabled: true
+    image:
+      enabled: true
+      query_load_enabled: true
+      edges_enabled: true
+    remote_video:
+      enabled: true
+      query_load_enabled: true
+      edges_enabled: true
+    video:
+      enabled: true
+      query_load_enabled: true
+      edges_enabled: true
+  menu:
+    account:
+      enabled: false
+    admin:
+      enabled: false
+    footer:
+      enabled: true
+    main:
+      enabled: true
+    tools:
+      enabled: false
+  node:
+    article:
+      enabled: true
+      query_load_enabled: true
+      edges_enabled: true
+      routes_enabled: true
+    frontpage:
+      enabled: true
+      query_load_enabled: true
+      routes_enabled: true
+    page:
+      enabled: true
+      query_load_enabled: true
+      edges_enabled: true
+      routes_enabled: true
+  paragraph:
+    accordion:
+      enabled: true
+    accordion_item:
+      enabled: true
+    file_attachments:
+      enabled: true
+    formatted_text:
+      enabled: true
+    hero:
+      enabled: true
+    image:
+      enabled: true
+    liftups_articles:
+      enabled: true
+    links:
+      enabled: true
+    listing_articles:
+      enabled: true
+    video:
+      enabled: true
+  taxonomy_term:
+    tags:
+      enabled: false
+  user:
+    user:
+      enabled: true
+field_config:
+  media:
+    audio:
+      field_media_audio_file:
+        enabled: true
+    document:
+      field_media_document:
+        enabled: true
+    image:
+      field_media_image:
+        enabled: true
+    remote_video:
+      field_media_oembed_video:
+        enabled: true
+    video:
+      field_media_video_file:
+        enabled: true
+  node:
+    article:
+      body:
+        enabled: true
+      field_excerpt:
+        enabled: true
+      field_image:
+        enabled: true
+      field_tags:
+        enabled: true
+    frontpage:
+      field_content_elements:
+        enabled: true
+      field_excerpt:
+        enabled: true
+      field_image:
+        enabled: true
+    page:
+      field_content_elements:
+        enabled: true
+      field_excerpt:
+        enabled: true
+      field_image:
+        enabled: true
+  paragraph:
+    accordion:
+      field_accordion_items:
+        enabled: true
+      field_accordion_layout:
+        enabled: true
+      field_formatted_text:
+        enabled: true
+      field_heading:
+        enabled: true
+      field_primary_link:
+        enabled: true
+    accordion_item:
+      field_content_elements:
+        enabled: true
+      field_formatted_text:
+        enabled: true
+      field_heading:
+        enabled: true
+    file_attachments:
+      field_file_attachments:
+        enabled: true
+      field_formatted_text:
+        enabled: true
+      field_heading:
+        enabled: true
+    formatted_text:
+      field_formatted_text:
+        enabled: true
+      field_heading:
+        enabled: true
+    hero:
+      field_formatted_text:
+        enabled: true
+      field_heading:
+        enabled: true
+      field_image:
+        enabled: true
+      field_primary_link:
+        enabled: true
+      field_secondary_link:
+        enabled: true
+    image:
+      field_image:
+        enabled: true
+    liftups_articles:
+      field_articles:
+        enabled: true
+      field_heading:
+        enabled: true
+    links:
+      field_links:
+        enabled: true
+    listing_articles:
+      field_heading:
+        enabled: true
+      field_limit:
+        enabled: true
+    video:
+      field_video:
+        enabled: true
+settings:
+  exclude_unpublished: true
+  expose_entity_ids: true
+  field_required_override: false
+  schema_description: 'GraphQL Compose'
+  schema_version: '1'
+  simple_queries: true
+  simple_unions: false
+  site_name: false
+  site_slogan: false
+  site_front: true
+  svg_image: false
+  svg_filesize: 100
+  inflector_langcode: en
+  inflector_singularize: true
+  custom: {  }
+  edge_max_limit: 100

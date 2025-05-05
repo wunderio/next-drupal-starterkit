@@ -34,8 +34,6 @@ install:
   - webform_ui
   - admin_toolbar
   - menu_link_attributes
-  - simple_sitemap
-  - wunder_sitemap
 
 config:
   import:
@@ -45,6 +43,7 @@ config:
     claro: '*'
     webform: '*'
     webform_ui: '*'
+    editor: '*'
   actions:
     system.theme:
       simple_config_update:

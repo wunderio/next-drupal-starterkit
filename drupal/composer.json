@@ -18,39 +18,44 @@
         "php": ">=8.2",
         "composer/installers": "^2.1",
         "cweagans/composer-patches": "^1.7",
-        "drupal/admin_toolbar": "^3.4",
-        "drupal/core-composer-scaffold": "^10.0",
-        "drupal/core-recommended": "^10.0",
-        "drupal/elasticsearch_helper": "^8.1",
-        "drupal/jsonapi_extras": "^3.24",
-        "drupal/jsonapi_menu_items": "^1.2",
-        "drupal/menu_link_attributes": "^1.3",
-        "drupal/metatag": "^2.0",
+        "drupal/admin_toolbar": "^3.5",
+        "drupal/consumers": "^1.19",
+        "drupal/core-composer-scaffold": "^10.4",
+        "drupal/core-recommended": "^10.4",
+        "drupal/decoupled_router": "^2.0",
+        "drupal/elasticsearch_helper": "^8.2",
+        "drupal/entity_reference_revisions": "^1.12",
+        "drupal/graphql": "^4.10",
+        "drupal/graphql_compose": "^2.3",
+        "drupal/graphql_compose_preview": "^1.0",
+        "drupal/menu_link_attributes": "^1.5",
+        "drupal/metatag": "^2.1",
         "drupal/migrate_plus": "^6.0",
         "drupal/migrate_source_csv": "^3.5",
         "drupal/migrate_tools": "^6.0",
         "drupal/monolog": "^3.0@beta",
-        "drupal/next": "^1.6",
-        "drupal/paragraphs": "^1.16",
-        "drupal/pathauto": "^1.12",
-        "drupal/redirect": "^1.9",
+        "drupal/next": "^2.0",
+        "drupal/paragraphs": "^1.18",
+        "drupal/pathauto": "^1.13",
+        "drupal/redirect": "^1.11",
         "drupal/registration_role": "^2.0",
         "drupal/require_login": "^3.0",
         "drupal/restui": "^1.21",
         "drupal/simple_oauth": "^5.2",
-        "drupal/simple_sitemap": "^4.1",
         "drupal/simplei": "^2.0@beta",
-        "drupal/token": "^1.13",
+        "drupal/subrequests": "^3.0",
+        "drupal/token": "^1.15",
+        "drupal/typed_data": "^2.1",
         "drupal/webform": "^6.2",
         "drupal/webform_rest": "^4.0",
-        "drush/drush": "^11.4",
+        "drush/drush": "^13",
         "elasticsearch/elasticsearch": "^8.9",
         "vlucas/phpdotenv": "^5.4",
         "webflo/drupal-finder": "^1.2",
         "wunderio/drupal-ping": "^2.4"
     },
     "require-dev": {
-        "drupal/core-dev": "^10.0",
+        "drupal/core-dev": "^10.4",
         "wunderio/code-quality": "^2.2"
     },
     "conflict": {
@@ -64,12 +69,13 @@
         "allow-plugins": {
             "composer/installers": true,
             "cweagans/composer-patches": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/core-composer-scaffold": true,
             "koodimonni/composer-dropin-installer": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true,
             "phpro/grumphp": true,
             "phpstan/extension-installer": true,
-            "php-http/discovery": true
+            "tbachert/spi": true
         },
         "process-timeout": 3000
     },
@@ -128,21 +134,22 @@
         "composer-exit-on-patch-failure": true,
         "patches": {
             "drupal/subrequests": {
-                "Get same results on different request": "https://www.drupal.org/files/issues/2019-07-18/change_request_type-63049395-09.patch"
+                "#3049395-58 - Page Cache causes different subrequests to return the same responses": "https://www.drupal.org/files/issues/2024-08-06/subrequests-3049395-change-request-type.patch"
             },
             "drupal/decoupled_router": {
-                "Unable to resolve path on node in other language than default": "https://www.drupal.org/files/issues/2023-04-27/decouple_router-3111456-resolve-language-issue-64--get-translation.patch"
+                "#3111456-78 - Unable to resolve path on node in other language than default": "https://www.drupal.org/files/issues/2024-10-22/decoupled_router-3111456-resolve-langcode-issue-78--external-redirects.patch"
             },
-            "drupal/jsonapi_menu_items": {
-                "Add info about the langcode for menu items (issue #3192576)": "https://www.drupal.org/files/issues/2023-02-10/3192576-18.patch"
+            "drupal/paragraphs": {
+                "Paragraphs (stable) title from form options not being applied (issue #3401581)": "https://www.drupal.org/files/issues/2023-11-14/paragraphs-custom-title-not-displayed-3401581-2.patch"
+            },
+            "drupal/graphql" : {
+                "drupal-graphql#1323: Add check for translation (from Github)": "https://patch-diff.githubusercontent.com/raw/drupal-graphql/graphql/pull/1388.patch"
             },
             "drupal/core": {
-                "Add support for the experimental recipes functionality": "https://git.drupalcode.org/project/distributions_recipes/-/raw/patch/recipe.patch",
-                "Fix error when enabling the language module via recipe": "https://www.drupal.org/files/issues/2019-11-19/drupal.8.8.x-3002532-20.patch",
-                "Set MenuLinkContent getEntity to public visibility": "https://www.drupal.org/files/issues/2022-05-16/2997790-40.patch",
-                "Add link fields to jsonapi response": "https://www.drupal.org/files/issues/2022-03-04/3066751-68.patch",
-                "Do not set user as blocked when created via REST": "https://www.drupal.org/files/issues/2022-08-17/3055807-47.patch",
-                "Return correct revisions of paragraphs in preview json api response": "https://www.drupal.org/files/issues/2022-09-27/3088239-33.patch"
+                "Fix error when enabling the language module via recipe": "https://www.drupal.org/files/issues/2019-11-19/drupal.8.8.x-3002532-20.patch"
+            },
+            "drupal/webform_rest": {
+                "Fix fetching a webform submission by UUID": "https://www.drupal.org/files/issues/2024-01-17/webform_rest-Error-membe-%20function-replace-3415211-02.patch"
             }
         },
         "dropin-paths": {

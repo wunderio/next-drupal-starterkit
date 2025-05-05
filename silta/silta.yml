@@ -1,4 +1,3 @@
-
 # Values in this file override the default values of our helm chart.
 #
 # See https://github.com/wunderio/charts/blob/master/drupal/values.yaml
@@ -10,7 +9,9 @@ php:
   drupalCoreVersion: "10"
   env:
     DRUPAL_CLIENT_ID: <|DRUPAL_CLIENT_ID|>
+    DRUPAL_CLIENT_VIEWER_ID: <|DRUPAL_CLIENT_VIEWER_ID|>
     DRUPAL_CLIENT_SECRET: ${DRUPAL_CLIENT_SECRET}
+    DRUPAL_CLIENT_VIEWER_SECRET: ${DRUPAL_CLIENT_VIEWER_SECRET}
     DRUPAL_REVALIDATE_SECRET: ${DRUPAL_REVALIDATE_SECRET}
     WUNDER_NEXT_FRONTEND_URL: https://<|NEXT_DOMAIN|>
   hashsalt: ${HASHSALT}
@@ -21,23 +22,27 @@ php:
   postupgrade:
     afterCommand: |
       drush si minimal --account-pass=${DRUPAL_ADMIN_PWD} -y
-      chmod +x /app/web/core/scripts/drupal
-      cd /app/web && core/scripts/drupal recipe ../recipes/wunder_next_setup
       drush cr
-      drush wunder_next:setup-user-and-consumer
+      cd /app/web && drush recipe ../recipes/wunder_next_setup -y -vvv
+      drush cr
+      drush wunder_next:setup-users-and-consumers
+      drush state:set wunder_democontent.disable_revalidation TRUE
       drush en wunder_democontent -y
       drush eshd -y
       drush eshs
       drush mim --group=demo_content --execute-dependencies --skip-progress-bar
+      drush state:del wunder_democontent.disable_revalidation
+      drush cron
 
 # Configure reference data that will be used when creating new environments.
 referenceData:
   enabled: false
   # The name of the environment from which reference data will be copied.
-  referenceEnvironment: 'main'
+  referenceEnvironment: "main"
 
 nginx:
   basicauth:
+    # Basicauth must be disabled as otherwise Next.js can't access Drupal.
     enabled: false
   content_security_policy: >-
     upgrade-insecure-requests;
@@ -51,8 +56,83 @@ nginx:
 elasticsearch:
   enabled: true
   image: europe-north1-docker.pkg.dev/silta-dev/images/next-drupal-starterkit-elasticsearch
-  imageTag: 'with-icu-analysis'
+  imageTag: "with-icu-analysis"
   imagePullPolicy: Always
   esConfig:
     elasticsearch.yml: |
       script.allowed_contexts: score
+
+# MariaDB configuration.
+mariadb:
+  master:
+    persistence:
+      # Database storage disk space allocation.
+      # Request assistance from Ops team to change this on an existing deployment.
+      size: 1G
+    resources:
+      requests:
+        cpu: 25m
+        memory: 366Mi
+      limits:
+        memory: 488Mi
+    config: |-
+      [mysqld]
+      skip-name-resolve
+      explicit_defaults_for_timestamp
+      basedir=/opt/bitnami/mariadb
+      plugin_dir=/opt/bitnami/mariadb/plugin
+      port=3306
+      socket=/opt/bitnami/mariadb/tmp/mysql.sock
+      tmpdir=/opt/bitnami/mariadb/tmp
+      max_allowed_packet=256M
+      bind-address=0.0.0.0
+      pid-file=/opt/bitnami/mariadb/tmp/mysqld.pid
+      log-error=/opt/bitnami/mariadb/logs/mysqld.log
+      character-set-server=UTF8
+      collation-server=utf8_unicode_ci
+      transaction-isolation=READ-COMMITTED
+      # Default max_connections value is 150.
+      # Each active connection consumes approx. 19-20MB of memory.
+      # Consider adding additional memory for production requests/limits when scaling up.
+      max_connections=200
+      # Set innodb_buffer_pool_size to 70/80% of resources.requests.memory (366Mi).
+      innodb_buffer_pool_size=275Mi
+      innodb_log_buffer_size=8M
+      # Set innodb_log_file_size to 12.5% of innodb_buffer_pool_size (34Mi is 12.5% of 275Mi).
+      innodb_log_file_size=34Mi
+      innodb_lock_wait_timeout=120
+      innodb_open_files=49152
+      innodb_flush_log_at_trx_commit=2
+      innodb_flush_method=O_DIRECT
+      table_open_cache=4000
+      table_definition_cache=1000
+      back_log=2048
+      tmp_table_size=64M
+      max_heap_table_size=32M
+      join_buffer_size=2M
+      # have_query_cache=NO
+      performance_schema=1
+      innodb_write_io_threads=16
+      innodb_use_native_aio=0
+      [client]
+      port=3306
+      socket=/opt/bitnami/mariadb/tmp/mysql.sock
+      default-character-set=UTF8
+      plugin_dir=/opt/bitnami/mariadb/plugin
+      [manager]
+      port=3306
+      socket=/opt/bitnami/mariadb/tmp/mysql.sock
+      pid-file=/opt/bitnami/mariadb/tmp/mysqld.pid
+
+# Configure Google Filestore for public and private files.
+mounts:
+  public-files:
+    enabled: true
+    storage: 10G
+    mountPath: /app/web/sites/default/files
+    storageClassName: nfs-shared
+  private-files:
+    enabled: true
+    storage: 1G
+    mountPath: /app/private
+    storageClassName: nfs-shared
