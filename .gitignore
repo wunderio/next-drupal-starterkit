@@ -1,5 +1,3 @@
-# Ignore .gitattributes files
-.gitattributes
 .editorconfig
 
 # Ignore potential database dumps:
@@ -24,5 +22,10 @@ node_modules
 
 # Ignore Lando data volumes
 /.lando/data-*
+
+# Unencrypted secrets
+/silta/secrets*.yml
+# ... except the example secrets
+!/silta/secrets.example.yml
 
 Makefile
