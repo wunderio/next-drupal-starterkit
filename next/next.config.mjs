@@ -5,9 +5,25 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
-const imageHostname = String(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL).split(
-  "://",
-)[1];
+const imageHostnameInternal = String(
+  process.env.DRUPAL_BASE_URL_INTERNAL_IMAGES,
+).split("://");
+
+if (imageHostnameInternal.length < 2) {
+  throw new Error(
+    "Invalid DRUPAL_BASE_URL_INTERNAL_IMAGES. Expected a valid URL with protocol and hostname.",
+  );
+}
+
+const imageHostnameExternal = String(
+  process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
+).split("://");
+
+if (imageHostnameExternal.length < 2) {
+  throw new Error(
+    "Invalid NEXT_PUBLIC_DRUPAL_BASE_URL. Expected a valid URL with protocol and hostname.",
+  );
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -25,8 +41,13 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: imageHostname,
+        protocol: imageHostnameExternal[0] === "https" ? "https" : "http",
+        hostname: imageHostnameExternal[1],
+        pathname: "**",
+      },
+      {
+        protocol: imageHostnameInternal[0] === "https" ? "https" : "http",
+        hostname: imageHostnameInternal[1],
         pathname: "**",
       },
     ],
