@@ -185,8 +185,7 @@ Note that when there are changes on the GraphQL server schema itself, you will n
 We have included a `.vscode/extensions.json` file that will suggest some useful extensions to work with GraphQL and TypeScript in VSCode with full autocomplete and syntax highlighting. You can install them by clicking on the notification that appears when you open the project in VSCode.
 
 Please note:
-1. We suggest opening the project in VSCode using the `/next` directory as the root of the project. 
-2. The latest version of the "GraphQL: Language Feature Support" extension [currently has a bug](https://github.com/graphql/graphiql/issues/3620) that prevents it from working correctly with the `graphql-codegen` package. Make sure to install the v0.9.3 version instead.
+1. We suggest opening the project in VSCode using the `/next` directory as the root of the project.
 
 #### Typesafe environment variables
 
