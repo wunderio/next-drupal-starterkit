@@ -3,36 +3,10 @@ import { neshCache } from "@neshca/cache-handler/functions";
 import { AbortError } from "p-retry";
 
 import { REVALIDATE_LONG } from "@/lib/constants";
-import {
-  drupalClientPreviewer,
-  drupalClientViewer,
-} from "@/lib/drupal/drupal-client";
-import { GET_ENTITY_AT_DRUPAL_PATH } from "@/lib/graphql/queries";
+
+import { fetchNodeByPathQuery } from "./get-node-nocache";
 
 import { env } from "@/env";
-
-/**
- * Function to directly fetch a node from Drupal by its path and locale.
- *
- * @param path The path of the node.
- * @param locale The locale of the node.
- * @param revision The revision of the node.
- * @param isDraftMode If true, fetches the draft version of the node.
- * @returns The fetched node data or null if not found.
- */
-export async function fetchNodeByPathQuery(
-  path: string,
-  locale: string,
-  isDraftMode: boolean,
-  revision: string = null,
-) {
-  const drupalClient = isDraftMode ? drupalClientPreviewer : drupalClientViewer;
-  return await drupalClient.doGraphQlRequest(GET_ENTITY_AT_DRUPAL_PATH, {
-    path,
-    langcode: locale,
-    revision,
-  });
-}
 
 // Here we wrap the function in react cache and nesh cache  avoiding unnecessary requests.
 const cachedFetchNodeByPathQuery = neshCache(cache(fetchNodeByPathQuery));

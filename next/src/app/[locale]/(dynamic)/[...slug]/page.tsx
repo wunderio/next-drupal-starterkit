@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getDraftData } from "next-drupal/draft";
 import { setRequestLocale } from "next-intl/server";
 
@@ -9,10 +9,7 @@ import { REVALIDATE_LONG } from "@/lib/constants";
 import { getNodeByPathQuery } from "@/lib/drupal/get-node";
 import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
 import { getNodeStaticParams } from "@/lib/drupal/get-node-static-params";
-import {
-  extractEntityFromRouteQueryResult,
-  extractRedirectFromRouteQueryResult,
-} from "@/lib/graphql/utils";
+import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
 type NodePageParams = {
   params: { slug: string[]; locale: string };
@@ -55,31 +52,12 @@ export default async function NodePage({
   // in the getNodeByPathQuery function.
   const nodeByPathResult = await getNodeByPathQuery(path, locale, isDraftMode);
 
-  // The response will contain either a redirect or node data.
-  // If it's a redirect, redirect to the new path:
-  const redirectResult = extractRedirectFromRouteQueryResult(nodeByPathResult);
-
-  if (redirectResult) {
-    // Set to temporary redirect for 302 and 307 status codes,
-    // and permanent for all others.
-    if (redirectResult.status === 307 || redirectResult.status === 302) {
-      redirect(redirectResult.url);
-    } else {
-      permanentRedirect(redirectResult.url);
-    }
-  }
-
   // Extract the node entity from the query result:
   let node = extractEntityFromRouteQueryResult(nodeByPathResult);
 
   // Node not found or is not published:
   if (!node || (!isDraftMode && node.status !== true)) {
     notFound();
-  }
-
-  // If the node is a frontpage, redirect to the frontpage:
-  if (!isDraftMode && node.__typename === "NodeFrontpage") {
-    redirect(`/${locale}`);
   }
 
   // When in draftMode, we could be requesting a specific revision.
