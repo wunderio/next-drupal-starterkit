@@ -34,7 +34,7 @@ const options: HTMLReactParserOptions = {
         if (isRelative(src)) {
           return (
             <Image
-              src={`${env.DRUPAL_BASE_URL_INTERNAL}${src}`}
+              src={`${env.NEXT_PUBLIC_DRUPAL_BASE_URL}${src}`}
               width={numberWidth}
               height={numberHeight}
               alt={alt}
