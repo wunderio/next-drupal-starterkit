@@ -5,26 +5,6 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
-const imageHostnameInternal = String(
-  process.env.DRUPAL_BASE_URL_INTERNAL_IMAGES,
-).split("://");
-
-if (imageHostnameInternal.length < 2) {
-  throw new Error(
-    "Invalid DRUPAL_BASE_URL_INTERNAL_IMAGES. Expected a valid URL with protocol and hostname.",
-  );
-}
-
-const imageHostnameExternal = String(
-  process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
-).split("://");
-
-if (imageHostnameExternal.length < 2) {
-  throw new Error(
-    "Invalid NEXT_PUBLIC_DRUPAL_BASE_URL. Expected a valid URL with protocol and hostname.",
-  );
-}
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -40,17 +20,19 @@ const nextConfig = {
 
   images: {
     remotePatterns: [
-      {
-        protocol: imageHostnameExternal[0] === "https" ? "https" : "http",
-        hostname: imageHostnameExternal[1],
+      process.env.DRUPAL_BASE_URL_INTERNAL_IMAGES,
+      process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
+    ].map((url = "") => {
+      const [protocol, hostname] = url.split("://");
+      if (!hostname || (protocol !== "https" && protocol !== "http")) {
+        throw new Error(`Invalid images URL "${url}" in next.config.ts`);
+      }
+      return {
+        protocol,
+        hostname,
         pathname: "**",
-      },
-      {
-        protocol: imageHostnameInternal[0] === "https" ? "https" : "http",
-        hostname: imageHostnameInternal[1],
-        pathname: "**",
-      },
-    ],
+      };
+    }),
   },
 
   experimental: {
