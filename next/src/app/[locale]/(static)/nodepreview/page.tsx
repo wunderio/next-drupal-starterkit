@@ -2,7 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 
 import { Node } from "@/components/node";
 import NotFoundPage from "@/components/not-found-page";
-import { fetchNodeByPathQuery } from "@/lib/drupal/get-node";
+import { fetchNodeByPathQuery } from "@/lib/drupal/get-node-nocache";
 import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
 async function DrupalPreviewPage({ searchParams, params: { locale } }) {
