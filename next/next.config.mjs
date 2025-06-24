@@ -5,10 +5,6 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
-const imageHostname = String(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL).split(
-  "://",
-)[1];
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -24,12 +20,19 @@ const nextConfig = {
 
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: imageHostname,
+      process.env.DRUPAL_BASE_URL_INTERNAL_IMAGES,
+      process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
+    ].map((url = "") => {
+      const [protocol, hostname] = url.split("://");
+      if (!hostname || (protocol !== "https" && protocol !== "http")) {
+        throw new Error(`Invalid images URL "${url}" in next.config.ts`);
+      }
+      return {
+        protocol,
+        hostname,
         pathname: "**",
-      },
-    ],
+      };
+    }),
   },
 
   experimental: {

@@ -123,6 +123,9 @@ commands:
 
             drupal_release_name=`silta ci release name`
             next_release_name=`silta ci release name --release-suffix next`
+            # This is the name that will be used in the internal URL, used in
+            # Node containers to call the Drupal backend.
+            drupal_release_name_for_internal_use=${drupal_release_name}-drupal
 
             # If name is too long, truncate it and append a hash
             if [ ${#drupal_release_name} -ge 36 ]; then
@@ -145,6 +148,12 @@ commands:
             fi
 
             echo "export NEXT_PUBLIC_DRUPAL_BASE_URL=https://$drupal_domain" >> "$BASH_ENV"
+            # Here we set the internal URL to the same as the public one, because
+            # CircleCI is not able to resolve the internal URL.
+            echo "export DRUPAL_BASE_URL_INTERNAL=https://$drupal_domain" >> "$BASH_ENV"
+            # This is an additional environment variable used only to allow
+            # images from the internal domain when running in CircleCI.
+            echo "export DRUPAL_BASE_URL_INTERNAL_IMAGES=http://$drupal_release_name_for_internal_use" >> "$BASH_ENV"
             echo "export NEXT_PUBLIC_FRONTEND_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export AUTH_URL=https://$next_domain" >> "$BASH_ENV"
             echo "export DRUPAL_CLIENT_ID=$drupal_client_id" >> "$BASH_ENV"
@@ -153,6 +162,11 @@ commands:
 
             echo "Expanding special variable DRUPAL_DOMAIN = $drupal_domain ..."
             sed -i -e "s/<|DRUPAL_DOMAIN|>/$drupal_domain/g" $envvars_file
+            
+            # We set the release name here to the internal URL
+            # and this will then be used by the node containers to call the drupal backend.
+            echo "Expanding special variable DRUPAL_RELEASE_NAME = $drupal_release_name_for_internal_use ..."
+            sed -i -e "s/<|DRUPAL_RELEASE_NAME|>/$drupal_release_name_for_internal_use/g" $envvars_file
 
             echo "Expanding special variable NEXT_DOMAIN = $next_domain ..."
             sed -i -e "s/<|NEXT_DOMAIN|>/$next_domain/g" $envvars_file

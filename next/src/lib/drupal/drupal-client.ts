@@ -24,6 +24,9 @@ const RETRY_OPTIONS: Options = {
 export const createGraphQlDrupalClient = (
   clientId: string,
   clientSecret: string,
+  // The base URL for the Drupal API. This is used to build the URL for the GraphQL endpoint.
+  // The default is the internal URL, which is used for server-side requests.
+  drupalBaseUrl: string = env.DRUPAL_BASE_URL_INTERNAL,
 ) => {
   class GraphQlDrupalClient extends NextDrupalBase {
     async doGraphQlRequest<T>(
@@ -43,7 +46,7 @@ export const createGraphQlDrupalClient = (
     }
   }
 
-  return new GraphQlDrupalClient(env.NEXT_PUBLIC_DRUPAL_BASE_URL, {
+  return new GraphQlDrupalClient(drupalBaseUrl, {
     fetcher: (input, init) => pRetry(() => fetch(input, init), RETRY_OPTIONS),
     auth: {
       clientId,
@@ -65,4 +68,14 @@ export const drupalClientViewer = createGraphQlDrupalClient(
 export const drupalClientPreviewer = createGraphQlDrupalClient(
   env.DRUPAL_CLIENT_ID,
   env.DRUPAL_CLIENT_SECRET,
+);
+
+// This instance of the client will connect to the Drupal API using a consumer that
+// is associated with a role with "regular" permissions. This will always use the
+// external URL for the Drupal API. This is useful, for example, when registering
+// users, so that the links in the email confirmation are correct.
+export const drupalExternalClientViewer = createGraphQlDrupalClient(
+  env.DRUPAL_CLIENT_VIEWER_ID,
+  env.DRUPAL_CLIENT_VIEWER_SECRET,
+  env.NEXT_PUBLIC_DRUPAL_BASE_URL,
 );
