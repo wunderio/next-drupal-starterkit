@@ -162,7 +162,7 @@ services:
   elasticsearch:
     type: lando
     services:
-      image: "docker.elastic.co/elasticsearch/elasticsearch:8.10.2"
+      image: "docker.elastic.co/elasticsearch/elasticsearch:8.13.4"
       command: "/bin/tini -- /usr/local/bin/docker-entrypoint.sh eswrapper"
       user: elasticsearch
       environment:
