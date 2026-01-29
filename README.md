@@ -19,29 +19,15 @@ The template includes all you need to have a working multi-language decoupled Dr
 
 This example is meant to be used together with the [Silta](https://wunderio.github.io/silta/) hosting system by [Wunder](https://www.wunder.io), but it can be used with any hosting system.
 
-## 🤓 Lando or DDEV? Your choice!
-
-This starterkit can be used either with [Lando](https://lando.dev/) or with [DDEV](https://www.DDEV.com/). The only requirement is to have either one of those installed.
-
-### Lando minimum version
-
-The minimum version of lando required is 3.21.
-
-> Check the `version` property in the `.lando.yml` file to see which version of Lando is currently supported.
-
 ### ⚠️⚠️ NOTE: Using npm
 
-Instead of running npm operations in your host machine, _this template requires you to use npm inside Lando or DDEV_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend without the need of additional configuration steps.
+Instead of running npm operations in your host machine, _this template requires you to use npm inside DDEV_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend without the need of additional configuration steps.
 
-**Just prefix all npm operations with `lando` or `ddev`.**
+**Just prefix all npm operations with `ddev`.**
 
-So instead of `npm install`, run `lando npm install` or `ddev npm install`, instead of `npm run dev` run `lando npm run dev` or `ddev npm run dev`, etc.
+So instead of `npm install`, run `ddev npm install`, instead of `npm run dev` run `ddev npm run dev`, etc.
 
 > ⚠️⚠️ For DDEV, when using npm commands you have to make sure that you are in the `next` directory.
-
-#### Stopping a running npm operation running inside the Lando node container
-
-If you have closed the terminal window where you were running the server with `lando npm start` or `lando npm run dev`, and you want to stop the running npm operation, you can use the specially created `lando npm-stop` command that will log into the node container and kill all node processes there.
 
 ## 🤸 Getting started
 
@@ -50,14 +36,8 @@ Follow this guide to get the backend and frontend up and running. You can either
 ### 🏎️ Quickstart
 
 1. Clone this repository
-2. Choose which local environment you want to use: **Lando** or **DDEV**.
-3. Run the setup script corresponding to your chosen local environment:
-
-```bash
-./setup-lando.sh
-```
-
-or
+2. For local environment, use **DDEV**.
+3. Run the setup script:
 
 ```bash
 ./setup-ddev.sh
@@ -68,7 +48,7 @@ The script will execute a series of commands in sequence. If an error occurs, yo
 If the script has failed on some step, and instead of continuing you want to start from scratch, you can run the script with the `-c` flag:
 
 ```bash
-./setup-[lando/ddev].sh -c
+./setup-ddev.sh -c
 ```
 
 > NOTE: the script will install the site from scratch. Export your database if you have started working with the template, and you have something valuable in it. :)
@@ -76,22 +56,6 @@ If the script has failed on some step, and instead of continuing you want to sta
 ## 👨‍💻Urls
 
 After the setup is complete, you can access the site at the following URLs:
-
-### With Lando
-
-Lando has two separate containers for the backend and frontend, so the URLs are different:
-
-| Backend                                   | Frontend                    |
-| ----------------------------------------- | --------------------------- |
-| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/ |
-
-You can get a more detailed list of all the services and their urls with the command:
-
-```bash
-lando info
-```
-
-### With DDEV
 
 DDEV has a single container for both the backend and frontend, so the URLs differ only by the port:
 
