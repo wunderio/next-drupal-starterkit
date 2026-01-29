@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 import { ReactElement } from "react";
 
 import Drupal from "@/styles/icons/drupal-icon.svg";
-import Lando from "@/styles/icons/lando-logo.svg";
 import NextJS from "@/styles/icons/nextjs-logo.svg";
 import React from "@/styles/icons/react-icon.svg";
 import Tailwind from "@/styles/icons/tailwindcss.svg";
@@ -41,13 +40,6 @@ const logos: Logo[] = [
     ),
     label: "Drupal logo",
     id: "drupal-logo",
-  },
-  {
-    image: (
-      <Lando className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
-    ),
-    label: "Lando logo",
-    id: "lando-logo",
   },
 ];
 

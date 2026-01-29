@@ -95,7 +95,7 @@ The Next.js site will then create the metatags using a combination of these two 
 ### Search indexing and frontend search interface
 
 The site is set up to work with Elasticsearch to provide a complete search experience.
-Both the Lando and DDEV setups include spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module, which in turn makes use of the [Elasticsearch helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
+The DDEV setups include spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module, which in turn makes use of the [Elasticsearch helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
 On the frontend side, the search user uses the [Elastic UI library](https://elastic.github.io/eui/).
 The frontend site queries Elasticsearch via a simple proxy controller in Drupal, also provided by the included `wunder_search` custom Drupal module.
 The included frontend search UI is provided by [Searchkit](https://www.searchkit.co/).
@@ -140,9 +140,9 @@ TypeScript is setup quite loosely by default to minimise friction and make it ac
 
 The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
 
-When adding or modifying queries and fragments, the codegen script needs to be run to generate the corresponding types from the schema. Though you can always run `lando npm run graphql-codegen` or `ddev npm run graphql-codegen` yourself if needed, you shouldn't normally need to: `lando npm run build` or `ddev npm run build` will run the codegen before the build, and `lando npm run dev` or `ddev npm run dev` will start the codegen in watch mode alongside starting Next.js in development mode. The output of the codegen is gitignored, as the same step will be run on the CI server.
+When adding or modifying queries and fragments, the codegen script needs to be run to generate the corresponding types from the schema. Though you can always run `ddev npm run graphql-codegen` yourself if needed, you shouldn't normally need to: `ddev npm run build` will run the codegen before the build, and `ddev npm run dev` will start the codegen in watch mode alongside starting Next.js in development mode. The output of the codegen is gitignored, as the same step will be run on the CI server.
 
-Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `lando drush cr` or `ddev drush cr` to clear the Drupal cache.
+Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `ddev drush cr` to clear the Drupal cache.
 
 ##### VSCode extensions to work with GraphQL and TypeScript
 
@@ -156,7 +156,7 @@ Please note:
 The environment variables used by the frontend are also checked for type safety. If used correctly, a Zod error will prevent the frontend from building if the environment variables are not set according to the schema defined in `next/env.ts`. 
 
 To add a new environment variable:
-1. Add it to `.lando.yml`, under services > node > overrides > environment. or to `.ddev/config.yaml` for DDEV.
+1. Add it to `.ddev/config.yaml` for DDEV.
 2. Add it to `next/env.ts`. Note that it must be added twice there - once under server/client to define its schema, and once under `runtimeEnv` to read the actual value.
 3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
 4. To ensure it also works in CircleCI and Silta, also add it to`.circleci/config.yml` and `silta-next.yml`.
@@ -193,20 +193,12 @@ You can then run your tests inside the Cypress application.
 
 #### Redis caching
 
-The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. Both the ddev and lando setup include redis by default.
+The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend.The ddev setup include redis by default.
 The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package.
 
 ### Connecting to Redis in the local environment
 
 You can connect to Redis and interact with it using the [redis cli](https://redis.io/docs/latest/develop/connect/cli/) in the local environment by running the following command:
-
-If you are using Lando:
-
-```bash
-lando redis-cli
-```
-
-If you are using DDEV:
 
 ```bash
 ddev redis
