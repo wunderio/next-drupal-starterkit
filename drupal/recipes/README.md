@@ -5,7 +5,7 @@ This directory contains examples of drupal recipes, as defined by the [Distribut
 The initiative is ongoing and currently we are gathering here our experiments to evaluate whether we can use this new
 feature of Drupal to establish a set of common recipes to be used in wunder projects.
 
-Recipes are installed using a script that has been added to Lando (check `.lando.yml`).
+Recipes are installed via drush in the automated setup script.
 
 ### Installing recipes with composer
 
