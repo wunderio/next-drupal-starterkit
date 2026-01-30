@@ -169,7 +169,7 @@ The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` 
 
 The template includes example tests to be run with Cypress. This will require installation steps before it works in DDEV environment.
 
-Follow theses steps to make the Cypress work in DDEV:
+Follow these steps to make the Cypress work in DDEV:
 
 1. Run `cd next`.
 2. Run `ddev npm install`, if it hasn't already been run.
@@ -202,7 +202,7 @@ You can then run your tests inside the Cypress application.
 
 #### Redis caching
 
-The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend.The ddev setup include redis by default.
+The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. The ddev setup includes redis by default.
 The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package.
 
 ### Connecting to Redis in the local environment
