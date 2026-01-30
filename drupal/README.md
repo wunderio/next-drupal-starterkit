@@ -32,9 +32,9 @@ Drush alias for **current** Silta feature branch deployment is `drush @current s
 - Drush alias: `ddev drush @local st`
 - SSH: `ddev ssh (-s <service>)`
 
-### [Setup](docs.ddev.com/en/stable/users/install/ddev-installation/)
+### [Setup](https://docs.ddev.com/en/stable/users/install/ddev-installation/)
 
-1. Install the latest [DDEV](docs.ddev.com/en/stable/users/install/ddev-installation/) and read the [documentation](https://docs.ddev.com/en/stable/).
+1. Install the latest [DDEV](https://docs.ddev.com/en/stable/users/install/ddev-installation/) and read the [documentation](https://docs.ddev.com/en/stable/).
 2. Update your project name and other DDEV's parameters at `.ddev/config.yaml`.
 3. Run `ddev start`.
 

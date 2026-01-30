@@ -159,7 +159,7 @@ To add a new environment variable:
 1. Add it to `.ddev/config.yaml` for DDEV.
 2. Add it to `next/env.ts`. Note that it must be added twice there - once under server/client to define its schema, and once under `runtimeEnv` to read the actual value.
 3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
-4. To ensure it also works in CircleCI and Silta, also add it to`.circleci/config.yml` and `silta-next.yml`.
+4. To ensure it also works in CircleCI and Silta, also add it to `.circleci/config.yml` and `silta-next.yml`.
 
 #### XML sitemap
 
@@ -205,7 +205,7 @@ You can then run your tests inside the Cypress application.
 The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. The ddev setup includes redis by default.
 The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package.
 
-### Connecting to Redis in the local environment
+#### Connecting to Redis in the local environment
 
 You can connect to Redis and interact with it using the [redis cli](https://redis.io/docs/latest/develop/connect/cli/) in the local environment by running the following command:
 
