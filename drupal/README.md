@@ -32,21 +32,13 @@ Drush alias for **current** Silta feature branch deployment is `drush @current s
 - Drush alias: `ddev drush @local st`
 - SSH: `ddev ssh (-s <service>)`
 
-### [Setup](https://docs.lando.dev/basics/installation.html)
+### [Setup](docs.ddev.com/en/stable/users/install/ddev-installation/)
 
-1. Install the latest [Lando](https://github.com/lando/lando/releases) and read the [documentation](https://docs.lando.dev/).
-2. Update your project name and other Lando [Drupal 9 recipe](https://docs.lando.dev/config/drupal9.html)'s parameters at `.lando.yml`.
-3. Run `lando start`.
+1. Install the latest [DDEV](docs.ddev.com/en/stable/users/install/ddev-installation/) and read the [documentation](https://docs.ddev.com/en/stable/).
+2. Update your project name and other DDEV's parameters at `.ddev/config.yaml`.
+3. Run `ddev start`.
 
-### [Services](https://docs.lando.dev/config/services.html)
-
-- `chrome` - uses [selenium/standalone-chrome](https://hub.docker.com/r/selenium/standalone-chrome/) image, uncomment the service definition at `.lando.yml` to enable.
-- `elasticsearch` - uses official [Elasticsearch image](https://hub.docker.com/r/elastic/elasticsearch), uncomment the service definition at `.lando.yml` to enable. Requires [at least 4GiB of memory](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html).
-- `kibana` - uses official [Kibana image](https://hub.docker.com/r/elastic/kibana), uncomment the service definition at `.lando.yml` to enable.
-- `mailhog` - uses Lando [MailHog service](https://docs.lando.dev/config/mailhog.html).
-- `node` - uses Lando [Node service](https://docs.lando.dev/config/node.html).
-
-### [Commands](https://docs.lando.dev/config/tooling.html)
+### [Commands](https://docs.ddev.com/en/stable/users/usage/commands/)
 
 - `ddev` - commands overview.
 - `ddev grumphp <commands>` - run [GrumPHP](https://github.com/phpro/grumphp) code quality checks. Modified or new files are checked on git commit, see more at `ddev grumphp -h` or [wunderio/code-quality](https://github.com/wunderio/code-quality).
