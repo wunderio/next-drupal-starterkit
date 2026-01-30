@@ -165,29 +165,35 @@ To add a new environment variable:
 
 The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` path that can be submitted to search engines.
 
-### Testing with Cypress (Lando only)
+### Testing with Cypress
 
-The template includes example tests to be run with Cypress. The Lando setup includes a headless browser and Cypress, so you can run the tests locally without the need to install anything else, but it won't be able to use the visual Cypress application. See below for more details.
+The template includes example tests to be run with Cypress. This will require installation steps before it works in DDEV environment.
 
-#### Running tests locally inside Lando on the command line
+Follow theses steps to make the Cypress work in DDEV:
 
-To run the Cypress tests inside Lando:
+1. Run `cd next`.
+2. Run `ddev npm install`, if it hasn't already been run.
+3. Run `ddev npx cypress install`. This will download and install the Cypress binary for DDEV.
+
+#### Running tests locally inside DDEV on the command line
+
+To run the Cypress tests inside DDEV:
 
 1. make sure the backend is running
-2. run `lando npm run build` to build the frontend
-3. run `lando npm run start` to start serving the frontend
-4. open another terminal and run `lando npm run cypress:run` to start the Cypress test runner
+2. run `ddev npm run build` to build the frontend
+3. run `ddev npm run start` to start serving the frontend
+4. open another terminal and run `ddev npm run cypress:run` to start the Cypress test runner
 
 A video of the run will be recorded, and it will be available at `next/cypress/videos`.
 
 #### Using the Cypress application
 
-If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work:
+If you want to run the visual Cypress application, you will need to run cypress outside of DDEV, on your host computer. For this to work:
 
-1. ensure you are using the correct node version, matching what we use inside Lando (see the `.lando.yml` file for details)
+1. ensure you are using the correct node version, matching what we use inside DDEV (see the `.ddev/config.yaml` file for details)
 2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
 3. check which version of Cypress is specified in `next/package.json` and install the same version on your host computer globally with `npm install -g cypress@<version>`
-4. while in the `/next` directory, run `npm run cypress:open` (notice that there's no `lando` at the beginning of the command).
+4. while in the `/next` directory, run `npm run cypress:open` (notice that there's no `ddev` at the beginning of the command).
 
 You can then run your tests inside the Cypress application.
 
