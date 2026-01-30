@@ -174,6 +174,9 @@ Follow theses steps to make the Cypress work in DDEV:
 1. Run `cd next`.
 2. Run `ddev npm install`, if it hasn't already been run.
 3. Run `ddev npx cypress install`. This will download and install the Cypress binary for DDEV.
+4. Run `ddev exec "sudo apt-get update && sudo apt-get install -y xvfb libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth"` to install Xvfb and other required Cypress dependencies inside the DDEV container.
+
+> **Note:** The Xvfb and Cypress dependencies must be installed inside the DDEV container, not on your host machine. If you run the installation command without `ddev exec`, Cypress will fail to run with an error about missing Xvfb.
 
 #### Running tests locally inside DDEV on the command line
 
