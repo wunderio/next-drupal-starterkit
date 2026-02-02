@@ -1,0 +1,35 @@
+#ddev-generated
+hooks:
+  pre-start:
+    # Install the wunderio/ddev-wunderio-drupal add-on if it's not already
+    # installed. Developers don't need to do this manually. They just need to
+    # clone the project and run ddev start.
+    - exec-host: 'if [ ! -d "$HOME/.ddev/wunderio/core" ]; then ddev add-on get wunderio/ddev-wunderio-drupal; fi'
+  post-import-db:
+    - exec: "$WUNDERIO_GLOBAL_CACHE_WUNDERIO/core/_run-scripts.sh hooks-db-post-import.sh"
+  post-restore-snapshot:
+    - exec: "$WUNDERIO_GLOBAL_CACHE_WUNDERIO/core/_run-scripts.sh hooks-db-post-import.sh"
+  post-start:
+    # Check for the env variables to be present.
+    - exec: 'if [ -z "${DDEV_APPROOT+x}" ]; then echo -e "\e[1;31mError: Your DDEV version is too old and is missing DDEV_APPROOT. Please update DDEV. See upgrading guide https://docs.ddev.com/en/stable/users/install/ddev-upgrade/\e[0m"; fi'
+    # Build hook workaround to run composer install on first start.
+    # @todo We could potentially make this more like lando build hook by creating tmp files.
+    - exec: "[ ! -d \"$DDEV_COMPOSER_ROOT/vendor\" ] && $WUNDERIO_GLOBAL_CACHE_WUNDERIO/core/_run-scripts.sh hooks-web-post-start-once.sh || true"
+    # Script to run on every start on the host.
+    - exec-host: "~/.ddev/wunderio/core/_run-scripts.sh hooks-host-post-start.sh"
+    # Script to run on every start.
+    - exec: "$WUNDERIO_GLOBAL_CACHE_WUNDERIO/core/_run-scripts.sh hooks-web-post-start.sh"
+    # Update check.
+    - exec-host: "~/.ddev/wunderio/core/hooks-host-post-start-update-check.sh"
+web_environment:
+- WUNDERIO_GLOBAL_CACHE_ROOT=/mnt/ddev-global-cache
+- WUNDERIO_GLOBAL_CACHE_WUNDERIO=/mnt/ddev-global-cache/wunderio
+# When Mutagen is enabled (which it is by default in DDEV v1.19+),
+# these directories are bind-mounted directly rather than synced via Mutagen
+# This improves performance for large file directories by bypassing Mutagen's
+# syncing.
+# The paths are relative to the project root.
+upload_dirs:
+  # Configure database_dumps directory to be bind-mounted directly
+  # instead of being synced via Mutagen for better performance
+  - ../database_dumps

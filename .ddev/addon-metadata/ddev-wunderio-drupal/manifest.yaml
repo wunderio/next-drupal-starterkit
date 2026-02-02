@@ -1,0 +1,11 @@
+name: ddev-wunderio-drupal
+repository: wunderio/ddev-wunderio-drupal
+version: 0.4.1
+install_date: "2026-02-02T13:52:29+02:00"
+project_files:
+    - config.wunderio.yaml
+    - docker-compose.wunderio.yaml
+global_files:
+    - commands/
+    - wunderio/core/
+removal_actions: []
