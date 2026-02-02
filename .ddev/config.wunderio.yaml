@@ -13,7 +13,7 @@ hooks:
     # Check for the env variables to be present.
     - exec: 'if [ -z "${DDEV_APPROOT+x}" ]; then echo -e "\e[1;31mError: Your DDEV version is too old and is missing DDEV_APPROOT. Please update DDEV. See upgrading guide https://docs.ddev.com/en/stable/users/install/ddev-upgrade/\e[0m"; fi'
     # Build hook workaround to run composer install on first start.
-    # @todo We could potentially make this more like lando build hook by creating tmp files.
+    # @todo We could potentially make this more robust by creating tmp files to track build status.
     - exec: "[ ! -d \"$DDEV_COMPOSER_ROOT/vendor\" ] && $WUNDERIO_GLOBAL_CACHE_WUNDERIO/core/_run-scripts.sh hooks-web-post-start-once.sh || true"
     # Script to run on every start on the host.
     - exec-host: "~/.ddev/wunderio/core/_run-scripts.sh hooks-host-post-start.sh"
