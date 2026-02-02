@@ -2,7 +2,7 @@
 services:
   agents:
     container_name: ddev-${DDEV_PROJECT}-agents
-    # CHANGE THIS LINE: Use the Python 3 image (supports Apple Silicon)
+    # Use the Python 3 image (supports Apple Silicon)
     image: mcr.microsoft.com/devcontainers/python:3-bookworm
     hostname: agents
     user: vscode
