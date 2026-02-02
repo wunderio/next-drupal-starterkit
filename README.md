@@ -167,7 +167,7 @@ The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` 
 
 ### Testing with Cypress
 
-The template includes example tests to be run with Cypress. This will require installation steps before it works in DDEV environment.
+The template includes example tests to be run with Cypress. This will require installation steps before it works in the DDEV environment.
 
 Follow these steps to make the Cypress work in DDEV:
 

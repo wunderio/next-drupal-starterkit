@@ -49,3 +49,4 @@ lerna-debug.log*
 
 # Cypress gitignore
 /cypress/screenshots/
+/cypress/videos/
