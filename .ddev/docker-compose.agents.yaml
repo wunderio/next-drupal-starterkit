@@ -1,0 +1,19 @@
+#ddev-generated
+services:
+  agents:
+    container_name: ddev-${DDEV_PROJECT}-agents
+    # CHANGE THIS LINE: Use the Python 3 image (supports Apple Silicon)
+    image: mcr.microsoft.com/devcontainers/python:3-bookworm
+    hostname: agents
+    user: vscode
+    restart: "no"
+    volumes:
+      - ../:/workspace:cached
+      - ddev-global-cache:/mnt/ddev-global-cache
+    working_dir: /workspace
+    environment:
+      - DDEV_PROJECT=${DDEV_PROJECT}
+    command: ["sleep", "infinity"]
+    labels:
+      com.ddev.site-name: ${DDEV_PROJECT}
+      com.ddev.app-type: agents

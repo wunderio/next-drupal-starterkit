@@ -1,0 +1,9 @@
+name: ddev-agents
+repository: wunderio/ddev-agents
+version: "0.4"
+install_date: "2026-02-02T10:59:42+02:00"
+project_files:
+    - docker-compose.agents.yaml
+    - .devcontainer/devcontainer.json
+global_files: []
+removal_actions: []
