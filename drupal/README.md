@@ -25,10 +25,10 @@ Drush alias for **current** Silta feature branch deployment is `drush @current s
 
 ## Local environment
 
-- Appserver: <https://drupal-project.lndo.site>
-- Elasticsearch: <http://localhost:9200>, <http://elasticsearch.lndo.site>
-- Kibana: <http://localhost:5601>, <http://kibana.lndo.site>
-- Mailhog: <http://mail.lndo.site>
+- Appserver: <https://drupal-project.ddev.site>
+- Elasticsearch: <http://localhost:9200>, <http://elasticsearch.ddev.site>
+- Kibana: <http://localhost:5601>, <http://kibana.ddev.site>
+- Mailhog: <http://mail.ddev.site>
 - Drush alias: `ddev drush @local st`
 - SSH: `ddev ssh (-s <service>)`
 
