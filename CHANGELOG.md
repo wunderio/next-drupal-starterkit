@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## Unreleased
+
+ - WNDR-385: Cleaned Lando configuration altogether
+
 ## [3.0.0] 22.11.2024
 
 New major release! 🎉
