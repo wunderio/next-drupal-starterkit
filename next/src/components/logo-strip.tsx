@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 import Ddev from "@/styles/icons/ddev-logo.svg";
 import Drupal from "@/styles/icons/drupal-icon.svg";
 import NextJS from "@/styles/icons/nextjs-logo.svg";
-import React from "@/styles/icons/react-icon.svg";
+import ReactIcon from "@/styles/icons/react-icon.svg";
 import Tailwind from "@/styles/icons/tailwindcss.svg";
 
 interface Logo {
@@ -16,7 +16,7 @@ interface Logo {
 const logos: Logo[] = [
   {
     image: (
-      <React className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+      <ReactIcon className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
     ),
     label: "React logo",
     id: "react-logo",
