@@ -9,6 +9,6 @@ export default defineConfig({
   env: {
     MAILPIT_URL: "http://mail.ddev.site",
     FRONTEND_URL: "https://frontend.ddev.site",
-    BACKEND_URL: "https://backend.ddev.site",
+    BACKEND_URL: "https://next-drupal-starterkit.ddev.site",
   },
 });
