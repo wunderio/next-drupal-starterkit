@@ -11,6 +11,9 @@ else
   RESTORE_PHP_LIST=false
 fi
 
+# Ensure repository is restored even if script fails
+trap 'if [ "$RESTORE_PHP_LIST" = true ]; then sudo mv /etc/apt/sources.list.d/php.list.bak /etc/apt/sources.list.d/php.list 2>/dev/null || true; fi' EXIT
+
 sudo apt-get update
 sudo apt-get install -y \
   xvfb \
@@ -23,11 +26,5 @@ sudo apt-get install -y \
   libasound2 \
   libxtst6 \
   xauth
-
-# Restore the php.list repository if it was disabled
-if [ "$RESTORE_PHP_LIST" = true ]; then
-  echo "Restoring php.list repository..."
-  sudo mv /etc/apt/sources.list.d/php.list.bak /etc/apt/sources.list.d/php.list
-fi
 
 echo "Cypress dependencies installed successfully!"
