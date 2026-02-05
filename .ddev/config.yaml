@@ -70,3 +70,7 @@ web_extra_exposed_ports:
     container_port: 3000
     http_port: 3000
     https_port: 3001
+
+# This is necessary for our custom traefik setup to work:
+ddev_version_constraint: '>=v1.25.0'
+
