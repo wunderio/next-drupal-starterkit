@@ -21,7 +21,7 @@ content:
     type: preview_token_iframe
     label: hidden
     settings:
-      iframe_url: 'https://frontend.ddev.site/[node:language:langcode]/nodepreview?path=[node:preview:url]'
+      iframe_url: 'https://[wunder_next:frontend-url]/[node:language:langcode]/nodepreview?path=[node:preview:url]'
       class: ''
       width: 100%
       height: '900'
