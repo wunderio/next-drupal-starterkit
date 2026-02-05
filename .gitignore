@@ -19,6 +19,9 @@ node_modules
 # Ignore start.sh script status file
 .last_successful_command_ddev
 
+# Ignore custom DDEV web build files (developers can create their own)
+.ddev/web-build/
+
 # Unencrypted secrets
 /silta/secrets*.yml
 # ... except the example secrets

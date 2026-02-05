@@ -172,22 +172,31 @@ The template includes example tests to be run with Cypress. This will require in
 Follow these steps to make the Cypress work in DDEV:
 
 1. Run `cd next`.
-2. Run `ddev npm install`, if it hasn't already been run.
+2. Run `ddev npm install` to install all dependencies including TypeScript (required for Cypress tests).
 3. Run `ddev npx cypress install`. This will download and install the Cypress binary for DDEV.
 4. Run `ddev exec ./install-cypress-deps.sh` to install Xvfb and other required Cypress dependencies inside the DDEV container.
 
 > **Note:** The Xvfb and Cypress dependencies must be installed inside the DDEV container, not on your host machine. If you run the installation command without `ddev exec`, Cypress will fail to run with an error about missing Xvfb.
 
+> **Troubleshooting:** If step 4 fails with a GPG key error, the script includes a workaround that temporarily disables the problematic repository. Alternatively, you can run the command manually:
+> ```bash
+> ddev exec "sudo apt-get update && sudo apt-get install -y xvfb libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth"
+> ```
+
 #### Running tests locally inside DDEV on the command line
 
 To run the Cypress tests inside DDEV:
 
-1. make sure the backend is running
-2. run `ddev npm run build` to build the frontend
-3. run `ddev npm run start` to start serving the frontend
-4. open another terminal and run `ddev npm run cypress:run` to start the Cypress test runner
+1. Make sure the backend is running
+2. Navigate to the `next` directory: `cd next`
+3. Run `ddev npx cypress install` to ensure the Cypress binary is available (if you haven't done this already or if you see an error about Cypress not being installed)
+4. Run `ddev npm run build` to build the frontend
+5. Run `ddev npm run start` to start serving the frontend
+6. Open another terminal, navigate to `next` directory, and run `ddev npm run cypress:run` to start the Cypress test runner
 
 A video of the run will be recorded, and it will be available at `next/cypress/videos`.
+
+> **Important:** Always ensure you're in the `next` directory when running Cypress commands. If you get an error saying "No version of Cypress is installed", run `ddev npx cypress install` from the `next` directory.
 
 #### Using the Cypress application
 
