@@ -17,7 +17,7 @@ commands=(
   "ddev drush pm-uninstall wunder_democontent migrate migrate_tools migrate_plus -y"
   "ddev drush state:del wunder_democontent.disable_revalidation"
   "ddev drush queue:run elasticsearch_helper_indexing"
-  "echo '⏳ Waiting for Drupal to be ready...'; sleep 5"
+  "echo '⏳ Waiting for Drupal OAuth endpoint to be ready...'; for i in {1..30}; do ddev exec curl -s -o /dev/null -w '%{http_code}' https://next-drupal-starterkit.ddev.site/oauth/token | grep -q '400\\|401' && echo '✓ Drupal is ready!' && break || echo \"Attempt \$i/30: Drupal not ready yet, waiting...\"; sleep 2; done"
   "cd next && ddev npm run build"
 )
 
