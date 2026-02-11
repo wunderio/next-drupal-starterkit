@@ -29,7 +29,10 @@ void (async function getAndSaveAccessToken() {
     });
 
     if (!response.ok) {
-      throw new Error(response?.statusText || "Error getting access token.");
+      const errorText = await response.text();
+      throw new Error(
+        `OAuth request failed with status ${response.status}: ${response.statusText}\n${errorText}`,
+      );
     }
 
     const result = await response.json();
@@ -40,6 +43,7 @@ void (async function getAndSaveAccessToken() {
 
     console.log(`Access token saved to ${tokenFilePath}`);
   } catch (error) {
-    console.log("Error getting or saving access token:", error);
+    console.error("Error getting or saving access token:", error);
+    process.exit(1);
   }
 })();
