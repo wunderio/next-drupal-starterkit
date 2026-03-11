@@ -114,6 +114,9 @@ mariadb:
       performance_schema=1
       innodb_write_io_threads=16
       innodb_use_native_aio=0
+      # Undo Log Truncation
+      innodb_undo_log_truncate=ON
+      innodb_max_undo_log_size=1G
       [client]
       port=3306
       socket=/opt/bitnami/mariadb/tmp/mysql.sock
