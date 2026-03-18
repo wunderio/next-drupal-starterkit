@@ -1,0 +1,61 @@
+#!/bin/bash
+#ddev-generated
+
+## Description: Run GitHub Copilot CLI inside the agents container
+## Usage: copilot [args]
+## Example: copilot
+## Example: copilot -p "Explain this code"
+
+# Check if the agents container is running
+if ! docker ps --format '{{.Names}}' | grep -q "ddev-${DDEV_PROJECT}-agents"; then
+    echo "❌ Error: agents container is not running"
+    echo "👉 Run 'ddev start' first"
+    exit 1
+fi
+
+# Get DDEV project name
+if [ -z "$DDEV_PROJECT" ]; then
+    DDEV_PROJECT=$(ddev describe -j 2>/dev/null | jq -r '.raw.name' 2>/dev/null || echo "ddev-agents")
+fi
+
+# Check if the devcontainer image exists
+if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "ddev-${DDEV_PROJECT}-devcontainer:latest"; then
+    echo "❌ Error: devcontainer image not built"
+    echo "👉 Run 'ddev restart' to build the agents devcontainer"
+    exit 1
+fi
+
+# Check if GitHub CLI is installed
+if ! docker exec -it "ddev-${DDEV_PROJECT}-agents" bash -c "command -v gh &> /dev/null"; then
+    echo "❌ Error: GitHub CLI (gh) not found in agents container"
+    echo "👉 Ensure the devcontainer has the 'ghcr.io/devcontainers/features/github-cli' feature"
+    exit 1
+fi
+
+# Check if Copilot CLI extension is installed
+if ! docker exec -it "ddev-${DDEV_PROJECT}-agents" bash -c "gh copilot --version &> /dev/null"; then
+    echo "⚠️  GitHub Copilot CLI extension not found. Installing..."
+    docker exec -it "ddev-${DDEV_PROJECT}-agents" bash -c "gh extension install github/gh-copilot"
+fi
+
+# Check if GH_TOKEN is set in the container
+if ! docker exec -it "ddev-${DDEV_PROJECT}-agents" bash -c '[ -n "$GH_TOKEN" ]'; then
+    echo "❌ Error: GH_TOKEN not found in agents container"
+    echo "👉 Set DDEV_AGENTS_GH_TOKEN on your host (see README for instructions)"
+    exit 1
+fi
+
+# Check if copilot-managed-config.json exists
+if [ ! -f ".ddev/copilot-managed-config.json" ]; then
+    echo "⚠️  Warning: copilot-managed-config.json not found"
+    echo "� Security restrictions may not be enforced"
+fi
+
+# Run Copilot CLI in interactive or headless mode
+if [ "$#" -eq 0 ]; then
+    # Interactive mode (no arguments)
+    docker exec -it "ddev-${DDEV_PROJECT}-agents" bash -c "cd /workspace && exec gh copilot"
+else
+    # Headless mode (pass all arguments)
+    docker exec -it "ddev-${DDEV_PROJECT}-agents" bash -c "cd /workspace && exec gh copilot $(printf '%q ' "$@")"
+fi

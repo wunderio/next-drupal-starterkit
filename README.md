@@ -165,6 +165,10 @@ To add a new environment variable:
 
 The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` path that can be submitted to search engines.
 
+### DDEV Agents Add-on
+ 
+The setup includes the **DDEV Agents** plugin developed by Wunder, which adds a safe Devcontainer environment to run AI agents. Refer to the [project repository](https://github.com/wunderio/ddev-agents) for more information and setup instructions.
+
 ### Testing with Cypress
 
 The template includes example tests to be run with Cypress. This will require installation steps before it works in the DDEV environment.

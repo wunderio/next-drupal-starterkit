@@ -1,0 +1,127 @@
+# Composer PHP Dependency Manager Configuration
+# Defines available composer commands
+
+tools:
+  - name: composer_install
+    enabled: true
+    description: |
+      Install dependencies from composer.lock file.
+
+      Always run in the Drupal project directory (/var/www/html).
+      Installs packages with versions locked in composer.lock.
+
+    type: command
+    command_template: "composer install {args}"
+    ssh_target: "web"
+    ssh_user: "${DDEV_SSH_USER}"
+    working_dir: "/var/www/html"
+    default_args:
+      args: ["--no-interaction"]
+
+    input_schema:
+      type: object
+      properties:
+        args:
+          type: array
+          items:
+            type: string
+          description: >
+            Each flag or option as a separate array element.
+            The default ["--no-interaction"] is always included unless overridden.
+            Examples: ["--no-dev"], ["--no-dev", "--optimize-autoloader"].
+
+  - name: composer_update
+    enabled: true
+    description: |
+      Update dependencies to latest versions.
+
+      Always run in the Drupal project directory (/var/www/html).
+      Updates packages according to version constraints in composer.json.
+
+    type: command
+    command_template: "composer update {package} {args}"
+    ssh_target: "web"
+    ssh_user: "${DDEV_SSH_USER}"
+    working_dir: "/var/www/html"
+    default_args:
+      package: ""
+      args: ["--no-interaction"]
+
+    input_schema:
+      type: object
+      properties:
+        package:
+          type: string
+          description: >
+            Package name to update (e.g., "drupal/pathauto").
+            Omit or leave empty to update all packages.
+        args:
+          type: array
+          items:
+            type: string
+          description: >
+            Each flag or option as a separate array element.
+            Examples: ["--with-dependencies"], ["--no-dev", "--prefer-dist"].
+
+  - name: composer_require
+    enabled: true
+    description: |
+      Add one or more dependencies to composer.json.
+
+      Always run in the Drupal project directory (/var/www/html).
+      Adds packages and updates composer.lock.
+
+      Supports multiple packages in a single call — prefer this over separate
+      calls when installing related packages together:
+        {"packages": ["drupal/pathauto", "drupal/token:^1.0"]}
+        {"packages": ["drupal/mcp_server", "drupal/tool"], "args": ["--ignore-platform-req=ext-gd"]}
+
+      Single package still works:
+        {"packages": ["drupal/pathauto"]}
+
+      Troubleshooting installation failures:
+
+      1. **PHP Version Incompatibility** - Package may require different PHP version
+         - Check PHP version: Use drush_php_eval "echo PHP_VERSION;"
+         - Check composer.json: Look for "platform" sections with PHP constraints
+         - Try: args: ["--ignore-platform-req=php-ext-*"]
+
+      2. **Stability Constraints** - Package below minimum-stability threshold
+         - Try: packages: ["drupal/package:@dev"] (or @beta, @alpha)
+         - Or update composer.json "minimum-stability" to "dev"
+
+      3. **Memory Errors** - Large installation can exceed PHP memory limit
+         - Try: Use COMPOSER_MEMORY_LIMIT=-1 environment variable
+
+      4. **Dependency Conflicts** - New package conflicts with existing ones
+         - Try: args: ["--with-all-dependencies"]
+         - This updates related packages to compatible versions
+
+    type: command
+    command_template: "composer require {packages} {args}"
+    ssh_target: "web"
+    ssh_user: "${DDEV_SSH_USER}"
+    working_dir: "/var/www/html"
+    default_args:
+      args: ["--no-interaction"]
+
+    input_schema:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            type: string
+          description: >
+            One or more package names to require.
+            Examples: ["drupal/pathauto"], ["drupal/mcp_server", "drupal/tool:^1.0"].
+            Each element is shell-escaped and joined with spaces in the command.
+        args:
+          type: array
+          items:
+            type: string
+          description: >
+            Each flag or option as a separate array element.
+            Examples: ["--with-all-dependencies"], ["--no-dev", "--prefer-dist"].
+      required:
+        - packages

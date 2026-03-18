@@ -1,0 +1,74 @@
+# Drupal MCP Server Proxy Configuration
+# Proxies to a Drupal-specific MCP server
+#
+# == SETUP INSTRUCTIONS (run once per project) ==
+#
+# 1. Install and enable the module:
+#      composer_require: drupal/mcp
+#      drush pm:enable mcp -y
+#      drush_cr
+#
+# 2. Enable basic auth:
+#      drush config:set mcp.settings enable_auth true -y
+#      drush config:set mcp.settings auth_settings.enable_basic_auth true -y
+#
+# 3. Verify — expect a JSON-RPC response containing "protocolVersion":
+#      drush_php_eval:
+#        $req = \Symfony\Component\HttpFoundation\Request::create('/mcp/post','POST',[],[],[],
+#          ['HTTP_AUTHORIZATION'=>'Basic '.base64_encode('admin:admin'),'CONTENT_TYPE'=>'application/json'],
+#          json_encode(['jsonrpc'=>'2.0','method'=>'initialize','params'=>['protocolVersion'=>'2024-11-05','capabilities'=>[],'clientInfo'=>['name'=>'test','version'=>'1.0']],'id'=>1]));
+#        echo \Drupal::classResolver(\Drupal\mcp\Controller\McpController::class)->post($req)->getContent();
+#
+# 4. Ask the user for the Drupal admin username and password, then create
+#    .agents/tools-config/.env:
+#      DRUPAL_MCP_USER=<username>
+#      DRUPAL_MCP_PASS=<password>
+#
+# NOTE: Use http://web/mcp/post (internal container URL — bypasses Varnish).
+#       The tool config below already references this URL and the env vars above.
+
+tools:
+  - name: drupal
+    enabled: true
+    type: mcp_server
+    description: |
+      Drupal MCP server proxy for accessing tools provided by the Drupal site.
+
+      This proxies requests to the Drupal site's /mcp/post endpoint to discover
+      and call available tools. Discovered tools are prefixed with "drupal_"
+      (e.g., drupal_general_info).
+
+      Usage:
+      - Use discovered tools directly (e.g., drupal_general_info, drupal_entity_info)
+      - Each discovered tool is automatically prefixed
+
+    # Drupal MCP server endpoint - uses internal DDEV network address
+    server_url: "http://web/mcp/post"
+
+    # Basic authentication (if required by Drupal module)
+    auth_username: "${DRUPAL_MCP_USER}"
+    auth_password: "${DRUPAL_MCP_PASS}"
+
+    # Dynamically expose all tools from the remote MCP server
+    # Tools are automatically prefixed with the tool name: drupal_<tool_name>
+    expose_remote_tools: true
+
+    # Initialization timeout for fetching remote tools (seconds)
+    # Drupal MCP server can be slow, so allow enough time during startup
+    init_timeout: 60
+
+    # Request timeout in seconds (for runtime tool execution)
+    timeout: 60
+
+    # Input schema for JSON-RPC method calls
+    input_schema:
+      type: object
+      properties:
+        method:
+          type: string
+          description: "JSON-RPC method name (e.g., 'tools/list', 'tools/call')"
+        params:
+          type: object
+          description: "Method parameters (varies by method)"
+      required:
+        - method
