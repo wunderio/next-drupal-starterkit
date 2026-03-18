@@ -1,0 +1,248 @@
+#!/bin/bash
+#ddev-generated
+## Description: Set up devcontainer after DDEV starts (makes the agents container a real devcontainer)
+## Usage: set-up
+## Example: "ddev set-up"
+
+set -e
+
+# Resolve project root from this script's location (.ddev/commands/host/)
+PROJECT_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+cd "$PROJECT_ROOT"
+
+# Determine project name
+if [ -z "$DDEV_PROJECT" ]; then
+    DDEV_PROJECT=$(ddev describe -j 2>/dev/null | jq -r '.raw.name' 2>/dev/null || echo "ddev-agents")
+fi
+
+AGENTS_CONTAINER="ddev-${DDEV_PROJECT}-agents"
+WEB_CONTAINER="ddev-${DDEV_PROJECT}-web"
+
+echo "🔍 Project: $DDEV_PROJECT"
+
+# Verify DDEV is running
+if ! docker ps --format '{{.Names}}' | grep -q "^${AGENTS_CONTAINER}$"; then
+    echo "❌ agents container not running. Run 'ddev start' first."
+    exit 1
+fi
+
+CONTAINER_ID=$(docker inspect --format '{{.Id}}' "$AGENTS_CONTAINER")
+echo "✅ Agents container found: ${CONTAINER_ID:0:12}"
+
+# ==============================================================================
+# Resolve version placeholders in devcontainer.json
+# ==============================================================================
+DDEV_CONFIG="$PROJECT_ROOT/.ddev/config.yaml"
+PHP_VERSION=""
+NODE_VERSION=""
+
+if [ -f "$DDEV_CONFIG" ]; then
+    PHP_VERSION=$(grep -E '^\s*php_version:' "$DDEV_CONFIG" | sed -E 's/.*php_version:[[:space:]]*"?([^"]*)"?/\1/' | xargs)
+    NODE_VERSION=$(grep -E '^\s*nodejs_version:' "$DDEV_CONFIG" | sed -E 's/.*nodejs_version:[[:space:]]*"?([^"]*)"?/\1/' | xargs)
+fi
+
+PHP_VERSION="${PHP_VERSION:-8.3}"
+NODE_VERSION="${NODE_VERSION:-22}"
+
+DEVCONTAINER_JSON="$PROJECT_ROOT/.devcontainer/devcontainer.json"
+if [ -f "$DEVCONTAINER_JSON" ] && grep -q "__PHP_VERSION__\|__NODE_VERSION__\|__PROJECT_NAME__" "$DEVCONTAINER_JSON"; then
+    echo "📍 Resolving devcontainer.json: PHP $PHP_VERSION, Node $NODE_VERSION"
+    sed -i.bak \
+        -e "s|__PHP_VERSION__|${PHP_VERSION}|g" \
+        -e "s|__NODE_VERSION__|${NODE_VERSION}|g" \
+        -e "s|__PROJECT_NAME__|${DDEV_PROJECT}|g" \
+        "$DEVCONTAINER_JSON"
+    rm -f "${DEVCONTAINER_JSON}.bak"
+fi
+
+# ==============================================================================
+# Verify host Node.js (needed for devcontainer CLI and npx -y in MCP configs)
+# ==============================================================================
+NODE_MIN=22
+if ! command -v node &>/dev/null; then
+    echo "❌ Node.js is not installed. Version ${NODE_MIN}+ is required."
+    exit 1
+fi
+if ! HOST_NODE_MAJOR=$(node -e 'process.stdout.write(process.versions.node.split(".")[0])' 2>/dev/null); then
+    echo "❌ Failed to determine Node.js version. Version ${NODE_MIN}+ is required."
+    exit 1
+fi
+if ! [[ "$HOST_NODE_MAJOR" =~ ^[0-9]+$ ]]; then
+    echo "❌ Unexpected Node.js version format: $(node --version). Version ${NODE_MIN}+ is required."
+    exit 1
+fi
+if [ "$HOST_NODE_MAJOR" -lt "$NODE_MIN" ]; then
+    echo "❌ Node.js $(node --version) is too old. Version ${NODE_MIN}+ is required."
+    exit 1
+fi
+
+# Ensure devcontainer CLI is available
+if ! command -v devcontainer &>/dev/null; then
+    echo "⚠️  devcontainer CLI not found. Installing..."
+    npm install -g @devcontainers/cli
+fi
+
+echo "🚀 Running devcontainer set-up to apply devcontainer metadata and lifecycle commands..."
+
+# devcontainer set-up re-uses the already-running container by its ID,
+# applies devcontainer metadata labels, and runs postCreate/postAttach hooks.
+devcontainer set-up \
+    --container-id "$CONTAINER_ID"
+
+echo ""
+echo "✅ Devcontainer is ready."
+
+# ==============================================================================
+# SSH key generation and distribution (ephemeral)
+# ==============================================================================
+echo ""
+echo "🔐 Setting up SSH connectivity between agents and web containers..."
+
+# Verify web container is running
+if ! docker ps --format '{{.Names}}' | grep -q "^${WEB_CONTAINER}$"; then
+    echo "⚠️  Web container not running, skipping SSH setup."
+else
+    # Detect DDEV user from web container
+    DDEV_USER=$(docker exec "$WEB_CONTAINER" stat -c '%U' /var/www/html 2>/dev/null || echo "")
+    if [ -z "$DDEV_USER" ]; then
+        echo "⚠️  Could not detect DDEV user, skipping SSH setup."
+    else
+        echo "📍 Detected DDEV user: $DDEV_USER"
+
+        # Generate ephemeral Ed25519 keypair
+        SSH_TMPDIR=$(mktemp -d "${TMPDIR:-/tmp}/ddev-ssh-XXXXXX")
+        ssh-keygen -t ed25519 -f "$SSH_TMPDIR/id_ed25519" -N "" -q -C "ddev-agents-ephemeral"
+
+        # --- Place public key in web container ---
+        DDEV_USER_HOME=$(docker exec "$WEB_CONTAINER" bash -c "getent passwd $DDEV_USER | cut -d: -f6" 2>/dev/null)
+        if [ -n "$DDEV_USER_HOME" ] && [ "$DDEV_USER_HOME" != "/" ]; then
+            docker exec "$WEB_CONTAINER" bash -c "
+                mkdir -p '$DDEV_USER_HOME/.ssh'
+                chown '$DDEV_USER' '$DDEV_USER_HOME/.ssh'
+                chmod 700 '$DDEV_USER_HOME/.ssh'
+            "
+            cat "$SSH_TMPDIR/id_ed25519.pub" | docker exec -i "$WEB_CONTAINER" bash -c "
+                cat > '$DDEV_USER_HOME/.ssh/authorized_keys'
+                chown '$DDEV_USER' '$DDEV_USER_HOME/.ssh/authorized_keys'
+                chmod 600 '$DDEV_USER_HOME/.ssh/authorized_keys'
+            "
+            echo "✅ Public key placed in web container for user $DDEV_USER"
+        else
+            echo "⚠️  Could not determine home directory for $DDEV_USER"
+        fi
+
+        # --- Place private key and SSH config in agents container ---
+        # Use -u vscode to avoid cap_drop: ALL / chown issues
+        cat "$SSH_TMPDIR/id_ed25519" | docker exec -i -u vscode "$AGENTS_CONTAINER" bash -c '
+            mkdir -p ~/.ssh && chmod 700 ~/.ssh
+            cat > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+        '
+
+        # Write SSH client config (no User directive — tool configs specify ssh_user explicitly)
+        docker exec -i -u vscode "$AGENTS_CONTAINER" bash -c "cat > ~/.ssh/config && chmod 600 ~/.ssh/config" <<SSHCONFIG
+# Auto-generated by ddev set-up — ephemeral, regenerated each ddev start
+# User is specified per-connection by MCP tool configs (ssh_user field)
+Host web db
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    LogLevel ERROR
+    IdentityFile ~/.ssh/id_ed25519
+SSHCONFIG
+        echo "✅ Private key and SSH config placed in agents container"
+
+        # Set DDEV_SSH_USER env var in agents container for MCP tool configs
+        docker exec -i -u vscode "$AGENTS_CONTAINER" bash -c "
+            grep -q 'export DDEV_SSH_USER=' ~/.bashrc 2>/dev/null || echo 'export DDEV_SSH_USER=$DDEV_USER' >> ~/.bashrc
+            grep -q 'export DDEV_SSH_USER=' ~/.zshrc 2>/dev/null || echo 'export DDEV_SSH_USER=$DDEV_USER' >> ~/.zshrc
+        "
+        echo "✅ DDEV_SSH_USER=$DDEV_USER set in agents container shell configs"
+
+        # Clean up temp keypair from host
+        rm -rf "$SSH_TMPDIR"
+
+        # Verify SSH connectivity
+        if docker exec -u vscode "$AGENTS_CONTAINER" ssh -o ConnectTimeout=5 -o BatchMode=yes "$DDEV_USER@web" true 2>/dev/null; then
+            echo "✅ SSH connectivity verified: agents → web"
+        else
+            echo "⚠️  SSH connectivity test failed — sshd may still be starting, try 'ssh $DDEV_USER@web' from agents container"
+        fi
+    fi
+fi
+
+
+# ==============================================================================
+# Pre-populate VS Code User mcp.json for gallery-mode MCP servers
+# ==============================================================================
+# VS Code requires MCP servers to be in User/mcp.json with a "gallery" field
+# for registryOnly access mode. This pre-populates it so the server is
+# auto-enabled without manual @mcp gallery installation.
+WDRMCP_VERSION=$(docker exec "$AGENTS_CONTAINER" npm view @wunderio/wdrmcp version 2>/dev/null || echo "0.1.17")
+SUPERGATEWAY_VERSION=$(docker exec "$AGENTS_CONTAINER" npm view supergateway version 2>/dev/null || echo "3.4.3")
+docker exec -i -u vscode "$AGENTS_CONTAINER" bash -c '
+    mkdir -p ~/.vscode-server/data/User
+    cat > ~/.vscode-server/data/User/mcp.json
+' <<MCPJSON
+{
+  "servers": {
+    "wdrmcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@wunderio/wdrmcp@${WDRMCP_VERSION}",
+        "--tools-config",
+        "/workspace/.agents/tools-config"
+      ],
+      "gallery": "https://mcp.wdr.io",
+      "version": "${WDRMCP_VERSION}"
+    },
+    "wunder-quality-system": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "supergateway@${SUPERGATEWAY_VERSION}",
+        "--streamableHttp",
+        "https://quality.wunder.io/mcp",
+        "--oauth2Bearer",
+        "${WQS_MCP_API_KEY}"
+      ],
+      "gallery": "https://mcp.wdr.io",
+      "version": "1.0.0"
+    }
+  },
+  "inputs": []
+}
+MCPJSON
+echo "✅ VS Code MCP gallery config pre-populated (wdrmcp@${WDRMCP_VERSION})"
+
+# ==============================================================================
+# Generate Copilot CLI MCP config
+# ==============================================================================
+if [ -d "$PROJECT_ROOT/.agents/tools-config" ]; then
+    docker exec -i -u vscode "$AGENTS_CONTAINER" bash -c 'mkdir -p ~/.copilot && cat > ~/.copilot/mcp-config.json' <<MCPCONFIG
+{
+  "mcpServers": {
+    "wdrmcp": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; export DDEV_SSH_USER=${DDEV_USER:-}; [ -f /workspace/.env ] && source /workspace/.env; exec npx -y @wunderio/wdrmcp --tools-config /workspace/.agents/tools-config"
+      ],
+      "tools": ["*"]
+    },
+    "wunder-quality-system": {
+      "type": "http",
+      "url": "https://quality.wunder.io/mcp",
+      "headers": {
+        "Authorization": "Bearer \${WQS_MCP_API_KEY}"
+      }
+    }
+  }
+}
+MCPCONFIG
+    echo "✅ MCP config generated for Copilot CLI (~/.copilot/mcp-config.json)"
+fi
+
+echo ""
+echo "✅ Setup complete. Open VS Code and select 'Reopen in Container' to attach."

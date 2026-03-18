@@ -46,3 +46,7 @@ lerna-debug.log*
 
 # allow .env.local.example:
 !.env.local.example
+
+# Cypress gitignore
+/cypress/screenshots/
+/cypress/videos/

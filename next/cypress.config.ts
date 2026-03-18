@@ -7,8 +7,8 @@ export default defineConfig({
     },
   },
   env: {
-    MAILPIT_URL: "http://mail.lndo.site",
-    FRONTEND_URL: "https://frontend.lndo.site",
-    BACKEND_URL: "https://backend.lndo.site",
+    MAILPIT_URL: "http://mail.ddev.site",
+    FRONTEND_URL: "https://frontend.ddev.site",
+    BACKEND_URL: "https://next-drupal-starterkit.ddev.site",
   },
 });

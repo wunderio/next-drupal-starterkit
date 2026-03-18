@@ -1,4 +1,4 @@
-# Keep ES version in sync with .lando.yml
+# Keep ES version in sync with .ddev/config.yaml
 ARG ES_VERSION=8.13.4
 FROM docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
 ARG ES_VERSION

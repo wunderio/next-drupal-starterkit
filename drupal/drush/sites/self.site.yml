@@ -1,8 +1,8 @@
 # Edit or remove this file as needed.
 # Docs at https://github.com/drush-ops/drush/blob/master/examples/example.site.yml
 local:
-  root: ${env.LANDO_WEBROOT}
-  uri: https://${env.LANDO_APP_NAME}.${env.LANDO_DOMAIN}
+  root: ${env.DDEV_APPROOT}/${env.DDEV_DOCROOT}
+  uri: https://${env.DDEV_HOSTNAME}
 
 current:
   host: ${ENVIRONMENT}-shell.${REPOSITORY}

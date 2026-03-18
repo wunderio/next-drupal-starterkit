@@ -1,0 +1,33 @@
+{
+
+  "_comment": "#ddev-generated",
+  "tools": {
+    "deny": [
+      "git push*",
+      "git remote*",
+      "git checkout*",
+      "git reset --hard*",
+      "git clean -f*",
+      "git branch -D*",
+      "npm publish*",
+      "composer publish*",
+      "ssh *",
+      "rm -rf /*",
+      "sudo *"
+    ]
+  },
+  "files": {
+    "deny": [
+      ".env",
+      ".env.*",
+      "*secrets*",
+      "**/credentials*",
+      "**/*.pem",
+      "**/*.key",
+      "**/.npmrc",
+      "**/.htpasswd",
+      "wp-config.php",
+      "**/settings.local.php"
+    ]
+  }
+}

@@ -19,29 +19,15 @@ The template includes all you need to have a working multi-language decoupled Dr
 
 This example is meant to be used together with the [Silta](https://wunderio.github.io/silta/) hosting system by [Wunder](https://www.wunder.io), but it can be used with any hosting system.
 
-## 🤓 Lando or DDEV? Your choice!
-
-This starterkit can be used either with [Lando](https://lando.dev/) or with [DDEV](https://www.DDEV.com/). The only requirement is to have either one of those installed.
-
-### Lando minimum version
-
-The minimum version of lando required is 3.21.
-
-> Check the `version` property in the `.lando.yml` file to see which version of Lando is currently supported.
-
 ### ⚠️⚠️ NOTE: Using npm
 
-Instead of running npm operations in your host machine, _this template requires you to use npm inside Lando or DDEV_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend without the need of additional configuration steps.
+Instead of running npm operations in your host machine, _this template requires you to use npm inside DDEV_: this ensures the same node version is used by all developers participating in the project, and also that the node process has the right environment variables to connect to the backend without the need of additional configuration steps.
 
-**Just prefix all npm operations with `lando` or `ddev`.**
+**Just prefix all npm operations with `ddev`.**
 
-So instead of `npm install`, run `lando npm install` or `ddev npm install`, instead of `npm run dev` run `lando npm run dev` or `ddev npm run dev`, etc.
+So instead of `npm install`, run `ddev npm install`, instead of `npm run dev` run `ddev npm run dev`, etc.
 
 > ⚠️⚠️ For DDEV, when using npm commands you have to make sure that you are in the `next` directory.
-
-#### Stopping a running npm operation running inside the Lando node container
-
-If you have closed the terminal window where you were running the server with `lando npm start` or `lando npm run dev`, and you want to stop the running npm operation, you can use the specially created `lando npm-stop` command that will log into the node container and kill all node processes there.
 
 ## 🤸 Getting started
 
@@ -50,14 +36,8 @@ Follow this guide to get the backend and frontend up and running. You can either
 ### 🏎️ Quickstart
 
 1. Clone this repository
-2. Choose which local environment you want to use: **Lando** or **DDEV**.
-3. Run the setup script corresponding to your chosen local environment:
-
-```bash
-./setup-lando.sh
-```
-
-or
+2. For local environment, use **DDEV**.
+3. Run the setup script:
 
 ```bash
 ./setup-ddev.sh
@@ -68,7 +48,7 @@ The script will execute a series of commands in sequence. If an error occurs, yo
 If the script has failed on some step, and instead of continuing you want to start from scratch, you can run the script with the `-c` flag:
 
 ```bash
-./setup-[lando/ddev].sh -c
+./setup-ddev.sh -c
 ```
 
 > NOTE: the script will install the site from scratch. Export your database if you have started working with the template, and you have something valuable in it. :)
@@ -76,22 +56,6 @@ If the script has failed on some step, and instead of continuing you want to sta
 ## 👨‍💻Urls
 
 After the setup is complete, you can access the site at the following URLs:
-
-### With Lando
-
-Lando has two separate containers for the backend and frontend, so the URLs are different:
-
-| Backend                                   | Frontend                    |
-| ----------------------------------------- | --------------------------- |
-| https://next-drupal-starterkit.lndo.site/ | https://frontend.lndo.site/ |
-
-You can get a more detailed list of all the services and their urls with the command:
-
-```bash
-lando info
-```
-
-### With DDEV
 
 DDEV has a single container for both the backend and frontend, so the URLs differ only by the port:
 
@@ -131,7 +95,7 @@ The Next.js site will then create the metatags using a combination of these two 
 ### Search indexing and frontend search interface
 
 The site is set up to work with Elasticsearch to provide a complete search experience.
-Both the Lando and DDEV setups include spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module, which in turn makes use of the [Elasticsearch helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
+The DDEV setups include spinning up an Elasticsearch instance with the required plugins. The content normalization and index handling is managed via the custom `wunder_search` module, which in turn makes use of the [Elasticsearch helper Drupal contrib module](https://www.drupal.org/project/elasticsearch_helper).
 On the frontend side, the search user uses the [Elastic UI library](https://elastic.github.io/eui/).
 The frontend site queries Elasticsearch via a simple proxy controller in Drupal, also provided by the included `wunder_search` custom Drupal module.
 The included frontend search UI is provided by [Searchkit](https://www.searchkit.co/).
@@ -176,9 +140,9 @@ TypeScript is setup quite loosely by default to minimise friction and make it ac
 
 The project uses GraphQL to fetch data from the backend. The queries are defined in the `next/lib/graphql` directory. The queries are typed using the `graphql-codegen` package, which generates TypeScript types from the queries. The types are then used to type the data fetched from the backend.
 
-When adding or modifying queries and fragments, the codegen script needs to be run to generate the corresponding types from the schema. Though you can always run `lando npm run graphql-codegen` or `ddev npm run graphql-codegen` yourself if needed, you shouldn't normally need to: `lando npm run build` or `ddev npm run build` will run the codegen before the build, and `lando npm run dev` or `ddev npm run dev` will start the codegen in watch mode alongside starting Next.js in development mode. The output of the codegen is gitignored, as the same step will be run on the CI server.
+When adding or modifying queries and fragments, the codegen script needs to be run to generate the corresponding types from the schema. Though you can always run `ddev npm run graphql-codegen` yourself if needed, you shouldn't normally need to: `ddev npm run build` will run the codegen before the build, and `ddev npm run dev` will start the codegen in watch mode alongside starting Next.js in development mode. The output of the codegen is gitignored, as the same step will be run on the CI server.
 
-Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `lando drush cr` or `ddev drush cr` to clear the Drupal cache.
+Note that when there are changes on the GraphQL server schema itself, you will need to stop and start the command again to fetch the new schema definition (it will keep watching your changed files, but will only re-fetch the schema from the server when the codegen command first runs). Also, you might need to run `ddev drush cr` to clear the Drupal cache.
 
 ##### VSCode extensions to work with GraphQL and TypeScript
 
@@ -192,57 +156,71 @@ Please note:
 The environment variables used by the frontend are also checked for type safety. If used correctly, a Zod error will prevent the frontend from building if the environment variables are not set according to the schema defined in `next/env.ts`. 
 
 To add a new environment variable:
-1. Add it to `.lando.yml`, under services > node > overrides > environment. or to `.ddev/config.yaml` for DDEV.
+1. Add it to `.ddev/config.yaml` for DDEV.
 2. Add it to `next/env.ts`. Note that it must be added twice there - once under server/client to define its schema, and once under `runtimeEnv` to read the actual value.
 3. Import it in the file where it's used with `import { env } from "@/env";` and use it like `env.MY_ENV_VAR`. At this point, your environment variable should be working locally.
-4. To ensure it also works in CircleCI and Silta, also add it to`.circleci/config.yml` and `silta-next.yml`.
+4. To ensure it also works in CircleCI and Silta, also add it to `.circleci/config.yml` and `silta-next.yml`.
 
 #### XML sitemap
 
 The Next.js frontend will query the Drupal backend to generate a `/sitemap.xml` path that can be submitted to search engines.
 
-### Testing with Cypress (Lando only)
+### DDEV Agents Add-on
+ 
+The setup includes the **DDEV Agents** plugin developed by Wunder, which adds a safe Devcontainer environment to run AI agents. Refer to the [project repository](https://github.com/wunderio/ddev-agents) for more information and setup instructions.
 
-The template includes example tests to be run with Cypress. The Lando setup includes a headless browser and Cypress, so you can run the tests locally without the need to install anything else, but it won't be able to use the visual Cypress application. See below for more details.
+### Testing with Cypress
 
-#### Running tests locally inside Lando on the command line
+The template includes example tests to be run with Cypress. This will require installation steps before it works in the DDEV environment.
 
-To run the Cypress tests inside Lando:
+Follow these steps to make the Cypress work in DDEV:
 
-1. make sure the backend is running
-2. run `lando npm run build` to build the frontend
-3. run `lando npm run start` to start serving the frontend
-4. open another terminal and run `lando npm run cypress:run` to start the Cypress test runner
+1. Run `cd next`.
+2. Run `ddev npm install` to install all dependencies including TypeScript (required for Cypress tests).
+3. Run `ddev npx cypress install`. This will download and install the Cypress binary for DDEV.
+4. Run `ddev exec ./install-cypress-deps.sh` to install Xvfb and other required Cypress dependencies inside the DDEV container.
+
+> **Note:** The Xvfb and Cypress dependencies must be installed inside the DDEV container, not on your host machine. If you run the installation command without `ddev exec`, Cypress will fail to run with an error about missing Xvfb.
+
+> **Troubleshooting:** If step 4 fails with a GPG key error, the script includes a workaround that temporarily disables the problematic repository. Alternatively, you can run the command manually:
+> ```bash
+> ddev exec "sudo apt-get update && sudo apt-get install -y xvfb libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth"
+> ```
+
+#### Running tests locally inside DDEV on the command line
+
+To run the Cypress tests inside DDEV:
+
+1. Make sure the backend is running
+2. Navigate to the `next` directory: `cd next`
+3. Run `ddev npx cypress install` to ensure the Cypress binary is available (if you haven't done this already or if you see an error about Cypress not being installed)
+4. Run `ddev npm run build` to build the frontend
+5. Run `ddev npm run start` to start serving the frontend
+6. Open another terminal, navigate to `next` directory, and run `ddev npm run cypress:run` to start the Cypress test runner
 
 A video of the run will be recorded, and it will be available at `next/cypress/videos`.
 
+> **Important:** Always ensure you're in the `next` directory when running Cypress commands. If you get an error saying "No version of Cypress is installed", run `ddev npx cypress install` from the `next` directory.
+
 #### Using the Cypress application
 
-If you want to run the visual Cypress application, you will need to run cypress outside of Lando, on your host computer. For this to work:
+If you want to run the visual Cypress application, you will need to run cypress outside of DDEV, on your host computer. For this to work:
 
-1. ensure you are using the correct node version, matching what we use inside Lando (see the `.lando.yml` file for details)
+1. ensure you are using the correct node version, matching what we use inside DDEV (see the `.ddev/config.yaml` file for details)
 2. ensure your machine has the correct dependencies installed (see the [Cypress docs](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements) for details)
 3. check which version of Cypress is specified in `next/package.json` and install the same version on your host computer globally with `npm install -g cypress@<version>`
-4. while in the `/next` directory, run `npm run cypress:open` (notice that there's no `lando` at the beginning of the command).
+4. while in the `/next` directory, run `npm run cypress:open` (notice that there's no `ddev` at the beginning of the command).
 
 You can then run your tests inside the Cypress application.
 
 #### Redis caching
 
-The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. Both the ddev and lando setup include redis by default.
+The project is set up to use [Redis](https://redis.io/) if available to cache the responses from the backend. The ddev setup includes redis by default.
 The connection between next.js and redis is handled by the [@neshca/cache-handler](https://www.npmjs.com/package/@neshca/cache-handler) package.
 
-### Connecting to Redis in the local environment
+#### Connecting to Redis in the local environment
 
 You can connect to Redis and interact with it using the [redis cli](https://redis.io/docs/latest/develop/connect/cli/) in the local environment by running the following command:
-
-If you are using Lando:
-
-```bash
-lando redis-cli
-```
-
-If you are using DDEV:
 
 ```bash
 ddev redis

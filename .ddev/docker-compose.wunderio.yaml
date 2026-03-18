@@ -1,0 +1,8 @@
+#ddev-generated
+services:
+  web:
+    volumes:
+      # $WUNDERIO_GLOBAL_CACHE_WUNDERIO is set in config.wunderio.yaml, but
+      # it's not here. So we need to use the full path to the wunderio
+      # directory.
+      - ~/.ddev/wunderio:/mnt/ddev-global-cache/wunderio

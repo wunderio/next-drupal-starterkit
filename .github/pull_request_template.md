@@ -14,9 +14,11 @@
 
 ### Testing locally:
 
-1. rebuild the project locally with Lando, starting from scratch `./setup-lando.sh -c`
-2. open another terminal window while both frontend and backend are running and run the Cypress tests: `lando npm run cypress:run`
-3. also run the Ddev setup by running `./setup-ddev.sh -c` after having shut down lando with `lando poweroff` 
+1. rebuild the project locally with DDEV, starting from scratch `./setup-ddev.sh -c`
+2. if you have not set up Cypress in this environment yet, run the one-time setup commands:
+   - `ddev npx cypress install`
+   - from the project root directory, run: `ddev exec ./install-cypress-deps.sh`
+3. from the `next` directory, open another terminal window while both frontend and backend are running and run the Cypress tests: `ddev npm run cypress:run`
 
 ## Best practices:
 

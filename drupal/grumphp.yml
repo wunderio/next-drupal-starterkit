@@ -32,4 +32,4 @@ grumphp:
     - Wunderio\GrumPHP\Task\YamlLint\YamlLintExtensionLoader
     - Wunderio\GrumPHP\Task\JsonLint\JsonLintExtensionLoader
   git_hook_variables:
-    EXEC_GRUMPHP_COMMAND: lando php
+    EXEC_GRUMPHP_COMMAND: ddev php

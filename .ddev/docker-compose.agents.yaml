@@ -1,0 +1,44 @@
+#ddev-generated
+services:
+  agents:
+    container_name: ddev-${DDEV_PROJECT}-agents
+    # Using locally built devcontainer image (built via `ddev build-devcontainer`)
+    image: ddev-${DDEV_PROJECT}-devcontainer:latest
+    hostname: agents
+    user: vscode
+    restart: "no"
+    # Security hardening: Drop all Linux capabilities. The container runs as
+    # non-root (vscode), so capabilities are already inert for the running
+    # process. This additionally restricts the bounding set, preventing even
+    # root (via docker exec -u root) from acquiring capabilities.
+    # No cap_add needed — outbound networking, file I/O, and user-level
+    # package installs (pip, npm) all work without any capabilities.
+    cap_drop:
+      - ALL
+    # Security hardening: Prevent privilege escalation via setuid/setgid
+    # binaries. This intentionally disables sudo inside the container,
+    # closing the passwordless-sudo path in the base devcontainer image.
+    # Root access is still available from the host via:
+    #   docker exec -u root -it <container> bash
+    # Devcontainer feature installation is unaffected (runs during image
+    # build, not in the running container).
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ../:/workspace:cached
+      - ddev-global-cache:/mnt/ddev-global-cache
+      - copilot-state:/home/vscode/.copilot-state
+      - ./copilot-managed-config.json:/home/vscode/.copilot-managed-config.json:ro
+    working_dir: /workspace
+    environment:
+      - DDEV_PROJECT=${DDEV_PROJECT}
+    command: ["sleep", "infinity"]
+    labels:
+      com.ddev.site-name: ${DDEV_PROJECT}
+      com.ddev.app-type: agents
+
+volumes:
+  copilot-state:
+    name: ddev-${DDEV_PROJECT}-copilot-state
+  ddev-global-cache:
+    external: true

@@ -1,0 +1,70 @@
+# Logs Access Configuration
+# Read server and application logs for debugging
+# Each log type is a separate command for flexibility - logs may reside in different containers
+
+tools:
+  - name: logs_nginx_access
+    enabled: true
+    description: |
+      Read Nginx web server access logs.
+
+      Shows HTTP requests to the web server including method, path, status, response time, etc.
+      Default: Last 100 lines. Maximum: 1000 lines.
+
+    type: command
+    command_template: "tail -n {lines} /var/log/nginx/access.log"
+    ssh_target: "web"
+    ssh_user: "${DDEV_SSH_USER}"
+    default_args:
+      lines: "100"
+
+    input_schema:
+      type: object
+      properties:
+        lines:
+          type: integer
+          description: Number of lines to return (default 100, max 1000)
+
+  - name: logs_nginx_error
+    enabled: true
+    description: |
+      Read Nginx web server error logs.
+
+      Shows errors, warnings, and diagnostics from the Nginx web server.
+      Default: Last 100 lines. Maximum: 1000 lines.
+
+    type: command
+    command_template: "tail -n {lines} /var/log/nginx/error.log"
+    ssh_target: "web"
+    ssh_user: "${DDEV_SSH_USER}"
+    default_args:
+      lines: "100"
+
+    input_schema:
+      type: object
+      properties:
+        lines:
+          type: integer
+          description: Number of lines to return (default 100, max 1000)
+
+  - name: logs_php_fpm
+    enabled: true
+    description: |
+      Read PHP-FPM runtime error logs.
+
+      Shows PHP warnings, notices, errors, and fatal exceptions from the PHP-FPM process.
+      Default: Last 100 lines. Maximum: 1000 lines.
+
+    type: command
+    command_template: 'tail -n {lines} /var/log/php-fpm.log 2>/dev/null || echo "PHP-FPM log not found"'
+    ssh_target: "web"
+    ssh_user: "${DDEV_SSH_USER}"
+    default_args:
+      lines: "100"
+
+    input_schema:
+      type: object
+      properties:
+        lines:
+          type: integer
+          description: Number of lines to return (default 100, max 1000)

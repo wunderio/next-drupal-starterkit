@@ -1,10 +1,10 @@
 import { useTranslations } from "next-intl";
 import { ReactElement } from "react";
 
+import Ddev from "@/styles/icons/ddev-logo.svg";
 import Drupal from "@/styles/icons/drupal-icon.svg";
-import Lando from "@/styles/icons/lando-logo.svg";
 import NextJS from "@/styles/icons/nextjs-logo.svg";
-import React from "@/styles/icons/react-icon.svg";
+import ReactIcon from "@/styles/icons/react-icon.svg";
 import Tailwind from "@/styles/icons/tailwindcss.svg";
 
 interface Logo {
@@ -16,7 +16,7 @@ interface Logo {
 const logos: Logo[] = [
   {
     image: (
-      <React className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+      <ReactIcon className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
     ),
     label: "React logo",
     id: "react-logo",
@@ -44,10 +44,10 @@ const logos: Logo[] = [
   },
   {
     image: (
-      <Lando className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
+      <Ddev className="h-auto max-h-[5rem] w-[100%] max-w-[11.25rem] align-middle" />
     ),
-    label: "Lando logo",
-    id: "lando-logo",
+    label: "DDEV logo",
+    id: "ddev-logo",
   },
 ];
 

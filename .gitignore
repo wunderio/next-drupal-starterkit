@@ -18,10 +18,9 @@ node_modules
 
 # Ignore start.sh script status file
 .last_successful_command_ddev
-.last_successful_command_lando
 
-# Ignore Lando data volumes
-/.lando/data-*
+# Ignore custom DDEV web build files (developers can create their own)
+.ddev/web-build/
 
 # Unencrypted secrets
 /silta/secrets*.yml

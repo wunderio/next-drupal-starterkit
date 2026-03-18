@@ -65,6 +65,14 @@ hooks:
           rm .ddev/elasticsearch/restart_needed
         fi
 
+        # Automatic configuration for Git hooks.
+        if [ ! -d .git ]; then
+          echo "No Git repository available, skipping the hook configuration."
+        else
+          echo "Hook configuration with core.hooksPath"
+          git config core.hooksPath .githooks
+        fi
+
 web_extra_exposed_ports:
   - name: node-app
     container_port: 3000

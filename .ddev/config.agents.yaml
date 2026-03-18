@@ -1,0 +1,10 @@
+#ddev-generated
+# Hooks configuration for ddev-agents addon
+# This file configures DDEV to build the devcontainer image before starting
+
+hooks:
+  pre-start:
+    - exec-host: .ddev/commands/host/build-devcontainer
+
+  post-start:
+    - exec-host: .ddev/commands/host/set-up
