@@ -56,6 +56,84 @@ const nextConfig = {
     ];
   },
 
+  // More: https://nextjs.org/docs/api-reference/next.config.js/headers
+  async headers() {
+    return [
+      // Add security headers for each page.
+      {
+        // This will match all pages. Examples: "/", "/uk", "/uk/node/1".
+        source: "/:path*",
+        headers: [
+          {
+            // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
+          },
+          {
+            // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+        ],
+      },
+
+      // Enable caching for all pages, setting a short max-age
+      // and stale-while-revalidate to allow for quick updates.
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "max-age=60",
+          },
+          // Set Surrogate-Control header to allow Fastly to cache the page.
+          // https://www.fastly.com/documentation/guides/concepts/edge-state/cache/stale/#applying-staleness-directives-only-to-fastlys-cache
+          {
+            key: "Surrogate-Control",
+            value:
+              "max-age=300, stale-while-revalidate=60, stale-if-error=86400",
+          },
+        ],
+      },
+
+      // Disable cache for all pages when the "next_drupal_draft_data" cookie is present.
+      {
+        source: "/:path*",
+        has: [{ type: "cookie", key: "next_drupal_draft_data" }],
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "private, no-cache, no-store, max-age=0, must-revalidate",
+          },
+        ],
+      },
+
+      // Disable cache for requests containing "_rsc" query parameter.
+      // Caching RSC requests would show JSON response for end user when they visit this cached page.
+      {
+        source: "/:path*",
+        has: [{ type: "query", key: "_rsc" }],
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "private, no-cache, no-store, max-age=0, must-revalidate",
+          },
+        ],
+      },
+
+      // Disable cache for API endpoint.
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "private, no-cache, no-store, max-age=0, must-revalidate",
+          },
+        ],
+      },
+    ];
+  },
+
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>

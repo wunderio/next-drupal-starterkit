@@ -8,7 +8,6 @@ import { Node } from "@/components/node";
 import { REVALIDATE_LONG } from "@/lib/constants";
 import { getNodeByPathQuery } from "@/lib/drupal/get-node";
 import { getNodeMetadata } from "@/lib/drupal/get-node-metadata";
-import { getNodeStaticParams } from "@/lib/drupal/get-node-static-params";
 import {
   extractEntityFromRouteQueryResult,
   extractRedirectFromRouteQueryResult,
@@ -25,16 +24,6 @@ export async function generateMetadata({
   const path = "/" + slug.join("/");
   const metadata = await getNodeMetadata(path, locale);
   return metadata;
-}
-
-// Generates static paths for all node types.
-export async function generateStaticParams({
-  params: { locale },
-}: NodePageParams) {
-  // TODO: Add the node types you want to generate static paths in the array below.
-  const nodeTypes = ["nodePages", "nodeArticles"];
-  const params = await getNodeStaticParams(nodeTypes, locale, 10);
-  return params;
 }
 
 // We set the revalidate time to a long period because the content is not expected to change frequently.

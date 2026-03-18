@@ -20,6 +20,9 @@ import {
 
 import { LinkWithLocale } from "@/i18n/routing";
 
+export const dynamic = "force-dynamic"; // This page is dynamic because it fetches user-specific data.
+export const revalidate = 0; // Disable revalidation for this page, as it fetches user-specific data.
+
 type DashboardPageParams = {
   params: {
     locale: string;

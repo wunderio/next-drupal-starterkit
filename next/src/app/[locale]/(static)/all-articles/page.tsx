@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { REVALIDATE_LONG } from "@/lib/constants";
 import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
 
 import ArticlesPagination from "./_components/articles-pagination";
@@ -41,8 +40,6 @@ export async function generateMetadata({
     },
   };
 }
-
-export const revalidate = REVALIDATE_LONG;
 
 export default async function AllArticlesPage({
   params: { locale },
