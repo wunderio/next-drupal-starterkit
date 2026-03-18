@@ -37,7 +37,6 @@ Follow this guide to get the backend and frontend up and running. You can either
 
 1. Clone this repository
 2. For local environment, use **DDEV**.
-> NOTE: DDev 1.25 and up is required.
 3. Run the setup script:
 
 ```bash
