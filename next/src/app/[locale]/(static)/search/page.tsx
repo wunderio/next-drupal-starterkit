@@ -58,7 +58,6 @@ export default function Web({
         }}
         routing
       >
-        {/* @ts-ignore react-instantsearch types not yet updated for React 19 */}
         <Configure hitsPerPage={10} />
         <div className="flex flex-col md:flex-row">
           <aside className="mr-2 w-56">
