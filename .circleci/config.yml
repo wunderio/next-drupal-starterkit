@@ -6,7 +6,7 @@ orbs:
 executors:
   cicd82:
     docker:
-      - image: circleci-php8.3-node22-composer2-sqlite3.45-v1
+      - image: wunderio/silta-cicd:circleci-php8.3-node22-composer2-sqlite3.45-v1
     resource_class: small
 
 commands:
