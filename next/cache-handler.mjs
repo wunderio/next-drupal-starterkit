@@ -1,17 +1,16 @@
 // @ts-check
 
-import { CacheHandler } from "@neshca/cache-handler";
-import createLruHandler from "@neshca/cache-handler/local-lru";
-import createRedisHandler from "@neshca/cache-handler/redis-strings";
-import { createClient } from "redis";
+import { CacheHandler } from "@fortedigital/nextjs-cache-handler";
+import createLruHandler from "@fortedigital/nextjs-cache-handler/local-lru";
+import createRedisHandler from "@fortedigital/nextjs-cache-handler/redis-strings";
+import { createClient } from "@redis/client";
 
 // This should match the REVALIDATE_LONG value in src/lib/constants.ts
 const defaultStaleAge = 60 * 10;
 
 CacheHandler.onCreation(async ({ buildId }) => {
-  /** @type {import("redis").RedisClientType | undefined} */
   let client;
-  /** @type {import("@neshca/cache-handler").Handler | undefined} */
+  /** @type {any} */
   let handler;
 
   if (
@@ -68,7 +67,6 @@ CacheHandler.onCreation(async ({ buildId }) => {
     }
 
     if (client?.isReady) {
-      /** @type {import("@neshca/cache-handler/redis-strings").CreateRedisStringsHandlerOptions} */
       const redisHandlerOptions = {
         client,
         keyPrefix: `cache-${buildId}:`,

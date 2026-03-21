@@ -35,10 +35,7 @@ const nextConfig = {
     }),
   },
 
-  experimental: {
-    instrumentationHook: true,
-    swrDelta: 31536000, // 1 year
-  },
+  expireTime: 31536000, // 1 year (formerly experimental.swrDelta)
 
   async generateBuildId() {
     return process.env.CIRCLECI

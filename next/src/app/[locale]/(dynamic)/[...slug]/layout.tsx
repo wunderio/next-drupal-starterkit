@@ -10,11 +10,12 @@ import { extractEntityFromRouteQueryResult } from "@/lib/graphql/utils";
 
 export default async function DynamicLayout({
   children,
-  params: { locale, slug },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string; slug: string[] };
+  params: Promise<{ locale: string; slug: string[] }>;
 }) {
+  const { locale, slug } = await params;
   setRequestLocale(locale);
   const path = "/" + slug.join("/");
 

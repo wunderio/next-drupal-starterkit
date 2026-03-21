@@ -13,7 +13,7 @@ export function useEventListener({
   handler,
   element = globalThis,
 }: UseEventListenerProps) {
-  const savedHandler = useRef<EventHandler>();
+  const savedHandler = useRef<EventHandler>(undefined);
 
   useEffect(() => {
     savedHandler.current = handler;

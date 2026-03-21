@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { use } from "react";
 import {
   Configure,
   DynamicWidgets,
@@ -38,7 +39,12 @@ const Panel = ({ header, children }: any) => (
   </div>
 );
 
-export default function Web({ params: { locale } }) {
+export default function Web({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = use(params);
   const t = useTranslations();
   return (
     <div className="">
@@ -52,6 +58,7 @@ export default function Web({ params: { locale } }) {
         }}
         routing
       >
+        {/* @ts-ignore react-instantsearch types not yet updated for React 19 */}
         <Configure hitsPerPage={10} />
         <div className="flex flex-col md:flex-row">
           <aside className="mr-2 w-56">

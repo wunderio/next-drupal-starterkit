@@ -7,7 +7,7 @@ import { SkipToContentLink } from "@/components/ui/skip-to-content-link";
 import { DraftAlertClient } from "./draft-alert-client";
 
 export default async function DraftAlert() {
-  const { isEnabled } = draftMode();
+  const { isEnabled } = await draftMode();
   const t = await getTranslations();
 
   return (
