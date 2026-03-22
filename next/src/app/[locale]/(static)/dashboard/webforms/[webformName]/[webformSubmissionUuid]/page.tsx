@@ -21,11 +21,11 @@ import {
 import { LinkWithLocale } from "@/i18n/routing";
 
 type DashboardPageParams = {
-  params: {
+  params: Promise<{
     locale: string;
     webformName: string;
     webformSubmissionUuid: string;
-  };
+  }>;
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -36,9 +36,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function DashboardPage({
-  params: { locale, webformName, webformSubmissionUuid },
-}: DashboardPageParams) {
+export default async function DashboardPage({ params }: DashboardPageParams) {
+  const { locale, webformName, webformSubmissionUuid } = await params;
   setRequestLocale(locale);
   const t = await getTranslations();
 

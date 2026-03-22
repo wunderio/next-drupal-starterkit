@@ -1,5 +1,5 @@
+import { unstable_cache } from "next/cache";
 import { cache } from "react";
-import { neshCache } from "@neshca/cache-handler/functions";
 import { AbortError } from "p-retry";
 
 import { REVALIDATE_LONG } from "@/lib/constants";
@@ -23,8 +23,16 @@ export async function fetchMenu(name: MenuAvailable, locale: string) {
   });
 }
 
-// Here we wrap the function in react cache and nesh cache  avoiding unnecessary requests.
-const cachedFetchMenu = neshCache(cache(fetchMenu));
+// Wrap with unstable_cache for persistent caching with tag-based revalidation,
+// and react cache for per-request deduplication.
+// cache() must be called at module scope so a single memoized function is
+// shared across all callers within the same request.
+const cachedFetchMenu = cache((name: MenuAvailable, locale: string) =>
+  unstable_cache(() => fetchMenu(name, locale), [`menu-${name}-${locale}`], {
+    tags: [name],
+    revalidate: REVALIDATE_LONG,
+  })(),
+);
 
 /**
  * Gets the menu data for a given menu name and locale.
@@ -36,11 +44,7 @@ const cachedFetchMenu = neshCache(cache(fetchMenu));
  */
 export async function getMenu(name: MenuAvailable, locale: string) {
   try {
-    const menus = await cachedFetchMenu(
-      { tags: [name], revalidate: REVALIDATE_LONG },
-      name,
-      locale,
-    );
+    const menus = await cachedFetchMenu(name, locale);
     return menus.menu;
   } catch (error) {
     const type =

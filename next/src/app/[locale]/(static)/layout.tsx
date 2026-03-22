@@ -2,13 +2,14 @@ import { setRequestLocale } from "next-intl/server";
 
 import PageLayout from "@/components/page-layout";
 
-export default function StaticLayout({
+export default async function StaticLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   setRequestLocale(locale);
 
   return <PageLayout>{children}</PageLayout>;

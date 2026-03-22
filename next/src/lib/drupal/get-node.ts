@@ -1,5 +1,5 @@
+import { unstable_cache } from "next/cache";
 import { cache } from "react";
-import { neshCache } from "@neshca/cache-handler/functions";
 import { AbortError } from "p-retry";
 
 import { REVALIDATE_LONG } from "@/lib/constants";
@@ -34,8 +34,20 @@ export async function fetchNodeByPathQuery(
   });
 }
 
-// Here we wrap the function in react cache and nesh cache  avoiding unnecessary requests.
-const cachedFetchNodeByPathQuery = neshCache(cache(fetchNodeByPathQuery));
+// Wrap with unstable_cache for persistent caching with tag-based revalidation,
+// and react cache for per-request deduplication.
+// cache() must be called at module scope so a single memoized function is
+// shared across all callers within the same request.
+const cachedFetchNodeByPathQuery = cache(
+  (path: string, locale: string, isDraftMode: boolean, revision: string) =>
+    unstable_cache(
+      () => fetchNodeByPathQuery(path, locale, isDraftMode, revision),
+      [
+        `node-${locale}${path}-${isDraftMode ? "draft" : "published"}-${revision ?? "latest"}`,
+      ],
+      { tags: [`/${locale}${path}`], revalidate: REVALIDATE_LONG },
+    )(),
+);
 
 /**
  * Function to retrieve a node by its Drupal path.
@@ -63,7 +75,6 @@ export async function getNodeByPathQuery(
 ) {
   try {
     return await cachedFetchNodeByPathQuery(
-      { tags: [`/${locale}${path}`], revalidate: REVALIDATE_LONG },
       path,
       locale,
       isDraftMode,

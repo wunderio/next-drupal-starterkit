@@ -155,5 +155,3 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 }
 
 export const revalidate = 3600; // Revalidate the sitemap at most once an hour.
-
-export const fetchCache = "force-no-store";

@@ -43,7 +43,7 @@ const apiClient = API({
   },
 });
 
-export async function POST(req: NextRequest, _res: NextResponse) {
+export async function POST(req: NextRequest) {
   const data = await req.json();
 
   const results = await apiClient.handleRequest(data);

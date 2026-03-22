@@ -11,11 +11,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function LoginPage({
-  params: { locale },
+export default async function LoginPage({
+  params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   setRequestLocale(locale);
 
   return (

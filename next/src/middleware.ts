@@ -22,7 +22,7 @@ const AUTH_ROUTES = [
 ];
 
 interface AppRouteHandlerFnContext {
-  params?: Record<string, string | string[]>;
+  params: Promise<Record<string, string | string[]>>;
 }
 
 const intlMiddleware = createMiddleware(routing, {

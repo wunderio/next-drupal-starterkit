@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { REVALIDATE_LONG } from "@/lib/constants";
 import { getLatestArticlesItems } from "@/lib/drupal/get-articles";
 
 import ArticlesPagination from "./_components/articles-pagination";
@@ -9,18 +8,19 @@ import ArticlesPagination from "./_components/articles-pagination";
 import { getPathname } from "@/i18n/routing";
 
 type ArticlesListingPageParams = {
-  params: {
+  params: Promise<{
     locale: string;
-  };
-  searchParams?: {
+  }>;
+  searchParams?: Promise<{
     query?: string;
     page?: string;
-  };
+  }>;
 };
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: ArticlesListingPageParams): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations({ locale });
 
   // Example: This page accepts search params like `?page=1`.
@@ -42,16 +42,18 @@ export async function generateMetadata({
   };
 }
 
-export const revalidate = REVALIDATE_LONG;
+export const revalidate = 600; // REVALIDATE_LONG — must be a static literal for Next.js build analysis
 
 export default async function AllArticlesPage({
-  params: { locale },
+  params,
   searchParams,
 }: ArticlesListingPageParams) {
+  const { locale } = await params;
   setRequestLocale(locale);
 
   // Get the query and current page from the search params
-  const currentPage = Number(searchParams?.page) || 1;
+  const resolvedSearchParams = await searchParams;
+  const currentPage = Number(resolvedSearchParams?.page) || 1;
 
   // This has to match one of the allowed values in the article listing view
   // in Drupal.
