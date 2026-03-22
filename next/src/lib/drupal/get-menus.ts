@@ -25,13 +25,14 @@ export async function fetchMenu(name: MenuAvailable, locale: string) {
 
 // Wrap with unstable_cache for persistent caching with tag-based revalidation,
 // and react cache for per-request deduplication.
-const cachedFetchMenu = (name: MenuAvailable, locale: string) =>
-  cache((n: MenuAvailable, l: string) =>
-    unstable_cache(() => fetchMenu(n, l), [`menu-${n}-${l}`], {
-      tags: [n],
-      revalidate: REVALIDATE_LONG,
-    })(),
-  )(name, locale);
+// cache() must be called at module scope so a single memoized function is
+// shared across all callers within the same request.
+const cachedFetchMenu = cache((name: MenuAvailable, locale: string) =>
+  unstable_cache(() => fetchMenu(name, locale), [`menu-${name}-${locale}`], {
+    tags: [name],
+    revalidate: REVALIDATE_LONG,
+  })(),
+);
 
 /**
  * Gets the menu data for a given menu name and locale.

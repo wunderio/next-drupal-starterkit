@@ -36,19 +36,18 @@ export async function fetchNodeByPathQuery(
 
 // Wrap with unstable_cache for persistent caching with tag-based revalidation,
 // and react cache for per-request deduplication.
-const cachedFetchNodeByPathQuery = (
-  path: string,
-  locale: string,
-  isDraftMode: boolean,
-  revision: string,
-) =>
-  cache((p: string, l: string, draft: boolean, rev: string) =>
+// cache() must be called at module scope so a single memoized function is
+// shared across all callers within the same request.
+const cachedFetchNodeByPathQuery = cache(
+  (path: string, locale: string, isDraftMode: boolean, revision: string) =>
     unstable_cache(
-      () => fetchNodeByPathQuery(p, l, draft, rev),
-      [`node-${l}${p}-${draft ? "draft" : "published"}-${rev ?? "latest"}`],
-      { tags: [`/${l}${p}`], revalidate: REVALIDATE_LONG },
+      () => fetchNodeByPathQuery(path, locale, isDraftMode, revision),
+      [
+        `node-${locale}${path}-${isDraftMode ? "draft" : "published"}-${revision ?? "latest"}`,
+      ],
+      { tags: [`/${locale}${path}`], revalidate: REVALIDATE_LONG },
     )(),
-  )(path, locale, isDraftMode, revision);
+);
 
 /**
  * Function to retrieve a node by its Drupal path.
