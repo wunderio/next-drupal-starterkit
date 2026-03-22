@@ -11,7 +11,7 @@ const defaultStaleAge = 60 * 10;
 CacheHandler.onCreation(async ({ buildId }) => {
   let client;
   /** @type {any} */
-  let handler;
+  let handler = createLruHandler();
 
   if (
     // Do not create the Redis handler during the build phase.
