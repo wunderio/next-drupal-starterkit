@@ -96,7 +96,7 @@
     "postcss": "^8.4.49",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
-    "storybook": "^8.4.7",
+    "storybook": "^8.6.15",
     "storybook-next-intl": "^1.2.4",
     "tailwindcss": "^3.4.17",
     "ts-node": "^10.9.2",
